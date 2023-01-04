@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+vendors/__pycache__/*
+config/__pycache__/*
+config/credentials.ini
+jobs
+test.py
+*.pyc
+TO-DO.md
+*.log
