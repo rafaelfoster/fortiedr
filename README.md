@@ -17,7 +17,7 @@ First of all, create an Rest API user on FortiEDR Management console:
 
  * Then go to **/config** folder and rename the **credentials.ini.default** to **credentials.ini**.
  * Define user, pass and host parameters as explained.
- * If you are working under a Multi-Tenancy environment, note that the parameter 'org' should be defined, otherwise you will get an HTTP 401 0 Unauthorized Access error
+ * If you are working under a Multi-Tenancy environment, note that the parameter 'org' should be defined, otherwise you will get an HTTP 401 Unauthorized Access error
 
 
 ## How do I use FortiEDR_API?
