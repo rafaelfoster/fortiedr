@@ -10,6 +10,8 @@ Be sure you have at least Python 3.8 and PIP (https://pypi.org/project/pip/) ins
 After downloading this tool, use pip for installing dependencies using the following command:
 
 ```
+git -c http.sslVerify=false clone https://git.fndn.fortinet.net/fosterr/FortiEDR_API.git
+
 cd FortiEDR_API
 
 pip3 install .
