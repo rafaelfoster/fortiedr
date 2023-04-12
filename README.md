@@ -1,6 +1,8 @@
 # FortiEDR_API
 An Open-source python package intended to help on interacting with FortiEDR API.
 
+It was based and tested in FortiEDR Cloud version 5.2.1.2800.
+
 ## How do I install FortiEDR_API?
 
 Be sure you have at least Python 3.8 and PIP (https://pypi.org/project/pip/) installed.
