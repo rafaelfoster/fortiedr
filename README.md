@@ -8,6 +8,8 @@ Be sure you have at least Python 3.8 and PIP (https://pypi.org/project/pip/) ins
 After downloading this tool, use pip for installing dependencies using the following command:
 
 ```
+git clone https://github.com/rafaelfoster/FortiEDR_API.git
+
 cd FortiEDR_API
 
 pip3 install .
