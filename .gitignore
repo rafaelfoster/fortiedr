@@ -1,9 +1,15 @@
+converter.py
+api-docs.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 
 # C extensions
 *.so
+
+fortiedr.egg-info
+build
 
 vendors/__pycache__/*
 config/__pycache__/*
