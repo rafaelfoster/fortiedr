@@ -1,18 +1,37 @@
+import re
 import sys
 import json
+import logging
 import urllib.parse
 import requests
 from fortiedr.auth import Auth
 
-class FortiEDR_API_GW:
+debug_enabled = False
 
+def debug():
+    global debug_enabled
+    import http.client as http_client
+    http_client.HTTPConnection.debuglevel = 1
+    
+    logging.basicConfig()
+    logger = logging.getLogger().setLevel(logging.DEBUG)
+    requests_log = logging.getLogger("requests.packages.urllib3")
+    requests_log.setLevel(logging.DEBUG)
+    requests_log.propagate = True
+    debug_enabled = True
+
+class FortiEDR_API_GW:
+    global debug_enabled
+    
     host = None
     headers = None
     download_file = False
     
-    def __init__(self, headers, host) -> None:
+    def __init__(self, headers, host, enable_debug : bool = None) -> None:
         self.host = host
         self.headers = headers
+        if enable_debug:
+            debug()
 
     def get(self, url, params:dict = None, request_type = None):
         return self._exec("GET", url, params, request_type = request_type)
@@ -29,16 +48,19 @@ class FortiEDR_API_GW:
     def delete(self, url, params = None, request_type = None):
         return self._exec("DELETE", url, params, request_type = request_type)
     
-    def download(self, url, save_to_file, params = None ):
-        self.download_file = True
-        content = self._exec("GET", type = "download")
-        try:
-            with open(save_to_file, 'wb') as file:
-                file.write(content)
-        except OSError as e:
-            print("[!] - Some error occour: ")
-            print(e)
-            return False
+    '''
+    YET TO BE IMPLEMENTED 
+    '''
+    # def download(self, url, save_to_file, params = None ):
+    #     self.download_file = True
+    #     content = self._exec("GET", type = "download")
+    #     try:
+    #         with open(save_to_file, 'wb') as file:
+    #             file.write(content)
+    #     except OSError as e:
+    #         print("[!] - Some error occour: ")
+    #         print(e)
+    #         return False
 
     def _exec(self, method, url, params = None, is_file = None, request_type = None):
         if not self.headers or not self.host:
@@ -46,7 +68,7 @@ class FortiEDR_API_GW:
         
         headers = self.headers
         url = "https://" + self.host + url
-
+        
         if request_type and request_type == "query":
             filtered = {k: v for k, v in params.items() if v is not None}
             params.clear()
@@ -54,6 +76,11 @@ class FortiEDR_API_GW:
             url_params = urllib.parse.urlencode(params)
             url = url + "?" + url_params
 
+        if params:
+            params = {k: v for k, v in params.items() if v is not None}
+            print(json.dumps(params, indent=4))
+        url = re.sub('\?$', "", url)
+        print("URL = ", url)
         try:
             res = None
             if method == "GET":
@@ -75,21 +102,21 @@ class FortiEDR_API_GW:
         except requests.exceptions.HTTPError :
             pass
 
-        if res_code == 500:
-            print("HTTP 500 - Internal Server Error")
+        if res_code > 201:
 
-        elif res_code > 201:
+            res_data = res_code
 
             try:
                 res_data = res.json()
+                    
+                res_users_error_code = res_data['errorMessage']
+                res_data['status_code'] = res_code
+                print("\n[!] - Failed to perform this task")
+                print("    - HTTP Code: %d"     % (res_code))
+                print("    - Error message: %s" % (res_data['errorMessage']))
+
             except:
                 print(res)
-
-            res_users_error_code = res_data['errorMessage']
-            res_data['status_code'] = res_code
-            print("\n[!] - Failed to perform this task")
-            print("    - HTTP Code: %d"     % (res_code))
-            print("    - Error message: %s" % (res_data['errorMessage']))
 
             return False, res_data
 

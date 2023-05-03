@@ -1,7 +1,9 @@
+import json
 from typing import BinaryIO
 from fortiedr.auth import Auth as fedrAuth
 from fortiedr.connector import FortiEDR_API_GW
 
+debug = False
 fortiedr = None
 
 class Administrator:
@@ -2517,21 +2519,37 @@ class Users:
 			url_params.append('organization=' + organization)
 		if len(url_params) > 0:
 			url += '?' + '&'.join(url_params)
-		userRequest = {
-			'confirmPassword': confirmPassword,
-			'customScript': customScript,
-			'email': email,
-			'firstName': firstName,
-			'lastName': lastName,
-			'password': password,
-			'remoteShell': remoteShell,
-			'restApi': restApi,
-			'role': role,
-			'title': title,
-			'username': username
-		}
-		return fortiedr.send(url, userRequest)
+		# userRequest = {
+		# 	'confirmPassword': confirmPassword,
+		# 	'customScript': customScript,
+		# 	'email': email,
+		# 	'firstName': firstName,
+		# 	'lastName': lastName,
+		# 	'password': password,
+		# 	'remoteShell': remoteShell,
+		# 	'restApi': restApi,
+		# 	'role': role,
+		# 	'title': title,
+		# 	'username': username
+		# }
 
+		userRequest = {
+			"confirmPassword": "workshop_user_h9c8",
+			"customScript": False,
+			"remoteShell": False,
+			"restApi": False,
+			"email": "workshop_user@test.com",
+			"firstName": "WORKSHOP",
+			"lastName": "LATAM - TEST",
+			"password": "workshop_user_h9c8",
+			"role": "Admin",
+			"title": "WORKSHOP API",
+			"username": "workshop_user"
+		}
+
+		print(url)
+		print(json.dumps(userRequest, indent=4))
+		return fortiedr.send(url, userRequest)
 
 	'''
 	class Users: Delete SAML authentication settings per organization.
@@ -2655,10 +2673,15 @@ class Users:
 			'title': title,
 			'username': username
 		}
+
 		return fortiedr.insert(url, userRequest)
 
+def enable_debug():
+	global debug
+	debug = True
 
 def auth( host: str, user: str, passw: str, org: str = None):
+	global debug
 	global fortiedr
 	login = fedrAuth()
 	headers, host = login.get_headers(
@@ -2667,10 +2690,9 @@ def auth( host: str, user: str, passw: str, org: str = None):
 		fedr_pass=passw,
 		fedr_org=org
 	)
-
 	if headers is None:
 		return False, host
 	else:
-		fortiedr = FortiEDR_API_GW(headers, host)
-		return True
+		fortiedr = FortiEDR_API_GW(headers, host, debug)
+		return True, "AUTHENTICATION_SUCCEEDED"
 	
