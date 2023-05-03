@@ -2519,36 +2519,20 @@ class Users:
 			url_params.append('organization=' + organization)
 		if len(url_params) > 0:
 			url += '?' + '&'.join(url_params)
-		# userRequest = {
-		# 	'confirmPassword': confirmPassword,
-		# 	'customScript': customScript,
-		# 	'email': email,
-		# 	'firstName': firstName,
-		# 	'lastName': lastName,
-		# 	'password': password,
-		# 	'remoteShell': remoteShell,
-		# 	'restApi': restApi,
-		# 	'role': role,
-		# 	'title': title,
-		# 	'username': username
-		# }
-
 		userRequest = {
-			"confirmPassword": "workshop_user_h9c8",
-			"customScript": False,
-			"remoteShell": False,
-			"restApi": False,
-			"email": "workshop_user@test.com",
-			"firstName": "WORKSHOP",
-			"lastName": "LATAM - TEST",
-			"password": "workshop_user_h9c8",
-			"role": "Admin",
-			"title": "WORKSHOP API",
-			"username": "workshop_user"
+			'confirmPassword': confirmPassword,
+			'customScript': customScript,
+			'email': email,
+			'firstName': firstName,
+			'lastName': lastName,
+			'password': password,
+			'remoteShell': remoteShell,
+			'restApi': restApi,
+			'role': role,
+			'title': title,
+			'username': username
 		}
 
-		print(url)
-		print(json.dumps(userRequest, indent=4))
 		return fortiedr.send(url, userRequest)
 
 	'''
