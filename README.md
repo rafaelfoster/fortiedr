@@ -3,7 +3,7 @@ An Open-source python package intended to help on interacting with FortiEDR API.
 
 ## How do I install FortiEDR_API?
 
-Be sure you have at least Python 3.8 and PIP (https://pypi.org/project/pip/) installed.
+Be sure you have at least Python 3.10 and PIP (https://pypi.org/project/pip/) installed.
 
 After downloading this tool, use pip for installing dependencies using the following command:
 
