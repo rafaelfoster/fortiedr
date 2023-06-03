@@ -18,7 +18,7 @@ pip3 install .
 ## First steps with FortiEDR_API
 
 First of all, create a Rest API user on FortiEDR Management console:
- * Create a user with Rest API permissions on FortiEDR Console. You can check this doc for help: https://docs.fortinet.com/document/fortiedr/5.2.1/administration-guide/776468/users
+ * Create a user with Rest API permissions on FortiEDR Console. You can check this doc for help: [FortiEDR Docs](https://docs.fortinet.com/document/fortiedr/6.0.0/administration-guide/776468)
 
  * After creating the user, this newly created user must log in to the Central Manager console and change their initial password before they can be used by Rest API calls.
 
