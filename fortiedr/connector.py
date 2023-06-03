@@ -2,9 +2,10 @@ import re
 import sys
 import json
 import logging
-import urllib.parse
 import requests
+import urllib.parse
 from fortiedr.auth import Auth
+requests.packages.urllib3.disable_warnings()
 
 debug_enabled = False
 
@@ -26,12 +27,15 @@ class FortiEDR_API_GW:
     host = None
     headers = None
     download_file = False
+    SSL_Verify = True
     
-    def __init__(self, headers, host, enable_debug : bool = None) -> None:
+    def conn(self, headers = None, host = None, enable_debug : bool = None, enable_ssl : bool = None) -> None:
         self.host = host
         self.headers = headers
         if enable_debug:
             debug()
+        if not enable_ssl:
+            self.SSL_Verify = False
 
     def get(self, url, params:dict = None, request_type = None):
         return self._exec("GET", url, params, request_type = request_type)
@@ -48,9 +52,9 @@ class FortiEDR_API_GW:
     def delete(self, url, params = None, request_type = None):
         return self._exec("DELETE", url, params, request_type = request_type)
     
-    '''
-    YET TO BE IMPLEMENTED 
-    '''
+    # '''
+    # YET TO BE IMPLEMENTED 
+    # '''
     # def download(self, url, save_to_file, params = None ):
     #     self.download_file = True
     #     content = self._exec("GET", type = "download")
@@ -63,42 +67,54 @@ class FortiEDR_API_GW:
     #         return False
 
     def _exec(self, method, url, params = None, is_file = None, request_type = None):
+        if method not in ['GET', 'POST','PUT', 'PATCH', 'DELETE']:
+            print("[!] - Method not found")
+            print("[!] - Aborting execution.")
+            exit()
+
         if not self.headers or not self.host:
             return "NOT AUTHENTICATED. Run Auth() first."
-        
+
         headers = self.headers
-        url = "https://" + self.host + url
-        
+        url = f"https://{self.host}{url}"
+
         if request_type and request_type == "query":
             filtered = {k: v for k, v in params.items() if v is not None}
             params.clear()
             params.update(filtered)
             url_params = urllib.parse.urlencode(params)
-            url = url + "?" + url_params
+            url = f"{url}?{url_params}"
 
         if params:
             params = {k: v for k, v in params.items() if v is not None}
-            print(json.dumps(params, indent=4))
+
         url = re.sub('\?$', "", url)
-        print("URL = ", url)
+        if debug_enabled:
+            print(json.dumps(params, indent=4))
+            print("URL = ", url)
         try:
             res = None
-            if method == "GET":
-                res = requests.get(url, headers=headers )
-            elif method == "POST":
-                res = requests.post(url, headers=headers, json=params)
-            elif method == "PUT":
-                res = requests.put(url, headers=headers, json=params)
-            elif method == "PATCH":
-                res = requests.patch(url, headers=headers, json=params)
-            elif method == "DELETE":
-                res = requests.delete(url, headers=headers, json=params)
-            else:
-                print("[!] - Method not found")
-                print("[!] - Aborting execution.")
+            res = requests.request(
+                method,
+                headers=headers,
+                url=url,
+                json=params,
+                verify=self.SSL_Verify
+            )
+
+            # if method == "GET":
+            #     res = requests.get(url, headers=headers, verify=self.SSL_Verify)
+            # elif method == "POST":
+            #     res = requests.post(url, headers=headers, json=params, verify=self.SSL_Verify)
+            # elif method == "PUT":
+            #     res = requests.put(url, headers=headers, json=params, ssl_verify=self.SSL_Verify)
+            # elif method == "PATCH":
+            #     res = requests.patch(url, headers=headers, json=params, ssl_verify=self.SSL_Verify)
+            # elif method == "DELETE":
+            #     res = requests.delete(url, headers=headers, json=params, ssl_verify=self.SSL_Verify)
 
             res_code = res.status_code
-          
+
         except requests.exceptions.HTTPError :
             pass
 
@@ -108,26 +124,25 @@ class FortiEDR_API_GW:
 
             try:
                 res_data = res.json()
-                    
+
                 res_users_error_code = res_data['errorMessage']
                 res_data['status_code'] = res_code
                 print("\n[!] - Failed to perform this task")
                 print("    - HTTP Code: %d"     % (res_code))
-                print("    - Error message: %s" % (res_data['errorMessage']))
+                print(f"    - Error message: {res_data['errorMessage']}")
 
-            except:
-                print(res)
+            except Exception:
+                if debug_enabled:
+                    print(res)
 
             return False, res_data
 
-        if res_code == 200 or res_code == 201:
-            
+        if res_code in {200, 201}:
             if is_file == "download":
                 return res
-            else:
-                try:
-                    res_data = res.json()
-                except:
-                    res_data = res
+            try:
+                res_data = res.json()
+            except Exception:
+                res_data = res
 
-                return True, res_data
+            return True, res_data
