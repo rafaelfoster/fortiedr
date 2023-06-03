@@ -28,7 +28,7 @@ After creating a user with privileges for interacting with FortiEDR API, you can
 
 Or you can import all the modules, by running:
 
-`from fortiedr import *`
+`import fortiedr`
 
 *Obs.: Auth module is mandatory for being able to authenticate with FortiEDR Management Host *
 
@@ -37,7 +37,7 @@ Once imported, you need to authenticate with Management Host using valid credent
 ```
 organization = "ORGANIZATION_NAME"
 
-authentication = auth(
+authentication = fortiedr.auth(
     user="USER",
     passw="PASSWORD",
     host="FORTIEDR_HOST.COM", # use only the hostname, without 'https://' and '/'.
