@@ -1,11 +1,11 @@
 import json
-from fortiedr.fortiedr import *
+import fortiedr
 
 def main():
 
    organization = "ORGANIZATION_NAME"
 
-   authentication = auth(
+   authentication = fortiedr.auth(
       user="USER",
       passw="PASSWORD",
       host="FORTIEDR_HOST.COM", # use only the hostname, without 'https://' and '/'.
@@ -20,7 +20,7 @@ def main():
 
       # A example for getting Tenant administration data.
       #
-      admin = Administrator()
+      admin = fortiedr.Administrator()
 
       status, data = admin.list_system_summary(organization)
       if status:
@@ -36,7 +36,7 @@ def main():
       # An example of cloning the 'Execution Prevention' policy to another one called 'Cloned_Execution_Prevention'
       # 
 
-      policies = Policies()
+      policies = fortiedr.Policies()
       status = policies.clone("Execution Prevention", "Cloned_Execution_Prevention", organization)
       if status:
          print("OK - Policy cloned")
@@ -47,7 +47,7 @@ def main():
       # Listing all users in a organization
       # 
 
-      u = Users()
+      u = fortiedr.Users()
       status, data = u.list_users(organization)
       if status:
          print(json.dumps(data, indent=4))
