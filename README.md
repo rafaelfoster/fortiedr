@@ -35,6 +35,8 @@ Or you can import all the modules, by running:
 Once imported, you need to authenticate with Management Host using valid credentials, as such:
 
 ```
+import fortiedr 
+
 organization = "ORGANIZATION_NAME"
 
 authentication = fortiedr.auth(
