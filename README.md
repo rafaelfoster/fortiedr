@@ -1,4 +1,4 @@
-# Python FortiEDR module
+# FortiEDR python module
 An Open-source python package intended to help on interacting with FortiEDR API.
 
 ## How do I install fortiedr?
