@@ -97,6 +97,20 @@ class Administrator:
 		}
 		return fortiedr_connection.insert(url, license)
 
+	'''
+	class Administrator: Create collector group
+	'''
+	def create_collector_group(self, organization : str, collectorGroupName : str) -> tuple[bool, None]:
+		url = '/management-rest/inventory/create-collector-group'
+		url_params = []
+		if organization:
+			url_params.append(f'organization={organization}')
+		if collectorGroupName:
+			url_params.append(f'name={collectorGroupName}')	
+		url += '?' + '&'.join(url_params)	
+		return fortiedr_connection.send(url)
+	
+	
 class Audit:
 
 	'''
