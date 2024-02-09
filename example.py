@@ -13,9 +13,8 @@ def main():
    )
 
    if not authentication:
-
+      # Explain why the authentication has failed
       print(authentication)
-
    else:
 
       # A example for getting Tenant administration data.
@@ -31,7 +30,7 @@ def main():
          print("Internal IP Address: ",     str(data['managementInternalIP']))
       else:
          print("Error in fetching data.")
-      
+
       # 
       # An example of cloning the 'Execution Prevention' policy to another one called 'Cloned_Execution_Prevention'
       # 

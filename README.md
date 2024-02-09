@@ -1,7 +1,7 @@
 # FortiEDR_API
 An Open-source python package intended to help on interacting with FortiEDR API.
 
-It was based and tested in FortiEDR Cloud version 5.2.1.2800.
+It was based and tested in FortiEDR Cloud version 6.0.1.0723.
 
 ## How do I install FortiEDR_API?
 
@@ -10,14 +10,20 @@ Be sure you have at least Python 3.8 and PIP (https://pypi.org/project/pip/) ins
 After downloading this tool, use pip for installing dependencies using the following command:
 
 ```
-git -c http.sslVerify=false clone https://git.fndn.fortinet.net/fosterr/FortiEDR_API.git
+pip install fortiedr
+```
 
-cd FortiEDR_API
+Or you can download directly from this repo:
+
+```
+git clone https://github.com/rafaelfoster/fortiedr.git
+
+cd fortiedr
 
 pip3 install .
 ```
 
-## First steps with FortiEDR_API
+## First steps with fortiedr
 
 First of all, create a Rest API user on FortiEDR Management console:
  * Create a user with Rest API permissions on FortiEDR Console. You can check this doc for help: https://docs.fortinet.com/document/fortiedr/5.2.1/administration-guide/776468/users
@@ -26,13 +32,7 @@ First of all, create a Rest API user on FortiEDR Management console:
 
 After creating a user with privileges for interacting with FortiEDR API, you can start using the package by importing the modules you want to your code:
 
-`from fortiedr import Auth, Policies`
-
-Or you can import all the modules, by running:
-
-`from fortiedr import *`
-
-*Obs.: Auth module is mandatory for being able to authenticate with FortiEDR Management Host *
+`import fortiedr`
 
 Once imported, you need to authenticate with Management Host using valid credentials, as such:
 
@@ -47,7 +47,15 @@ authentication = auth(
 )
 ```
 
-If the authentication is successful, you can proceed by interacting with the API.
+If the authentication is successful, you can proceed by interacting with the API, like:
+
+
+```
+collectors = fortiedr.Collectors()
+
+data = collectors.list_collectors()
+
+```
 
 ## How do I use FortiEDR_API?
 
