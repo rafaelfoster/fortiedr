@@ -1,5 +1,8 @@
 converter.py
-api-docs.json
+converter - Copy.py
+fortiedr.py
+*.json
+*.old
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
