@@ -3,7 +3,7 @@ from fortiedr.fortiedr import *
 
 def main():
 
-   organization = "ORGANIZATION_NAME"
+   organization = "ORGANIZATION_NAME" # Case sensitive
 
    authentication = auth(
       user="USER",

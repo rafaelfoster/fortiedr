@@ -4,6 +4,36 @@ from fortiedr.connector import FortiEDR_API_GW
 
 fortiedr_connection = None
 
+class Admin:
+
+	def set_tray_notification_settings(self, organization: str, enabledPopup: bool = None, enabledTrayNotification: bool = None, message: str = None) -> tuple[bool, None]:
+
+		'''
+		class Admin
+		Description: Update tray notification settings.
+
+		:param adminSetTrayNotificationSettingsRequest: adminSetTrayNotificationSettingsRequest. 
+		:param enabledPopup: Enable popup. 
+		:param enabledTrayNotification: Enable tray notification. 
+		:param message: Specifies the message. 
+		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+
+		return: 
+			Status of the request (True or False). 
+			This function does not return any data.
+
+		'''
+		url = '/api/admin/set-tray-notification-settings'
+		url_params = []
+		url += '?' + '&'.join(url_params)
+		adminSetTrayNotificationSettingsRequest = {
+			'enabledPopup': enabledPopup,
+			'enabledTrayNotification': enabledTrayNotification,
+			'message': message,
+			'organization': organization
+		}
+		return fortiedr_connection.send(url, adminSetTrayNotificationSettingsRequest)
+
 class Administrator:
 
 	def list_collector_installers(self, organization :str = None) -> tuple[bool, None]:
@@ -22,7 +52,7 @@ class Administrator:
 		url = '/management-rest/admin/list-collector-installers'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -44,9 +74,9 @@ class Administrator:
 		url = '/management-rest/admin/list-system-summary'
 		url_params = []
 		if addLicenseBlob:
-			url_params.append('addLicenseBlob=' + addLicenseBlob)
+			url_params.append('addLicenseBlob=' + str(addLicenseBlob))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -153,11 +183,11 @@ class Administrator:
 		url = '/management-rest/admin/set-system-mode'
 		url_params = []
 		if forceAll:
-			url_params.append('forceAll=' + forceAll)
+			url_params.append('forceAll=' + str(forceAll))
 		if mode:
-			url_params.append('mode=' + mode)
+			url_params.append('mode=' + str(mode))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -182,11 +212,11 @@ class Administrator:
 		url = '/management-rest/admin/update-collector-installer'
 		url_params = []
 		if collectorGroupIds:
-			url_params.append('collectorGroupIds=' + collectorGroupIds)
+			url_params.append('collectorGroupIds=' + str(collectorGroupIds))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		requestUpdateData = {
 			'updateVersions': updateVersions
@@ -235,6 +265,170 @@ class Administrator:
 		}
 		return fortiedr_connection.insert(url, license)
 
+class ApplicationControl:
+
+	def get_applications(self, currentPage : int, organization : str, fileName :str = None, path :str = None, signer :str = None, enabled :bool = None, hash :str = None, operatingSystem :str = None, policyIds :dict = None, tag :str = None) -> tuple[bool, None]:
+
+		'''
+		class ApplicationControl
+		Description: Get application controls.
+
+		:param fileName: Specifies the file name, if contains special characters - encode to HTML URL Encoding. 
+		:param path: Specifies the path, if contains special characters - encode to HTML URL Encoding. 
+		:param signer: Specifies the value, if contains special characters - encode to HTML URL Encoding. 
+		:param currentPage: Specifies the current page. 
+		:param enabled: Specifies the state of the application control. 
+		:param hash: Specifies the hash of the application control. 
+		:param operatingSystem: Specifies the operating system of the application control. 
+		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		:param policyIds: Specifies the IDs of the relevant policies for application control. 
+		:param tag: Specifies the tag related to application control. 
+
+		return: 
+			Status of the request (True or False). 
+			This function does not return any data.
+
+		'''
+		url = '/api/application-control/applications'
+		url_params = []
+		if fileName:
+			url_params.append('fileName=' + str(fileName))
+		if path:
+			url_params.append('path=' + str(path))
+		if signer:
+			url_params.append('signer=' + str(signer))
+		if currentPage:
+			url_params.append('currentPage=' + str(currentPage))
+		if enabled:
+			url_params.append('enabled=' + str(enabled))
+		if hash:
+			url_params.append('hash=' + str(hash))
+		if operatingSystem:
+			url_params.append('operatingSystem=' + str(operatingSystem))
+		if organization:
+			url_params.append('organization=' + str(organization))
+		if policyIds:
+			url_params.append('policyIds=' + str(policyIds))
+		if tag:
+			url_params.append('tag=' + str(tag))
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def send_applications(self, applicationControls: dict, organization: str) -> tuple[bool, None]:
+
+		'''
+		class ApplicationControl
+		Description: Get application controls.
+
+		:param applicationControlSaveRequest: applicationControlSaveRequest. 
+		:param applicationControls: Specifies the list of applications to add. 
+		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+
+		return: 
+			Status of the request (True or False). 
+			This function does not return any data.
+
+		'''
+		url = '/api/application-control/applications'
+		url_params = []
+		url += '?' + '&'.join(url_params)
+		applicationControlSaveRequest = {
+			'applicationControls': applicationControls,
+			'organization': organization
+		}
+		return fortiedr_connection.send(url, applicationControlSaveRequest)
+
+	def insert_applications(self, appIds : dict, organization : str, enabled: bool = None, groupIds: dict = None, isOverridePolicies: bool = None, policyIds: dict = None, tagId: int = None) -> tuple[bool, dict]:
+
+		'''
+		class ApplicationControl
+		Description: Get application controls.
+
+		:param appIds: The relevant application IDs to edit. 
+		:param modifiedFields: modifiedFields. 
+		:param enabled: Specifies the state of the application. 
+		:param groupIds: Specifies the IDs of the groups to assign the application. 
+		:param isOverridePolicies: Set true to override all current policies, if false or not specified they will be added to the current policies. 
+		:param policyIds: Specifies the IDs of the policies to assign the application. 
+		:param tagId: Specifies the new tag ID of the application. 
+		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+
+		return: 
+			Status of the request (True or False). 
+			dict
+
+		'''
+		url = '/api/application-control/applications'
+		url_params = []
+		if appIds:
+			url_params.append('appIds=' + str(appIds))
+		if organization:
+			url_params.append('organization=' + str(organization))
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.insert(url)
+
+	def delete_applications(self, organization : str, applicationIds :dict = None) -> tuple[bool, None]:
+
+		'''
+		class ApplicationControl
+		Description: Get application controls.
+
+		:param applicationIds: The IDs of the applications to be deleted. 
+		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+
+		return: 
+			Status of the request (True or False). 
+			This function does not return any data.
+
+		'''
+		url = '/api/application-control/applications'
+		url_params = []
+		if applicationIds:
+			url_params.append('applicationIds=' + str(applicationIds))
+		if organization:
+			url_params.append('organization=' + str(organization))
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+
+	def force_update_ootb_application_controls(self) -> tuple[bool, None]:
+
+		'''
+		class ApplicationControl
+		Description: Trigger OOTB application control update.
+
+		:param applicationIds: The IDs of the applications to be deleted. 
+		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+
+		'''
+		url = '/api/application-control/force-update-ootb-application-controls'
+		return fortiedr_connection.send(url)
+
+
+	def tags(self, name: str, organization: str) -> tuple[bool, None]:
+
+		'''
+		class ApplicationControl
+		Description: Create an application control tags.
+
+		:param applicationControlTagCreateRequest: applicationControlTagCreateRequest. 
+		:param name: Specifies the name of the application control tag. 
+		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+
+		return: 
+			Status of the request (True or False). 
+			This function does not return any data.
+
+		'''
+		url = '/api/application-control/tags'
+		url_params = []
+		url += '?' + '&'.join(url_params)
+		applicationControlTagCreateRequest = {
+			'name': name,
+			'organization': organization
+		}
+		return fortiedr_connection.send(url, applicationControlTagCreateRequest)
+
 class Audit:
 
 	def get_audit(self, fromTime :str = None, organization :str = None, toTime :str = None) -> tuple[bool, dict]:
@@ -255,11 +449,11 @@ class Audit:
 		url = '/management-rest/audit/get-audit'
 		url_params = []
 		if fromTime:
-			url_params.append('fromTime=' + fromTime)
+			url_params.append('fromTime=' + str(fromTime))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if toTime:
-			url_params.append('toTime=' + toTime)
+			url_params.append('toTime=' + str(toTime))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -284,13 +478,13 @@ class CommunicationControl:
 		url = '/management-rest/comm-control/assign-collector-group'
 		url_params = []
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
 		if forceAssign:
-			url_params.append('forceAssign=' + forceAssign)
+			url_params.append('forceAssign=' + str(forceAssign))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if policyName:
-			url_params.append('policyName=' + policyName)
+			url_params.append('policyName=' + str(policyName))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -313,11 +507,11 @@ class CommunicationControl:
 		url = '/management-rest/comm-control/clone-policy'
 		url_params = []
 		if newPolicyName:
-			url_params.append('newPolicyName=' + newPolicyName)
+			url_params.append('newPolicyName=' + str(newPolicyName))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if sourcePolicyName:
-			url_params.append('sourcePolicyName=' + sourcePolicyName)
+			url_params.append('sourcePolicyName=' + str(sourcePolicyName))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.send(url)
 
@@ -347,25 +541,25 @@ class CommunicationControl:
 		url = '/management-rest/comm-control/list-policies'
 		url_params = []
 		if decisions:
-			url_params.append('decisions=' + decisions)
+			url_params.append('decisions=' + str(decisions))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if policies:
-			url_params.append('policies=' + policies)
+			url_params.append('policies=' + str(policies))
 		if rules:
-			url_params.append('rules=' + rules)
+			url_params.append('rules=' + str(rules))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if sources:
-			url_params.append('sources=' + sources)
+			url_params.append('sources=' + str(sources))
 		if state:
-			url_params.append('state=' + state)
+			url_params.append('state=' + str(state))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -417,69 +611,69 @@ class CommunicationControl:
 		url = '/management-rest/comm-control/list-products'
 		url_params = []
 		if action:
-			url_params.append('action=' + action)
+			url_params.append('action=' + str(action))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
 		if cveIdentifier:
-			url_params.append('cveIdentifier=' + cveIdentifier)
+			url_params.append('cveIdentifier=' + str(cveIdentifier))
 		if destinationIp:
-			url_params.append('destinationIp=' + destinationIp)
+			url_params.append('destinationIp=' + str(destinationIp))
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + str(devices))
 		if firstConnectionTimeEnd:
-			url_params.append('firstConnectionTimeEnd=' + firstConnectionTimeEnd)
+			url_params.append('firstConnectionTimeEnd=' + str(firstConnectionTimeEnd))
 		if firstConnectionTimeStart:
-			url_params.append('firstConnectionTimeStart=' + firstConnectionTimeStart)
+			url_params.append('firstConnectionTimeStart=' + str(firstConnectionTimeStart))
 		if handled:
-			url_params.append('handled=' + handled)
+			url_params.append('handled=' + str(handled))
 		if includeStatistics:
-			url_params.append('includeStatistics=' + includeStatistics)
+			url_params.append('includeStatistics=' + str(includeStatistics))
 		if ips:
-			url_params.append('ips=' + ips)
+			url_params.append('ips=' + str(ips))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if lastConnectionTimeEnd:
-			url_params.append('lastConnectionTimeEnd=' + lastConnectionTimeEnd)
+			url_params.append('lastConnectionTimeEnd=' + str(lastConnectionTimeEnd))
 		if lastConnectionTimeStart:
-			url_params.append('lastConnectionTimeStart=' + lastConnectionTimeStart)
+			url_params.append('lastConnectionTimeStart=' + str(lastConnectionTimeStart))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if os:
-			url_params.append('os=' + os)
+			url_params.append('os=' + str(os))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if policies:
-			url_params.append('policies=' + policies)
+			url_params.append('policies=' + str(policies))
 		if processHash:
-			url_params.append('processHash=' + processHash)
+			url_params.append('processHash=' + str(processHash))
 		if processes:
-			url_params.append('processes=' + processes)
+			url_params.append('processes=' + str(processes))
 		if product:
-			url_params.append('product=' + product)
+			url_params.append('product=' + str(product))
 		if products:
-			url_params.append('products=' + products)
+			url_params.append('products=' + str(products))
 		if reputation:
-			url_params.append('reputation=' + reputation)
+			url_params.append('reputation=' + str(reputation))
 		if rule:
-			url_params.append('rule=' + rule)
+			url_params.append('rule=' + str(rule))
 		if rulePolicy:
-			url_params.append('rulePolicy=' + rulePolicy)
+			url_params.append('rulePolicy=' + str(rulePolicy))
 		if seen:
-			url_params.append('seen=' + seen)
+			url_params.append('seen=' + str(seen))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		if vendor:
-			url_params.append('vendor=' + vendor)
+			url_params.append('vendor=' + str(vendor))
 		if vendors:
-			url_params.append('vendors=' + vendors)
+			url_params.append('vendors=' + str(vendors))
 		if version:
-			url_params.append('version=' + version)
+			url_params.append('version=' + str(version))
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + str(versions))
 		if vulnerabilities:
-			url_params.append('vulnerabilities=' + vulnerabilities)
+			url_params.append('vulnerabilities=' + str(vulnerabilities))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -507,21 +701,21 @@ class CommunicationControl:
 		url = '/management-rest/comm-control/resolve-applications'
 		url_params = []
 		if applyNested:
-			url_params.append('applyNested=' + applyNested)
+			url_params.append('applyNested=' + str(applyNested))
 		if comment:
-			url_params.append('comment=' + comment)
+			url_params.append('comment=' + str(comment))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if products:
-			url_params.append('products=' + products)
+			url_params.append('products=' + str(products))
 		if resolve:
-			url_params.append('resolve=' + resolve)
+			url_params.append('resolve=' + str(resolve))
 		if signed:
-			url_params.append('signed=' + signed)
+			url_params.append('signed=' + str(signed))
 		if vendors:
-			url_params.append('vendors=' + vendors)
+			url_params.append('vendors=' + str(vendors))
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + str(versions))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -544,11 +738,11 @@ class CommunicationControl:
 		url = '/management-rest/comm-control/set-policy-mode'
 		url_params = []
 		if mode:
-			url_params.append('mode=' + mode)
+			url_params.append('mode=' + str(mode))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if policyNames:
-			url_params.append('policyNames=' + policyNames)
+			url_params.append('policyNames=' + str(policyNames))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -576,21 +770,21 @@ class CommunicationControl:
 		url = '/management-rest/comm-control/set-policy-permission'
 		url_params = []
 		if applyNested:
-			url_params.append('applyNested=' + applyNested)
+			url_params.append('applyNested=' + str(applyNested))
 		if decision:
-			url_params.append('decision=' + decision)
+			url_params.append('decision=' + str(decision))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if policies:
-			url_params.append('policies=' + policies)
+			url_params.append('policies=' + str(policies))
 		if products:
-			url_params.append('products=' + products)
+			url_params.append('products=' + str(products))
 		if signed:
-			url_params.append('signed=' + signed)
+			url_params.append('signed=' + str(signed))
 		if vendors:
-			url_params.append('vendors=' + vendors)
+			url_params.append('vendors=' + str(vendors))
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + str(versions))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -614,25 +808,26 @@ class CommunicationControl:
 		url = '/management-rest/comm-control/set-policy-rule-state'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if policyName:
-			url_params.append('policyName=' + policyName)
+			url_params.append('policyName=' + str(policyName))
 		if ruleName:
-			url_params.append('ruleName=' + ruleName)
+			url_params.append('ruleName=' + str(ruleName))
 		if state:
-			url_params.append('state=' + state)
+			url_params.append('state=' + str(state))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
 class Events:
 
-	def insert_events(self, actions :dict = None, archived :bool = None, classifications :dict = None, collectorGroups :dict = None, destinations :dict = None, device :str = None, deviceControl :bool = None, deviceIps :dict = None, eventIds :dict = None, eventType :dict = None, expired :bool = None, fileHash :str = None, firstSeen :str = None, firstSeenFrom :str = None, firstSeenTo :str = None, handled :bool = None, itemsPerPage :int = None, lastSeen :str = None, lastSeenFrom :str = None, lastSeenTo :str = None, loggedUser :str = None, macAddresses :dict = None, muted :bool = None, operatingSystems :dict = None, organization :str = None, pageNumber :int = None, paths :dict = None, process :str = None, rule :str = None, seen :bool = None, severities :dict = None, signed :bool = None, sorting :str = None, strictMode :bool = None, archive: bool = None, classification: str = None, comment: str = None, familyName: str = None, forceUnmute: bool = None, handle: bool = None, malwareType: str = None, mute: bool = None, muteDuration: str = None, read: bool = None, threatName: str = None) -> tuple[bool, None]:
+	def insert_events(self, actions :dict = None, applicationControl :bool = None, archived :bool = None, classifications :dict = None, collectorGroups :dict = None, destinations :dict = None, device :str = None, deviceControl :bool = None, deviceIps :dict = None, eventIds :dict = None, eventType :dict = None, expired :bool = None, fileHash :str = None, firstSeen :str = None, firstSeenFrom :str = None, firstSeenTo :str = None, handled :bool = None, itemsPerPage :int = None, lastSeen :str = None, lastSeenFrom :str = None, lastSeenTo :str = None, loggedUser :str = None, macAddresses :dict = None, muted :bool = None, operatingSystems :dict = None, organization :str = None, pageNumber :int = None, paths :dict = None, process :str = None, rule :str = None, seen :bool = None, severities :dict = None, signed :bool = None, sorting :str = None, strictMode :bool = None, archive: bool = None, classification: str = None, comment: str = None, familyName: str = None, forceUnmute: bool = None, handle: bool = None, malwareType: str = None, mute: bool = None, muteDuration: str = None, read: bool = None, threatName: str = None) -> tuple[bool, None]:
 
 		'''
 		class Events
 		Description: This API call updates the read/unread, handled/unhandled or archived/unarchived state of an event. The output of this call is a message indicating whether the update succeeded or failed.
 
 		:param actions: Specifies the action of the event. 
+		:param applicationControl: A true/false parameter indicating whether to include only application control events. 
 		:param archived: A true/false parameter indicating whether to include only archived events. 
 		:param classifications: Specifies the classification of the event. 
 		:param collectorGroups: Specifies the collector groups whose collector reported the events. 
@@ -687,73 +882,75 @@ class Events:
 		url = '/management-rest/events'
 		url_params = []
 		if actions:
-			url_params.append('actions=' + actions)
+			url_params.append('actions=' + str(actions))
+		if applicationControl:
+			url_params.append('applicationControl=' + str(applicationControl))
 		if archived:
-			url_params.append('archived=' + archived)
+			url_params.append('archived=' + str(archived))
 		if classifications:
-			url_params.append('classifications=' + classifications)
+			url_params.append('classifications=' + str(classifications))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
 		if destinations:
-			url_params.append('destinations=' + destinations)
+			url_params.append('destinations=' + str(destinations))
 		if device:
-			url_params.append('device=' + device)
+			url_params.append('device=' + str(device))
 		if deviceControl:
-			url_params.append('deviceControl=' + deviceControl)
+			url_params.append('deviceControl=' + str(deviceControl))
 		if deviceIps:
-			url_params.append('deviceIps=' + deviceIps)
+			url_params.append('deviceIps=' + str(deviceIps))
 		if eventIds:
-			url_params.append('eventIds=' + eventIds)
+			url_params.append('eventIds=' + str(eventIds))
 		if eventType:
-			url_params.append('eventType=' + eventType)
+			url_params.append('eventType=' + str(eventType))
 		if expired:
-			url_params.append('expired=' + expired)
+			url_params.append('expired=' + str(expired))
 		if fileHash:
-			url_params.append('fileHash=' + fileHash)
+			url_params.append('fileHash=' + str(fileHash))
 		if firstSeen:
-			url_params.append('firstSeen=' + firstSeen)
+			url_params.append('firstSeen=' + str(firstSeen))
 		if firstSeenFrom:
-			url_params.append('firstSeenFrom=' + firstSeenFrom)
+			url_params.append('firstSeenFrom=' + str(firstSeenFrom))
 		if firstSeenTo:
-			url_params.append('firstSeenTo=' + firstSeenTo)
+			url_params.append('firstSeenTo=' + str(firstSeenTo))
 		if handled:
-			url_params.append('handled=' + handled)
+			url_params.append('handled=' + str(handled))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if lastSeen:
-			url_params.append('lastSeen=' + lastSeen)
+			url_params.append('lastSeen=' + str(lastSeen))
 		if lastSeenFrom:
-			url_params.append('lastSeenFrom=' + lastSeenFrom)
+			url_params.append('lastSeenFrom=' + str(lastSeenFrom))
 		if lastSeenTo:
-			url_params.append('lastSeenTo=' + lastSeenTo)
+			url_params.append('lastSeenTo=' + str(lastSeenTo))
 		if loggedUser:
-			url_params.append('loggedUser=' + loggedUser)
+			url_params.append('loggedUser=' + str(loggedUser))
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + str(macAddresses))
 		if muted:
-			url_params.append('muted=' + muted)
+			url_params.append('muted=' + str(muted))
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + str(operatingSystems))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if paths:
-			url_params.append('paths=' + paths)
+			url_params.append('paths=' + str(paths))
 		if process:
-			url_params.append('process=' + process)
+			url_params.append('process=' + str(process))
 		if rule:
-			url_params.append('rule=' + rule)
+			url_params.append('rule=' + str(rule))
 		if seen:
-			url_params.append('seen=' + seen)
+			url_params.append('seen=' + str(seen))
 		if severities:
-			url_params.append('severities=' + severities)
+			url_params.append('severities=' + str(severities))
 		if signed:
-			url_params.append('signed=' + signed)
+			url_params.append('signed=' + str(signed))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		url += '?' + '&'.join(url_params)
 		updateEventsRequest = {
 			'archive': archive,
@@ -770,13 +967,14 @@ class Events:
 		}
 		return fortiedr_connection.insert(url, updateEventsRequest)
 
-	def delete_events(self, actions :dict = None, archived :bool = None, classifications :dict = None, collectorGroups :dict = None, deleteAll :bool = None, destinations :dict = None, device :str = None, deviceControl :bool = None, deviceIps :dict = None, eventIds :dict = None, eventType :dict = None, expired :bool = None, fileHash :str = None, firstSeen :str = None, firstSeenFrom :str = None, firstSeenTo :str = None, handled :bool = None, itemsPerPage :int = None, lastSeen :str = None, lastSeenFrom :str = None, lastSeenTo :str = None, loggedUser :str = None, macAddresses :dict = None, muted :bool = None, operatingSystems :dict = None, organization :str = None, pageNumber :int = None, paths :dict = None, process :str = None, rule :str = None, seen :bool = None, severities :dict = None, signed :bool = None, sorting :str = None, strictMode :bool = None) -> tuple[bool, None]:
+	def delete_events(self, actions :dict = None, applicationControl :bool = None, archived :bool = None, classifications :dict = None, collectorGroups :dict = None, deleteAll :bool = None, destinations :dict = None, device :str = None, deviceControl :bool = None, deviceIps :dict = None, eventIds :dict = None, eventType :dict = None, expired :bool = None, fileHash :str = None, firstSeen :str = None, firstSeenFrom :str = None, firstSeenTo :str = None, handled :bool = None, itemsPerPage :int = None, lastSeen :str = None, lastSeenFrom :str = None, lastSeenTo :str = None, loggedUser :str = None, macAddresses :dict = None, muted :bool = None, operatingSystems :dict = None, organization :str = None, pageNumber :int = None, paths :dict = None, process :str = None, rule :str = None, seen :bool = None, severities :dict = None, signed :bool = None, sorting :str = None, strictMode :bool = None) -> tuple[bool, None]:
 
 		'''
 		class Events
 		Description: This API call updates the read/unread, handled/unhandled or archived/unarchived state of an event. The output of this call is a message indicating whether the update succeeded or failed.
 
 		:param actions: Specifies the action of the event. 
+		:param applicationControl: A true/false parameter indicating whether to include only application control events. 
 		:param archived: A true/false parameter indicating whether to include only archived events. 
 		:param classifications: Specifies the classification of the event. 
 		:param collectorGroups: Specifies the collector groups whose collector reported the events. 
@@ -820,86 +1018,89 @@ class Events:
 		url = '/management-rest/events'
 		url_params = []
 		if actions:
-			url_params.append('actions=' + actions)
+			url_params.append('actions=' + str(actions))
+		if applicationControl:
+			url_params.append('applicationControl=' + str(applicationControl))
 		if archived:
-			url_params.append('archived=' + archived)
+			url_params.append('archived=' + str(archived))
 		if classifications:
-			url_params.append('classifications=' + classifications)
+			url_params.append('classifications=' + str(classifications))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
 		if deleteAll:
-			url_params.append('deleteAll=' + deleteAll)
+			url_params.append('deleteAll=' + str(deleteAll))
 		if destinations:
-			url_params.append('destinations=' + destinations)
+			url_params.append('destinations=' + str(destinations))
 		if device:
-			url_params.append('device=' + device)
+			url_params.append('device=' + str(device))
 		if deviceControl:
-			url_params.append('deviceControl=' + deviceControl)
+			url_params.append('deviceControl=' + str(deviceControl))
 		if deviceIps:
-			url_params.append('deviceIps=' + deviceIps)
+			url_params.append('deviceIps=' + str(deviceIps))
 		if eventIds:
-			url_params.append('eventIds=' + eventIds)
+			url_params.append('eventIds=' + str(eventIds))
 		if eventType:
-			url_params.append('eventType=' + eventType)
+			url_params.append('eventType=' + str(eventType))
 		if expired:
-			url_params.append('expired=' + expired)
+			url_params.append('expired=' + str(expired))
 		if fileHash:
-			url_params.append('fileHash=' + fileHash)
+			url_params.append('fileHash=' + str(fileHash))
 		if firstSeen:
-			url_params.append('firstSeen=' + firstSeen)
+			url_params.append('firstSeen=' + str(firstSeen))
 		if firstSeenFrom:
-			url_params.append('firstSeenFrom=' + firstSeenFrom)
+			url_params.append('firstSeenFrom=' + str(firstSeenFrom))
 		if firstSeenTo:
-			url_params.append('firstSeenTo=' + firstSeenTo)
+			url_params.append('firstSeenTo=' + str(firstSeenTo))
 		if handled:
-			url_params.append('handled=' + handled)
+			url_params.append('handled=' + str(handled))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if lastSeen:
-			url_params.append('lastSeen=' + lastSeen)
+			url_params.append('lastSeen=' + str(lastSeen))
 		if lastSeenFrom:
-			url_params.append('lastSeenFrom=' + lastSeenFrom)
+			url_params.append('lastSeenFrom=' + str(lastSeenFrom))
 		if lastSeenTo:
-			url_params.append('lastSeenTo=' + lastSeenTo)
+			url_params.append('lastSeenTo=' + str(lastSeenTo))
 		if loggedUser:
-			url_params.append('loggedUser=' + loggedUser)
+			url_params.append('loggedUser=' + str(loggedUser))
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + str(macAddresses))
 		if muted:
-			url_params.append('muted=' + muted)
+			url_params.append('muted=' + str(muted))
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + str(operatingSystems))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if paths:
-			url_params.append('paths=' + paths)
+			url_params.append('paths=' + str(paths))
 		if process:
-			url_params.append('process=' + process)
+			url_params.append('process=' + str(process))
 		if rule:
-			url_params.append('rule=' + rule)
+			url_params.append('rule=' + str(rule))
 		if seen:
-			url_params.append('seen=' + seen)
+			url_params.append('seen=' + str(seen))
 		if severities:
-			url_params.append('severities=' + severities)
+			url_params.append('severities=' + str(severities))
 		if signed:
-			url_params.append('signed=' + signed)
+			url_params.append('signed=' + str(signed))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
 
-	def count_events(self, actions :dict = None, archived :bool = None, classifications :dict = None, collectorGroups :dict = None, destinations :dict = None, device :str = None, deviceControl :bool = None, deviceIps :dict = None, eventIds :dict = None, eventType :dict = None, expired :bool = None, fileHash :str = None, firstSeen :str = None, firstSeenFrom :str = None, firstSeenTo :str = None, handled :bool = None, itemsPerPage :int = None, lastSeen :str = None, lastSeenFrom :str = None, lastSeenTo :str = None, loggedUser :str = None, macAddresses :dict = None, muted :bool = None, operatingSystems :dict = None, organization :str = None, pageNumber :int = None, paths :dict = None, process :str = None, rule :str = None, seen :bool = None, severities :dict = None, signed :bool = None, sorting :str = None, strictMode :bool = None) -> tuple[bool, int]:
+	def count_events(self, actions :dict = None, applicationControl :bool = None, archived :bool = None, classifications :dict = None, collectorGroups :dict = None, destinations :dict = None, device :str = None, deviceControl :bool = None, deviceIps :dict = None, eventIds :dict = None, eventType :dict = None, expired :bool = None, fileHash :str = None, firstSeen :str = None, firstSeenFrom :str = None, firstSeenTo :str = None, handled :bool = None, itemsPerPage :int = None, lastSeen :str = None, lastSeenFrom :str = None, lastSeenTo :str = None, loggedUser :str = None, macAddresses :dict = None, muted :bool = None, operatingSystems :dict = None, organization :str = None, pageNumber :int = None, paths :dict = None, process :str = None, rule :str = None, seen :bool = None, severities :dict = None, signed :bool = None, sorting :str = None, strictMode :bool = None) -> tuple[bool, int]:
 
 		'''
 		class Events
 		Description: Count Events.
 
 		:param actions: Specifies the action of the event. 
+		:param applicationControl: A true/false parameter indicating whether to include only application control events. 
 		:param archived: A true/false parameter indicating whether to include only archived events. 
 		:param classifications: Specifies the classification of the event. 
 		:param collectorGroups: Specifies the collector groups whose collector reported the events. 
@@ -942,73 +1143,75 @@ class Events:
 		url = '/management-rest/events/count-events'
 		url_params = []
 		if actions:
-			url_params.append('actions=' + actions)
+			url_params.append('actions=' + str(actions))
+		if applicationControl:
+			url_params.append('applicationControl=' + str(applicationControl))
 		if archived:
-			url_params.append('archived=' + archived)
+			url_params.append('archived=' + str(archived))
 		if classifications:
-			url_params.append('classifications=' + classifications)
+			url_params.append('classifications=' + str(classifications))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
 		if destinations:
-			url_params.append('destinations=' + destinations)
+			url_params.append('destinations=' + str(destinations))
 		if device:
-			url_params.append('device=' + device)
+			url_params.append('device=' + str(device))
 		if deviceControl:
-			url_params.append('deviceControl=' + deviceControl)
+			url_params.append('deviceControl=' + str(deviceControl))
 		if deviceIps:
-			url_params.append('deviceIps=' + deviceIps)
+			url_params.append('deviceIps=' + str(deviceIps))
 		if eventIds:
-			url_params.append('eventIds=' + eventIds)
+			url_params.append('eventIds=' + str(eventIds))
 		if eventType:
-			url_params.append('eventType=' + eventType)
+			url_params.append('eventType=' + str(eventType))
 		if expired:
-			url_params.append('expired=' + expired)
+			url_params.append('expired=' + str(expired))
 		if fileHash:
-			url_params.append('fileHash=' + fileHash)
+			url_params.append('fileHash=' + str(fileHash))
 		if firstSeen:
-			url_params.append('firstSeen=' + firstSeen)
+			url_params.append('firstSeen=' + str(firstSeen))
 		if firstSeenFrom:
-			url_params.append('firstSeenFrom=' + firstSeenFrom)
+			url_params.append('firstSeenFrom=' + str(firstSeenFrom))
 		if firstSeenTo:
-			url_params.append('firstSeenTo=' + firstSeenTo)
+			url_params.append('firstSeenTo=' + str(firstSeenTo))
 		if handled:
-			url_params.append('handled=' + handled)
+			url_params.append('handled=' + str(handled))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if lastSeen:
-			url_params.append('lastSeen=' + lastSeen)
+			url_params.append('lastSeen=' + str(lastSeen))
 		if lastSeenFrom:
-			url_params.append('lastSeenFrom=' + lastSeenFrom)
+			url_params.append('lastSeenFrom=' + str(lastSeenFrom))
 		if lastSeenTo:
-			url_params.append('lastSeenTo=' + lastSeenTo)
+			url_params.append('lastSeenTo=' + str(lastSeenTo))
 		if loggedUser:
-			url_params.append('loggedUser=' + loggedUser)
+			url_params.append('loggedUser=' + str(loggedUser))
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + str(macAddresses))
 		if muted:
-			url_params.append('muted=' + muted)
+			url_params.append('muted=' + str(muted))
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + str(operatingSystems))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if paths:
-			url_params.append('paths=' + paths)
+			url_params.append('paths=' + str(paths))
 		if process:
-			url_params.append('process=' + process)
+			url_params.append('process=' + str(process))
 		if rule:
-			url_params.append('rule=' + rule)
+			url_params.append('rule=' + str(rule))
 		if seen:
-			url_params.append('seen=' + seen)
+			url_params.append('seen=' + str(seen))
 		if severities:
-			url_params.append('severities=' + severities)
+			url_params.append('severities=' + str(severities))
 		if signed:
-			url_params.append('signed=' + signed)
+			url_params.append('signed=' + str(signed))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -1045,29 +1248,29 @@ class Events:
 		url = '/management-rest/events/create-exception'
 		url_params = []
 		if allCollectorGroups:
-			url_params.append('allCollectorGroups=' + allCollectorGroups)
+			url_params.append('allCollectorGroups=' + str(allCollectorGroups))
 		if allDestinations:
-			url_params.append('allDestinations=' + allDestinations)
+			url_params.append('allDestinations=' + str(allDestinations))
 		if allOrganizations:
-			url_params.append('allOrganizations=' + allOrganizations)
+			url_params.append('allOrganizations=' + str(allOrganizations))
 		if allUsers:
-			url_params.append('allUsers=' + allUsers)
+			url_params.append('allUsers=' + str(allUsers))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
 		if comment:
-			url_params.append('comment=' + comment)
+			url_params.append('comment=' + str(comment))
 		if destinations:
-			url_params.append('destinations=' + destinations)
+			url_params.append('destinations=' + str(destinations))
 		if eventId:
-			url_params.append('eventId=' + eventId)
+			url_params.append('eventId=' + str(eventId))
 		if exceptionId:
-			url_params.append('exceptionId=' + exceptionId)
+			url_params.append('exceptionId=' + str(exceptionId))
 		if forceCreate:
-			url_params.append('forceCreate=' + forceCreate)
+			url_params.append('forceCreate=' + str(forceCreate))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if users:
-			url_params.append('users=' + users)
+			url_params.append('users=' + str(users))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.send(url)
 
@@ -1089,20 +1292,21 @@ class Events:
 		url = '/management-rest/events/export-raw-data-items-json'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if rawItemIds:
-			url_params.append('rawItemIds=' + rawItemIds)
+			url_params.append('rawItemIds=' + str(rawItemIds))
 		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.download(url, file_format='json')
+		return fortiedr_connection.download(url)
 
 
-	def list_events(self, actions :dict = None, archived :bool = None, classifications :dict = None, collectorGroups :dict = None, destinations :dict = None, device :str = None, deviceControl :bool = None, deviceIps :dict = None, eventIds :dict = None, eventType :dict = None, expired :bool = None, fileHash :str = None, firstSeen :str = None, firstSeenFrom :str = None, firstSeenTo :str = None, handled :bool = None, itemsPerPage :int = None, lastSeen :str = None, lastSeenFrom :str = None, lastSeenTo :str = None, loggedUser :str = None, macAddresses :dict = None, muted :bool = None, operatingSystems :dict = None, organization :str = None, pageNumber :int = None, paths :dict = None, process :str = None, rule :str = None, seen :bool = None, severities :dict = None, signed :bool = None, sorting :str = None, strictMode :bool = None) -> tuple[bool, dict]:
+	def list_events(self, actions :dict = None, applicationControl :bool = None, archived :bool = None, classifications :dict = None, collectorGroups :dict = None, destinations :dict = None, device :str = None, deviceControl :bool = None, deviceIps :dict = None, eventIds :dict = None, eventType :dict = None, expired :bool = None, fileHash :str = None, firstSeen :str = None, firstSeenFrom :str = None, firstSeenTo :str = None, handled :bool = None, itemsPerPage :int = None, lastSeen :str = None, lastSeenFrom :str = None, lastSeenTo :str = None, loggedUser :str = None, macAddresses :dict = None, muted :bool = None, operatingSystems :dict = None, organization :str = None, pageNumber :int = None, paths :dict = None, process :str = None, rule :str = None, seen :bool = None, severities :dict = None, signed :bool = None, sorting :str = None, strictMode :bool = None) -> tuple[bool, dict]:
 
 		'''
 		class Events
 		Description: List Events.
 
 		:param actions: Specifies the action of the event. 
+		:param applicationControl: A true/false parameter indicating whether to include only application control events. 
 		:param archived: A true/false parameter indicating whether to include only archived events. 
 		:param classifications: Specifies the classification of the event. 
 		:param collectorGroups: Specifies the collector groups whose collector reported the events. 
@@ -1145,73 +1349,75 @@ class Events:
 		url = '/management-rest/events/list-events'
 		url_params = []
 		if actions:
-			url_params.append('actions=' + actions)
+			url_params.append('actions=' + str(actions))
+		if applicationControl:
+			url_params.append('applicationControl=' + str(applicationControl))
 		if archived:
-			url_params.append('archived=' + archived)
+			url_params.append('archived=' + str(archived))
 		if classifications:
-			url_params.append('classifications=' + classifications)
+			url_params.append('classifications=' + str(classifications))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
 		if destinations:
-			url_params.append('destinations=' + destinations)
+			url_params.append('destinations=' + str(destinations))
 		if device:
-			url_params.append('device=' + device)
+			url_params.append('device=' + str(device))
 		if deviceControl:
-			url_params.append('deviceControl=' + deviceControl)
+			url_params.append('deviceControl=' + str(deviceControl))
 		if deviceIps:
-			url_params.append('deviceIps=' + deviceIps)
+			url_params.append('deviceIps=' + str(deviceIps))
 		if eventIds:
-			url_params.append('eventIds=' + eventIds)
+			url_params.append('eventIds=' + str(eventIds))
 		if eventType:
-			url_params.append('eventType=' + eventType)
+			url_params.append('eventType=' + str(eventType))
 		if expired:
-			url_params.append('expired=' + expired)
+			url_params.append('expired=' + str(expired))
 		if fileHash:
-			url_params.append('fileHash=' + fileHash)
+			url_params.append('fileHash=' + str(fileHash))
 		if firstSeen:
-			url_params.append('firstSeen=' + firstSeen)
+			url_params.append('firstSeen=' + str(firstSeen))
 		if firstSeenFrom:
-			url_params.append('firstSeenFrom=' + firstSeenFrom)
+			url_params.append('firstSeenFrom=' + str(firstSeenFrom))
 		if firstSeenTo:
-			url_params.append('firstSeenTo=' + firstSeenTo)
+			url_params.append('firstSeenTo=' + str(firstSeenTo))
 		if handled:
-			url_params.append('handled=' + handled)
+			url_params.append('handled=' + str(handled))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if lastSeen:
-			url_params.append('lastSeen=' + lastSeen)
+			url_params.append('lastSeen=' + str(lastSeen))
 		if lastSeenFrom:
-			url_params.append('lastSeenFrom=' + lastSeenFrom)
+			url_params.append('lastSeenFrom=' + str(lastSeenFrom))
 		if lastSeenTo:
-			url_params.append('lastSeenTo=' + lastSeenTo)
+			url_params.append('lastSeenTo=' + str(lastSeenTo))
 		if loggedUser:
-			url_params.append('loggedUser=' + loggedUser)
+			url_params.append('loggedUser=' + str(loggedUser))
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + str(macAddresses))
 		if muted:
-			url_params.append('muted=' + muted)
+			url_params.append('muted=' + str(muted))
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + str(operatingSystems))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if paths:
-			url_params.append('paths=' + paths)
+			url_params.append('paths=' + str(paths))
 		if process:
-			url_params.append('process=' + process)
+			url_params.append('process=' + str(process))
 		if rule:
-			url_params.append('rule=' + rule)
+			url_params.append('rule=' + str(rule))
 		if seen:
-			url_params.append('seen=' + seen)
+			url_params.append('seen=' + str(seen))
 		if severities:
-			url_params.append('severities=' + severities)
+			url_params.append('severities=' + str(severities))
 		if signed:
-			url_params.append('signed=' + signed)
+			url_params.append('signed=' + str(signed))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -1250,43 +1456,43 @@ class Events:
 		url = '/management-rest/events/list-raw-data-items'
 		url_params = []
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
 		if destinations:
-			url_params.append('destinations=' + destinations)
+			url_params.append('destinations=' + str(destinations))
 		if device:
-			url_params.append('device=' + device)
+			url_params.append('device=' + str(device))
 		if deviceIps:
-			url_params.append('deviceIps=' + deviceIps)
+			url_params.append('deviceIps=' + str(deviceIps))
 		if eventId:
-			url_params.append('eventId=' + eventId)
+			url_params.append('eventId=' + str(eventId))
 		if firstSeen:
-			url_params.append('firstSeen=' + firstSeen)
+			url_params.append('firstSeen=' + str(firstSeen))
 		if firstSeenFrom:
-			url_params.append('firstSeenFrom=' + firstSeenFrom)
+			url_params.append('firstSeenFrom=' + str(firstSeenFrom))
 		if firstSeenTo:
-			url_params.append('firstSeenTo=' + firstSeenTo)
+			url_params.append('firstSeenTo=' + str(firstSeenTo))
 		if fullDataRequested:
-			url_params.append('fullDataRequested=' + fullDataRequested)
+			url_params.append('fullDataRequested=' + str(fullDataRequested))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if lastSeen:
-			url_params.append('lastSeen=' + lastSeen)
+			url_params.append('lastSeen=' + str(lastSeen))
 		if lastSeenFrom:
-			url_params.append('lastSeenFrom=' + lastSeenFrom)
+			url_params.append('lastSeenFrom=' + str(lastSeenFrom))
 		if lastSeenTo:
-			url_params.append('lastSeenTo=' + lastSeenTo)
+			url_params.append('lastSeenTo=' + str(lastSeenTo))
 		if loggedUser:
-			url_params.append('loggedUser=' + loggedUser)
+			url_params.append('loggedUser=' + str(loggedUser))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if rawEventIds:
-			url_params.append('rawEventIds=' + rawEventIds)
+			url_params.append('rawEventIds=' + str(rawEventIds))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -1310,9 +1516,9 @@ class Exceptions:
 		url = '/management-rest/exceptions/create-or-edit-exception'
 		url_params = []
 		if confirmEdit:
-			url_params.append('confirmEdit=' + confirmEdit)
+			url_params.append('confirmEdit=' + str(confirmEdit))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.send(url)
 
@@ -1347,35 +1553,35 @@ class Exceptions:
 		url = '/management-rest/exceptions/delete'
 		url_params = []
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
 		if comment:
-			url_params.append('comment=' + comment)
+			url_params.append('comment=' + str(comment))
 		if createdAfter:
-			url_params.append('createdAfter=' + createdAfter)
+			url_params.append('createdAfter=' + str(createdAfter))
 		if createdBefore:
-			url_params.append('createdBefore=' + createdBefore)
+			url_params.append('createdBefore=' + str(createdBefore))
 		if deleteAll:
-			url_params.append('deleteAll=' + deleteAll)
+			url_params.append('deleteAll=' + str(deleteAll))
 		if destination:
-			url_params.append('destination=' + destination)
+			url_params.append('destination=' + str(destination))
 		if exceptionId:
-			url_params.append('exceptionId=' + exceptionId)
+			url_params.append('exceptionId=' + str(exceptionId))
 		if exceptionIds:
-			url_params.append('exceptionIds=' + exceptionIds)
+			url_params.append('exceptionIds=' + str(exceptionIds))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if path:
-			url_params.append('path=' + path)
+			url_params.append('path=' + str(path))
 		if process:
-			url_params.append('process=' + process)
+			url_params.append('process=' + str(process))
 		if rules:
-			url_params.append('rules=' + rules)
+			url_params.append('rules=' + str(rules))
 		if updatedAfter:
-			url_params.append('updatedAfter=' + updatedAfter)
+			url_params.append('updatedAfter=' + str(updatedAfter))
 		if updatedBefore:
-			url_params.append('updatedBefore=' + updatedBefore)
+			url_params.append('updatedBefore=' + str(updatedBefore))
 		if user:
-			url_params.append('user=' + user)
+			url_params.append('user=' + str(user))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -1397,9 +1603,9 @@ class Exceptions:
 		url = '/management-rest/exceptions/get-event-exceptions'
 		url_params = []
 		if eventId:
-			url_params.append('eventId=' + eventId)
+			url_params.append('eventId=' + str(eventId))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -1432,31 +1638,31 @@ class Exceptions:
 		url = '/management-rest/exceptions/list-exceptions'
 		url_params = []
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
 		if comment:
-			url_params.append('comment=' + comment)
+			url_params.append('comment=' + str(comment))
 		if createdAfter:
-			url_params.append('createdAfter=' + createdAfter)
+			url_params.append('createdAfter=' + str(createdAfter))
 		if createdBefore:
-			url_params.append('createdBefore=' + createdBefore)
+			url_params.append('createdBefore=' + str(createdBefore))
 		if destination:
-			url_params.append('destination=' + destination)
+			url_params.append('destination=' + str(destination))
 		if exceptionIds:
-			url_params.append('exceptionIds=' + exceptionIds)
+			url_params.append('exceptionIds=' + str(exceptionIds))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if path:
-			url_params.append('path=' + path)
+			url_params.append('path=' + str(path))
 		if process:
-			url_params.append('process=' + process)
+			url_params.append('process=' + str(process))
 		if rules:
-			url_params.append('rules=' + rules)
+			url_params.append('rules=' + str(rules))
 		if updatedAfter:
-			url_params.append('updatedAfter=' + updatedAfter)
+			url_params.append('updatedAfter=' + str(updatedAfter))
 		if updatedBefore:
-			url_params.append('updatedBefore=' + updatedBefore)
+			url_params.append('updatedBefore=' + str(updatedBefore))
 		if user:
-			url_params.append('user=' + user)
+			url_params.append('user=' + str(user))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -1485,21 +1691,21 @@ class Forensics:
 		url = '/management-rest/forensics/get-event-file'
 		url_params = []
 		if disk:
-			url_params.append('disk=' + disk)
+			url_params.append('disk=' + str(disk))
 		if endRange:
-			url_params.append('endRange=' + endRange)
+			url_params.append('endRange=' + str(endRange))
 		if filePaths:
-			url_params.append('filePaths=' + filePaths)
+			url_params.append('filePaths=' + str(filePaths))
 		if memory:
-			url_params.append('memory=' + memory)
+			url_params.append('memory=' + str(memory))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if processId:
-			url_params.append('processId=' + processId)
+			url_params.append('processId=' + str(processId))
 		if rawEventId:
-			url_params.append('rawEventId=' + rawEventId)
+			url_params.append('rawEventId=' + str(rawEventId))
 		if startRange:
-			url_params.append('startRange=' + startRange)
+			url_params.append('startRange=' + str(startRange))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.download(url)
 
@@ -1523,13 +1729,13 @@ class Forensics:
 		url = '/management-rest/forensics/get-file'
 		url_params = []
 		if device:
-			url_params.append('device=' + device)
+			url_params.append('device=' + str(device))
 		if filePaths:
-			url_params.append('filePaths=' + filePaths)
+			url_params.append('filePaths=' + str(filePaths))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if type:
-			url_params.append('type=' + type)
+			url_params.append('type=' + str(type))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.download(url)
 
@@ -1561,29 +1767,29 @@ class Forensics:
 		url = '/management-rest/forensics/remediate-device'
 		url_params = []
 		if device:
-			url_params.append('device=' + device)
+			url_params.append('device=' + str(device))
 		if deviceId:
-			url_params.append('deviceId=' + deviceId)
+			url_params.append('deviceId=' + str(deviceId))
 		if executablesToRemove:
-			url_params.append('executablesToRemove=' + executablesToRemove)
+			url_params.append('executablesToRemove=' + str(executablesToRemove))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if persistenceDataAction:
-			url_params.append('persistenceDataAction=' + persistenceDataAction)
+			url_params.append('persistenceDataAction=' + str(persistenceDataAction))
 		if persistenceDataNewContent:
-			url_params.append('persistenceDataNewContent=' + persistenceDataNewContent)
+			url_params.append('persistenceDataNewContent=' + str(persistenceDataNewContent))
 		if persistenceDataPath:
-			url_params.append('persistenceDataPath=' + persistenceDataPath)
+			url_params.append('persistenceDataPath=' + str(persistenceDataPath))
 		if persistenceDataValueName:
-			url_params.append('persistenceDataValueName=' + persistenceDataValueName)
+			url_params.append('persistenceDataValueName=' + str(persistenceDataValueName))
 		if persistenceDataValueNewType:
-			url_params.append('persistenceDataValueNewType=' + persistenceDataValueNewType)
+			url_params.append('persistenceDataValueNewType=' + str(persistenceDataValueNewType))
 		if processName:
-			url_params.append('processName=' + processName)
+			url_params.append('processName=' + str(processName))
 		if terminatedProcessId:
-			url_params.append('terminatedProcessId=' + terminatedProcessId)
+			url_params.append('terminatedProcessId=' + str(terminatedProcessId))
 		if threadId:
-			url_params.append('threadId=' + threadId)
+			url_params.append('threadId=' + str(threadId))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -1606,9 +1812,9 @@ class HashSearch:
 		url = '/management-rest/hash/search'
 		url_params = []
 		if fileHashes:
-			url_params.append('fileHashes=' + fileHashes)
+			url_params.append('fileHashes=' + str(fileHashes))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -1663,9 +1869,9 @@ class IPsets:
 		url = '/management-rest/ip-sets/delete-ip-set'
 		url_params = []
 		if ipSets:
-			url_params.append('ipSets=' + ipSets)
+			url_params.append('ipSets=' + str(ipSets))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -1687,9 +1893,9 @@ class IPsets:
 		url = '/management-rest/ip-sets/list-ip-sets'
 		url_params = []
 		if ip:
-			url_params.append('ip=' + ip)
+			url_params.append('ip=' + str(ip))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -1715,7 +1921,7 @@ class IPsets:
 		url = '/management-rest/ip-sets/update-ip-set'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -1737,7 +1943,7 @@ class Integrations:
 		url = '/management-rest/integrations/connectors-metadata'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -1805,11 +2011,11 @@ class Integrations:
 		url = '/management-rest/integrations/delete-connector'
 		url_params = []
 		if connectorName:
-			url_params.append('connectorName=' + connectorName)
+			url_params.append('connectorName=' + str(connectorName))
 		if connectorType:
-			url_params.append('connectorType=' + connectorType)
+			url_params.append('connectorType=' + str(connectorType))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -1831,9 +2037,9 @@ class Integrations:
 		url = '/management-rest/integrations/list-connectors'
 		url_params = []
 		if onlyValidConnectors:
-			url_params.append('onlyValidConnectors=' + onlyValidConnectors)
+			url_params.append('onlyValidConnectors=' + str(onlyValidConnectors))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -1856,11 +2062,11 @@ class Integrations:
 		url = '/management-rest/integrations/test-connector'
 		url_params = []
 		if connectorName:
-			url_params.append('connectorName=' + connectorName)
+			url_params.append('connectorName=' + str(connectorName))
 		if connectorType:
-			url_params.append('connectorType=' + connectorType)
+			url_params.append('connectorType=' + str(connectorType))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -1928,9 +2134,9 @@ class IoT:
 		url = '/management-rest/iot/create-iot-group'
 		url_params = []
 		if name:
-			url_params.append('name=' + name)
+			url_params.append('name=' + str(name))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.send(url)
 
@@ -1970,45 +2176,45 @@ class IoT:
 		url = '/management-rest/iot/delete-devices'
 		url_params = []
 		if categories:
-			url_params.append('categories=' + categories)
+			url_params.append('categories=' + str(categories))
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + str(devices))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + str(devicesIds))
 		if firstSeenEnd:
-			url_params.append('firstSeenEnd=' + firstSeenEnd)
+			url_params.append('firstSeenEnd=' + str(firstSeenEnd))
 		if firstSeenStart:
-			url_params.append('firstSeenStart=' + firstSeenStart)
+			url_params.append('firstSeenStart=' + str(firstSeenStart))
 		if internalIps:
-			url_params.append('internalIps=' + internalIps)
+			url_params.append('internalIps=' + str(internalIps))
 		if iotGroups:
-			url_params.append('iotGroups=' + iotGroups)
+			url_params.append('iotGroups=' + str(iotGroups))
 		if iotGroupsIds:
-			url_params.append('iotGroupsIds=' + iotGroupsIds)
+			url_params.append('iotGroupsIds=' + str(iotGroupsIds))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if lastSeenEnd:
-			url_params.append('lastSeenEnd=' + lastSeenEnd)
+			url_params.append('lastSeenEnd=' + str(lastSeenEnd))
 		if lastSeenStart:
-			url_params.append('lastSeenStart=' + lastSeenStart)
+			url_params.append('lastSeenStart=' + str(lastSeenStart))
 		if locations:
-			url_params.append('locations=' + locations)
+			url_params.append('locations=' + str(locations))
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + str(macAddresses))
 		if models:
-			url_params.append('models=' + models)
+			url_params.append('models=' + str(models))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if showExpired:
-			url_params.append('showExpired=' + showExpired)
+			url_params.append('showExpired=' + str(showExpired))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		if vendors:
-			url_params.append('vendors=' + vendors)
+			url_params.append('vendors=' + str(vendors))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -2030,9 +2236,9 @@ class IoT:
 		url = '/management-rest/iot/export-iot-json'
 		url_params = []
 		if iotDeviceIds:
-			url_params.append('iotDeviceIds=' + iotDeviceIds)
+			url_params.append('iotDeviceIds=' + str(iotDeviceIds))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -2072,45 +2278,45 @@ class IoT:
 		url = '/management-rest/iot/list-iot-devices'
 		url_params = []
 		if categories:
-			url_params.append('categories=' + categories)
+			url_params.append('categories=' + str(categories))
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + str(devices))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + str(devicesIds))
 		if firstSeenEnd:
-			url_params.append('firstSeenEnd=' + firstSeenEnd)
+			url_params.append('firstSeenEnd=' + str(firstSeenEnd))
 		if firstSeenStart:
-			url_params.append('firstSeenStart=' + firstSeenStart)
+			url_params.append('firstSeenStart=' + str(firstSeenStart))
 		if internalIps:
-			url_params.append('internalIps=' + internalIps)
+			url_params.append('internalIps=' + str(internalIps))
 		if iotGroups:
-			url_params.append('iotGroups=' + iotGroups)
+			url_params.append('iotGroups=' + str(iotGroups))
 		if iotGroupsIds:
-			url_params.append('iotGroupsIds=' + iotGroupsIds)
+			url_params.append('iotGroupsIds=' + str(iotGroupsIds))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if lastSeenEnd:
-			url_params.append('lastSeenEnd=' + lastSeenEnd)
+			url_params.append('lastSeenEnd=' + str(lastSeenEnd))
 		if lastSeenStart:
-			url_params.append('lastSeenStart=' + lastSeenStart)
+			url_params.append('lastSeenStart=' + str(lastSeenStart))
 		if locations:
-			url_params.append('locations=' + locations)
+			url_params.append('locations=' + str(locations))
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + str(macAddresses))
 		if models:
-			url_params.append('models=' + models)
+			url_params.append('models=' + str(models))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if showExpired:
-			url_params.append('showExpired=' + showExpired)
+			url_params.append('showExpired=' + str(showExpired))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		if vendors:
-			url_params.append('vendors=' + vendors)
+			url_params.append('vendors=' + str(vendors))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -2131,7 +2337,7 @@ class IoT:
 		url = '/management-rest/iot/list-iot-groups'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -2154,11 +2360,11 @@ class IoT:
 		url = '/management-rest/iot/move-iot-devices'
 		url_params = []
 		if iotDeviceIds:
-			url_params.append('iotDeviceIds=' + iotDeviceIds)
+			url_params.append('iotDeviceIds=' + str(iotDeviceIds))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if targetIotGroup:
-			url_params.append('targetIotGroup=' + targetIotGroup)
+			url_params.append('targetIotGroup=' + str(targetIotGroup))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2198,45 +2404,45 @@ class IoT:
 		url = '/management-rest/iot/rescan-iot-device-details'
 		url_params = []
 		if categories:
-			url_params.append('categories=' + categories)
+			url_params.append('categories=' + str(categories))
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + str(devices))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + str(devicesIds))
 		if firstSeenEnd:
-			url_params.append('firstSeenEnd=' + firstSeenEnd)
+			url_params.append('firstSeenEnd=' + str(firstSeenEnd))
 		if firstSeenStart:
-			url_params.append('firstSeenStart=' + firstSeenStart)
+			url_params.append('firstSeenStart=' + str(firstSeenStart))
 		if internalIps:
-			url_params.append('internalIps=' + internalIps)
+			url_params.append('internalIps=' + str(internalIps))
 		if iotGroups:
-			url_params.append('iotGroups=' + iotGroups)
+			url_params.append('iotGroups=' + str(iotGroups))
 		if iotGroupsIds:
-			url_params.append('iotGroupsIds=' + iotGroupsIds)
+			url_params.append('iotGroupsIds=' + str(iotGroupsIds))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if lastSeenEnd:
-			url_params.append('lastSeenEnd=' + lastSeenEnd)
+			url_params.append('lastSeenEnd=' + str(lastSeenEnd))
 		if lastSeenStart:
-			url_params.append('lastSeenStart=' + lastSeenStart)
+			url_params.append('lastSeenStart=' + str(lastSeenStart))
 		if locations:
-			url_params.append('locations=' + locations)
+			url_params.append('locations=' + str(locations))
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + str(macAddresses))
 		if models:
-			url_params.append('models=' + models)
+			url_params.append('models=' + str(models))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if showExpired:
-			url_params.append('showExpired=' + showExpired)
+			url_params.append('showExpired=' + str(showExpired))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		if vendors:
-			url_params.append('vendors=' + vendors)
+			url_params.append('vendors=' + str(vendors))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2315,7 +2521,7 @@ class Organizations:
 		url = '/management-rest/organizations/delete-organization'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -2337,9 +2543,9 @@ class Organizations:
 		url = '/management-rest/organizations/export-organization'
 		url_params = []
 		if destinationName:
-			url_params.append('destinationName=' + destinationName)
+			url_params.append('destinationName=' + str(destinationName))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.download(url)
 
@@ -2421,7 +2627,7 @@ class Organizations:
 		url = '/management-rest/organizations/transfer-collectors-stop'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.send(url)
 
@@ -2459,7 +2665,7 @@ class Organizations:
 		url = '/management-rest/organizations/update-organization'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2484,13 +2690,13 @@ class Playbookspolicies:
 		url = '/management-rest/playbooks-policies/assign-collector-group'
 		url_params = []
 		if collectorGroupNames:
-			url_params.append('collectorGroupNames=' + collectorGroupNames)
+			url_params.append('collectorGroupNames=' + str(collectorGroupNames))
 		if forceAssign:
-			url_params.append('forceAssign=' + forceAssign)
+			url_params.append('forceAssign=' + str(forceAssign))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if policyName:
-			url_params.append('policyName=' + policyName)
+			url_params.append('policyName=' + str(policyName))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2513,11 +2719,11 @@ class Playbookspolicies:
 		url = '/management-rest/playbooks-policies/clone'
 		url_params = []
 		if newPolicyName:
-			url_params.append('newPolicyName=' + newPolicyName)
+			url_params.append('newPolicyName=' + str(newPolicyName))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if sourcePolicyName:
-			url_params.append('sourcePolicyName=' + sourcePolicyName)
+			url_params.append('sourcePolicyName=' + str(sourcePolicyName))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.send(url)
 
@@ -2538,7 +2744,7 @@ class Playbookspolicies:
 		url = '/management-rest/playbooks-policies/list-policies'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -2563,7 +2769,7 @@ class Playbookspolicies:
 		url = '/management-rest/playbooks-policies/map-connectors-to-actions'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2588,7 +2794,7 @@ class Playbookspolicies:
 		url = '/management-rest/playbooks-policies/set-action-classification'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		setActionsClassificationRequest = {
 			'customActionsToClassificationMaps': customActionsToClassificationMaps,
@@ -2616,11 +2822,11 @@ class Playbookspolicies:
 		url = '/management-rest/playbooks-policies/set-mode'
 		url_params = []
 		if mode:
-			url_params.append('mode=' + mode)
+			url_params.append('mode=' + str(mode))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if policyName:
-			url_params.append('policyName=' + policyName)
+			url_params.append('policyName=' + str(policyName))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2645,13 +2851,13 @@ class Policies:
 		url = '/management-rest/policies/assign-collector-group'
 		url_params = []
 		if collectorsGroupName:
-			url_params.append('collectorsGroupName=' + collectorsGroupName)
+			url_params.append('collectorsGroupName=' + str(collectorsGroupName))
 		if forceAssign:
-			url_params.append('forceAssign=' + forceAssign)
+			url_params.append('forceAssign=' + str(forceAssign))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if policyName:
-			url_params.append('policyName=' + policyName)
+			url_params.append('policyName=' + str(policyName))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2674,11 +2880,11 @@ class Policies:
 		url = '/management-rest/policies/clone'
 		url_params = []
 		if newPolicyName:
-			url_params.append('newPolicyName=' + newPolicyName)
+			url_params.append('newPolicyName=' + str(newPolicyName))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if sourcePolicyName:
-			url_params.append('sourcePolicyName=' + sourcePolicyName)
+			url_params.append('sourcePolicyName=' + str(sourcePolicyName))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.send(url)
 
@@ -2699,9 +2905,48 @@ class Policies:
 		url = '/management-rest/policies/list-policies'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
+
+
+	def scan_files(self, applyRecursiveScan : bool, executableFilesOnly : bool, origin : str, scanBy : str, filePaths :dict = None, organization :str = None, scanSelection :dict = None) -> tuple[bool, None]:
+
+		'''
+		class Policies
+		Description: Scan Files.
+
+		:param applyRecursiveScan: Specifies if execution includes recursive scan. 
+		:param executableFilesOnly: Specifies if execution includes only files. 
+		:param filePaths: Specifies file path. 
+		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		:param origin: Specifies scan origin. 
+		:param scanBy: Specifies scan by choice. 
+		:param scanSelection: Specifies scan selection. 
+
+		return: 
+			Status of the request (True or False). 
+			This function does not return any data.
+
+		'''
+		url = '/management-rest/policies/scan-files'
+		url_params = []
+		if applyRecursiveScan:
+			url_params.append('applyRecursiveScan=' + str(applyRecursiveScan))
+		if executableFilesOnly:
+			url_params.append('executableFilesOnly=' + str(executableFilesOnly))
+		if filePaths:
+			url_params.append('filePaths=' + str(filePaths))
+		if organization:
+			url_params.append('organization=' + str(organization))
+		if origin:
+			url_params.append('origin=' + str(origin))
+		if scanBy:
+			url_params.append('scanBy=' + str(scanBy))
+		if scanSelection:
+			url_params.append('scanSelection=' + str(scanSelection))
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.send(url)
 
 
 	def set_mode(self, mode : str, policyName : str, organization :str = None) -> tuple[bool, None]:
@@ -2722,11 +2967,11 @@ class Policies:
 		url = '/management-rest/policies/set-mode'
 		url_params = []
 		if mode:
-			url_params.append('mode=' + mode)
+			url_params.append('mode=' + str(mode))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if policyName:
-			url_params.append('policyName=' + policyName)
+			url_params.append('policyName=' + str(policyName))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2750,13 +2995,13 @@ class Policies:
 		url = '/management-rest/policies/set-policy-rule-action'
 		url_params = []
 		if action:
-			url_params.append('action=' + action)
+			url_params.append('action=' + str(action))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if policyName:
-			url_params.append('policyName=' + policyName)
+			url_params.append('policyName=' + str(policyName))
 		if ruleName:
-			url_params.append('ruleName=' + ruleName)
+			url_params.append('ruleName=' + str(ruleName))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2780,13 +3025,13 @@ class Policies:
 		url = '/management-rest/policies/set-policy-rule-state'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if policyName:
-			url_params.append('policyName=' + policyName)
+			url_params.append('policyName=' + str(policyName))
 		if ruleName:
-			url_params.append('ruleName=' + ruleName)
+			url_params.append('ruleName=' + str(ruleName))
 		if state:
-			url_params.append('state=' + state)
+			url_params.append('state=' + str(state))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2809,9 +3054,9 @@ class SendableEntities:
 		url = '/management-rest/sendable-entities/set-mail-format'
 		url_params = []
 		if format:
-			url_params.append('format=' + format)
+			url_params.append('format=' + str(format))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2843,7 +3088,7 @@ class SendableEntities:
 		url = '/management-rest/sendable-entities/syslog'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		syslogRequest = {
 			'certificateBlob': certificateBlob,
@@ -2885,23 +3130,23 @@ class SystemEvents:
 		url = '/management-rest/system-events/list-system-events'
 		url_params = []
 		if componentNames:
-			url_params.append('componentNames=' + componentNames)
+			url_params.append('componentNames=' + str(componentNames))
 		if componentTypes:
-			url_params.append('componentTypes=' + componentTypes)
+			url_params.append('componentTypes=' + str(componentTypes))
 		if fromDate:
-			url_params.append('fromDate=' + fromDate)
+			url_params.append('fromDate=' + str(fromDate))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		if toDate:
-			url_params.append('toDate=' + toDate)
+			url_params.append('toDate=' + str(toDate))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -2925,11 +3170,32 @@ class SystemInventory:
 		url = '/management-rest/inventory/aggregator-logs'
 		url_params = []
 		if device:
-			url_params.append('device=' + device)
+			url_params.append('device=' + str(device))
 		if deviceId:
-			url_params.append('deviceId=' + deviceId)
+			url_params.append('deviceId=' + str(deviceId))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+
+	def check_custom_installer(self, customInstallerID : str) -> tuple[bool, None]:
+
+		'''
+		class SystemInventory
+		Description: This API call for checking the results for an custom installer request and getting the installer url.
+
+		:param customInstallerID: customInstallerID. 
+
+		return: 
+			Status of the request (True or False). 
+			This function does not return any data.
+
+		'''
+		url = '/management-rest/inventory/check-custom-installer'
+		url_params = []
+		if customInstallerID:
+			url_params.append('customInstallerID=' + str(customInstallerID))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -2952,11 +3218,11 @@ class SystemInventory:
 		url = '/management-rest/inventory/collector-logs'
 		url_params = []
 		if device:
-			url_params.append('device=' + device)
+			url_params.append('device=' + str(device))
 		if deviceId:
-			url_params.append('deviceId=' + deviceId)
+			url_params.append('deviceId=' + str(deviceId))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -2979,11 +3245,11 @@ class SystemInventory:
 		url = '/management-rest/inventory/core-logs'
 		url_params = []
 		if device:
-			url_params.append('device=' + device)
+			url_params.append('device=' + str(device))
 		if deviceId:
-			url_params.append('deviceId=' + deviceId)
+			url_params.append('deviceId=' + str(deviceId))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -3005,20 +3271,76 @@ class SystemInventory:
 		url = '/management-rest/inventory/create-collector-group'
 		url_params = []
 		if name:
-			url_params.append('name=' + name)
+			url_params.append('name=' + str(name))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.send(url)
 
 
-	def delete_collectors(self, collectorGroups :dict = None, confirmDeletion :bool = None, deleteAll :bool = None, devices :dict = None, devicesIds :dict = None, firstSeen :str = None, hasCrashDumps :bool = None, ips :dict = None, itemsPerPage :int = None, lastSeenEnd :str = None, lastSeenStart :str = None, loggedUser :str = None, operatingSystems :dict = None, organization :str = None, osFamilies :dict = None, pageNumber :int = None, showExpired :bool = None, sorting :str = None, states :dict = None, strictMode :bool = None, versions :dict = None) -> tuple[bool, None]:
+	def create_ems_custom_installer(self, osType : str, aggregatorAddress :str = None, aggregatorPort :int = None, citrixPVS :bool = None, collectorGroup :str = None, collectorVersion :str = None, distro :str = None, is64bit :bool = None, organization :str = None, proxy :bool = None, vdi :bool = None) -> tuple[bool, None]:
+
+		'''
+		class SystemInventory
+		Description: This API call sends request for creating custom-installer for EMS integration.
+
+		:param aggregatorAddress: Specifies the aggregator ip or dns address. 
+		:param aggregatorPort: Specifies the aggregator port. 
+		:param citrixPVS: Specifies whether the collector installed with citrix in pvs mode. 
+		:param collectorGroup: Specifies the requested collector group. 
+		:param collectorVersion: Specifies the requested collector version. 
+		:param distro: Specifies the Linux distribution. For example: CentOS_6, CentOS_7, CentOS_8, CentOS_9, Amazon, Oracle_6, Oracle_7, Oracle_8, SLES_12, SLES_15, Ubuntu_16.04, Ubuntu_18.04, Ubuntu_20.04, Ubuntu_22.04. 
+		:param is64bit: Specifies the Windows os bit version. 
+		:param organization: Specifies the requested organization. 
+		:param osType: Specifies the operating system type. 
+		:param proxy: Specifies the system proxy settings (Only applies to Collector versions 3.1 and above). 
+		:param vdi: Specifies the VDI (Virtual Desktop Infrastructure) installation. 
+
+		return: 
+			Status of the request (True or False). 
+			This function does not return any data.
+
+		'''
+		url = '/management-rest/inventory/create-ems-custom-installer'
+		url_params = []
+		if aggregatorAddress:
+			url_params.append('aggregatorAddress=' + str(aggregatorAddress))
+		if aggregatorPort:
+			url_params.append('aggregatorPort=' + str(aggregatorPort))
+		if citrixPVS:
+			url_params.append('citrixPVS=' + str(citrixPVS))
+		if collectorGroup:
+			url_params.append('collectorGroup=' + str(collectorGroup))
+		if collectorVersion:
+			url_params.append('collectorVersion=' + str(collectorVersion))
+		if distro:
+			url_params.append('distro=' + str(distro))
+		if is64bit:
+			url_params.append('is64bit=' + str(is64bit))
+		if organization:
+			url_params.append('organization=' + str(organization))
+		if osType:
+			url_params.append('osType=' + str(osType))
+		if proxy:
+			url_params.append('proxy=' + str(proxy))
+		if vdi:
+			url_params.append('vdi=' + str(vdi))
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.send(url)
+
+
+	def delete_collectors(self, cloudAccounts :dict = None, cloudProviders :dict = None, clusters :dict = None, collectorGroups :dict = None, collectorGroupsIds :dict = None, collectorType :str = None, confirmDeletion :bool = None, deleteAll :bool = None, devices :dict = None, devicesIds :dict = None, firstSeen :str = None, hasCrashDumps :bool = None, ips :dict = None, itemsPerPage :int = None, lastSeenEnd :str = None, lastSeenStart :str = None, loggedUser :str = None, operatingSystems :dict = None, organization :str = None, osFamilies :dict = None, pageNumber :int = None, showExpired :bool = None, sorting :str = None, states :dict = None, strictMode :bool = None, versions :dict = None) -> tuple[bool, None]:
 
 		'''
 		class SystemInventory
 		Description: This API call deletes a Collector(s).
 
+		:param cloudAccounts: Specifies the list cloud account names. 
+		:param cloudProviders: Specifies the list of cloud providers: AWS, Azure, GCP. 
+		:param clusters: Specifies the list of cluster. 
 		:param collectorGroups: Specifies the list of collector group names and retrieves collectors under thegiven groups. 
+		:param collectorGroupsIds: Specifies the list of collector group Ids and retrieves collectors under thegiven groups. 
+		:param collectorType: Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default. 
 		:param confirmDeletion: A true/false parameter indicating if to detach/delete relevant exceptions from Collector groups about to be deleted. 
 		:param deleteAll: A true/false parameter indicating if all collectors should be deleted. 
 		:param devices: Specifies the list of device names. 
@@ -3047,48 +3369,58 @@ class SystemInventory:
 		'''
 		url = '/management-rest/inventory/delete-collectors'
 		url_params = []
+		if cloudAccounts:
+			url_params.append('cloudAccounts=' + str(cloudAccounts))
+		if cloudProviders:
+			url_params.append('cloudProviders=' + str(cloudProviders))
+		if clusters:
+			url_params.append('clusters=' + str(clusters))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
+		if collectorGroupsIds:
+			url_params.append('collectorGroupsIds=' + str(collectorGroupsIds))
+		if collectorType:
+			url_params.append('collectorType=' + str(collectorType))
 		if confirmDeletion:
-			url_params.append('confirmDeletion=' + confirmDeletion)
+			url_params.append('confirmDeletion=' + str(confirmDeletion))
 		if deleteAll:
-			url_params.append('deleteAll=' + deleteAll)
+			url_params.append('deleteAll=' + str(deleteAll))
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + str(devices))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + str(devicesIds))
 		if firstSeen:
-			url_params.append('firstSeen=' + firstSeen)
+			url_params.append('firstSeen=' + str(firstSeen))
 		if hasCrashDumps:
-			url_params.append('hasCrashDumps=' + hasCrashDumps)
+			url_params.append('hasCrashDumps=' + str(hasCrashDumps))
 		if ips:
-			url_params.append('ips=' + ips)
+			url_params.append('ips=' + str(ips))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if lastSeenEnd:
-			url_params.append('lastSeenEnd=' + lastSeenEnd)
+			url_params.append('lastSeenEnd=' + str(lastSeenEnd))
 		if lastSeenStart:
-			url_params.append('lastSeenStart=' + lastSeenStart)
+			url_params.append('lastSeenStart=' + str(lastSeenStart))
 		if loggedUser:
-			url_params.append('loggedUser=' + loggedUser)
+			url_params.append('loggedUser=' + str(loggedUser))
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + str(operatingSystems))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if osFamilies:
-			url_params.append('osFamilies=' + osFamilies)
+			url_params.append('osFamilies=' + str(osFamilies))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if showExpired:
-			url_params.append('showExpired=' + showExpired)
+			url_params.append('showExpired=' + str(showExpired))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if states:
-			url_params.append('states=' + states)
+			url_params.append('states=' + str(states))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + str(versions))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -3111,11 +3443,11 @@ class SystemInventory:
 		url = '/management-rest/inventory/isolate-collectors'
 		url_params = []
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + str(devices))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + str(devicesIds))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -3139,13 +3471,13 @@ class SystemInventory:
 		url = '/management-rest/inventory/list-aggregators'
 		url_params = []
 		if ip:
-			url_params.append('ip=' + ip)
+			url_params.append('ip=' + str(ip))
 		if names:
-			url_params.append('names=' + names)
+			url_params.append('names=' + str(names))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + str(versions))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -3166,18 +3498,23 @@ class SystemInventory:
 		url = '/management-rest/inventory/list-collector-groups'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
 
-	def list_collectors(self, collectorGroups :dict = None, devices :dict = None, devicesIds :dict = None, firstSeen :str = None, hasCrashDumps :bool = None, ips :dict = None, itemsPerPage :int = None, lastSeenEnd :str = None, lastSeenStart :str = None, loggedUser :str = None, operatingSystems :dict = None, organization :str = None, osFamilies :dict = None, pageNumber :int = None, showExpired :bool = None, sorting :str = None, states :dict = None, strictMode :bool = None, versions :dict = None) -> tuple[bool, dict]:
+	def list_collectors(self, cloudAccounts :dict = None, cloudProviders :dict = None, clusters :dict = None, collectorGroups :dict = None, collectorGroupsIds :dict = None, collectorType :str = None, devices :dict = None, devicesIds :dict = None, firstSeen :str = None, hasCrashDumps :bool = None, ips :dict = None, itemsPerPage :int = None, lastSeenEnd :str = None, lastSeenStart :str = None, loggedUser :str = None, operatingSystems :dict = None, organization :str = None, osFamilies :dict = None, pageNumber :int = None, showExpired :bool = None, sorting :str = None, states :dict = None, strictMode :bool = None, versions :dict = None) -> tuple[bool, dict]:
 
 		'''
 		class SystemInventory
 		Description: This API call outputs a list of the Collectors in the system. Use the input parameters to filter the list.
 
+		:param cloudAccounts: Specifies the list cloud account names. 
+		:param cloudProviders: Specifies the list of cloud providers: AWS, Azure, GCP. 
+		:param clusters: Specifies the list of cluster. 
 		:param collectorGroups: Specifies the list of collector group names and retrieves collectors under thegiven groups. 
+		:param collectorGroupsIds: Specifies the list of collector group Ids and retrieves collectors under thegiven groups. 
+		:param collectorType: Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default. 
 		:param devices: Specifies the list of device names. 
 		:param devicesIds: Specifies the list of device ids. 
 		:param firstSeen: Retrieves collectors that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
@@ -3204,44 +3541,54 @@ class SystemInventory:
 		'''
 		url = '/management-rest/inventory/list-collectors'
 		url_params = []
+		if cloudAccounts:
+			url_params.append('cloudAccounts=' + str(cloudAccounts))
+		if cloudProviders:
+			url_params.append('cloudProviders=' + str(cloudProviders))
+		if clusters:
+			url_params.append('clusters=' + str(clusters))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
+		if collectorGroupsIds:
+			url_params.append('collectorGroupsIds=' + str(collectorGroupsIds))
+		if collectorType:
+			url_params.append('collectorType=' + str(collectorType))
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + str(devices))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + str(devicesIds))
 		if firstSeen:
-			url_params.append('firstSeen=' + firstSeen)
+			url_params.append('firstSeen=' + str(firstSeen))
 		if hasCrashDumps:
-			url_params.append('hasCrashDumps=' + hasCrashDumps)
+			url_params.append('hasCrashDumps=' + str(hasCrashDumps))
 		if ips:
-			url_params.append('ips=' + ips)
+			url_params.append('ips=' + str(ips))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if lastSeenEnd:
-			url_params.append('lastSeenEnd=' + lastSeenEnd)
+			url_params.append('lastSeenEnd=' + str(lastSeenEnd))
 		if lastSeenStart:
-			url_params.append('lastSeenStart=' + lastSeenStart)
+			url_params.append('lastSeenStart=' + str(lastSeenStart))
 		if loggedUser:
-			url_params.append('loggedUser=' + loggedUser)
+			url_params.append('loggedUser=' + str(loggedUser))
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + str(operatingSystems))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if osFamilies:
-			url_params.append('osFamilies=' + osFamilies)
+			url_params.append('osFamilies=' + str(osFamilies))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if showExpired:
-			url_params.append('showExpired=' + showExpired)
+			url_params.append('showExpired=' + str(showExpired))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if states:
-			url_params.append('states=' + states)
+			url_params.append('states=' + str(states))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + str(versions))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -3267,17 +3614,17 @@ class SystemInventory:
 		url = '/management-rest/inventory/list-cores'
 		url_params = []
 		if deploymentModes:
-			url_params.append('deploymentModes=' + deploymentModes)
+			url_params.append('deploymentModes=' + str(deploymentModes))
 		if hasCrashDumps:
-			url_params.append('hasCrashDumps=' + hasCrashDumps)
+			url_params.append('hasCrashDumps=' + str(hasCrashDumps))
 		if ip:
-			url_params.append('ip=' + ip)
+			url_params.append('ip=' + str(ip))
 		if names:
-			url_params.append('names=' + names)
+			url_params.append('names=' + str(names))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + str(versions))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -3320,25 +3667,27 @@ class SystemInventory:
 		url = '/management-rest/inventory/list-unmanaged-devices'
 		url_params = []
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
 
-	def move_collectors(self, collectors : dict, targetCollectorGroup : str, forceAssign :bool = None, organization :str = None) -> tuple[bool, None]:
+	def move_collectors(self, targetCollectorGroup : str, collectorIds :dict = None, collectorSIDs :dict = None, collectors :dict = None, forceAssign :bool = None, organization :str = None) -> tuple[bool, None]:
 
 		'''
 		class SystemInventory
 		Description: This API call move collector between groups.
 
+		:param collectorIds: value = Array of collectors Ids. To move collectors from one organization to another. 
+		:param collectorSIDs: value = Array of collectors SIDS. To move collectors from one organization to another. 
 		:param collectors: Array of collectors names. To move collectors from one organization to another, for each collector please add the organization name before the collector name (<organization-name>\\<collector-name>). 
 		:param forceAssign: Indicates whether to force the assignment even if the organization of the target Collector group is under migration. 
 		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
@@ -3351,14 +3700,18 @@ class SystemInventory:
 		'''
 		url = '/management-rest/inventory/move-collectors'
 		url_params = []
+		if collectorIds:
+			url_params.append('collectorIds=' + str(collectorIds))
+		if collectorSIDs:
+			url_params.append('collectorSIDs=' + str(collectorSIDs))
 		if collectors:
-			url_params.append('collectors=' + collectors)
+			url_params.append('collectors=' + str(collectors))
 		if forceAssign:
-			url_params.append('forceAssign=' + forceAssign)
+			url_params.append('forceAssign=' + str(forceAssign))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if targetCollectorGroup:
-			url_params.append('targetCollectorGroup=' + targetCollectorGroup)
+			url_params.append('targetCollectorGroup=' + str(targetCollectorGroup))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -3369,6 +3722,8 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call retrieves a system logs.
 
+		:param collectorIds: value = Array of collectors Ids. To move collectors from one organization to another. 
+		:param collectorSIDs: value = Array of collectors SIDS. To move collectors from one organization to another. 
 		:param collectors: Array of collectors names. To move collectors from one organization to another, for each collector please add the organization name before the collector name (<organization-name>\\<collector-name>). 
 		:param forceAssign: Indicates whether to force the assignment even if the organization of the target Collector group is under migration. 
 		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
@@ -3379,13 +3734,18 @@ class SystemInventory:
 		return fortiedr_connection.get(url)
 
 
-	def toggle_collectors(self, enable : bool, collectorGroups :dict = None, devices :dict = None, devicesIds :dict = None, firstSeen :str = None, hasCrashDumps :bool = None, ips :dict = None, itemsPerPage :int = None, lastSeenEnd :str = None, lastSeenStart :str = None, loggedUser :str = None, operatingSystems :dict = None, organization :str = None, osFamilies :dict = None, pageNumber :int = None, showExpired :bool = None, sorting :str = None, states :dict = None, strictMode :bool = None, versions :dict = None) -> tuple[bool, str]:
+	def toggle_collectors(self, enable : bool, cloudAccounts :dict = None, cloudProviders :dict = None, clusters :dict = None, collectorGroups :dict = None, collectorGroupsIds :dict = None, collectorType :str = None, devices :dict = None, devicesIds :dict = None, firstSeen :str = None, hasCrashDumps :bool = None, ips :dict = None, itemsPerPage :int = None, lastSeenEnd :str = None, lastSeenStart :str = None, loggedUser :str = None, operatingSystems :dict = None, organization :str = None, osFamilies :dict = None, pageNumber :int = None, showExpired :bool = None, sorting :str = None, states :dict = None, strictMode :bool = None, versions :dict = None) -> tuple[bool, str]:
 
 		'''
 		class SystemInventory
 		Description: This API call enables/disables a Collector(s). You must specify whether the Collector is to be enabled or disabled.
 
+		:param cloudAccounts: Specifies the list cloud account names. 
+		:param cloudProviders: Specifies the list of cloud providers: AWS, Azure, GCP. 
+		:param clusters: Specifies the list of cluster. 
 		:param collectorGroups: Specifies the list of collector group names and retrieves collectors under thegiven groups. 
+		:param collectorGroupsIds: Specifies the list of collector group Ids and retrieves collectors under thegiven groups. 
+		:param collectorType: Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default. 
 		:param devices: Specifies the list of device names. 
 		:param devicesIds: Specifies the list of device ids. 
 		:param enable: Toggle enable. 
@@ -3413,46 +3773,56 @@ class SystemInventory:
 		'''
 		url = '/management-rest/inventory/toggle-collectors'
 		url_params = []
+		if cloudAccounts:
+			url_params.append('cloudAccounts=' + str(cloudAccounts))
+		if cloudProviders:
+			url_params.append('cloudProviders=' + str(cloudProviders))
+		if clusters:
+			url_params.append('clusters=' + str(clusters))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + str(collectorGroups))
+		if collectorGroupsIds:
+			url_params.append('collectorGroupsIds=' + str(collectorGroupsIds))
+		if collectorType:
+			url_params.append('collectorType=' + str(collectorType))
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + str(devices))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + str(devicesIds))
 		if enable:
-			url_params.append('enable=' + enable)
+			url_params.append('enable=' + str(enable))
 		if firstSeen:
-			url_params.append('firstSeen=' + firstSeen)
+			url_params.append('firstSeen=' + str(firstSeen))
 		if hasCrashDumps:
-			url_params.append('hasCrashDumps=' + hasCrashDumps)
+			url_params.append('hasCrashDumps=' + str(hasCrashDumps))
 		if ips:
-			url_params.append('ips=' + ips)
+			url_params.append('ips=' + str(ips))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + itemsPerPage)
+			url_params.append('itemsPerPage=' + str(itemsPerPage))
 		if lastSeenEnd:
-			url_params.append('lastSeenEnd=' + lastSeenEnd)
+			url_params.append('lastSeenEnd=' + str(lastSeenEnd))
 		if lastSeenStart:
-			url_params.append('lastSeenStart=' + lastSeenStart)
+			url_params.append('lastSeenStart=' + str(lastSeenStart))
 		if loggedUser:
-			url_params.append('loggedUser=' + loggedUser)
+			url_params.append('loggedUser=' + str(loggedUser))
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + str(operatingSystems))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if osFamilies:
-			url_params.append('osFamilies=' + osFamilies)
+			url_params.append('osFamilies=' + str(osFamilies))
 		if pageNumber:
-			url_params.append('pageNumber=' + pageNumber)
+			url_params.append('pageNumber=' + str(pageNumber))
 		if showExpired:
-			url_params.append('showExpired=' + showExpired)
+			url_params.append('showExpired=' + str(showExpired))
 		if sorting:
-			url_params.append('sorting=' + sorting)
+			url_params.append('sorting=' + str(sorting))
 		if states:
-			url_params.append('states=' + states)
+			url_params.append('states=' + str(states))
 		if strictMode:
-			url_params.append('strictMode=' + strictMode)
+			url_params.append('strictMode=' + str(strictMode))
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + str(versions))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -3475,23 +3845,24 @@ class SystemInventory:
 		url = '/management-rest/inventory/unisolate-collectors'
 		url_params = []
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + str(devices))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + str(devicesIds))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
 class ThreatHunting:
 
-	def counts(self, category: str = None, devices: dict = None, filters: dict = None, fromTime: str = None, itemsPerPage: int = None, organization: str = None, pageNumber: int = None, query: str = None, sorting: dict = None, time: str = None, toTime: str = None) -> tuple[bool, None]:
+	def counts(self, accountId: int = None, category: str = None, devices: dict = None, filters: dict = None, fromTime: str = None, itemsPerPage: int = None, organization: str = None, pageNumber: int = None, query: str = None, sorting: dict = None, time: str = None, toTime: str = None) -> tuple[bool, None]:
 
 		'''
 		class ThreatHunting
 		Description: This API call outputs EDR total events for every EDR category.
 
 		:param edrRequest: edrRequest. 
+		:param accountId: Account ID. 
 		:param category: Specifies the category name. All is the default value. 
 		:param devices: Specifies the devices name list. 
 		:param filters: Specifies the filters list that available for the user based on the category selected 2. Specifies filters to add to the query.. 
@@ -3513,6 +3884,7 @@ class ThreatHunting:
 		url_params = []
 		url += '?' + '&'.join(url_params)
 		edrRequest = {
+			'accountId': accountId,
 			'category': category,
 			'devices': devices,
 			'filters': filters,
@@ -3587,9 +3959,9 @@ class ThreatHunting:
 		url = '/management-rest/threat-hunting/customize-fortinet-query'
 		url_params = []
 		if id:
-			url_params.append('id=' + id)
+			url_params.append('id=' + str(id))
 		if queryToEdit:
-			url_params.append('queryToEdit=' + queryToEdit)
+			url_params.append('queryToEdit=' + str(queryToEdit))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.send(url)
 
@@ -3616,19 +3988,19 @@ class ThreatHunting:
 		url = '/management-rest/threat-hunting/delete-saved-queries'
 		url_params = []
 		if deleteAll:
-			url_params.append('deleteAll=' + deleteAll)
+			url_params.append('deleteAll=' + str(deleteAll))
 		if deleteFromCommunity:
-			url_params.append('deleteFromCommunity=' + deleteFromCommunity)
+			url_params.append('deleteFromCommunity=' + str(deleteFromCommunity))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if queryIds:
-			url_params.append('queryIds=' + queryIds)
+			url_params.append('queryIds=' + str(queryIds))
 		if queryNames:
-			url_params.append('queryNames=' + queryNames)
+			url_params.append('queryNames=' + str(queryNames))
 		if scheduled:
-			url_params.append('scheduled=' + scheduled)
+			url_params.append('scheduled=' + str(scheduled))
 		if source:
-			url_params.append('source=' + source)
+			url_params.append('source=' + str(source))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -3651,22 +4023,23 @@ class ThreatHunting:
 		url = '/management-rest/threat-hunting/delete-tags'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if tagIds:
-			url_params.append('tagIds=' + tagIds)
+			url_params.append('tagIds=' + str(tagIds))
 		if tagNames:
-			url_params.append('tagNames=' + tagNames)
+			url_params.append('tagNames=' + str(tagNames))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
 
-	def facets(self, facets: dict, category: str = None, devices: dict = None, filters: dict = None, fromTime: str = None, itemsPerPage: int = None, organization: str = None, pageNumber: int = None, query: str = None, sorting: dict = None, time: str = None, toTime: str = None) -> tuple[bool, dict]:
+	def facets(self, facets: dict, accountId: int = None, category: str = None, devices: dict = None, filters: dict = None, fromTime: str = None, itemsPerPage: int = None, organization: str = None, pageNumber: int = None, query: str = None, sorting: dict = None, time: str = None, toTime: str = None) -> tuple[bool, dict]:
 
 		'''
 		class ThreatHunting
 		Description: This API retrieves EDR total events for every EDR facet item.
 
 		:param facetsRequest: facetsRequest. 
+		:param accountId: Account ID. 
 		:param category: Specifies the category name. All is the default value. 
 		:param devices: Specifies the devices name list. 
 		:param facets: Specifies the facets list that available for the user based on the category selected 2. Specifies facets to add to the query.. 
@@ -3689,6 +4062,7 @@ class ThreatHunting:
 		url_params = []
 		url += '?' + '&'.join(url_params)
 		facetsRequest = {
+			'accountId': accountId,
 			'category': category,
 			'devices': devices,
 			'facets': facets,
@@ -3723,11 +4097,11 @@ class ThreatHunting:
 		url = '/management-rest/threat-hunting/list-saved-queries'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if scheduled:
-			url_params.append('scheduled=' + scheduled)
+			url_params.append('scheduled=' + str(scheduled))
 		if source:
-			url_params.append('source=' + source)
+			url_params.append('source=' + str(source))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -3748,7 +4122,7 @@ class ThreatHunting:
 		url = '/management-rest/threat-hunting/list-tags'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -3792,9 +4166,9 @@ class ThreatHunting:
 		url = '/management-rest/threat-hunting/save-query'
 		url_params = []
 		if id:
-			url_params.append('id=' + id)
+			url_params.append('id=' + str(id))
 		if queryToEdit:
-			url_params.append('queryToEdit=' + queryToEdit)
+			url_params.append('queryToEdit=' + str(queryToEdit))
 		url += '?' + '&'.join(url_params)
 		saveQueryRequest = {
 			'category': category,
@@ -3822,13 +4196,14 @@ class ThreatHunting:
 		return fortiedr_connection.send(url, saveQueryRequest)
 
 
-	def search(self, category: str = None, devices: dict = None, filters: dict = None, fromTime: str = None, itemsPerPage: int = None, organization: str = None, pageNumber: int = None, query: str = None, sorting: dict = None, time: str = None, toTime: str = None) -> tuple[bool, dict]:
+	def search(self, accountId: int = None, category: str = None, devices: dict = None, filters: dict = None, fromTime: str = None, itemsPerPage: int = None, organization: str = None, pageNumber: int = None, query: str = None, sorting: dict = None, time: str = None, toTime: str = None) -> tuple[bool, dict]:
 
 		'''
 		class ThreatHunting
 		Description: This API call outputs a list of Activity events from middleware..
 
 		:param edrRequest: edrRequest. 
+		:param accountId: Account ID. 
 		:param category: Specifies the category name. All is the default value. 
 		:param devices: Specifies the devices name list. 
 		:param filters: Specifies the filters list that available for the user based on the category selected 2. Specifies filters to add to the query.. 
@@ -3850,6 +4225,7 @@ class ThreatHunting:
 		url_params = []
 		url += '?' + '&'.join(url_params)
 		edrRequest = {
+			'accountId': accountId,
 			'category': category,
 			'devices': devices,
 			'filters': filters,
@@ -3886,23 +4262,23 @@ class ThreatHunting:
 		url = '/management-rest/threat-hunting/set-query-state'
 		url_params = []
 		if markAll:
-			url_params.append('markAll=' + markAll)
+			url_params.append('markAll=' + str(markAll))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if queryIds:
-			url_params.append('queryIds=' + queryIds)
+			url_params.append('queryIds=' + str(queryIds))
 		if queryNames:
-			url_params.append('queryNames=' + queryNames)
+			url_params.append('queryNames=' + str(queryNames))
 		if source:
-			url_params.append('source=' + source)
+			url_params.append('source=' + str(source))
 		if state:
-			url_params.append('state=' + state)
+			url_params.append('state=' + str(state))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
 class ThreatHuntingExclusions:
 
-	def send_exclusions(self, exclusionListName: str, exclusions: dict, organization: str) -> tuple[bool, dict]:
+	def send_exclusion(self, exclusionListName: str, exclusions: dict, organization: str) -> tuple[bool, dict]:
 
 		'''
 		class ThreatHuntingExclusions
@@ -3995,7 +4371,7 @@ class ThreatHuntingExclusions:
 		url = '/management-rest/threat-hunting-exclusions/exclusions-list'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -4070,9 +4446,9 @@ class ThreatHuntingExclusions:
 		url = '/management-rest/threat-hunting-exclusions/exclusions-list'
 		url_params = []
 		if listName:
-			url_params.append('listName=' + listName)
+			url_params.append('listName=' + str(listName))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -4109,11 +4485,11 @@ class ThreatHuntingExclusions:
 		url = '/management-rest/threat-hunting-exclusions/exclusions-search'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if os:
-			url_params.append('os=' + os)
+			url_params.append('os=' + str(os))
 		if searchText:
-			url_params.append('searchText=' + searchText)
+			url_params.append('searchText=' + str(searchText))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -4150,7 +4526,7 @@ class ThreatHuntingSettings:
 		url = '/management-rest/threat-hunting-settings/threat-hunting-profile'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -4201,9 +4577,9 @@ class ThreatHuntingSettings:
 		url = '/management-rest/threat-hunting-settings/threat-hunting-profile'
 		url_params = []
 		if name:
-			url_params.append('name=' + name)
+			url_params.append('name=' + str(name))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -4226,11 +4602,11 @@ class ThreatHuntingSettings:
 		url = '/management-rest/threat-hunting-settings/threat-hunting-profile-clone'
 		url_params = []
 		if cloneProfileName:
-			url_params.append('cloneProfileName=' + cloneProfileName)
+			url_params.append('cloneProfileName=' + str(cloneProfileName))
 		if existingProfileName:
-			url_params.append('existingProfileName=' + existingProfileName)
+			url_params.append('existingProfileName=' + str(existingProfileName))
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.send(url)
 
@@ -4291,7 +4667,7 @@ class Users:
 		url = '/management-rest/users/create-user'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		userRequest = {
 			'confirmPassword': confirmPassword,
@@ -4325,7 +4701,7 @@ class Users:
 		url = '/management-rest/users/delete-saml-settings'
 		url_params = []
 		if organizationNameRequest:
-			url_params.append('organizationNameRequest=' + organizationNameRequest)
+			url_params.append('organizationNameRequest=' + str(organizationNameRequest))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -4347,9 +4723,9 @@ class Users:
 		url = '/management-rest/users/delete-user'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if username:
-			url_params.append('username=' + username)
+			url_params.append('username=' + str(username))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -4370,7 +4746,7 @@ class Users:
 		url = '/management-rest/users/get-sp-metadata'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -4391,7 +4767,7 @@ class Users:
 		url = '/management-rest/users/list-users'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -4416,9 +4792,9 @@ class Users:
 		url = '/management-rest/users/reset-password'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if username:
-			url_params.append('username=' + username)
+			url_params.append('username=' + str(username))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -4468,11 +4844,66 @@ class Users:
 		url = '/management-rest/users/update-user'
 		url_params = []
 		if organization:
-			url_params.append('organization=' + organization)
+			url_params.append('organization=' + str(organization))
 		if username:
-			url_params.append('username=' + username)
+			url_params.append('username=' + str(username))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
+
+class Dashboard:
+
+	def most_targeted_items(self, organization : str, itemType :str = None, numOfColumns :int = None, numOfDays :int = None) -> tuple[bool, None]:
+
+		'''
+		class dashboardrestapicontroller
+		Description: Returns most targeted devices or most targeted processes, depending on the itemType parameter.
+
+		:param itemType: Specifies the type of items. 
+		:param numOfColumns: Specifies the number of columns to present. 
+		:param numOfDays: Specifies the number of days to present. 
+		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+
+		return: 
+			Status of the request (True or False). 
+			This function does not return any data.
+
+		'''
+		url = '/api/dashboard/most-targeted-items'
+		url_params = []
+		if itemType:
+			url_params.append('itemType=' + str(itemType))
+		if numOfColumns:
+			url_params.append('numOfColumns=' + str(numOfColumns))
+		if numOfDays:
+			url_params.append('numOfDays=' + str(numOfDays))
+		if organization:
+			url_params.append('organization=' + str(organization))
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+
+	def unhandled_items(self, organization : str, itemType :str = None) -> tuple[bool, None]:
+
+		'''
+		class dashboardrestapicontroller
+		Description: Returns unhandled devices or unhandled processes, depending on the itemType parameter.
+
+		:param itemType: Specifies the type of items. 
+		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+
+		return: 
+			Status of the request (True or False). 
+			This function does not return any data.
+
+		'''
+		url = '/api/dashboard/unhandled-items'
+		url_params = []
+		if itemType:
+			url_params.append('itemType=' + str(itemType))
+		if organization:
+			url_params.append('organization=' + str(organization))
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
 
 
 debug = None
@@ -4511,4 +4942,3 @@ def auth( host: str, user: str, passw: str, org: str = None):
 		'status': status,
 		'data': data
 	}
-
