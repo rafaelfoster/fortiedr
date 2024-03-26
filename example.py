@@ -1,28 +1,29 @@
 import json
-from fortiedr.fortiedr import *
+import fortiedr
 
 def main():
 
-   organization = "ORGANIZATION_NAME" # Case sensitive
+   organization = "ORGANIZATION_NAME" 
 
-   authentication = auth(
+   authentication = fortiedr.auth(
       user="USER",
       passw="PASSWORD",
       host="FORTIEDR_HOST.COM", # use only the hostname, without 'https://' and '/'.
       org=organization          # Add organization IF needed. Case sensitive
    )
 
-   if not authentication:
+   if not authentication['status']:
       # Explain why the authentication has failed
-      print(authentication)
+      print(authentication['data'])
    else:
 
       # A example for getting Tenant administration data.
       #
-      admin = Administrator()
+      admin = fortiedr.Administrator()
 
-      status, data = admin.list_system_summary(organization)
-      if status:
+      admin_data = admin.list_system_summary(organization)
+      data = admin_data['data']
+      if admin_data['status']:
          print("Management Hostname: ",     str(data['managementHostname']))
          print("Management Version: ",      str(data['managementVersion']))
          print("License Expiration Date: ", str(data['licenseExpirationDate']))
@@ -35,27 +36,27 @@ def main():
       # An example of cloning the 'Execution Prevention' policy to another one called 'Cloned_Execution_Prevention'
       # 
 
-      policies = Policies()
-      status = policies.clone("Execution Prevention", "Cloned_Execution_Prevention", organization)
-      if status:
+      policies = fortiedr.Policies()
+      policies_data = policies.clone("Execution Prevention", "Cloned_Execution_Prevention", organization)
+      if policies_data['status']:
          print("OK - Policy cloned")
       else:
          print("Error while cloning policy")
-
+         print(policies_data['data'])
       # 
       # Listing all users in a organization
       # 
 
-      u = Users()
-      status, data = u.list_users(organization)
-      if status:
-         print(json.dumps(data, indent=4))
+      u = fortiedr.Users()
+      users_data = u.list_users(organization)
+      if users_data['status']:
+         print(json.dumps(users_data['data'], indent=4))
 
       # 
       # An example of creating a user
       #
 
-      status = u.create_user(
+      user_data = u.create_user(
          organization=organization,
          firstName="Username",
          lastName="Test API",
@@ -70,10 +71,11 @@ def main():
          remoteShell=False
       )
 
-      if status:
+      if user_data['status']:
          print("User created!")
       else:
          print("Error while creating user...")
+         print(user_data['data'])
    
 if __name__ == "__main__":
     main()

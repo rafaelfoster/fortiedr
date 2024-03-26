@@ -5,6 +5,7 @@ from fortiedr.connector import FortiEDR_API_GW
 fortiedr_connection = None
 
 class Admin:
+	'''Admin Rest Api Controller'''
 
 	def set_tray_notification_settings(self, organization: str, enabledPopup: bool = None, enabledTrayNotification: bool = None, message: str = None) -> tuple[bool, None]:
 
@@ -12,15 +13,16 @@ class Admin:
 		class Admin
 		Description: Update tray notification settings.
 
-		:param adminSetTrayNotificationSettingsRequest: adminSetTrayNotificationSettingsRequest. 
-		:param enabledPopup: Enable popup. 
-		:param enabledTrayNotification: Enable tray notification. 
-		:param message: Specifies the message. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			adminSetTrayNotificationSettingsRequest: adminSetTrayNotificationSettingsRequest. 
+			enabledPopup: Enable popup. 
+			enabledTrayNotification: Enable tray notification. 
+			message: Specifies the message. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/api/admin/set-tray-notification-settings'
@@ -35,6 +37,7 @@ class Admin:
 		return fortiedr_connection.send(url, adminSetTrayNotificationSettingsRequest)
 
 class Administrator:
+	'''The Administrator module enables administrators to perform administrative operations, such as handling licenses and users.'''
 
 	def list_collector_installers(self, organization :str = None) -> tuple[bool, None]:
 
@@ -42,11 +45,12 @@ class Administrator:
 		class Administrator
 		Description: This API call output the available collectors installers.
 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/admin/list-collector-installers'
@@ -63,12 +67,13 @@ class Administrator:
 		class Administrator
 		Description: Get System Summary.
 
-		:param addLicenseBlob: Indicates whether to put license blob to response. By default addLicenseBlob is false. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			addLicenseBlob: Indicates whether to put license blob to response. By default addLicenseBlob is false. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/admin/list-system-summary'
@@ -87,11 +92,12 @@ class Administrator:
 		class Administrator
 		Description: This API retrieve previous registration passwords for given organization.
 
-		:param organizationRequest: organizationRequest. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			organizationRequest: organizationRequest. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -110,12 +116,13 @@ class Administrator:
 		class Administrator
 		Description: This API deletes previous registration password for given id.
 
-		:param organizationRequest: organizationRequest. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param passwordId: passwordId. 
+		Args:
+			organizationRequest: organizationRequest. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			passwordId: passwordId. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			str
 
 		'''
@@ -131,9 +138,10 @@ class Administrator:
 		class Administrator
 		Description: Get System Readiness.
 
-		:param organizationRequest: organizationRequest. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param passwordId: passwordId. 
+		Args:
+			organizationRequest: organizationRequest. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			passwordId: passwordId. 
 
 		'''
 		url = '/management-rest/admin/ready'
@@ -146,13 +154,14 @@ class Administrator:
 		class Administrator
 		Description: This API creates new registration password for given organization.
 
-		:param request: request. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param password: New Registration Password. 
+		Args:
+			request: request. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			password: New Registration Password. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/admin/registration-password'
@@ -171,13 +180,14 @@ class Administrator:
 		class Administrator
 		Description: Set system modeThis API call enables you to switch the system to Simulation mode.
 
-		:param forceAll: Indicates whether to force set all the policies in 'Prevention' mode. 
-		:param mode: Operation mode. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			forceAll: Indicates whether to force set all the policies in 'Prevention' mode. 
+			mode: Operation mode. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/admin/set-system-mode'
@@ -198,15 +208,16 @@ class Administrator:
 		class Administrator
 		Description: This API update collectors target version for collector groups.
 
-		:param collectorGroupIds: Specifies the list of IDs of all the collector groups which should be updated.. 
-		:param collectorGroups: Specifies the list of all the collector groups which should be updated.. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param requestUpdateData: requestUpdateData. 
-		:param updateVersions: List of installer versions that should be applied in the collector groups. 
+		Args:
+			collectorGroupIds: Specifies the list of IDs of all the collector groups which should be updated.. 
+			collectorGroups: Specifies the list of all the collector groups which should be updated.. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			requestUpdateData: requestUpdateData. 
+			updateVersions: List of installer versions that should be applied in the collector groups. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/admin/update-collector-installer'
@@ -230,10 +241,11 @@ class Administrator:
 		class Administrator
 		Description: Upload content to the system.
 
-		:param file: file. 
+		Args:
+			file: file. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			str
 
 		'''
@@ -249,12 +261,13 @@ class Administrator:
 		class Administrator
 		Description: Upload license to the system.
 
-		:param license: license. 
-		:param licenseBlob: License blob. 
+		Args:
+			license: license. 
+			licenseBlob: License blob. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/admin/upload-license'
@@ -266,6 +279,7 @@ class Administrator:
 		return fortiedr_connection.insert(url, license)
 
 class ApplicationControl:
+	'''Application Control Rest Api Controller'''
 
 	def get_applications(self, currentPage : int, organization : str, fileName :str = None, path :str = None, signer :str = None, enabled :bool = None, hash :str = None, operatingSystem :str = None, policyIds :dict = None, tag :str = None) -> tuple[bool, None]:
 
@@ -273,20 +287,21 @@ class ApplicationControl:
 		class ApplicationControl
 		Description: Get application controls.
 
-		:param fileName: Specifies the file name, if contains special characters - encode to HTML URL Encoding. 
-		:param path: Specifies the path, if contains special characters - encode to HTML URL Encoding. 
-		:param signer: Specifies the value, if contains special characters - encode to HTML URL Encoding. 
-		:param currentPage: Specifies the current page. 
-		:param enabled: Specifies the state of the application control. 
-		:param hash: Specifies the hash of the application control. 
-		:param operatingSystem: Specifies the operating system of the application control. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param policyIds: Specifies the IDs of the relevant policies for application control. 
-		:param tag: Specifies the tag related to application control. 
+		Args:
+			fileName: Specifies the file name, if contains special characters - encode to HTML URL Encoding. 
+			path: Specifies the path, if contains special characters - encode to HTML URL Encoding. 
+			signer: Specifies the value, if contains special characters - encode to HTML URL Encoding. 
+			currentPage: Specifies the current page. 
+			enabled: Specifies the state of the application control. 
+			hash: Specifies the hash of the application control. 
+			operatingSystem: Specifies the operating system of the application control. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			policyIds: Specifies the IDs of the relevant policies for application control. 
+			tag: Specifies the tag related to application control. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/api/application-control/applications'
@@ -320,13 +335,14 @@ class ApplicationControl:
 		class ApplicationControl
 		Description: Get application controls.
 
-		:param applicationControlSaveRequest: applicationControlSaveRequest. 
-		:param applicationControls: Specifies the list of applications to add. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			applicationControlSaveRequest: applicationControlSaveRequest. 
+			applicationControls: Specifies the list of applications to add. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/api/application-control/applications'
@@ -344,17 +360,18 @@ class ApplicationControl:
 		class ApplicationControl
 		Description: Get application controls.
 
-		:param appIds: The relevant application IDs to edit. 
-		:param modifiedFields: modifiedFields. 
-		:param enabled: Specifies the state of the application. 
-		:param groupIds: Specifies the IDs of the groups to assign the application. 
-		:param isOverridePolicies: Set true to override all current policies, if false or not specified they will be added to the current policies. 
-		:param policyIds: Specifies the IDs of the policies to assign the application. 
-		:param tagId: Specifies the new tag ID of the application. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			appIds: The relevant application IDs to edit. 
+			modifiedFields: modifiedFields. 
+			enabled: Specifies the state of the application. 
+			groupIds: Specifies the IDs of the groups to assign the application. 
+			isOverridePolicies: Set true to override all current policies, if false or not specified they will be added to the current policies. 
+			policyIds: Specifies the IDs of the policies to assign the application. 
+			tagId: Specifies the new tag ID of the application. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -373,12 +390,13 @@ class ApplicationControl:
 		class ApplicationControl
 		Description: Get application controls.
 
-		:param applicationIds: The IDs of the applications to be deleted. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			applicationIds: The IDs of the applications to be deleted. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/api/application-control/applications'
@@ -397,8 +415,9 @@ class ApplicationControl:
 		class ApplicationControl
 		Description: Trigger OOTB application control update.
 
-		:param applicationIds: The IDs of the applications to be deleted. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			applicationIds: The IDs of the applications to be deleted. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
 		'''
 		url = '/api/application-control/force-update-ootb-application-controls'
@@ -411,13 +430,14 @@ class ApplicationControl:
 		class ApplicationControl
 		Description: Create an application control tags.
 
-		:param applicationControlTagCreateRequest: applicationControlTagCreateRequest. 
-		:param name: Specifies the name of the application control tag. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			applicationControlTagCreateRequest: applicationControlTagCreateRequest. 
+			name: Specifies the name of the application control tag. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/api/application-control/tags'
@@ -430,6 +450,7 @@ class ApplicationControl:
 		return fortiedr_connection.send(url, applicationControlTagCreateRequest)
 
 class Audit:
+	'''The Audit module enables you to retrieve system audit based on given dates'''
 
 	def get_audit(self, fromTime :str = None, organization :str = None, toTime :str = None) -> tuple[bool, dict]:
 
@@ -437,12 +458,13 @@ class Audit:
 		class Audit
 		Description: This API retrieve the audit between 2 dates.
 
-		:param fromTime: Retrieves audit that were written after the given date. Date Format: yyyy-MM-dd (Default is current date). 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param toTime: Retrieves audit that were written before the given date. Date Format: yyyy-MM-dd (Default is current date). 
+		Args:
+			fromTime: Retrieves audit that were written after the given date. Date Format: yyyy-MM-dd (Default is current date). 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			toTime: Retrieves audit that were written before the given date. Date Format: yyyy-MM-dd (Default is current date). 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -458,6 +480,7 @@ class Audit:
 		return fortiedr_connection.get(url)
 
 class CommunicationControl:
+	'''Fortinet Endpoint Protection and Response Platform’s Communication Control module is responsible for monitoring and handling non-disguised security events. The module uses a set of policies that contain recommendations about whether an application should be approved or denied from communicating outside your organization.'''
 
 	def assign_collector_group(self, collectorGroups : dict, policyName : str, forceAssign :bool = None, organization :str = None) -> tuple[bool, None]:
 
@@ -465,14 +488,15 @@ class CommunicationControl:
 		class CommunicationControl
 		Description: Assign collector group to application policy.
 
-		:param collectorGroups:  Specifies the collector groups whose collector reported the events. 
-		:param forceAssign: Indicates whether to force the assignment even if the group is assigned to similar policies. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param policyName: Specifies the list of policies. 
+		Args:
+			collectorGroups:  Specifies the collector groups whose collector reported the events. 
+			forceAssign: Indicates whether to force the assignment even if the group is assigned to similar policies. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			policyName: Specifies the list of policies. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/comm-control/assign-collector-group'
@@ -495,13 +519,14 @@ class CommunicationControl:
 		class CommunicationControl
 		Description: application clone policy.
 
-		:param newPolicyName: Specifies security policy target name.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param sourcePolicyName: Specifies security policy source name. 
+		Args:
+			newPolicyName: Specifies security policy target name.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			sourcePolicyName: Specifies security policy source name. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/comm-control/clone-policy'
@@ -522,19 +547,20 @@ class CommunicationControl:
 		class CommunicationControl
 		Description: This API call outputs a list of all the communication control policies in the system, and information about each of them.
 
-		:param decisions: Indicates the action. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param policies: Specifies the list of policy names. 
-		:param rules: Specifies the list of rules. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param sources: Specifies who created the policy. 
-		:param state: Policy rule state. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+		Args:
+			decisions: Indicates the action. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			policies: Specifies the list of policy names. 
+			rules: Specifies the list of rules. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			sources: Specifies who created the policy. 
+			state: Policy rule state. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -570,41 +596,42 @@ class CommunicationControl:
 		class CommunicationControl
 		Description: This API call outputs a list of all the communicating applications in the system, and information about each of them.
 
-		:param action: Indicates the action: Allow/Deny. This parameter is irrelevant without policies parameter. 
-		:param collectorGroups: Specifies the list of collector groups where the products were seen. 
-		:param cveIdentifier: Specifies the CVE identifier. 
-		:param destinationIp: Destination IPs. 
-		:param devices: Specifies the list of device names where the products were seen. 
-		:param firstConnectionTimeEnd:  Retrieves products whose first connection time is less than the value assigned to this date. 
-		:param firstConnectionTimeStart:  Retrieves products whose first connection time is greater than the value assigned to this date. 
-		:param handled: A true/false parameter indicating whether events were handled/unhandled. 
-		:param includeStatistics: A true/false parameter indicating including statistics data. 
-		:param ips: Specifies the list of IPs where the products were seen. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param lastConnectionTimeEnd:  Retrieves products whose last connection time is less than the value assigned to this date. 
-		:param lastConnectionTimeStart:  Retrieves products whose last connection time is greater than the value assigned to this date. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param os: Specifies the list of operating system families where the products were seen. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param policies: Specifies the list of policy names whose products have a specific decision, as specified in the action parameter. 
-		:param processHash: Specifies the process hash name. 
-		:param processes: Specifies the list of process names running alongside the products. 
-		:param product: Specifies a single value for the product name. By default, strictMode is false. 
-		:param products: Specifies the list of product names. Names must match exactly (strictMode is always true). 
-		:param reputation: Specifies the recommendation of the application: Unknown, Known bad, Assumed bad, Contradiction, Assumed good or Known good. 
-		:param rule: Indicates the rule. This parameter is irrelevant without rulePolicy parameter. 
-		:param rulePolicy: Specifies the policy name whose products have a specific rule, as specified in the rule parameter. 
-		:param seen: A true/false parameter indicating whether events were read/unread by the user operating the API. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
-		:param vendor: Specifies a single value for the vendor name. By default, strictMode is false. 
-		:param vendors: Specifies the list of vendor names. Names must match exactly (strictMode is always true). 
-		:param version: Specifies a single value for the version name. By default, strictMode is false. 
-		:param versions: Specifies the list of versions. Names must match exactly (strictMode is always true). 
-		:param vulnerabilities: Specifies the list of vulnerabilities where the products were seen. 
+		Args:
+			action: Indicates the action: Allow/Deny. This parameter is irrelevant without policies parameter. 
+			collectorGroups: Specifies the list of collector groups where the products were seen. 
+			cveIdentifier: Specifies the CVE identifier. 
+			destinationIp: Destination IPs. 
+			devices: Specifies the list of device names where the products were seen. 
+			firstConnectionTimeEnd:  Retrieves products whose first connection time is less than the value assigned to this date. 
+			firstConnectionTimeStart:  Retrieves products whose first connection time is greater than the value assigned to this date. 
+			handled: A true/false parameter indicating whether events were handled/unhandled. 
+			includeStatistics: A true/false parameter indicating including statistics data. 
+			ips: Specifies the list of IPs where the products were seen. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			lastConnectionTimeEnd:  Retrieves products whose last connection time is less than the value assigned to this date. 
+			lastConnectionTimeStart:  Retrieves products whose last connection time is greater than the value assigned to this date. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			os: Specifies the list of operating system families where the products were seen. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			policies: Specifies the list of policy names whose products have a specific decision, as specified in the action parameter. 
+			processHash: Specifies the process hash name. 
+			processes: Specifies the list of process names running alongside the products. 
+			product: Specifies a single value for the product name. By default, strictMode is false. 
+			products: Specifies the list of product names. Names must match exactly (strictMode is always true). 
+			reputation: Specifies the recommendation of the application: Unknown, Known bad, Assumed bad, Contradiction, Assumed good or Known good. 
+			rule: Indicates the rule. This parameter is irrelevant without rulePolicy parameter. 
+			rulePolicy: Specifies the policy name whose products have a specific rule, as specified in the rule parameter. 
+			seen: A true/false parameter indicating whether events were read/unread by the user operating the API. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+			vendor: Specifies a single value for the vendor name. By default, strictMode is false. 
+			vendors: Specifies the list of vendor names. Names must match exactly (strictMode is always true). 
+			version: Specifies a single value for the version name. By default, strictMode is false. 
+			versions: Specifies the list of versions. Names must match exactly (strictMode is always true). 
+			vulnerabilities: Specifies the list of vulnerabilities where the products were seen. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -684,18 +711,19 @@ class CommunicationControl:
 		class CommunicationControl
 		Description: Enable resolving/unresolving applications.
 
-		:param applyNested: A true/false parameter indicating updating inherited. 
-		:param comment: Specifies a user-defined string to attach to the policy. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param products: Specifies the list of product names. Names must match exactly (strictMode is always true). 
-		:param resolve: A true/false parameter indicating update the application resolve/unresolve. 
-		:param signed: A true/false parameter indicating if the policy is signed. 
-		:param vendors: Specifies the list of vendor names. Names must match exactly (strictMode is always true). 
-		:param versions: Specifies the list of versions. Names must match exactly (strictMode is always true). 
+		Args:
+			applyNested: A true/false parameter indicating updating inherited. 
+			comment: Specifies a user-defined string to attach to the policy. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			products: Specifies the list of product names. Names must match exactly (strictMode is always true). 
+			resolve: A true/false parameter indicating update the application resolve/unresolve. 
+			signed: A true/false parameter indicating if the policy is signed. 
+			vendors: Specifies the list of vendor names. Names must match exactly (strictMode is always true). 
+			versions: Specifies the list of versions. Names must match exactly (strictMode is always true). 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/comm-control/resolve-applications'
@@ -726,13 +754,14 @@ class CommunicationControl:
 		class CommunicationControl
 		Description: Set policy to simulation/prevention.
 
-		:param mode: Operation mode. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param policyNames: Specifies the list of policies. 
+		Args:
+			mode: Operation mode. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			policyNames: Specifies the list of policies. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/comm-control/set-policy-mode'
@@ -753,18 +782,19 @@ class CommunicationControl:
 		class CommunicationControl
 		Description: Set the application allow/deny.
 
-		:param applyNested: A true/false parameter indicating updating inherited. 
-		:param decision: Indicates the action. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param policies: Specifies the list of policies names. 
-		:param products: Specifies the list of product names. Names must match exactly (strictMode is always true). 
-		:param signed: A true/false parameter indicating if the policy is signed. 
-		:param vendors: Specifies the list of vendor names. Names must match exactly (strictMode is always true). 
-		:param versions: Specifies the list of versions. Names must match exactly (strictMode is always true). 
+		Args:
+			applyNested: A true/false parameter indicating updating inherited. 
+			decision: Indicates the action. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			policies: Specifies the list of policies names. 
+			products: Specifies the list of product names. Names must match exactly (strictMode is always true). 
+			signed: A true/false parameter indicating if the policy is signed. 
+			vendors: Specifies the list of vendor names. Names must match exactly (strictMode is always true). 
+			versions: Specifies the list of versions. Names must match exactly (strictMode is always true). 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/comm-control/set-policy-permission'
@@ -795,14 +825,15 @@ class CommunicationControl:
 		class CommunicationControl
 		Description: Set rule in policy to enable/disable.
 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param policyName: Specifies policy name. 
-		:param ruleName: Specifies rule name. 
-		:param state: Policy rule state. 
+		Args:
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			policyName: Specifies policy name. 
+			ruleName: Specifies rule name. 
+			state: Policy rule state. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/comm-control/set-policy-rule-state'
@@ -819,6 +850,7 @@ class CommunicationControl:
 		return fortiedr_connection.insert(url)
 
 class Events:
+	'''This API call outputs all the events in the system that match the condition(s) you specify in the call. An AND relationship exists when specifying multiple input parameters. When no input parameters are matched, an empty result set is returned'''
 
 	def insert_events(self, actions :dict = None, applicationControl :bool = None, archived :bool = None, classifications :dict = None, collectorGroups :dict = None, destinations :dict = None, device :str = None, deviceControl :bool = None, deviceIps :dict = None, eventIds :dict = None, eventType :dict = None, expired :bool = None, fileHash :str = None, firstSeen :str = None, firstSeenFrom :str = None, firstSeenTo :str = None, handled :bool = None, itemsPerPage :int = None, lastSeen :str = None, lastSeenFrom :str = None, lastSeenTo :str = None, loggedUser :str = None, macAddresses :dict = None, muted :bool = None, operatingSystems :dict = None, organization :str = None, pageNumber :int = None, paths :dict = None, process :str = None, rule :str = None, seen :bool = None, severities :dict = None, signed :bool = None, sorting :str = None, strictMode :bool = None, archive: bool = None, classification: str = None, comment: str = None, familyName: str = None, forceUnmute: bool = None, handle: bool = None, malwareType: str = None, mute: bool = None, muteDuration: str = None, read: bool = None, threatName: str = None) -> tuple[bool, None]:
 
@@ -826,57 +858,58 @@ class Events:
 		class Events
 		Description: This API call updates the read/unread, handled/unhandled or archived/unarchived state of an event. The output of this call is a message indicating whether the update succeeded or failed.
 
-		:param actions: Specifies the action of the event. 
-		:param applicationControl: A true/false parameter indicating whether to include only application control events. 
-		:param archived: A true/false parameter indicating whether to include only archived events. 
-		:param classifications: Specifies the classification of the event. 
-		:param collectorGroups: Specifies the collector groups whose collector reported the events. 
-		:param destinations: Specifies the connection destination(s) of the events. 
-		:param device: Specifies the device name where the events occurred. 
-		:param deviceControl: A true/false parameter indicating whether to include only device control events. 
-		:param deviceIps: Specifies the IPs of the devices where the event occurred. 
-		:param eventIds: Specifies the required event IDs. 
-		:param eventType: Specifies the type of the event. 
-		:param expired: A true/false parameter indicating whether to include only expired events. 
-		:param fileHash: Specifies the hash signature of the main process of the event. 
-		:param firstSeen:  Specifies the date when the event was first seen (Deprecated). 
-		:param firstSeenFrom: Specifies the from date when the event was first seen. 
-		:param firstSeenTo: Specifies the to date when the event was first seen. 
-		:param handled:  A true/false parameter indicating whether events were handled/unhandled. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param lastSeen:  Specifies the date when the event was last seen (Deprecated). 
-		:param lastSeenFrom: Specifies the from date when the event was last seen. 
-		:param lastSeenTo: Specifies the to date when the event was last seen. 
-		:param loggedUser: Specifies the logged user. 
-		:param macAddresses: Specifies the mac addresses where the event occurred. 
-		:param muted: A true/false parameter indicating if the event is muted. 
-		:param operatingSystems: Specifies the operating system of the devices where the events occurred. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param paths: Specifies the paths of the processes related to the event. 
-		:param process: Specifies the main process of the event. 
-		:param rule: Specifies the short rule name of the rule that triggered the events. 
-		:param seen: A true/false parameter indicating whether events were read/unread by the user operating the API. 
-		:param severities: Specifies the severity of the event (Deprecated). 
-		:param signed: A true/false parameter indicating if the event is signed. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
-		:param updateEventsRequest: updateEventsRequest. 
-		:param archive: A true/false parameter indicating whether to update archived events. 
-		:param classification: Specifies the event classification. 
-		:param comment: Specifies a user-defined string attached to the event. 
-		:param familyName: Specifies the event family name. 
-		:param forceUnmute: Indicates whether to force archive even if the event is muted. 
-		:param handle: A true/false parameter indicating update the events handled/unhandled. 
-		:param malwareType: Specifies the event malware type. 
-		:param mute: A true/false parameter indicating whether to mute events. 
-		:param muteDuration: Specifies the mute duration time. 
-		:param read: A true/false parameter indicating whether the events are read/unread by the user operating the API. 
-		:param threatName: Specifies the event threat name. 
+		Args:
+			actions: Specifies the action of the event. 
+			applicationControl: A true/false parameter indicating whether to include only application control events. 
+			archived: A true/false parameter indicating whether to include only archived events. 
+			classifications: Specifies the classification of the event. 
+			collectorGroups: Specifies the collector groups whose collector reported the events. 
+			destinations: Specifies the connection destination(s) of the events. 
+			device: Specifies the device name where the events occurred. 
+			deviceControl: A true/false parameter indicating whether to include only device control events. 
+			deviceIps: Specifies the IPs of the devices where the event occurred. 
+			eventIds: Specifies the required event IDs. 
+			eventType: Specifies the type of the event. 
+			expired: A true/false parameter indicating whether to include only expired events. 
+			fileHash: Specifies the hash signature of the main process of the event. 
+			firstSeen:  Specifies the date when the event was first seen (Deprecated). 
+			firstSeenFrom: Specifies the from date when the event was first seen. 
+			firstSeenTo: Specifies the to date when the event was first seen. 
+			handled:  A true/false parameter indicating whether events were handled/unhandled. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			lastSeen:  Specifies the date when the event was last seen (Deprecated). 
+			lastSeenFrom: Specifies the from date when the event was last seen. 
+			lastSeenTo: Specifies the to date when the event was last seen. 
+			loggedUser: Specifies the logged user. 
+			macAddresses: Specifies the mac addresses where the event occurred. 
+			muted: A true/false parameter indicating if the event is muted. 
+			operatingSystems: Specifies the operating system of the devices where the events occurred. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			paths: Specifies the paths of the processes related to the event. 
+			process: Specifies the main process of the event. 
+			rule: Specifies the short rule name of the rule that triggered the events. 
+			seen: A true/false parameter indicating whether events were read/unread by the user operating the API. 
+			severities: Specifies the severity of the event (Deprecated). 
+			signed: A true/false parameter indicating if the event is signed. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+			updateEventsRequest: updateEventsRequest. 
+			archive: A true/false parameter indicating whether to update archived events. 
+			classification: Specifies the event classification. 
+			comment: Specifies a user-defined string attached to the event. 
+			familyName: Specifies the event family name. 
+			forceUnmute: Indicates whether to force archive even if the event is muted. 
+			handle: A true/false parameter indicating update the events handled/unhandled. 
+			malwareType: Specifies the event malware type. 
+			mute: A true/false parameter indicating whether to mute events. 
+			muteDuration: Specifies the mute duration time. 
+			read: A true/false parameter indicating whether the events are read/unread by the user operating the API. 
+			threatName: Specifies the event threat name. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/events'
@@ -973,46 +1006,47 @@ class Events:
 		class Events
 		Description: This API call updates the read/unread, handled/unhandled or archived/unarchived state of an event. The output of this call is a message indicating whether the update succeeded or failed.
 
-		:param actions: Specifies the action of the event. 
-		:param applicationControl: A true/false parameter indicating whether to include only application control events. 
-		:param archived: A true/false parameter indicating whether to include only archived events. 
-		:param classifications: Specifies the classification of the event. 
-		:param collectorGroups: Specifies the collector groups whose collector reported the events. 
-		:param deleteAll: A true/false parameter indicating if all events should be deleted. 
-		:param destinations: Specifies the connection destination(s) of the events. 
-		:param device: Specifies the device name where the events occurred. 
-		:param deviceControl: A true/false parameter indicating whether to include only device control events. 
-		:param deviceIps: Specifies the IPs of the devices where the event occurred. 
-		:param eventIds: Specifies the required event IDs. 
-		:param eventType: Specifies the type of the event. 
-		:param expired: A true/false parameter indicating whether to include only expired events. 
-		:param fileHash: Specifies the hash signature of the main process of the event. 
-		:param firstSeen:  Specifies the date when the event was first seen (Deprecated). 
-		:param firstSeenFrom: Specifies the from date when the event was first seen. 
-		:param firstSeenTo: Specifies the to date when the event was first seen. 
-		:param handled:  A true/false parameter indicating whether events were handled/unhandled. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param lastSeen:  Specifies the date when the event was last seen (Deprecated). 
-		:param lastSeenFrom: Specifies the from date when the event was last seen. 
-		:param lastSeenTo: Specifies the to date when the event was last seen. 
-		:param loggedUser: Specifies the logged user. 
-		:param macAddresses: Specifies the mac addresses where the event occurred. 
-		:param muted: A true/false parameter indicating if the event is muted. 
-		:param operatingSystems: Specifies the operating system of the devices where the events occurred. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param paths: Specifies the paths of the processes related to the event. 
-		:param process: Specifies the main process of the event. 
-		:param rule: Specifies the short rule name of the rule that triggered the events. 
-		:param seen: A true/false parameter indicating whether events were read/unread by the user operating the API. 
-		:param severities: Specifies the severity of the event (Deprecated). 
-		:param signed: A true/false parameter indicating if the event is signed. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+		Args:
+			actions: Specifies the action of the event. 
+			applicationControl: A true/false parameter indicating whether to include only application control events. 
+			archived: A true/false parameter indicating whether to include only archived events. 
+			classifications: Specifies the classification of the event. 
+			collectorGroups: Specifies the collector groups whose collector reported the events. 
+			deleteAll: A true/false parameter indicating if all events should be deleted. 
+			destinations: Specifies the connection destination(s) of the events. 
+			device: Specifies the device name where the events occurred. 
+			deviceControl: A true/false parameter indicating whether to include only device control events. 
+			deviceIps: Specifies the IPs of the devices where the event occurred. 
+			eventIds: Specifies the required event IDs. 
+			eventType: Specifies the type of the event. 
+			expired: A true/false parameter indicating whether to include only expired events. 
+			fileHash: Specifies the hash signature of the main process of the event. 
+			firstSeen:  Specifies the date when the event was first seen (Deprecated). 
+			firstSeenFrom: Specifies the from date when the event was first seen. 
+			firstSeenTo: Specifies the to date when the event was first seen. 
+			handled:  A true/false parameter indicating whether events were handled/unhandled. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			lastSeen:  Specifies the date when the event was last seen (Deprecated). 
+			lastSeenFrom: Specifies the from date when the event was last seen. 
+			lastSeenTo: Specifies the to date when the event was last seen. 
+			loggedUser: Specifies the logged user. 
+			macAddresses: Specifies the mac addresses where the event occurred. 
+			muted: A true/false parameter indicating if the event is muted. 
+			operatingSystems: Specifies the operating system of the devices where the events occurred. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			paths: Specifies the paths of the processes related to the event. 
+			process: Specifies the main process of the event. 
+			rule: Specifies the short rule name of the rule that triggered the events. 
+			seen: A true/false parameter indicating whether events were read/unread by the user operating the API. 
+			severities: Specifies the severity of the event (Deprecated). 
+			signed: A true/false parameter indicating if the event is signed. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/events'
@@ -1099,44 +1133,45 @@ class Events:
 		class Events
 		Description: Count Events.
 
-		:param actions: Specifies the action of the event. 
-		:param applicationControl: A true/false parameter indicating whether to include only application control events. 
-		:param archived: A true/false parameter indicating whether to include only archived events. 
-		:param classifications: Specifies the classification of the event. 
-		:param collectorGroups: Specifies the collector groups whose collector reported the events. 
-		:param destinations: Specifies the connection destination(s) of the events. 
-		:param device: Specifies the device name where the events occurred. 
-		:param deviceControl: A true/false parameter indicating whether to include only device control events. 
-		:param deviceIps: Specifies the IPs of the devices where the event occurred. 
-		:param eventIds: Specifies the required event IDs. 
-		:param eventType: Specifies the type of the event. 
-		:param expired: A true/false parameter indicating whether to include only expired events. 
-		:param fileHash: Specifies the hash signature of the main process of the event. 
-		:param firstSeen:  Specifies the date when the event was first seen (Deprecated). 
-		:param firstSeenFrom: Specifies the from date when the event was first seen. 
-		:param firstSeenTo: Specifies the to date when the event was first seen. 
-		:param handled:  A true/false parameter indicating whether events were handled/unhandled. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param lastSeen:  Specifies the date when the event was last seen (Deprecated). 
-		:param lastSeenFrom: Specifies the from date when the event was last seen. 
-		:param lastSeenTo: Specifies the to date when the event was last seen. 
-		:param loggedUser: Specifies the logged user. 
-		:param macAddresses: Specifies the mac addresses where the event occurred. 
-		:param muted: A true/false parameter indicating if the event is muted. 
-		:param operatingSystems: Specifies the operating system of the devices where the events occurred. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param paths: Specifies the paths of the processes related to the event. 
-		:param process: Specifies the main process of the event. 
-		:param rule: Specifies the short rule name of the rule that triggered the events. 
-		:param seen: A true/false parameter indicating whether events were read/unread by the user operating the API. 
-		:param severities: Specifies the severity of the event (Deprecated). 
-		:param signed: A true/false parameter indicating if the event is signed. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+		Args:
+			actions: Specifies the action of the event. 
+			applicationControl: A true/false parameter indicating whether to include only application control events. 
+			archived: A true/false parameter indicating whether to include only archived events. 
+			classifications: Specifies the classification of the event. 
+			collectorGroups: Specifies the collector groups whose collector reported the events. 
+			destinations: Specifies the connection destination(s) of the events. 
+			device: Specifies the device name where the events occurred. 
+			deviceControl: A true/false parameter indicating whether to include only device control events. 
+			deviceIps: Specifies the IPs of the devices where the event occurred. 
+			eventIds: Specifies the required event IDs. 
+			eventType: Specifies the type of the event. 
+			expired: A true/false parameter indicating whether to include only expired events. 
+			fileHash: Specifies the hash signature of the main process of the event. 
+			firstSeen:  Specifies the date when the event was first seen (Deprecated). 
+			firstSeenFrom: Specifies the from date when the event was first seen. 
+			firstSeenTo: Specifies the to date when the event was first seen. 
+			handled:  A true/false parameter indicating whether events were handled/unhandled. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			lastSeen:  Specifies the date when the event was last seen (Deprecated). 
+			lastSeenFrom: Specifies the from date when the event was last seen. 
+			lastSeenTo: Specifies the to date when the event was last seen. 
+			loggedUser: Specifies the logged user. 
+			macAddresses: Specifies the mac addresses where the event occurred. 
+			muted: A true/false parameter indicating if the event is muted. 
+			operatingSystems: Specifies the operating system of the devices where the events occurred. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			paths: Specifies the paths of the processes related to the event. 
+			process: Specifies the main process of the event. 
+			rule: Specifies the short rule name of the rule that triggered the events. 
+			seen: A true/false parameter indicating whether events were read/unread by the user operating the API. 
+			severities: Specifies the severity of the event (Deprecated). 
+			signed: A true/false parameter indicating if the event is signed. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			int
 
 		'''
@@ -1222,26 +1257,27 @@ class Events:
 		class Events
 		Description: This API call adds an exception to a specific event. The output of this call is a message indicating whether the creation of the exception .
 
-		:param allCollectorGroups: A true/false parameter indicating whether the exception should be applied to all collector groups. When not used, all collector groups are selected. 
-		:param allDestinations: A true/false parameter indicating whether the exception should be applied to all destinations. When not used, all destinations are selected. 
-		:param allOrganizations: A true/false parameter indicating whether the exception should be applied to all the organizations (tenants). This parameter is only relevant in multi-tenancy environment. This parameter is only allowed for user with Hoster privilege (general admin). 
-		:param allUsers: A true/false parameter indicating whether the exception should be applied to all users. When not used, all users are selected. 
-		:param collectorGroups: Specifies the list of all the collector groups to which the exception should be applied. When not used, all collector groups are selected. 
-		:param comment: Specifies a user-defined string to attach to the exception. 
-		:param destinations: A list of IPs to which the exception applies and/or the value all internal destinations. 
-		:param eventId: Specifies the event ID on which to create the exception. 
-		:param exceptionId: Specifies the exception ID to edit. 
-		:param exceptionRequest: exceptionRequest. 
-		:param useAnyPath: For each relevant process in each relevant rule, the user must indicate true/false to set an exception on the path that was seen in the event or for any path. 
-		:param useInException: For each relevant process in each relevant rule, the user must indicate true/false in order to include it in the exception. 
-		:param wildcardFiles: For each relevant process in each relevant rule filename, check if pattern matches the file value, and according to action (true/false) attach/remove the exception wildcard field. 
-		:param wildcardPaths: For each relevant process in each relevant rule path name, check if pattern matches the file value, and according to action (true/false) attach/remove the exception wildcard field. 
-		:param forceCreate: A true/false parameter indicating whether to create the exception, even if there are already exceptions that cover this given event. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param users: A list of users to which the exception. 
+		Args:
+			allCollectorGroups: A true/false parameter indicating whether the exception should be applied to all collector groups. When not used, all collector groups are selected. 
+			allDestinations: A true/false parameter indicating whether the exception should be applied to all destinations. When not used, all destinations are selected. 
+			allOrganizations: A true/false parameter indicating whether the exception should be applied to all the organizations (tenants). This parameter is only relevant in multi-tenancy environment. This parameter is only allowed for user with Hoster privilege (general admin). 
+			allUsers: A true/false parameter indicating whether the exception should be applied to all users. When not used, all users are selected. 
+			collectorGroups: Specifies the list of all the collector groups to which the exception should be applied. When not used, all collector groups are selected. 
+			comment: Specifies a user-defined string to attach to the exception. 
+			destinations: A list of IPs to which the exception applies and/or the value all internal destinations. 
+			eventId: Specifies the event ID on which to create the exception. 
+			exceptionId: Specifies the exception ID to edit. 
+			exceptionRequest: exceptionRequest. 
+			useAnyPath: For each relevant process in each relevant rule, the user must indicate true/false to set an exception on the path that was seen in the event or for any path. 
+			useInException: For each relevant process in each relevant rule, the user must indicate true/false in order to include it in the exception. 
+			wildcardFiles: For each relevant process in each relevant rule filename, check if pattern matches the file value, and according to action (true/false) attach/remove the exception wildcard field. 
+			wildcardPaths: For each relevant process in each relevant rule path name, check if pattern matches the file value, and according to action (true/false) attach/remove the exception wildcard field. 
+			forceCreate: A true/false parameter indicating whether to create the exception, even if there are already exceptions that cover this given event. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			users: A list of users to which the exception. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			str
 
 		'''
@@ -1281,12 +1317,13 @@ class Events:
 		class Events
 		Description: Get event as Json format.
 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param rawItemIds: Specifies the raw data item event IDs. 
+		Args:
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			rawItemIds: Specifies the raw data item event IDs. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/events/export-raw-data-items-json'
@@ -1305,44 +1342,45 @@ class Events:
 		class Events
 		Description: List Events.
 
-		:param actions: Specifies the action of the event. 
-		:param applicationControl: A true/false parameter indicating whether to include only application control events. 
-		:param archived: A true/false parameter indicating whether to include only archived events. 
-		:param classifications: Specifies the classification of the event. 
-		:param collectorGroups: Specifies the collector groups whose collector reported the events. 
-		:param destinations: Specifies the connection destination(s) of the events. 
-		:param device: Specifies the device name where the events occurred. 
-		:param deviceControl: A true/false parameter indicating whether to include only device control events. 
-		:param deviceIps: Specifies the IPs of the devices where the event occurred. 
-		:param eventIds: Specifies the required event IDs. 
-		:param eventType: Specifies the type of the event. 
-		:param expired: A true/false parameter indicating whether to include only expired events. 
-		:param fileHash: Specifies the hash signature of the main process of the event. 
-		:param firstSeen:  Specifies the date when the event was first seen (Deprecated). 
-		:param firstSeenFrom: Specifies the from date when the event was first seen. 
-		:param firstSeenTo: Specifies the to date when the event was first seen. 
-		:param handled:  A true/false parameter indicating whether events were handled/unhandled. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param lastSeen:  Specifies the date when the event was last seen (Deprecated). 
-		:param lastSeenFrom: Specifies the from date when the event was last seen. 
-		:param lastSeenTo: Specifies the to date when the event was last seen. 
-		:param loggedUser: Specifies the logged user. 
-		:param macAddresses: Specifies the mac addresses where the event occurred. 
-		:param muted: A true/false parameter indicating if the event is muted. 
-		:param operatingSystems: Specifies the operating system of the devices where the events occurred. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param paths: Specifies the paths of the processes related to the event. 
-		:param process: Specifies the main process of the event. 
-		:param rule: Specifies the short rule name of the rule that triggered the events. 
-		:param seen: A true/false parameter indicating whether events were read/unread by the user operating the API. 
-		:param severities: Specifies the severity of the event (Deprecated). 
-		:param signed: A true/false parameter indicating if the event is signed. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+		Args:
+			actions: Specifies the action of the event. 
+			applicationControl: A true/false parameter indicating whether to include only application control events. 
+			archived: A true/false parameter indicating whether to include only archived events. 
+			classifications: Specifies the classification of the event. 
+			collectorGroups: Specifies the collector groups whose collector reported the events. 
+			destinations: Specifies the connection destination(s) of the events. 
+			device: Specifies the device name where the events occurred. 
+			deviceControl: A true/false parameter indicating whether to include only device control events. 
+			deviceIps: Specifies the IPs of the devices where the event occurred. 
+			eventIds: Specifies the required event IDs. 
+			eventType: Specifies the type of the event. 
+			expired: A true/false parameter indicating whether to include only expired events. 
+			fileHash: Specifies the hash signature of the main process of the event. 
+			firstSeen:  Specifies the date when the event was first seen (Deprecated). 
+			firstSeenFrom: Specifies the from date when the event was first seen. 
+			firstSeenTo: Specifies the to date when the event was first seen. 
+			handled:  A true/false parameter indicating whether events were handled/unhandled. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			lastSeen:  Specifies the date when the event was last seen (Deprecated). 
+			lastSeenFrom: Specifies the from date when the event was last seen. 
+			lastSeenTo: Specifies the to date when the event was last seen. 
+			loggedUser: Specifies the logged user. 
+			macAddresses: Specifies the mac addresses where the event occurred. 
+			muted: A true/false parameter indicating if the event is muted. 
+			operatingSystems: Specifies the operating system of the devices where the events occurred. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			paths: Specifies the paths of the processes related to the event. 
+			process: Specifies the main process of the event. 
+			rule: Specifies the short rule name of the rule that triggered the events. 
+			seen: A true/false parameter indicating whether events were read/unread by the user operating the API. 
+			severities: Specifies the severity of the event (Deprecated). 
+			signed: A true/false parameter indicating if the event is signed. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -1428,28 +1466,29 @@ class Events:
 		class Events
 		Description: List raw data items.
 
-		:param collectorGroups: Specifies the collector groups whose collector reported the raw events. 
-		:param destinations: Specifies the connection destination(s) of the events. 
-		:param device: Specifies the name of the device where the raw event occurred. 
-		:param deviceIps: Specifies the IPs of the devices where the event occurred. 
-		:param eventId: Specifies the ID of the event that holds the raw data items. 
-		:param firstSeen: Specifies the date when the raw data item was first seen (Deprecated). 
-		:param firstSeenFrom: Specifies the from date when the raw data item was first seen. 
-		:param firstSeenTo: Specifies the to date when the raw data item was first seen. 
-		:param fullDataRequested: A true/false parameter indicating whether to include the event internal information. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param lastSeen: Specifies the date when the raw data item was last seen (Deprecated). 
-		:param lastSeenFrom: Specifies the from date when the raw data item was last seen. 
-		:param lastSeenTo: Specifies the to date when the raw data item was last seen. 
-		:param loggedUser: Specifies the logged user. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param rawEventIds: Specifies the list of raw data item event IDs. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+		Args:
+			collectorGroups: Specifies the collector groups whose collector reported the raw events. 
+			destinations: Specifies the connection destination(s) of the events. 
+			device: Specifies the name of the device where the raw event occurred. 
+			deviceIps: Specifies the IPs of the devices where the event occurred. 
+			eventId: Specifies the ID of the event that holds the raw data items. 
+			firstSeen: Specifies the date when the raw data item was first seen (Deprecated). 
+			firstSeenFrom: Specifies the from date when the raw data item was first seen. 
+			firstSeenTo: Specifies the to date when the raw data item was first seen. 
+			fullDataRequested: A true/false parameter indicating whether to include the event internal information. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			lastSeen: Specifies the date when the raw data item was last seen (Deprecated). 
+			lastSeenFrom: Specifies the from date when the raw data item was last seen. 
+			lastSeenTo: Specifies the to date when the raw data item was last seen. 
+			loggedUser: Specifies the logged user. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			rawEventIds: Specifies the list of raw data item event IDs. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -1497,6 +1536,7 @@ class Events:
 		return fortiedr_connection.get(url)
 
 class Exceptions:
+	'''This API call outputs all exceptions in the system'''
 
 	def create_or_edit_exception(self, confirmEdit :bool = None, exceptionJSON :str = None, organization :str = None) -> tuple[bool, int]:
 
@@ -1504,12 +1544,13 @@ class Exceptions:
 		class Exceptions
 		Description: This API call creates a new exception or updates an existing exception based on the given exception JSON body parameter.
 
-		:param confirmEdit: Confirm editing an existing exception in case of providing an exception ID in the body JSON. By default confirmEdit is false. 
-		:param exceptionJSON: exceptionJSON. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			confirmEdit: Confirm editing an existing exception in case of providing an exception ID in the body JSON. By default confirmEdit is false. 
+			exceptionJSON: exceptionJSON. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			int
 
 		'''
@@ -1529,25 +1570,26 @@ class Exceptions:
 		class Exceptions
 		Description: Delete exceptions.
 
-		:param collectorGroups: Specifies the list of all the collector groups to which the exception applied. 
-		:param comment: Specifies a comment attach to the exception. 
-		:param createdAfter: Specifies the date after which the exception was created. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
-		:param createdBefore: Specifies the date before which the exception was created. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
-		:param deleteAll: A true/false parameter indicating if all exception should be deleted. 
-		:param destination: Specifies a destination IP of the exception. 
-		:param exceptionId: Specifies the required exception ID. 
-		:param exceptionIds: Specifies a list of exception ids. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param path: Specifies the path of the exception. 
-		:param process: Specifies the process of the exception. 
-		:param rules: Specifies a list of rule names. 
-		:param updatedAfter: Specifies the date after which the exception was updated. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
-		:param updatedBefore: Specifies the date before which the exception was updated. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
-		:param user: Specifies a user of the exception. 
+		Args:
+			collectorGroups: Specifies the list of all the collector groups to which the exception applied. 
+			comment: Specifies a comment attach to the exception. 
+			createdAfter: Specifies the date after which the exception was created. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
+			createdBefore: Specifies the date before which the exception was created. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
+			deleteAll: A true/false parameter indicating if all exception should be deleted. 
+			destination: Specifies a destination IP of the exception. 
+			exceptionId: Specifies the required exception ID. 
+			exceptionIds: Specifies a list of exception ids. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			path: Specifies the path of the exception. 
+			process: Specifies the process of the exception. 
+			rules: Specifies a list of rule names. 
+			updatedAfter: Specifies the date after which the exception was updated. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
+			updatedBefore: Specifies the date before which the exception was updated. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
+			user: Specifies a user of the exception. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/exceptions/delete'
@@ -1592,11 +1634,12 @@ class Exceptions:
 		class Exceptions
 		Description: Show exceptions.
 
-		:param eventId: Specifies the required event ID. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			eventId: Specifies the required event ID. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -1616,22 +1659,23 @@ class Exceptions:
 		class Exceptions
 		Description: List of exceptions.
 
-		:param collectorGroups: Specifies the list of all the collector groups to which the exception applied. 
-		:param comment: Specifies a comment attach to the exception. 
-		:param createdAfter: Specifies the date after which the exception was created. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
-		:param createdBefore: Specifies the date before which the exception was created. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
-		:param destination: Specifies a destination IP of the exception. 
-		:param exceptionIds: Specifies a list of exception ids. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param path: Specifies the path of the exception. 
-		:param process: Specifies the process of the exception. 
-		:param rules: Specifies a list of rule names. 
-		:param updatedAfter: Specifies the date after which the exception was updated. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
-		:param updatedBefore: Specifies the date before which the exception was updated. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
-		:param user: Specifies a user of the exception. 
+		Args:
+			collectorGroups: Specifies the list of all the collector groups to which the exception applied. 
+			comment: Specifies a comment attach to the exception. 
+			createdAfter: Specifies the date after which the exception was created. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
+			createdBefore: Specifies the date before which the exception was created. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
+			destination: Specifies a destination IP of the exception. 
+			exceptionIds: Specifies a list of exception ids. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			path: Specifies the path of the exception. 
+			process: Specifies the process of the exception. 
+			rules: Specifies a list of rule names. 
+			updatedAfter: Specifies the date after which the exception was updated. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
+			updatedBefore: Specifies the date before which the exception was updated. Specify the date using the yyyy-MM-dd HH:mm:ss format. 
+			user: Specifies a user of the exception. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -1666,7 +1710,10 @@ class Exceptions:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
+class Exclusions:
+	'''API to create EDR exclusions.'''
 class Forensics:
+	'''The Forensics module facilitates deep analysis into the actual internals of the communicating devices operating system that led up to an event.'''
 
 	def get_event_file(self, rawEventId : int, disk :bool = None, endRange :str = None, filePaths :dict = None, memory :bool = None, organization :str = None, processId :int = None, startRange :str = None) -> tuple[bool, None]:
 
@@ -1674,18 +1721,19 @@ class Forensics:
 		class Forensics
 		Description: This API call retrieves a file or memory.
 
-		:param disk: A true/false parameter indicating whether find in the disk. 
-		:param endRange: Specifies the memory end range, in Hexadecimal format. 
-		:param filePaths: Specifies the list of file paths. 
-		:param memory: A true/false parameter indicating whether find in the memory. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param processId: Specifies the ID of the process from which to take a memory image. required for memory base action. 
-		:param rawEventId: Specifies the ID of the raw event on which to perform the memory retrieval. 
-		:param startRange: Specifies the memory start range, in Hexadecimal format. 
+		Args:
+			disk: A true/false parameter indicating whether find in the disk. 
+			endRange: Specifies the memory end range, in Hexadecimal format. 
+			filePaths: Specifies the list of file paths. 
+			memory: A true/false parameter indicating whether find in the memory. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			processId: Specifies the ID of the process from which to take a memory image. required for memory base action. 
+			rawEventId: Specifies the ID of the raw event on which to perform the memory retrieval. 
+			startRange: Specifies the memory start range, in Hexadecimal format. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/forensics/get-event-file'
@@ -1716,14 +1764,15 @@ class Forensics:
 		class Forensics
 		Description: This API call retrieves a file or memory.
 
-		:param device: Specifies the name or id of the device to remediate. 
-		:param filePaths: Specifies the list of file paths. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param type: Specifies the device parameter type used in the request : Name or ID. 
+		Args:
+			device: Specifies the name or id of the device to remediate. 
+			filePaths: Specifies the list of file paths. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			type: Specifies the device parameter type used in the request : Name or ID. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/forensics/get-file'
@@ -1746,22 +1795,23 @@ class Forensics:
 		class Forensics
 		Description: This API kill process / delete file / clean persistence, File and persistence paths must be specified in a logical format.
 
-		:param device: Specifies the name of the device to remediate. You must specify a value for either device or deviceId (see below). 
-		:param deviceId: Specifies the unique identifier (ID) of the device to remediate. You must specify a value for either deviceId or device (see above). 
-		:param executablesToRemove: Specifies the list of full paths of executable files (*.exe) to delete on thegiven device. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param persistenceDataAction: persistence data desired action. 
-		:param persistenceDataNewContent: persistence data new content. 
-		:param persistenceDataPath: persistence data path. 
-		:param persistenceDataValueName: persistence data value name. 
-		:param persistenceDataValueNewType: persistence data value new type. 
-		:param processName: Specifies the process name. 
-		:param terminatedProcessId: Represents the process ID to terminate on the device. 
-		:param threadId: Specifies the thread ID. 
+		Args:
+			device: Specifies the name of the device to remediate. You must specify a value for either device or deviceId (see below). 
+			deviceId: Specifies the unique identifier (ID) of the device to remediate. You must specify a value for either deviceId or device (see above). 
+			executablesToRemove: Specifies the list of full paths of executable files (*.exe) to delete on thegiven device. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			persistenceDataAction: persistence data desired action. 
+			persistenceDataNewContent: persistence data new content. 
+			persistenceDataPath: persistence data path. 
+			persistenceDataValueName: persistence data value name. 
+			persistenceDataValueNewType: persistence data value new type. 
+			processName: Specifies the process name. 
+			terminatedProcessId: Represents the process ID to terminate on the device. 
+			threadId: Specifies the thread ID. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/forensics/remediate-device'
@@ -1794,6 +1844,7 @@ class Forensics:
 		return fortiedr_connection.insert(url)
 
 class HashSearch:
+	'''The Hash Search API'''
 
 	def search(self, fileHashes : dict, organization :str = None) -> tuple[bool, None]:
 
@@ -1801,12 +1852,13 @@ class HashSearch:
 		class HashSearch
 		Description: This API enables the user to search a file hash among the current events, threat hunting repository and communicating applications that exist in the system.
 
-		:param fileHashes: Specifies the list of files hashes. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			fileHashes: Specifies the list of files hashes. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/hash/search'
@@ -1819,6 +1871,7 @@ class HashSearch:
 		return fortiedr_connection.get(url)
 
 class IPsets:
+	'''API to define IPs sets and use them for exceptions'''
 
 	def create_ip_set(self, include: dict, name: str, description: str = None, exclude: dict = None, organization: str = None) -> tuple[bool, None]:
 
@@ -1827,16 +1880,17 @@ class IPsets:
 		Description: This API create IP sets in the system.
 	Use the input parameter organization=All organizations to create for all the organization. (only for Admin role.
 
-		:param ipGroupsRequest: ipGroupsRequest. 
-		:param description: Specifies the IP set description. 
-		:param exclude: List of IPs, ranges and mask that excluded in the IP set. 
-		:param include: Specifies List of IPs, ranges and mask that included in the IP set. 
-		:param name: Specifies the IP set name. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies: ��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly. ��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations. ��� each ��� Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.. 
+		Args:
+			ipGroupsRequest: ipGroupsRequest. 
+			description: Specifies the IP set description. 
+			exclude: List of IPs, ranges and mask that excluded in the IP set. 
+			include: Specifies List of IPs, ranges and mask that included in the IP set. 
+			name: Specifies the IP set name. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies: ��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly. ��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations. ��� each ��� Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/ip-sets/create-ip-set'
@@ -1858,12 +1912,13 @@ class IPsets:
 		class IPsets
 		Description: This API delete IP sets from the system. Use the input parameters to filter organization.
 
-		:param ipSets: Specifies the list of IP name to delete. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			ipSets: Specifies the list of IP name to delete. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/ip-sets/delete-ip-set'
@@ -1882,11 +1937,12 @@ class IPsets:
 		class IPsets
 		Description: This API call outputs a list of the IP sets in the system. Use the input parameters to filter the list.
 
-		:param ip: Specifies the IP of the requested sets. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			ip: Specifies the IP of the requested sets. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -1906,16 +1962,17 @@ class IPsets:
 		class IPsets
 		Description: This API update IP sets in the system. Use the input parameters to filter organization.
 
-		:param ipGroupsRequest: ipGroupsRequest. 
-		:param description: Specifies the IP set description. 
-		:param exclude: List of IPs, ranges and mask that excluded in the IP set. 
-		:param include: Specifies List of IPs, ranges and mask that included in the IP set. 
-		:param name: Specifies the IP set name. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.��� each ��� Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.. 
+		Args:
+			ipGroupsRequest: ipGroupsRequest. 
+			description: Specifies the IP set description. 
+			exclude: List of IPs, ranges and mask that excluded in the IP set. 
+			include: Specifies List of IPs, ranges and mask that included in the IP set. 
+			name: Specifies the IP set name. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.��� each ��� Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/ip-sets/update-ip-set'
@@ -1926,6 +1983,7 @@ class IPsets:
 		return fortiedr_connection.insert(url)
 
 class Integrations:
+	'''API to create and test connectors.'''
 
 	def connectors_metadata(self, organization :str = None) -> tuple[bool, None]:
 
@@ -1933,11 +1991,12 @@ class Integrations:
 		class Integrations
 		Description: Get connectors metadata, describing the valid values for connector fields definition and on-premise cores..
 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/integrations/connectors-metadata'
@@ -1954,23 +2013,24 @@ class Integrations:
 		class Integrations
 		Description: Creates a new connector. Please note: Creation of Custom connectors/actions is not yet support..
 
-		:param createConnectorRequest: createConnectorRequest. 
-		:param apiKey: Specifies the connector's API key (API key authentication mode). Should be empty if username and passwords are used.. 
-		:param connectorActions: Specifies the connector's actions' definition. Use connectors-metadata API for supported values. 
-		:param coreId: Specifies the ID of the connector's on-premise core. 
-		:param enabled: Specifies whether or not the connector is enabled.. Example: enabled=True.
-		:param host: Specifies the connector host address.. Example: host=127.0.0.1.
-		:param name: Specifies the connector name.. Example: name=Connector Name.
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param password: Specifies the connector's user's password (credentials authentication mode). Should be empty if apiKey is used.. 
-		:param port: Specifies the connector port.. Example: port=443.
-		:param type: Specifies the connector type. See /connectors-metadata for valid types.. Example: type=Firewall.
-		:param username: Specifies the connector's user's username (credentials authentication mode). Should be empty if apiKey is used.. 
-		:param vendor: Specifies the connector's vendor. See /connectors-metadata for valid values.. Example: vendor=FortiGate.
+		Args:
+			createConnectorRequest: createConnectorRequest. 
+			apiKey: Specifies the connector's API key (API key authentication mode). Should be empty if username and passwords are used.. 
+			connectorActions: Specifies the connector's actions' definition. Use connectors-metadata API for supported values. 
+			coreId: Specifies the ID of the connector's on-premise core. 
+			enabled: Specifies whether or not the connector is enabled.. Example: enabled=True.
+			host: Specifies the connector host address.. Example: host=127.0.0.1.
+			name: Specifies the connector name.. Example: name=Connector Name.
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			password: Specifies the connector's user's password (credentials authentication mode). Should be empty if apiKey is used.. 
+			port: Specifies the connector port.. Example: port=443.
+			type: Specifies the connector type. See /connectors-metadata for valid types.. Example: type=Firewall.
+			username: Specifies the connector's user's username (credentials authentication mode). Should be empty if apiKey is used.. 
+			vendor: Specifies the connector's vendor. See /connectors-metadata for valid values.. Example: vendor=FortiGate.
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/integrations/create-connector'
@@ -1999,13 +2059,14 @@ class Integrations:
 		class Integrations
 		Description: Deletes a connector.
 
-		:param connectorName: Specifies the connector's name (case sensitive). 
-		:param connectorType: Specifies the connector's type.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			connectorName: Specifies the connector's name (case sensitive). 
+			connectorType: Specifies the connector's type.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/integrations/delete-connector'
@@ -2026,11 +2087,12 @@ class Integrations:
 		class Integrations
 		Description: List all organization connectors.
 
-		:param onlyValidConnectors: Set to true to retrieve enabled, non-failing connectors.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			onlyValidConnectors: Set to true to retrieve enabled, non-failing connectors.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -2050,13 +2112,14 @@ class Integrations:
 		class Integrations
 		Description: Tests a connector.
 
-		:param connectorName: Specifies the connector's name (case sensitive). 
-		:param connectorType: Specifies the connector's type.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			connectorName: Specifies the connector's name (case sensitive). 
+			connectorType: Specifies the connector's type.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/integrations/test-connector'
@@ -2077,23 +2140,24 @@ class Integrations:
 		class Integrations
 		Description: Updates an existing connector based on (name, type, organization). Please note: Modification of Custom connectors/actions is not yet support..
 
-		:param updateConnectorRequest: updateConnectorRequest. 
-		:param apiKey: Specifies the connector's API key (API key authentication mode). Should be empty if username and passwords are used.. 
-		:param connectorActions: Specifies the connector's actions' definition. Use connectors-metadata API for supported values. 
-		:param coreId: Specifies the ID of the connector's on-premise core. 
-		:param enabled: Specifies whether or not the connector is enabled.. Example: enabled=True.
-		:param host: Specifies the connector host address.. Example: host=127.0.0.1.
-		:param name: Specifies the connector name.. Example: name=Connector Name.
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param password: Specifies the connector's user's password (credentials authentication mode). Should be empty if apiKey is used.. 
-		:param port: Specifies the connector port.. Example: port=443.
-		:param type: Specifies the connector type. See /connectors-metadata for valid types.. Example: type=Firewall.
-		:param username: Specifies the connector's user's username (credentials authentication mode). Should be empty if apiKey is used.. 
-		:param vendor: Specifies the connector's vendor. See /connectors-metadata for valid values.. Example: vendor=FortiGate.
+		Args:
+			updateConnectorRequest: updateConnectorRequest. 
+			apiKey: Specifies the connector's API key (API key authentication mode). Should be empty if username and passwords are used.. 
+			connectorActions: Specifies the connector's actions' definition. Use connectors-metadata API for supported values. 
+			coreId: Specifies the ID of the connector's on-premise core. 
+			enabled: Specifies whether or not the connector is enabled.. Example: enabled=True.
+			host: Specifies the connector host address.. Example: host=127.0.0.1.
+			name: Specifies the connector name.. Example: name=Connector Name.
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			password: Specifies the connector's user's password (credentials authentication mode). Should be empty if apiKey is used.. 
+			port: Specifies the connector port.. Example: port=443.
+			type: Specifies the connector type. See /connectors-metadata for valid types.. Example: type=Firewall.
+			username: Specifies the connector's user's username (credentials authentication mode). Should be empty if apiKey is used.. 
+			vendor: Specifies the connector's vendor. See /connectors-metadata for valid values.. Example: vendor=FortiGate.
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/integrations/update-connector'
@@ -2115,7 +2179,10 @@ class Integrations:
 		}
 		return fortiedr_connection.insert(url, updateConnectorRequest)
 
+class Integrationssupport:
+	'''The Integrations support module enables integration with hoster environments, e.g. EMS.'''
 class IoT:
+	'''The IoT module enables you to monitor the devices found in IoT scans and create/move IoT Groups.'''
 
 	def create_iot_group(self, name : str, organization :str = None) -> tuple[bool, None]:
 
@@ -2123,12 +2190,13 @@ class IoT:
 		class IoT
 		Description: This API call create IoT group.
 
-		:param name: IoT group name. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			name: IoT group name. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/iot/create-iot-group'
@@ -2147,30 +2215,31 @@ class IoT:
 		class IoT
 		Description: This API call deletes a IoT device(s).
 
-		:param categories: Specifies the list of categories values. 
-		:param devices: Specifies the list of device names. 
-		:param devicesIds: Specifies the list of device ids. 
-		:param firstSeenEnd: Retrieves IoT devices that were first seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param firstSeenStart: Retrieves IoT devices that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param internalIps: Specifies the list of IP values. 
-		:param iotGroups: Specifies the list of collector group names and retrieves collectors under the given groups. 
-		:param iotGroupsIds: Specifies the list of collector group ids and retrieves collectors under the given groups. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param lastSeenEnd: Retrieves IoT devices that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param lastSeenStart: Retrieves IoT devices that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param locations: Specifies the list of locations values. 
-		:param macAddresses: Specifies the list of mac address values. 
-		:param models: Specifies the list of models values. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param showExpired: Specifies whether to include IoT devices which have been disconnected for more than 3 days (sequentially) and are marked as Expired. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
-		:param vendors: Specifies the list of vendors values. 
+		Args:
+			categories: Specifies the list of categories values. 
+			devices: Specifies the list of device names. 
+			devicesIds: Specifies the list of device ids. 
+			firstSeenEnd: Retrieves IoT devices that were first seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			firstSeenStart: Retrieves IoT devices that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			internalIps: Specifies the list of IP values. 
+			iotGroups: Specifies the list of collector group names and retrieves collectors under the given groups. 
+			iotGroupsIds: Specifies the list of collector group ids and retrieves collectors under the given groups. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			lastSeenEnd: Retrieves IoT devices that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			lastSeenStart: Retrieves IoT devices that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			locations: Specifies the list of locations values. 
+			macAddresses: Specifies the list of mac address values. 
+			models: Specifies the list of models values. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			showExpired: Specifies whether to include IoT devices which have been disconnected for more than 3 days (sequentially) and are marked as Expired. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+			vendors: Specifies the list of vendors values. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/iot/delete-devices'
@@ -2225,12 +2294,13 @@ class IoT:
 		class IoT
 		Description: This API call outputs a list of the IoT devices info.
 
-		:param iotDeviceIds: Specifies the list of device ids. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			iotDeviceIds: Specifies the list of device ids. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/iot/export-iot-json'
@@ -2249,29 +2319,30 @@ class IoT:
 		class IoT
 		Description: This API call outputs a list of the IoT devices in the system. Use the input parameters to filter the list.
 
-		:param categories: Specifies the list of categories values. 
-		:param devices: Specifies the list of device names. 
-		:param devicesIds: Specifies the list of device ids. 
-		:param firstSeenEnd: Retrieves IoT devices that were first seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param firstSeenStart: Retrieves IoT devices that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param internalIps: Specifies the list of IP values. 
-		:param iotGroups: Specifies the list of collector group names and retrieves collectors under the given groups. 
-		:param iotGroupsIds: Specifies the list of collector group ids and retrieves collectors under the given groups. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param lastSeenEnd: Retrieves IoT devices that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param lastSeenStart: Retrieves IoT devices that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param locations: Specifies the list of locations values. 
-		:param macAddresses: Specifies the list of mac address values. 
-		:param models: Specifies the list of models values. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param showExpired: Specifies whether to include IoT devices which have been disconnected for more than 3 days (sequentially) and are marked as Expired. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
-		:param vendors: Specifies the list of vendors values. 
+		Args:
+			categories: Specifies the list of categories values. 
+			devices: Specifies the list of device names. 
+			devicesIds: Specifies the list of device ids. 
+			firstSeenEnd: Retrieves IoT devices that were first seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			firstSeenStart: Retrieves IoT devices that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			internalIps: Specifies the list of IP values. 
+			iotGroups: Specifies the list of collector group names and retrieves collectors under the given groups. 
+			iotGroupsIds: Specifies the list of collector group ids and retrieves collectors under the given groups. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			lastSeenEnd: Retrieves IoT devices that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			lastSeenStart: Retrieves IoT devices that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			locations: Specifies the list of locations values. 
+			macAddresses: Specifies the list of mac address values. 
+			models: Specifies the list of models values. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			showExpired: Specifies whether to include IoT devices which have been disconnected for more than 3 days (sequentially) and are marked as Expired. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+			vendors: Specifies the list of vendors values. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -2327,10 +2398,11 @@ class IoT:
 		class IoT
 		Description: This API call output the IoT devices groups.
 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -2348,13 +2420,14 @@ class IoT:
 		class IoT
 		Description: This API call move IoT devices between groups.
 
-		:param iotDeviceIds: Array of IoT device ids. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param targetIotGroup: IoT target group name. 
+		Args:
+			iotDeviceIds: Array of IoT device ids. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			targetIotGroup: IoT target group name. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/iot/move-iot-devices'
@@ -2375,29 +2448,30 @@ class IoT:
 		class IoT
 		Description: This API call device details scan on IoT device(s).
 
-		:param categories: Specifies the list of categories values. 
-		:param devices: Specifies the list of device names. 
-		:param devicesIds: Specifies the list of device ids. 
-		:param firstSeenEnd: Retrieves IoT devices that were first seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param firstSeenStart: Retrieves IoT devices that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param internalIps: Specifies the list of IP values. 
-		:param iotGroups: Specifies the list of collector group names and retrieves collectors under the given groups. 
-		:param iotGroupsIds: Specifies the list of collector group ids and retrieves collectors under the given groups. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param lastSeenEnd: Retrieves IoT devices that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param lastSeenStart: Retrieves IoT devices that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param locations: Specifies the list of locations values. 
-		:param macAddresses: Specifies the list of mac address values. 
-		:param models: Specifies the list of models values. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param showExpired: Specifies whether to include IoT devices which have been disconnected for more than 3 days (sequentially) and are marked as Expired. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
-		:param vendors: Specifies the list of vendors values. 
+		Args:
+			categories: Specifies the list of categories values. 
+			devices: Specifies the list of device names. 
+			devicesIds: Specifies the list of device ids. 
+			firstSeenEnd: Retrieves IoT devices that were first seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			firstSeenStart: Retrieves IoT devices that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			internalIps: Specifies the list of IP values. 
+			iotGroups: Specifies the list of collector group names and retrieves collectors under the given groups. 
+			iotGroupsIds: Specifies the list of collector group ids and retrieves collectors under the given groups. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			lastSeenEnd: Retrieves IoT devices that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			lastSeenStart: Retrieves IoT devices that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			locations: Specifies the list of locations values. 
+			macAddresses: Specifies the list of mac address values. 
+			models: Specifies the list of models values. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			showExpired: Specifies whether to include IoT devices which have been disconnected for more than 3 days (sequentially) and are marked as Expired. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+			vendors: Specifies the list of vendors values. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			str
 
 		'''
@@ -2447,6 +2521,7 @@ class IoT:
 		return fortiedr_connection.insert(url)
 
 class Organizations:
+	'''Organizations API'''
 
 	def create_organization(self, expirationDate: str, name: str, password: str, passwordConfirmation: str, eXtendedDetection: bool = None, edr: bool = None, edrAddOnsAllocated: int = None, edrBackupEnabled: bool = None, edrEnabled: bool = None, edrNumberOfShards: int = None, edrStorageAllocatedInMb: int = None, forensics: bool = None, iotAllocated: int = None, requestPolicyEngineLibUpdates: bool = None, serialNumber: str = None, serversAllocated: int = None, vulnerabilityAndIoT: bool = None, workstationsAllocated: int = None) -> tuple[bool, None]:
 
@@ -2454,29 +2529,30 @@ class Organizations:
 		class Organizations
 		Description: This API creates organization in the system (only for Admin role).
 
-		:param createAccountRequest: createAccountRequest. 
-		:param eXtendedDetection: A true/false parameter indication if the eXtended Detection is enabled for the organization. 
-		:param edr: A true/false parameter indicating whether the organization support Threat Hunting. 
-		:param edrAddOnsAllocated: Specifies the EDR storage add-ons allocated to this account. 
-		:param edrBackupEnabled: A true/false parameter indication if the EDR backup is enabled for the organization. 
-		:param edrEnabled: A true/false parameter indication if the EDR is enabled for the organization. 
-		:param edrNumberOfShards: Specifies the EDR shards per index, should be above 1 only for very large environments. 
-		:param edrStorageAllocatedInMb: Specifies the EDR storage allocation in MB, used when edrStorageAllocatedPercents is empty. 
-		:param expirationDate: Specifies the license expiration date. Specify the date using the following date format yyyy-MM-dd. 
-		:param forensics: A true/false parameter indicating whether the organization support Forensics. 
-		:param iotAllocated: Specifies the IoT device���s license capacity. 
-		:param name: Specifies the organization name. 
-		:param password: Specifies the device registration password name. 
-		:param passwordConfirmation: Specifies the confirm device registration password name. 
-		:param requestPolicyEngineLibUpdates: A true/false parameter indicating whether the organization collectors should request for policy engine lib updates. 
-		:param serialNumber: Specifies the serial number. 
-		:param serversAllocated: Specifies the server collector���s license capacity. 
-		:param vulnerabilityAndIoT: A true/false parameter indicating whether the organization support Vulnerability And IoT. 
-		:param workstationsAllocated: Specifies the workstation collector���s license capacity. 
+		Args:
+			createAccountRequest: createAccountRequest. 
+			eXtendedDetection: A true/false parameter indication if the eXtended Detection is enabled for the organization. 
+			edr: A true/false parameter indicating whether the organization support Threat Hunting. 
+			edrAddOnsAllocated: Specifies the EDR storage add-ons allocated to this account. 
+			edrBackupEnabled: A true/false parameter indication if the EDR backup is enabled for the organization. 
+			edrEnabled: A true/false parameter indication if the EDR is enabled for the organization. 
+			edrNumberOfShards: Specifies the EDR shards per index, should be above 1 only for very large environments. 
+			edrStorageAllocatedInMb: Specifies the EDR storage allocation in MB, used when edrStorageAllocatedPercents is empty. 
+			expirationDate: Specifies the license expiration date. Specify the date using the following date format yyyy-MM-dd. 
+			forensics: A true/false parameter indicating whether the organization support Forensics. 
+			iotAllocated: Specifies the IoT device���s license capacity. 
+			name: Specifies the organization name. 
+			password: Specifies the device registration password name. 
+			passwordConfirmation: Specifies the confirm device registration password name. 
+			requestPolicyEngineLibUpdates: A true/false parameter indicating whether the organization collectors should request for policy engine lib updates. 
+			serialNumber: Specifies the serial number. 
+			serversAllocated: Specifies the server collector���s license capacity. 
+			vulnerabilityAndIoT: A true/false parameter indicating whether the organization support Vulnerability And IoT. 
+			workstationsAllocated: Specifies the workstation collector���s license capacity. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/organizations/create-organization'
@@ -2511,11 +2587,12 @@ class Organizations:
 		class Organizations
 		Description: This API delete organization in the system (only for Admin role).
 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/organizations/delete-organization'
@@ -2532,12 +2609,13 @@ class Organizations:
 		class Organizations
 		Description: Export organization data as zip file.
 
-		:param destinationName: The organization destination name. 
-		:param organization: Organization to export. 
+		Args:
+			destinationName: The organization destination name. 
+			organization: Organization to export. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/organizations/export-organization'
@@ -2556,11 +2634,12 @@ class Organizations:
 		class Organizations
 		Description: Import organization.
 
-		:param file: Export zip file. 
+		Args:
+			file: Export zip file. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/organizations/import-organization'
@@ -2575,7 +2654,8 @@ class Organizations:
 		class Organizations
 		Description: This API call outputs a list of the accounts in the system..
 
-		:param file: Export zip file. 
+		Args:
+			file: Export zip file. 
 
 		'''
 		url = '/management-rest/organizations/list-organizations'
@@ -2588,15 +2668,16 @@ class Organizations:
 		class Organizations
 		Description: Transfer collectors from aggregator to aggregator as the organization migration process.
 
-		:param transferCollectorRequests: transferCollectorRequests. 
-		:param aggregatorsMap: Specifies aggregators transfer mapping. 
-		:param sourceOrganization: Specifies the organization which collectors will be transferred from.. 
-		:param targetOrganization: Specifies the organization which collectors will be transferred to.. 
-		:param verificationCode: Specifies the verification code to validate the import step was finished successfully.. 
+		Args:
+			transferCollectorRequests: transferCollectorRequests. 
+			aggregatorsMap: Specifies aggregators transfer mapping. 
+			sourceOrganization: Specifies the organization which collectors will be transferred from.. 
+			targetOrganization: Specifies the organization which collectors will be transferred to.. 
+			verificationCode: Specifies the verification code to validate the import step was finished successfully.. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/organizations/transfer-collectors'
@@ -2617,11 +2698,12 @@ class Organizations:
 		class Organizations
 		Description: Transfer collector stop.
 
-		:param organization: Specifies the organization which the migration process should stop. 
+		Args:
+			organization: Specifies the organization which the migration process should stop. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/organizations/transfer-collectors-stop'
@@ -2638,28 +2720,29 @@ class Organizations:
 		class Organizations
 		Description: This API update organization in the system (only for Admin role).
 
-		:param accountRequest: accountRequest. 
-		:param eXtendedDetection: A true/false parameter indication if the eXtended Detection is enabled for the organization. 
-		:param edr: A true/false parameter indicating whether the organization support Threat Hunting. 
-		:param edrAddOnsAllocated: Specifies the EDR storage add-ons allocated to this account. 
-		:param edrBackupEnabled: A true/false parameter indication if the EDR backup is enabled for the organization. 
-		:param edrEnabled: A true/false parameter indication if the EDR is enabled for the organization. 
-		:param edrNumberOfShards: Specifies the EDR shards per index, should be above 1 only for very large environments. 
-		:param edrStorageAllocatedInMb: Specifies the EDR storage allocation in MB, used when edrStorageAllocatedPercents is empty. 
-		:param expirationDate: Specifies the license expiration date. Specify the date using the following date format yyyy-MM-dd. 
-		:param forensics: A true/false parameter indicating whether the organization support Forensics. 
-		:param iotAllocated: Specifies the IoT device���s license capacity. 
-		:param name: Specifies the organization name. 
-		:param requestPolicyEngineLibUpdates: A true/false parameter indicating whether the organization collectors should request for policy engine lib updates. 
-		:param serialNumber: Specifies the serial number. 
-		:param serversAllocated: Specifies the server collector���s license capacity. 
-		:param vulnerabilityAndIoT: A true/false parameter indicating whether the organization support Vulnerability And IoT. 
-		:param workstationsAllocated: Specifies the workstation collector���s license capacity. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			accountRequest: accountRequest. 
+			eXtendedDetection: A true/false parameter indication if the eXtended Detection is enabled for the organization. 
+			edr: A true/false parameter indicating whether the organization support Threat Hunting. 
+			edrAddOnsAllocated: Specifies the EDR storage add-ons allocated to this account. 
+			edrBackupEnabled: A true/false parameter indication if the EDR backup is enabled for the organization. 
+			edrEnabled: A true/false parameter indication if the EDR is enabled for the organization. 
+			edrNumberOfShards: Specifies the EDR shards per index, should be above 1 only for very large environments. 
+			edrStorageAllocatedInMb: Specifies the EDR storage allocation in MB, used when edrStorageAllocatedPercents is empty. 
+			expirationDate: Specifies the license expiration date. Specify the date using the following date format yyyy-MM-dd. 
+			forensics: A true/false parameter indicating whether the organization support Forensics. 
+			iotAllocated: Specifies the IoT device���s license capacity. 
+			name: Specifies the organization name. 
+			requestPolicyEngineLibUpdates: A true/false parameter indicating whether the organization collectors should request for policy engine lib updates. 
+			serialNumber: Specifies the serial number. 
+			serversAllocated: Specifies the server collector���s license capacity. 
+			vulnerabilityAndIoT: A true/false parameter indicating whether the organization support Vulnerability And IoT. 
+			workstationsAllocated: Specifies the workstation collector���s license capacity. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/organizations/update-organization'
@@ -2670,6 +2753,7 @@ class Organizations:
 		return fortiedr_connection.insert(url)
 
 class Playbookspolicies:
+	'''Playbooks-policies API'''
 
 	def assign_collector_group(self, collectorGroupNames : dict, policyName : str, forceAssign :bool = None, organization :str = None) -> tuple[bool, None]:
 
@@ -2677,14 +2761,15 @@ class Playbookspolicies:
 		class Playbookspolicies
 		Description: Assign collector group to air policy.
 
-		:param collectorGroupNames: Specifies the list of collector group names. 
-		:param forceAssign: Indicates whether to force the assignment even if the group is assigned to similar policies. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param policyName: Specifies policy name. 
+		Args:
+			collectorGroupNames: Specifies the list of collector group names. 
+			forceAssign: Indicates whether to force the assignment even if the group is assigned to similar policies. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			policyName: Specifies policy name. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/playbooks-policies/assign-collector-group'
@@ -2707,13 +2792,14 @@ class Playbookspolicies:
 		class Playbookspolicies
 		Description: clone policy.
 
-		:param newPolicyName: Specifies security policy target name.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param sourcePolicyName: Specifies security policy source name. 
+		Args:
+			newPolicyName: Specifies security policy target name.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			sourcePolicyName: Specifies security policy source name. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/playbooks-policies/clone'
@@ -2734,10 +2820,11 @@ class Playbookspolicies:
 		class Playbookspolicies
 		Description: List policies.
 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -2755,15 +2842,16 @@ class Playbookspolicies:
 		class Playbookspolicies
 		Description: Assign policy actions with connectors..
 
-		:param assignAIRActionsWithConnectorsRequest: assignAIRActionsWithConnectorsRequest. 
-		:param customActionsToConnectorsMaps: Specifies which connectors are to be used during a custom action invocation.. 
-		:param fortinetActionsToConnectorsMaps: Specifies which connectors are to be used during an Fortinet action invocation.. 
-		:param policyName: Specifies the policy name.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			assignAIRActionsWithConnectorsRequest: assignAIRActionsWithConnectorsRequest. 
+			customActionsToConnectorsMaps: Specifies which connectors are to be used during a custom action invocation.. 
+			fortinetActionsToConnectorsMaps: Specifies which connectors are to be used during an Fortinet action invocation.. 
+			policyName: Specifies the policy name.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/playbooks-policies/map-connectors-to-actions'
@@ -2780,15 +2868,16 @@ class Playbookspolicies:
 		class Playbookspolicies
 		Description: Set the air policy actions' classifications..
 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param setActionsClassificationRequest: setActionsClassificationRequest. 
-		:param customActionsToClassificationMaps: Specifies which custom actions' classifications should be enabled. Missing classifications are disabled.. 
-		:param fortinetActionsToClassificationMaps: Specifies which Fortinet actions' classifications should be enabled. Missing classifications are disabled.. 
-		:param policyName: Specifies the policy name.. 
+		Args:
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			setActionsClassificationRequest: setActionsClassificationRequest. 
+			customActionsToClassificationMaps: Specifies which custom actions' classifications should be enabled. Missing classifications are disabled.. 
+			fortinetActionsToClassificationMaps: Specifies which Fortinet actions' classifications should be enabled. Missing classifications are disabled.. 
+			policyName: Specifies the policy name.. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/playbooks-policies/set-action-classification'
@@ -2810,13 +2899,14 @@ class Playbookspolicies:
 		class Playbookspolicies
 		Description: Set playbook to simulation/prevention.
 
-		:param mode: Operation mode. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param policyName: Specifies security policy name. 
+		Args:
+			mode: Operation mode. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			policyName: Specifies security policy name. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/playbooks-policies/set-mode'
@@ -2831,6 +2921,7 @@ class Playbookspolicies:
 		return fortiedr_connection.insert(url)
 
 class Policies:
+	'''Policies API'''
 
 	def assign_collector_group(self, collectorsGroupName : dict, policyName : str, forceAssign :bool = None, organization :str = None) -> tuple[bool, None]:
 
@@ -2838,14 +2929,15 @@ class Policies:
 		class Policies
 		Description: Assign collector group to policy.
 
-		:param collectorsGroupName: Specifies the list of collector group names. 
-		:param forceAssign: Indicates whether to force the assignment even if the group is assigned to similar policies. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param policyName: Specifies security policy name. 
+		Args:
+			collectorsGroupName: Specifies the list of collector group names. 
+			forceAssign: Indicates whether to force the assignment even if the group is assigned to similar policies. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			policyName: Specifies security policy name. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/policies/assign-collector-group'
@@ -2868,13 +2960,14 @@ class Policies:
 		class Policies
 		Description: clone policy.
 
-		:param newPolicyName: Specifies security policy target name.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param sourcePolicyName: Specifies security policy source name. 
+		Args:
+			newPolicyName: Specifies security policy target name.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			sourcePolicyName: Specifies security policy source name. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/policies/clone'
@@ -2895,10 +2988,11 @@ class Policies:
 		class Policies
 		Description: List policies.
 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -2916,17 +3010,18 @@ class Policies:
 		class Policies
 		Description: Scan Files.
 
-		:param applyRecursiveScan: Specifies if execution includes recursive scan. 
-		:param executableFilesOnly: Specifies if execution includes only files. 
-		:param filePaths: Specifies file path. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param origin: Specifies scan origin. 
-		:param scanBy: Specifies scan by choice. 
-		:param scanSelection: Specifies scan selection. 
+		Args:
+			applyRecursiveScan: Specifies if execution includes recursive scan. 
+			executableFilesOnly: Specifies if execution includes only files. 
+			filePaths: Specifies file path. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			origin: Specifies scan origin. 
+			scanBy: Specifies scan by choice. 
+			scanSelection: Specifies scan selection. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/policies/scan-files'
@@ -2955,13 +3050,14 @@ class Policies:
 		class Policies
 		Description: Set policy to simulation/prevention.
 
-		:param mode: Operation mode. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param policyName: Specifies security policy name. 
+		Args:
+			mode: Operation mode. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			policyName: Specifies security policy name. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/policies/set-mode'
@@ -2982,14 +3078,15 @@ class Policies:
 		class Policies
 		Description: Set rule in policy to block/log.
 
-		:param action: Specifies the policy action. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param policyName: Specifies security policy name. 
-		:param ruleName: Specifies rule name. 
+		Args:
+			action: Specifies the policy action. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			policyName: Specifies security policy name. 
+			ruleName: Specifies rule name. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/policies/set-policy-rule-action'
@@ -3012,14 +3109,15 @@ class Policies:
 		class Policies
 		Description: Set rule in policy to enable/disable.
 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param policyName: Specifies security policy name. 
-		:param ruleName: Specifies rule name. 
-		:param state: Policy rule state. 
+		Args:
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			policyName: Specifies security policy name. 
+			ruleName: Specifies rule name. 
+			state: Policy rule state. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/policies/set-policy-rule-state'
@@ -3036,6 +3134,7 @@ class Policies:
 		return fortiedr_connection.insert(url)
 
 class SendableEntities:
+	'''API to create and test sendable entities'''
 
 	def set_mail_format(self, format : str, organization :str = None) -> tuple[bool, None]:
 
@@ -3043,12 +3142,13 @@ class SendableEntities:
 		class SendableEntities
 		Description: set mail format.
 
-		:param format: Specifies email format type. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			format: Specifies email format type. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/sendable-entities/set-mail-format'
@@ -3067,22 +3167,23 @@ class SendableEntities:
 		class SendableEntities
 		Description: This API creates syslog.
 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� each ��� Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.. 
-		:param syslogRequest: syslogRequest. 
-		:param certificateBlob: Specifies client certificate in Base64. 
-		:param host: Specifies the syslog host. 
-		:param name: Specifies the syslog name. 
-		:param port: Specifies the syslog port. 
-		:param privateKeyFile: Specifies client private key in Base64. 
-		:param privateKeyPassword: Specifies client private key password. 
-		:param protocol: Specifies syslog protocol type. 
-		:param syslogFormat: Specifies syslog format type. 
-		:param useClientCertificate: Specifies whether use client certificate. False by default. 
-		:param useSSL: Specifies whether to use SSL. False by default. 
+		Args:
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� each ��� Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.. 
+			syslogRequest: syslogRequest. 
+			certificateBlob: Specifies client certificate in Base64. 
+			host: Specifies the syslog host. 
+			name: Specifies the syslog name. 
+			port: Specifies the syslog port. 
+			privateKeyFile: Specifies client private key in Base64. 
+			privateKeyPassword: Specifies client private key password. 
+			protocol: Specifies syslog protocol type. 
+			syslogFormat: Specifies syslog format type. 
+			useClientCertificate: Specifies whether use client certificate. False by default. 
+			useSSL: Specifies whether to use SSL. False by default. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/sendable-entities/syslog'
@@ -3105,6 +3206,7 @@ class SendableEntities:
 		return fortiedr_connection.send(url, syslogRequest)
 
 class SystemEvents:
+	'''System Events API'''
 
 	def list_system_events(self, componentNames :dict = None, componentTypes :dict = None, fromDate :str = None, itemsPerPage :int = None, organization :str = None, pageNumber :int = None, sorting :str = None, strictMode :bool = None, toDate :str = None) -> tuple[bool, dict]:
 
@@ -3112,18 +3214,19 @@ class SystemEvents:
 		class SystemEvents
 		Description: Retrieve system events.
 
-		:param componentNames:  Specifies one or more names. The name is the customer name for license-related system events and the device name for all others events. 
-		:param componentTypes: Specifies one or more component type. 
-		:param fromDate: Searches for system events that occurred after this date. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
-		:param toDate: Searches for system events that occurred before this date. 
+		Args:
+			componentNames:  Specifies one or more names. The name is the customer name for license-related system events and the device name for all others events. 
+			componentTypes: Specifies one or more component type. 
+			fromDate: Searches for system events that occurred after this date. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+			toDate: Searches for system events that occurred before this date. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -3151,6 +3254,7 @@ class SystemEvents:
 		return fortiedr_connection.get(url)
 
 class SystemInventory:
+	'''The System Inventory module enables you to monitor the health of Fortinet Endpoint Protection and Response Platform components and to create Collector Groups.'''
 
 	def aggregator_logs(self, device :str = None, deviceId :int = None, organization :str = None) -> tuple[bool, None]:
 
@@ -3158,13 +3262,14 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call retrieves a aggregator logs.
 
-		:param device: Specifies the name of the device. 
-		:param deviceId: Specifies the ID of the device. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			device: Specifies the name of the device. 
+			deviceId: Specifies the ID of the device. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/inventory/aggregator-logs'
@@ -3185,11 +3290,12 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call for checking the results for an custom installer request and getting the installer url.
 
-		:param customInstallerID: customInstallerID. 
+		Args:
+			customInstallerID: customInstallerID. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/inventory/check-custom-installer'
@@ -3206,13 +3312,14 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call retrieves a collector logs.
 
-		:param device: Specifies the name of the device. 
-		:param deviceId: Specifies the ID of the device. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			device: Specifies the name of the device. 
+			deviceId: Specifies the ID of the device. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/inventory/collector-logs'
@@ -3233,13 +3340,14 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call retrieves a core logs.
 
-		:param device: Specifies the name of the device. 
-		:param deviceId: Specifies the ID of the device. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			device: Specifies the name of the device. 
+			deviceId: Specifies the ID of the device. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/inventory/core-logs'
@@ -3260,12 +3368,13 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call create collector group.
 
-		:param name: Collector group name. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			name: Collector group name. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/inventory/create-collector-group'
@@ -3284,21 +3393,22 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call sends request for creating custom-installer for EMS integration.
 
-		:param aggregatorAddress: Specifies the aggregator ip or dns address. 
-		:param aggregatorPort: Specifies the aggregator port. 
-		:param citrixPVS: Specifies whether the collector installed with citrix in pvs mode. 
-		:param collectorGroup: Specifies the requested collector group. 
-		:param collectorVersion: Specifies the requested collector version. 
-		:param distro: Specifies the Linux distribution. For example: CentOS_6, CentOS_7, CentOS_8, CentOS_9, Amazon, Oracle_6, Oracle_7, Oracle_8, SLES_12, SLES_15, Ubuntu_16.04, Ubuntu_18.04, Ubuntu_20.04, Ubuntu_22.04. 
-		:param is64bit: Specifies the Windows os bit version. 
-		:param organization: Specifies the requested organization. 
-		:param osType: Specifies the operating system type. 
-		:param proxy: Specifies the system proxy settings (Only applies to Collector versions 3.1 and above). 
-		:param vdi: Specifies the VDI (Virtual Desktop Infrastructure) installation. 
+		Args:
+			aggregatorAddress: Specifies the aggregator ip or dns address. 
+			aggregatorPort: Specifies the aggregator port. 
+			citrixPVS: Specifies whether the collector installed with citrix in pvs mode. 
+			collectorGroup: Specifies the requested collector group. 
+			collectorVersion: Specifies the requested collector version. 
+			distro: Specifies the Linux distribution. For example: CentOS_6, CentOS_7, CentOS_8, CentOS_9, Amazon, Oracle_6, Oracle_7, Oracle_8, SLES_12, SLES_15, Ubuntu_16.04, Ubuntu_18.04, Ubuntu_20.04, Ubuntu_22.04. 
+			is64bit: Specifies the Windows os bit version. 
+			organization: Specifies the requested organization. 
+			osType: Specifies the operating system type. 
+			proxy: Specifies the system proxy settings (Only applies to Collector versions 3.1 and above). 
+			vdi: Specifies the VDI (Virtual Desktop Infrastructure) installation. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/inventory/create-ems-custom-installer'
@@ -3335,36 +3445,37 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call deletes a Collector(s).
 
-		:param cloudAccounts: Specifies the list cloud account names. 
-		:param cloudProviders: Specifies the list of cloud providers: AWS, Azure, GCP. 
-		:param clusters: Specifies the list of cluster. 
-		:param collectorGroups: Specifies the list of collector group names and retrieves collectors under thegiven groups. 
-		:param collectorGroupsIds: Specifies the list of collector group Ids and retrieves collectors under thegiven groups. 
-		:param collectorType: Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default. 
-		:param confirmDeletion: A true/false parameter indicating if to detach/delete relevant exceptions from Collector groups about to be deleted. 
-		:param deleteAll: A true/false parameter indicating if all collectors should be deleted. 
-		:param devices: Specifies the list of device names. 
-		:param devicesIds: Specifies the list of device ids. 
-		:param firstSeen: Retrieves collectors that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param hasCrashDumps: Retrieves collectors that have crash dumps. 
-		:param ips: Specifies the list of IP values. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param lastSeenEnd: Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param lastSeenStart: Retrieves collectors that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param loggedUser: Specifies the user that was logged when the event occurred. 
-		:param operatingSystems: Specifies the list of specific operating systems. For example, Windows 7 Pro. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param osFamilies: Specifies the list of operating system families: Windows, Windows Server or OS X. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param showExpired: Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param states: Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, Pending Reboot, Isolated, Expired, Migrated or Pending Migration. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
-		:param versions: Specifies the list of collector versions. 
+		Args:
+			cloudAccounts: Specifies the list cloud account names. 
+			cloudProviders: Specifies the list of cloud providers: AWS, Azure, GCP. 
+			clusters: Specifies the list of cluster. 
+			collectorGroups: Specifies the list of collector group names and retrieves collectors under thegiven groups. 
+			collectorGroupsIds: Specifies the list of collector group Ids and retrieves collectors under thegiven groups. 
+			collectorType: Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default. 
+			confirmDeletion: A true/false parameter indicating if to detach/delete relevant exceptions from Collector groups about to be deleted. 
+			deleteAll: A true/false parameter indicating if all collectors should be deleted. 
+			devices: Specifies the list of device names. 
+			devicesIds: Specifies the list of device ids. 
+			firstSeen: Retrieves collectors that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			hasCrashDumps: Retrieves collectors that have crash dumps. 
+			ips: Specifies the list of IP values. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			lastSeenEnd: Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			lastSeenStart: Retrieves collectors that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			loggedUser: Specifies the user that was logged when the event occurred. 
+			operatingSystems: Specifies the list of specific operating systems. For example, Windows 7 Pro. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			osFamilies: Specifies the list of operating system families: Windows, Windows Server or OS X. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			showExpired: Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			states: Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, Pending Reboot, Isolated, Expired, Migrated or Pending Migration. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+			versions: Specifies the list of collector versions. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/inventory/delete-collectors'
@@ -3431,13 +3542,14 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call isolate collector functionality.
 
-		:param devices: Specifies the list of device names. 
-		:param devicesIds: Specifies the list of device ids. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			devices: Specifies the list of device names. 
+			devicesIds: Specifies the list of device ids. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/inventory/isolate-collectors'
@@ -3458,13 +3570,14 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call output the list of aggregators.
 
-		:param ip: IP. 
-		:param names: List of aggregators names. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param versions: List of aggregators versions. 
+		Args:
+			ip: IP. 
+			names: List of aggregators names. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			versions: List of aggregators versions. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -3488,10 +3601,11 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call output the collectors groups.
 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -3509,33 +3623,34 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call outputs a list of the Collectors in the system. Use the input parameters to filter the list.
 
-		:param cloudAccounts: Specifies the list cloud account names. 
-		:param cloudProviders: Specifies the list of cloud providers: AWS, Azure, GCP. 
-		:param clusters: Specifies the list of cluster. 
-		:param collectorGroups: Specifies the list of collector group names and retrieves collectors under thegiven groups. 
-		:param collectorGroupsIds: Specifies the list of collector group Ids and retrieves collectors under thegiven groups. 
-		:param collectorType: Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default. 
-		:param devices: Specifies the list of device names. 
-		:param devicesIds: Specifies the list of device ids. 
-		:param firstSeen: Retrieves collectors that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param hasCrashDumps: Retrieves collectors that have crash dumps. 
-		:param ips: Specifies the list of IP values. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param lastSeenEnd: Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param lastSeenStart: Retrieves collectors that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param loggedUser: Specifies the user that was logged when the event occurred. 
-		:param operatingSystems: Specifies the list of specific operating systems. For example, Windows 7 Pro. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param osFamilies: Specifies the list of operating system families: Windows, Windows Server or OS X. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param showExpired: Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param states: Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, Pending Reboot, Isolated, Expired, Migrated or Pending Migration. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
-		:param versions: Specifies the list of collector versions. 
+		Args:
+			cloudAccounts: Specifies the list cloud account names. 
+			cloudProviders: Specifies the list of cloud providers: AWS, Azure, GCP. 
+			clusters: Specifies the list of cluster. 
+			collectorGroups: Specifies the list of collector group names and retrieves collectors under thegiven groups. 
+			collectorGroupsIds: Specifies the list of collector group Ids and retrieves collectors under thegiven groups. 
+			collectorType: Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default. 
+			devices: Specifies the list of device names. 
+			devicesIds: Specifies the list of device ids. 
+			firstSeen: Retrieves collectors that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			hasCrashDumps: Retrieves collectors that have crash dumps. 
+			ips: Specifies the list of IP values. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			lastSeenEnd: Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			lastSeenStart: Retrieves collectors that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			loggedUser: Specifies the user that was logged when the event occurred. 
+			operatingSystems: Specifies the list of specific operating systems. For example, Windows 7 Pro. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			osFamilies: Specifies the list of operating system families: Windows, Windows Server or OS X. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			showExpired: Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			states: Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, Pending Reboot, Isolated, Expired, Migrated or Pending Migration. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+			versions: Specifies the list of collector versions. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -3599,15 +3714,16 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call output the list of cores.
 
-		:param deploymentModes: List of cores deployments modes. 
-		:param hasCrashDumps: Has crash dumps. 
-		:param ip: IP. 
-		:param names: List of cores names. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param versions: List of cores versions. 
+		Args:
+			deploymentModes: List of cores deployments modes. 
+			hasCrashDumps: Has crash dumps. 
+			ip: IP. 
+			names: List of cores names. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			versions: List of cores versions. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -3635,12 +3751,13 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call output the list of repositories (edrs).
 
-		:param deploymentModes: List of cores deployments modes. 
-		:param hasCrashDumps: Has crash dumps. 
-		:param ip: IP. 
-		:param names: List of cores names. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param versions: List of cores versions. 
+		Args:
+			deploymentModes: List of cores deployments modes. 
+			hasCrashDumps: Has crash dumps. 
+			ip: IP. 
+			names: List of cores names. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			versions: List of cores versions. 
 
 		'''
 		url = '/management-rest/inventory/list-repositories'
@@ -3653,14 +3770,15 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call outputs a list of the unmanaged devices in the system.
 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+		Args:
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -3686,16 +3804,17 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call move collector between groups.
 
-		:param collectorIds: value = Array of collectors Ids. To move collectors from one organization to another. 
-		:param collectorSIDs: value = Array of collectors SIDS. To move collectors from one organization to another. 
-		:param collectors: Array of collectors names. To move collectors from one organization to another, for each collector please add the organization name before the collector name (<organization-name>\\<collector-name>). 
-		:param forceAssign: Indicates whether to force the assignment even if the organization of the target Collector group is under migration. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param targetCollectorGroup: Collector group. To move collectors from one organization to another, please add the organization name before the target collector group (<organization-name>\\<collector-group-name>). 
+		Args:
+			collectorIds: value = Array of collectors Ids. To move collectors from one organization to another. 
+			collectorSIDs: value = Array of collectors SIDS. To move collectors from one organization to another. 
+			collectors: Array of collectors names. To move collectors from one organization to another, for each collector please add the organization name before the collector name (<organization-name>\\<collector-name>). 
+			forceAssign: Indicates whether to force the assignment even if the organization of the target Collector group is under migration. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			targetCollectorGroup: Collector group. To move collectors from one organization to another, please add the organization name before the target collector group (<organization-name>\\<collector-group-name>). 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/inventory/move-collectors'
@@ -3722,12 +3841,13 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call retrieves a system logs.
 
-		:param collectorIds: value = Array of collectors Ids. To move collectors from one organization to another. 
-		:param collectorSIDs: value = Array of collectors SIDS. To move collectors from one organization to another. 
-		:param collectors: Array of collectors names. To move collectors from one organization to another, for each collector please add the organization name before the collector name (<organization-name>\\<collector-name>). 
-		:param forceAssign: Indicates whether to force the assignment even if the organization of the target Collector group is under migration. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param targetCollectorGroup: Collector group. To move collectors from one organization to another, please add the organization name before the target collector group (<organization-name>\\<collector-group-name>). 
+		Args:
+			collectorIds: value = Array of collectors Ids. To move collectors from one organization to another. 
+			collectorSIDs: value = Array of collectors SIDS. To move collectors from one organization to another. 
+			collectors: Array of collectors names. To move collectors from one organization to another, for each collector please add the organization name before the collector name (<organization-name>\\<collector-name>). 
+			forceAssign: Indicates whether to force the assignment even if the organization of the target Collector group is under migration. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			targetCollectorGroup: Collector group. To move collectors from one organization to another, please add the organization name before the target collector group (<organization-name>\\<collector-group-name>). 
 
 		'''
 		url = '/management-rest/inventory/system-logs'
@@ -3740,34 +3860,35 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call enables/disables a Collector(s). You must specify whether the Collector is to be enabled or disabled.
 
-		:param cloudAccounts: Specifies the list cloud account names. 
-		:param cloudProviders: Specifies the list of cloud providers: AWS, Azure, GCP. 
-		:param clusters: Specifies the list of cluster. 
-		:param collectorGroups: Specifies the list of collector group names and retrieves collectors under thegiven groups. 
-		:param collectorGroupsIds: Specifies the list of collector group Ids and retrieves collectors under thegiven groups. 
-		:param collectorType: Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default. 
-		:param devices: Specifies the list of device names. 
-		:param devicesIds: Specifies the list of device ids. 
-		:param enable: Toggle enable. 
-		:param firstSeen: Retrieves collectors that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param hasCrashDumps: Retrieves collectors that have crash dumps. 
-		:param ips: Specifies the list of IP values. 
-		:param itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
-		:param lastSeenEnd: Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param lastSeenStart: Retrieves collectors that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
-		:param loggedUser: Specifies the user that was logged when the event occurred. 
-		:param operatingSystems: Specifies the list of specific operating systems. For example, Windows 7 Pro. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param osFamilies: Specifies the list of operating system families: Windows, Windows Server or OS X. 
-		:param pageNumber: An integer used for paging that indicates the required page number. 
-		:param showExpired: Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired. 
-		:param sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
-		:param states: Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, Pending Reboot, Isolated, Expired, Migrated or Pending Migration. 
-		:param strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
-		:param versions: Specifies the list of collector versions. 
+		Args:
+			cloudAccounts: Specifies the list cloud account names. 
+			cloudProviders: Specifies the list of cloud providers: AWS, Azure, GCP. 
+			clusters: Specifies the list of cluster. 
+			collectorGroups: Specifies the list of collector group names and retrieves collectors under thegiven groups. 
+			collectorGroupsIds: Specifies the list of collector group Ids and retrieves collectors under thegiven groups. 
+			collectorType: Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default. 
+			devices: Specifies the list of device names. 
+			devicesIds: Specifies the list of device ids. 
+			enable: Toggle enable. 
+			firstSeen: Retrieves collectors that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			hasCrashDumps: Retrieves collectors that have crash dumps. 
+			ips: Specifies the list of IP values. 
+			itemsPerPage: An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000. 
+			lastSeenEnd: Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			lastSeenStart: Retrieves collectors that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss. 
+			loggedUser: Specifies the user that was logged when the event occurred. 
+			operatingSystems: Specifies the list of specific operating systems. For example, Windows 7 Pro. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			osFamilies: Specifies the list of operating system families: Windows, Windows Server or OS X. 
+			pageNumber: An integer used for paging that indicates the required page number. 
+			showExpired: Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired. 
+			sorting: Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on. 
+			states: Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, Pending Reboot, Isolated, Expired, Migrated or Pending Migration. 
+			strictMode: A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False. 
+			versions: Specifies the list of collector versions. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			str
 
 		'''
@@ -3833,13 +3954,14 @@ class SystemInventory:
 		class SystemInventory
 		Description: This API call isolate collector functionality.
 
-		:param devices: Specifies the list of device names. 
-		:param devicesIds: Specifies the list of device ids. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			devices: Specifies the list of device names. 
+			devicesIds: Specifies the list of device ids. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/inventory/unisolate-collectors'
@@ -3854,6 +3976,7 @@ class SystemInventory:
 		return fortiedr_connection.insert(url)
 
 class ThreatHunting:
+	'''API for Activity events'''
 
 	def counts(self, accountId: int = None, category: str = None, devices: dict = None, filters: dict = None, fromTime: str = None, itemsPerPage: int = None, organization: str = None, pageNumber: int = None, query: str = None, sorting: dict = None, time: str = None, toTime: str = None) -> tuple[bool, None]:
 
@@ -3861,23 +3984,24 @@ class ThreatHunting:
 		class ThreatHunting
 		Description: This API call outputs EDR total events for every EDR category.
 
-		:param edrRequest: edrRequest. 
-		:param accountId: Account ID. 
-		:param category: Specifies the category name. All is the default value. 
-		:param devices: Specifies the devices name list. 
-		:param filters: Specifies the filters list that available for the user based on the category selected 2. Specifies filters to add to the query.. 
-		:param fromTime: Specifies events start at creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
-		:param itemsPerPage: Specifies the Threat Hunting chunck size to retrieve with each call. The default value is 100. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies: ��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly. ��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param pageNumber: Specifies the Threat Hunting start index number to retrieve from. The default value is 0. 
-		:param query: Specifies the search lucene like query. 
-		:param sorting: Specifies the Threat Hunting sorting. 
-		:param time: Specifies the time period of the events. 
-		:param toTime: Specifies events up to a creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
+		Args:
+			edrRequest: edrRequest. 
+			accountId: Account ID. 
+			category: Specifies the category name. All is the default value. 
+			devices: Specifies the devices name list. 
+			filters: Specifies the filters list that available for the user based on the category selected 2. Specifies filters to add to the query.. 
+			fromTime: Specifies events start at creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
+			itemsPerPage: Specifies the Threat Hunting chunck size to retrieve with each call. The default value is 100. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies: ��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly. ��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			pageNumber: Specifies the Threat Hunting start index number to retrieve from. The default value is 0. 
+			query: Specifies the search lucene like query. 
+			sorting: Specifies the Threat Hunting sorting. 
+			time: Specifies the time period of the events. 
+			toTime: Specifies events up to a creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting/counts'
@@ -3906,15 +4030,16 @@ class ThreatHunting:
 		class ThreatHunting
 		Description: This API creates or edits the saved queries tag.
 
-		:param createOrEditTagRequest: createOrEditTagRequest. 
-		:param newTagName: Specifies the new tag name. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies: ��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly. ��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param tagId: Specifies the tag ID for editing.. 
-		:param tagName: Specifies the tag name for editing.. 
+		Args:
+			createOrEditTagRequest: createOrEditTagRequest. 
+			newTagName: Specifies the new tag name. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies: ��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly. ��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			tagId: Specifies the tag ID for editing.. 
+			tagName: Specifies the tag name for editing.. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting/create-or-edit-tag'
@@ -3935,25 +4060,26 @@ class ThreatHunting:
 		class ThreatHunting
 		Description: This API customizes the scheduling properties of a Fortinet query.
 
-		:param id: Specifies the query ID to edit. 
-		:param ootbQueryCustomizeRequest: ootbQueryCustomizeRequest. 
-		:param dayOfMonth: Specifies the day of the month for the scheduled query. The value must be between 1 and 28. The properties scheduled and frequencyUnit must be true and Month respectively. 
-		:param dayOfWeek: Specifies the day of the week for the scheduled query. The value must be between 0 and 6. 0 is Sunday and 6 is Saturday. The properties scheduled and frequencyUnit must be true and Week respectively. 
-		:param forceSaving: A true/false parameter indicating whether to force the save, even when there is a large quantity of query results. 
-		:param frequency: Specifies the query frequency for the scheduled query. The scheduled property must be true. 
-		:param frequencyUnit: Specifies the query frequency unit. The scheduled property must be true. 
-		:param fromTime: Specifies events starting from this creation time. Specify the timestamp using the yyyy-MM-dd HH:mm:ss format. The 'time' value must be 'custom'. 
-		:param hour: Specifies the hour of the week for the scheduled query. The value must be between 0 and 23. The properties scheduled and frequencyUnit must be true and Day/Week/Month respectively. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param scheduled: Specifies whether the query is scheduled. False by default. 
-		:param state: A true/false parameter indicating whether the query state is enabled. True by default. 
-		:param time: Specifies the time period of the Threat Hunting events. The scheduled property must be false. 
-		:param toTime: Specifies events up to a creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
-		:param queryToEdit: Specifies the query name to edit. 
+		Args:
+			id: Specifies the query ID to edit. 
+			ootbQueryCustomizeRequest: ootbQueryCustomizeRequest. 
+			dayOfMonth: Specifies the day of the month for the scheduled query. The value must be between 1 and 28. The properties scheduled and frequencyUnit must be true and Month respectively. 
+			dayOfWeek: Specifies the day of the week for the scheduled query. The value must be between 0 and 6. 0 is Sunday and 6 is Saturday. The properties scheduled and frequencyUnit must be true and Week respectively. 
+			forceSaving: A true/false parameter indicating whether to force the save, even when there is a large quantity of query results. 
+			frequency: Specifies the query frequency for the scheduled query. The scheduled property must be true. 
+			frequencyUnit: Specifies the query frequency unit. The scheduled property must be true. 
+			fromTime: Specifies events starting from this creation time. Specify the timestamp using the yyyy-MM-dd HH:mm:ss format. The 'time' value must be 'custom'. 
+			hour: Specifies the hour of the week for the scheduled query. The value must be between 0 and 23. The properties scheduled and frequencyUnit must be true and Day/Week/Month respectively. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			scheduled: Specifies whether the query is scheduled. False by default. 
+			state: A true/false parameter indicating whether the query state is enabled. True by default. 
+			time: Specifies the time period of the Threat Hunting events. The scheduled property must be false. 
+			toTime: Specifies events up to a creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
+			queryToEdit: Specifies the query name to edit. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting/customize-fortinet-query'
@@ -3972,17 +4098,18 @@ class ThreatHunting:
 		class ThreatHunting
 		Description: This API deletes the saved queries.
 
-		:param deleteAll: A true/false parameter indicating whether all queries should be deleted. False by default. 
-		:param deleteFromCommunity: A true/false parameter indicating if whether to delete a query from the FortiEDR Community also. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param queryIds: Specifies the query IDs list. 
-		:param queryNames: Specifies the query names list. 
-		:param scheduled: A true/false parameter indicating whether the query is scheduled. 
-		:param source: Specifies the query source list. 
+		Args:
+			deleteAll: A true/false parameter indicating whether all queries should be deleted. False by default. 
+			deleteFromCommunity: A true/false parameter indicating if whether to delete a query from the FortiEDR Community also. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			queryIds: Specifies the query IDs list. 
+			queryNames: Specifies the query names list. 
+			scheduled: A true/false parameter indicating whether the query is scheduled. 
+			source: Specifies the query source list. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting/delete-saved-queries'
@@ -4011,13 +4138,14 @@ class ThreatHunting:
 		class ThreatHunting
 		Description: This API deletes the saved queries tags.
 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param tagIds: Specifies the tag ID list. 
-		:param tagNames: Specifies the tag name list. 
+		Args:
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			tagIds: Specifies the tag ID list. 
+			tagNames: Specifies the tag name list. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting/delete-tags'
@@ -4038,23 +4166,24 @@ class ThreatHunting:
 		class ThreatHunting
 		Description: This API retrieves EDR total events for every EDR facet item.
 
-		:param facetsRequest: facetsRequest. 
-		:param accountId: Account ID. 
-		:param category: Specifies the category name. All is the default value. 
-		:param devices: Specifies the devices name list. 
-		:param facets: Specifies the facets list that available for the user based on the category selected 2. Specifies facets to add to the query.. 
-		:param filters: Specifies the filters list that available for the user based on the category selected 2. Specifies filters to add to the query.. 
-		:param fromTime: Specifies events start at creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
-		:param itemsPerPage: Specifies the Threat Hunting chunck size to retrieve with each call. The default value is 100. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies: ��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly. ��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param pageNumber: Specifies the Threat Hunting start index number to retrieve from. The default value is 0. 
-		:param query: Specifies the search lucene like query. 
-		:param sorting: Specifies the Threat Hunting sorting. 
-		:param time: Specifies the time period of the events. 
-		:param toTime: Specifies events up to a creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
+		Args:
+			facetsRequest: facetsRequest. 
+			accountId: Account ID. 
+			category: Specifies the category name. All is the default value. 
+			devices: Specifies the devices name list. 
+			facets: Specifies the facets list that available for the user based on the category selected 2. Specifies facets to add to the query.. 
+			filters: Specifies the filters list that available for the user based on the category selected 2. Specifies filters to add to the query.. 
+			fromTime: Specifies events start at creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
+			itemsPerPage: Specifies the Threat Hunting chunck size to retrieve with each call. The default value is 100. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies: ��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly. ��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			pageNumber: Specifies the Threat Hunting start index number to retrieve from. The default value is 0. 
+			query: Specifies the search lucene like query. 
+			sorting: Specifies the Threat Hunting sorting. 
+			time: Specifies the time period of the events. 
+			toTime: Specifies events up to a creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -4085,12 +4214,13 @@ class ThreatHunting:
 		class ThreatHunting
 		Description: This API retrieves the existing saved queries list.
 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param scheduled: A true/false parameter indicating whether the query is scheduled. 
-		:param source: Specifies the query source list. 
+		Args:
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			scheduled: A true/false parameter indicating whether the query is scheduled. 
+			source: Specifies the query source list. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -4112,10 +4242,11 @@ class ThreatHunting:
 		class ThreatHunting
 		Description: This API retrieves the existing saved queries tag list.
 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -4133,34 +4264,35 @@ class ThreatHunting:
 		class ThreatHunting
 		Description: This API saves the query.
 
-		:param id: Specifies the query ID to edit. 
-		:param queryToEdit: Specifies the query name to edit. 
-		:param saveQueryRequest: saveQueryRequest. 
-		:param category: Specifies the category name. All is the default value. 
-		:param classification: Specifies the event classification. The scheduled property must be true. 
-		:param collectorNames: Specifies the Collector names. 
-		:param community: A true/false parameter indicating whether the query is available to the entire FortiEDR Community. False by default. 
-		:param dayOfMonth: Specifies the day of the month for the scheduled query. The value must be between 1 and 28. The properties scheduled and frequencyUnit must be true and Month respectively. 
-		:param dayOfWeek: Specifies the day of the week for the scheduled query. The value must be between 0 and 6. 0 is Sunday and 6 is Saturday. The properties scheduled and frequencyUnit must be true and Week respectively. 
-		:param description: Specifies the description. 
-		:param forceSaving: A true/false parameter indicating whether to force the save, even when there is a large quantity of query results. 
-		:param frequency: Specifies the query frequency for the scheduled query. The scheduled property must be true. 
-		:param frequencyUnit: Specifies the query frequency unit. The scheduled property must be true. 
-		:param fromTime: Specifies events starting from this creation time. Specify the timestamp using the yyyy-MM-dd HH:mm:ss format. The 'time' value must be 'custom'. 
-		:param hour: Specifies the hour of the day for the scheduled query. The value must be between 0 and 23. The properties scheduled and frequencyUnit must be true and Day/Week/Month respectively. 
-		:param name: Specifies the name of the query being saved. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param query: Specifies the Lucene-like search query. 
-		:param scheduled: Specifies whether the query is scheduled. False by default. 
-		:param state: A true/false parameter indicating whether the query state is enabled. True by default. 
-		:param tagIds: Specifies the query tag ids. 
-		:param tagNames: Specifies the query tag names. 
-		:param time: Specifies the time period of the Threat Hunting events. The scheduled property must be false. 
-		:param toTime: Specifies events up to a creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
+		Args:
+			id: Specifies the query ID to edit. 
+			queryToEdit: Specifies the query name to edit. 
+			saveQueryRequest: saveQueryRequest. 
+			category: Specifies the category name. All is the default value. 
+			classification: Specifies the event classification. The scheduled property must be true. 
+			collectorNames: Specifies the Collector names. 
+			community: A true/false parameter indicating whether the query is available to the entire FortiEDR Community. False by default. 
+			dayOfMonth: Specifies the day of the month for the scheduled query. The value must be between 1 and 28. The properties scheduled and frequencyUnit must be true and Month respectively. 
+			dayOfWeek: Specifies the day of the week for the scheduled query. The value must be between 0 and 6. 0 is Sunday and 6 is Saturday. The properties scheduled and frequencyUnit must be true and Week respectively. 
+			description: Specifies the description. 
+			forceSaving: A true/false parameter indicating whether to force the save, even when there is a large quantity of query results. 
+			frequency: Specifies the query frequency for the scheduled query. The scheduled property must be true. 
+			frequencyUnit: Specifies the query frequency unit. The scheduled property must be true. 
+			fromTime: Specifies events starting from this creation time. Specify the timestamp using the yyyy-MM-dd HH:mm:ss format. The 'time' value must be 'custom'. 
+			hour: Specifies the hour of the day for the scheduled query. The value must be between 0 and 23. The properties scheduled and frequencyUnit must be true and Day/Week/Month respectively. 
+			name: Specifies the name of the query being saved. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			query: Specifies the Lucene-like search query. 
+			scheduled: Specifies whether the query is scheduled. False by default. 
+			state: A true/false parameter indicating whether the query state is enabled. True by default. 
+			tagIds: Specifies the query tag ids. 
+			tagNames: Specifies the query tag names. 
+			time: Specifies the time period of the Threat Hunting events. The scheduled property must be false. 
+			toTime: Specifies events up to a creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting/save-query'
@@ -4202,22 +4334,23 @@ class ThreatHunting:
 		class ThreatHunting
 		Description: This API call outputs a list of Activity events from middleware..
 
-		:param edrRequest: edrRequest. 
-		:param accountId: Account ID. 
-		:param category: Specifies the category name. All is the default value. 
-		:param devices: Specifies the devices name list. 
-		:param filters: Specifies the filters list that available for the user based on the category selected 2. Specifies filters to add to the query.. 
-		:param fromTime: Specifies events start at creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
-		:param itemsPerPage: Specifies the Threat Hunting chunck size to retrieve with each call. The default value is 100. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies: ��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly. ��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param pageNumber: Specifies the Threat Hunting start index number to retrieve from. The default value is 0. 
-		:param query: Specifies the search lucene like query. 
-		:param sorting: Specifies the Threat Hunting sorting. 
-		:param time: Specifies the time period of the events. 
-		:param toTime: Specifies events up to a creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
+		Args:
+			edrRequest: edrRequest. 
+			accountId: Account ID. 
+			category: Specifies the category name. All is the default value. 
+			devices: Specifies the devices name list. 
+			filters: Specifies the filters list that available for the user based on the category selected 2. Specifies filters to add to the query.. 
+			fromTime: Specifies events start at creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
+			itemsPerPage: Specifies the Threat Hunting chunck size to retrieve with each call. The default value is 100. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies: ��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly. ��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			pageNumber: Specifies the Threat Hunting start index number to retrieve from. The default value is 0. 
+			query: Specifies the search lucene like query. 
+			sorting: Specifies the Threat Hunting sorting. 
+			time: Specifies the time period of the events. 
+			toTime: Specifies events up to a creation time. Specify the date using the yyyy-MM-dd HH:mm:ss format. The 'time' filed must be 'custom'. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -4247,16 +4380,17 @@ class ThreatHunting:
 		class ThreatHunting
 		Description: This API updates the scheduled saved query state.
 
-		:param markAll: A true/false parameter indicating whether all queries should be marked with the same value as 'state' property. False by default. 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
-		:param queryIds: Specifies the query ID list. 
-		:param queryNames: Specifies the query name list. 
-		:param source: Specifies the query source list. 
-		:param state: A true/false parameter indicating whether to save the query as enabled. 
+		Args:
+			markAll: A true/false parameter indicating whether all queries should be marked with the same value as 'state' property. False by default. 
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+			queryIds: Specifies the query ID list. 
+			queryNames: Specifies the query name list. 
+			source: Specifies the query source list. 
+			state: A true/false parameter indicating whether to save the query as enabled. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting/set-query-state'
@@ -4277,6 +4411,7 @@ class ThreatHunting:
 		return fortiedr_connection.insert(url)
 
 class ThreatHuntingExclusions:
+	'''API to create Threat Hunting exclusions.'''
 
 	def send_exclusion(self, exclusionListName: str, exclusions: dict, organization: str) -> tuple[bool, dict]:
 
@@ -4284,13 +4419,14 @@ class ThreatHuntingExclusions:
 		class ThreatHuntingExclusions
 		Description: Creates exclusions..
 
-		:param createExclusionsRequest: createExclusionsRequest. 
-		:param exclusionListName: Exclusions created in the request will be associated with this list.. 
-		:param exclusions: List of exclusions definitions to be created.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			createExclusionsRequest: createExclusionsRequest. 
+			exclusionListName: Exclusions created in the request will be associated with this list.. 
+			exclusions: List of exclusions definitions to be created.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -4310,13 +4446,14 @@ class ThreatHuntingExclusions:
 		class ThreatHuntingExclusions
 		Description: Creates exclusions..
 
-		:param updateExclusionsRequest: updateExclusionsRequest. 
-		:param exclusionListName: Exclusions created in the request will be associated with this list.. 
-		:param exclusions: List of exclusions definitions to update.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			updateExclusionsRequest: updateExclusionsRequest. 
+			exclusionListName: Exclusions created in the request will be associated with this list.. 
+			exclusions: List of exclusions definitions to update.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -4336,12 +4473,13 @@ class ThreatHuntingExclusions:
 		class ThreatHuntingExclusions
 		Description: Creates exclusions..
 
-		:param deleteExclusionsRequest: deleteExclusionsRequest. 
-		:param exclusionIds: List of exclusion Ids for deletion.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			deleteExclusionsRequest: deleteExclusionsRequest. 
+			exclusionIds: List of exclusion Ids for deletion.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			str
 
 		'''
@@ -4361,10 +4499,11 @@ class ThreatHuntingExclusions:
 		class ThreatHuntingExclusions
 		Description: Get the list of Exclusions lists..
 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -4381,14 +4520,15 @@ class ThreatHuntingExclusions:
 		class ThreatHuntingExclusions
 		Description: Get the list of Exclusions lists..
 
-		:param createExclusionListRequest: createExclusionListRequest. 
-		:param collectorGroupIds: The list of Collector group Ids associated with this exclusion list.. 
-		:param name: Exclusion list name.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			createExclusionListRequest: createExclusionListRequest. 
+			collectorGroupIds: The list of Collector group Ids associated with this exclusion list.. 
+			name: Exclusion list name.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting-exclusions/exclusions-list'
@@ -4407,15 +4547,16 @@ class ThreatHuntingExclusions:
 		class ThreatHuntingExclusions
 		Description: Get the list of Exclusions lists..
 
-		:param updateExclusionListRequest: updateExclusionListRequest. 
-		:param collectorGroupIds: The list of Collector group Ids associated with this exclusion list.. 
-		:param listName: Exclusions list name.. 
-		:param newName: Exclusion list new name.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			updateExclusionListRequest: updateExclusionListRequest. 
+			collectorGroupIds: The list of Collector group Ids associated with this exclusion list.. 
+			listName: Exclusions list name.. 
+			newName: Exclusion list new name.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting-exclusions/exclusions-list'
@@ -4435,12 +4576,13 @@ class ThreatHuntingExclusions:
 		class ThreatHuntingExclusions
 		Description: Get the list of Exclusions lists..
 
-		:param listName: Exclusions list name.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			listName: Exclusions list name.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting-exclusions/exclusions-list'
@@ -4459,8 +4601,9 @@ class ThreatHuntingExclusions:
 		class ThreatHuntingExclusions
 		Description: Get the metadata and available properties for exclusions configuration. When creating/modifying an exclusion, use the response of this API as a guide for the valid attribute names and values, and their corresponding EDR event types. Every attribute corresponds to an EDR category (for example, Filename attribute corresponds with the File category), and each category is a set of EDR event types. .
 
-		:param listName: Exclusions list name.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			listName: Exclusions list name.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
 		'''
 		url = '/management-rest/threat-hunting-exclusions/exclusions-metadata'
@@ -4473,12 +4616,13 @@ class ThreatHuntingExclusions:
 		class ThreatHuntingExclusions
 		Description: Free-text search of exclusions.
 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param os: OS identifiers list.. 
-		:param searchText: The free text search string. The API will return every exclusion list that contains this string, or contains an exclusion with any field that contains it.. 
+		Args:
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			os: OS identifiers list.. 
+			searchText: The free text search string. The API will return every exclusion list that contains this string, or contains an exclusion with any field that contains it.. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -4494,6 +4638,7 @@ class ThreatHuntingExclusions:
 		return fortiedr_connection.get(url)
 
 class ThreatHuntingSettings:
+	'''API to configure Threat Hunting Settings.'''
 
 	def threat_hunting_metadata(self) -> tuple[bool, dict]:
 
@@ -4501,9 +4646,10 @@ class ThreatHuntingSettings:
 		class ThreatHuntingSettings
 		Description: Get the Threat Hunting Settings metadata object, listing the available configuration options (Category and Event Types)..
 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param os: OS identifiers list.. 
-		:param searchText: The free text search string. The API will return every exclusion list that contains this string, or contains an exclusion with any field that contains it.. 
+		Args:
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			os: OS identifiers list.. 
+			searchText: The free text search string. The API will return every exclusion list that contains this string, or contains an exclusion with any field that contains it.. 
 
 		'''
 		url = '/management-rest/threat-hunting-settings/threat-hunting-metadata'
@@ -4516,10 +4662,11 @@ class ThreatHuntingSettings:
 		class ThreatHuntingSettings
 		Description: Get the list of Threat Hunting Setting profiles..
 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -4536,16 +4683,17 @@ class ThreatHuntingSettings:
 		class ThreatHuntingSettings
 		Description: Get the list of Threat Hunting Setting profiles..
 
-		:param threatHuntingUpdateRequest: threatHuntingUpdateRequest. 
-		:param associatedCollectorGroupIds: List of associated collector groups Ids, for example [1,2,3].. 
-		:param name: Threat Hunting profile name.. 
-		:param newName: New profile name. Optional.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param threatHuntingCategoryList: Threat Hunting Categories. 
+		Args:
+			threatHuntingUpdateRequest: threatHuntingUpdateRequest. 
+			associatedCollectorGroupIds: List of associated collector groups Ids, for example [1,2,3].. 
+			name: Threat Hunting profile name.. 
+			newName: New profile name. Optional.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			threatHuntingCategoryList: Threat Hunting Categories. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting-settings/threat-hunting-profile'
@@ -4566,12 +4714,13 @@ class ThreatHuntingSettings:
 		class ThreatHuntingSettings
 		Description: Get the list of Threat Hunting Setting profiles..
 
-		:param name: To be deleted profile's name.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			name: To be deleted profile's name.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting-settings/threat-hunting-profile'
@@ -4590,13 +4739,14 @@ class ThreatHuntingSettings:
 		class ThreatHuntingSettings
 		Description: Clone a Threat Hunting Settings profile..
 
-		:param cloneProfileName: Cloned profile name.. 
-		:param existingProfileName: Existing profile name.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			cloneProfileName: Cloned profile name.. 
+			existingProfileName: Existing profile name.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/threat-hunting-settings/threat-hunting-profile-clone'
@@ -4617,13 +4767,14 @@ class ThreatHuntingSettings:
 		class ThreatHuntingSettings
 		Description: Update Threat Hunting profile assigned collector groups. Returns the updated list of assigned collector groups..
 
-		:param threatHuntingAssignGroupsRequest: threatHuntingAssignGroupsRequest. 
-		:param associatedCollectorGroupIds: List of associated collector groups Ids, for example [1,2,3].. 
-		:param name: Threat Hunting profile name.. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			threatHuntingAssignGroupsRequest: threatHuntingAssignGroupsRequest. 
+			associatedCollectorGroupIds: List of associated collector groups Ids, for example [1,2,3].. 
+			name: Threat Hunting profile name.. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -4638,6 +4789,7 @@ class ThreatHuntingSettings:
 		return fortiedr_connection.send(url, threatHuntingAssignGroupsRequest)
 
 class Users:
+	'''API to define user'''
 
 	def create_user(self, confirmPassword: str, email: str, firstName: str, lastName: str, password: str, role: str, username: str, organization :str = None, customScript: bool = None, remoteShell: bool = None, restApi: bool = None, title: str = None) -> tuple[bool, None]:
 
@@ -4645,23 +4797,24 @@ class Users:
 		class Users
 		Description: This API create user in the system. (only for Admin role.
 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� each ��� Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.. 
-		:param userRequest: userRequest. 
-		:param confirmPassword: Specifies the confirm login password. 
-		:param customScript: Is user can upload custom scripts. 
-		:param email: Specifies the email of user. 
-		:param firstName: Specifies the first name of user. 
-		:param lastName: Specifies the last name of user. 
-		:param password: Specifies the login password. 
-		:param remoteShell: Is user can use remote shell. 
-		:param restApi: Is user can access by rest to the api. 
-		:param role: Specifies the roles of the user. 
-		:param title: Specifies the title of user. 
-		:param username: Specifies the login username of the user. 
+		Args:
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� each ��� Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.. 
+			userRequest: userRequest. 
+			confirmPassword: Specifies the confirm login password. 
+			customScript: Is user can upload custom scripts. 
+			email: Specifies the email of user. 
+			firstName: Specifies the first name of user. 
+			lastName: Specifies the last name of user. 
+			password: Specifies the login password. 
+			remoteShell: Is user can use remote shell. 
+			restApi: Is user can access by rest to the api. 
+			role: Specifies the roles of the user. 
+			title: Specifies the title of user. 
+			username: Specifies the login username of the user. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/users/create-user'
@@ -4691,11 +4844,12 @@ class Users:
 		class Users
 		Description: Delete SAML authentication settings per organization.
 
-		:param organizationNameRequest: organizationNameRequest. 
+		Args:
+			organizationNameRequest: organizationNameRequest. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/users/delete-saml-settings'
@@ -4712,12 +4866,13 @@ class Users:
 		class Users
 		Description: This API delete user from the system. Use the input parameters to filter organization.
 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param username: Specifies the name of the user. 
+		Args:
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			username: Specifies the name of the user. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/users/delete-user'
@@ -4736,10 +4891,11 @@ class Users:
 		class Users
 		Description: This API call retrieve the FortiEdr metadata by organization.
 
-		:param organization: organization. 
+		Args:
+			organization: organization. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			str
 
 		'''
@@ -4757,10 +4913,11 @@ class Users:
 		class Users
 		Description: This API call outputs a list of the users in the system. Use the input parameters to filter the list.
 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
+		Args:
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.. 
 
-		return: 
-			Status of the request (True or False). 
+		Returns: 
+			bool: Status of the request (True or False). 
 			dict
 
 		'''
@@ -4778,15 +4935,16 @@ class Users:
 		class Users
 		Description: This API reset user password. Use the input parameters to filter organization.
 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
-		:param userRequest: userRequest. 
-		:param confirmPassword: Specifies the confirm login password. 
-		:param password: Specifies the login password. 
-		:param username: Specifies the name of the user. 
+		Args:
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+			userRequest: userRequest. 
+			confirmPassword: Specifies the confirm login password. 
+			password: Specifies the login password. 
+			username: Specifies the name of the user. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/users/reset-password'
@@ -4805,11 +4963,12 @@ class Users:
 		class Users
 		Description: Create / Update SAML authentication settings per organization.
 
-		:param idpMetadataFile: idpMetadataFile. 
+		Args:
+			idpMetadataFile: idpMetadataFile. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/users/update-saml-settings'
@@ -4824,21 +4983,22 @@ class Users:
 		class Users
 		Description: This API update user in the system. Use the input parameters to filter organization.
 
-		:param organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� each ��� Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.. 
-		:param userRequest: userRequest. 
-		:param customScript: Is user can upload custom scripts. 
-		:param email: Specifies the email of user. 
-		:param firstName: Specifies the first name of user. 
-		:param lastName: Specifies the last name of user. 
-		:param remoteShell: Is user can use remote shell. 
-		:param restApi: Is user can access by rest to the api. 
-		:param role: Specifies the roles of the user. 
-		:param title: Specifies the title of user. 
-		:param username: Specifies the name of the user. 
+		Args:
+			organization: Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:��� Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.��� each ��� Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.. 
+			userRequest: userRequest. 
+			customScript: Is user can upload custom scripts. 
+			email: Specifies the email of user. 
+			firstName: Specifies the first name of user. 
+			lastName: Specifies the last name of user. 
+			remoteShell: Is user can use remote shell. 
+			restApi: Is user can access by rest to the api. 
+			role: Specifies the roles of the user. 
+			title: Specifies the title of user. 
+			username: Specifies the name of the user. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/management-rest/users/update-user'
@@ -4850,7 +5010,11 @@ class Users:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
+class WorkloadGroups:
+	'''API to define workload groups'''
+
 class Dashboard:
+	'''Dashboard Rest Api Controller'''
 
 	def most_targeted_items(self, organization : str, itemType :str = None, numOfColumns :int = None, numOfDays :int = None) -> tuple[bool, None]:
 
@@ -4858,14 +5022,15 @@ class Dashboard:
 		class dashboardrestapicontroller
 		Description: Returns most targeted devices or most targeted processes, depending on the itemType parameter.
 
-		:param itemType: Specifies the type of items. 
-		:param numOfColumns: Specifies the number of columns to present. 
-		:param numOfDays: Specifies the number of days to present. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			itemType: Specifies the type of items. 
+			numOfColumns: Specifies the number of columns to present. 
+			numOfDays: Specifies the number of days to present. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/api/dashboard/most-targeted-items'
@@ -4888,12 +5053,13 @@ class Dashboard:
 		class dashboardrestapicontroller
 		Description: Returns unhandled devices or unhandled processes, depending on the itemType parameter.
 
-		:param itemType: Specifies the type of items. 
-		:param organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
+		Args:
+			itemType: Specifies the type of items. 
+			organization: Specifies the name of a specific organization. The value that you specify here must match exactly. 
 
-		return: 
-			Status of the request (True or False). 
-			This function does not return any data.
+		Returns: 
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
 
 		'''
 		url = '/api/dashboard/unhandled-items'
