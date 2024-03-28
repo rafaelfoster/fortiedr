@@ -1,7 +1,9 @@
+import os
 from setuptools import find_packages, setup
 from setuptools.command.install import install
+cur_dir = os.path.dirname(__file__)
 
-with open("requirements.txt") as f:
+with open(f"{cur_dir}/requirements.txt") as f:
     required_packages = f.read().splitlines()
 
 setup(

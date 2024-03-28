@@ -1,3 +1,2 @@
-requests==2.22.0
+Requests==2.31.0
 setuptools==45.2.0
-typing==3.7.4.3
