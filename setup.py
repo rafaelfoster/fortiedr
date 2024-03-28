@@ -6,14 +6,14 @@ with open("requirements.txt") as f:
 
 setup(
     name="fortiedr",
-    version="1.0",
+    version="3.0",
     description="Open-source python package intended to help on interacting with FortiEDR API.",
     author="Rafael Foster",
     author_email="fosterr@fortinet.com",
     project_urls={
-        "GitHub": "https://github.com/rafaelfoster/FortiEDR_API",
+        "GitHub": "https://github.com/rafaelfoster/fortiedr",
     },
-    python_requires=">=3.5",
+    python_requires=">=3.8",
     packages=find_packages(),
     install_requires=required_packages,
     include_package_data=True,
