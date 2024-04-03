@@ -1,7 +1,7 @@
 converter.py
-converter - Copy.py
+converter*.py
 fortiedr.py
-*.json
+.*.json
 *.old
 
 # Byte-compiled / optimized / DLL files
@@ -14,6 +14,7 @@ __pycache__/
 fortiedr.egg-info
 build
 
+api_docs/
 vendors/__pycache__/*
 config/__pycache__/*
 config/credentials.ini

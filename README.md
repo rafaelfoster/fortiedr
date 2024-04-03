@@ -1,9 +1,9 @@
-# FortiEDR_API
+# FortiEDR Python module
 An Open-source python package intended to help on interacting with FortiEDR API.
 
 It was based and tested in FortiEDR Cloud version 6.2.0.0436.
 
-## How do I install FortiEDR_API?
+## How do I install FortiEDR Python module?
 
 Be sure you have at least Python 3.8 and PIP (https://pypi.org/project/pip/) installed.
 
@@ -26,7 +26,7 @@ pip3 install .
 ## First steps with fortiedr
 
 First of all, create a Rest API user on FortiEDR Management console:
- * Create a user with Rest API permissions on FortiEDR Console. You can check this doc for help: https://docs.fortinet.com/document/fortiedr/5.2.1/administration-guide/776468/users
+ * Create a user with Rest API permissions on FortiEDR Console. You can check this doc for help: https://docs.fortinet.com/document/fortiedr/6.2.0/administration-guide/776468/users
 
  * After creating the user, this newly created user must log in to the Central Manager console and change their initial password before they can be used by Rest API calls.
 
@@ -57,7 +57,7 @@ data = collectors.list_collectors()
 
 ```
 
-## How do I use FortiEDR_API?
+## How do I use FortiEDR Python module?
 
 After credentials are defined and successfully authenticated, you are now able to start consuming FortiEDR API.
 
@@ -66,6 +66,6 @@ The "example.py" file contains some examples of how to use the package.
 
 ## How to contribute, provide feedback, or report bugs?
 
-You can e-mail me at fosterr at fortinet (.) com.
+You can e-mail me at rafaelgfoster at gmail (.) com.
 
 Enjoy it!

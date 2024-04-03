@@ -1,3 +1,4 @@
+import json
 import base64
 import requests
 
@@ -11,12 +12,12 @@ class Auth:
 
     @staticmethod
     def test_authentication(headers, host):
-        url = f'https://{host}/management-rest/admin/list-system-summary'
+        response_headers = None
+        url = f'https://{host}/management-rest/admin/ready'
 
         try:
             res = requests.get(url, headers=headers, verify=False)
             res_code = res.status_code
-
             status = False
             if res_code == 401:
                 data = "Unauthorized"
@@ -29,8 +30,9 @@ class Auth:
             else:
                 data = res
                 status = True
+                response_headers = res.headers
 
-            return status, data
+            return status, data, response_headers
 
         except requests.exceptions.RequestException as err:
             raise SystemExit(err) from err
@@ -44,7 +46,5 @@ class Auth:
 
         auth_token = Auth.convert_to_base64(user_pass)
         headers = {"Authorization": f"Basic {auth_token}"}
-
-        status, data = Auth.test_authentication(headers, fedr_host)
-
+        status, data, res_headers = Auth.test_authentication(headers, fedr_host)
         return (headers, fedr_host) if status else (None, data)

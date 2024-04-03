@@ -8,10 +8,10 @@ with open(f"{cur_dir}/requirements.txt") as f:
 
 setup(
     name="fortiedr",
-    version="3.0",
-    description="Open-source python package intended to help on interacting with FortiEDR API.",
+    version="3.1",
+    description="This Fortiedr module is an open-source Python library that simplifies interaction with the FortiEDR Cloud API.",
     author="Rafael Foster",
-    author_email="fosterr@fortinet.com",
+    author_email="rafaelgfoster@gmail.com",
     project_urls={
         "GitHub": "https://github.com/rafaelfoster/fortiedr",
     },
