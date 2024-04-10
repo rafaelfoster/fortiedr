@@ -472,7 +472,7 @@ class Administrator:
 		url = '/management-rest/admin/upload-content'
 		if file:
 			file = {'file': file}
-		return fortiedr_connection.upload(url, file, request_type="multipart/form-data")
+		return fortiedr_connection.upload(url, file)
 
 	def upload_license(self, licenseBlob: str = None) -> tuple[bool, None]:
 		'''
@@ -493,7 +493,7 @@ class Administrator:
 		license = {
 			"licenseBlob": licenseBlob,
 		}
-		return fortiedr_connection.insert(url, license)
+		return fortiedr_connection.upload(url, license)
 
 class Audit:
 	'''The Audit module enables you to retrieve system audit based on given dates'''
@@ -1370,7 +1370,7 @@ class Events:
 		if rawItemIds:
 			url_params.append('rawItemIds=' + rawItemIds)
 		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.get(url)
+		return fortiedr_connection.download(url, file_format='json')
 
 	def list_events(self, actions: dict = None, applicationControl: bool = None, archived: bool = None, classifications: dict = None, collectorGroups: dict = None, destinations: dict = None, device: str = None, deviceControl: bool = None, deviceIps: dict = None, eventIds: dict = None, eventType: dict = None, expired: bool = None, fileHash: str = None, firstSeen: str = None, firstSeenFrom: str = None, firstSeenTo: str = None, handled: bool = None, itemsPerPage: int = None, lastSeen: str = None, lastSeenFrom: str = None, lastSeenTo: str = None, loggedUser: str = None, macAddresses: dict = None, muted: bool = None, operatingSystems: dict = None, organization: str = None, pageNumber: int = None, paths: dict = None, process: str = None, rule: str = None, seen: bool = None, severities: dict = None, signed: bool = None, sorting: str = None, strictMode: bool = None) -> tuple[bool, list]:
 		'''
@@ -1931,7 +1931,7 @@ class Integrations:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def create_connector(self, apiKey: str = None, connectorActions: dict = None, coreId: int = None, enabled: bool = None, host: str = None, name: str = None, organization: str = None, password: str = None, port: str = None, type: str = None, username: str = None, vendor: str = None) -> tuple[bool, None]:
+	def create_connector(self, apiKey: str = None, connectorActions: list = None, coreId: int = None, enabled: bool = None, host: str = None, name: str = None, organization: str = None, password: str = None, port: str = None, type: str = None, username: str = None, vendor: str = None) -> tuple[bool, None]:
 		'''
 		Class Integrations
 		Description: Creates a new connector. Please note: Creation of Custom connectors/actions is not yet support..
@@ -1961,7 +1961,7 @@ class Integrations:
 			"username": username,
 			"vendor": vendor,
 		}
-		return fortiedr_connection.upload(url, createConnectorRequest)
+		return fortiedr_connection.send(url, createConnectorRequest)
 
 	def delete_connector(self, connectorName: str, connectorType: str, organization: str = None) -> tuple[bool, None]:
 		'''
@@ -2041,7 +2041,7 @@ class Integrations:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def update_connector(self, apiKey: str = None, connectorActions: dict = None, coreId: int = None, enabled: bool = None, host: str = None, name: str = None, organization: str = None, password: str = None, port: str = None, type: str = None, username: str = None, vendor: str = None) -> tuple[bool, None]:
+	def update_connector(self, apiKey: str = None, connectorActions: list = None, coreId: int = None, enabled: bool = None, host: str = None, name: str = None, organization: str = None, password: str = None, port: str = None, type: str = None, username: str = None, vendor: str = None) -> tuple[bool, None]:
 		'''
 		Class Integrations
 		Description: Updates an existing connector based on (name, type, organization). Please note: Modification of Custom connectors/actions is not yet support..
@@ -3905,7 +3905,7 @@ class SendableEntities:
 			"useClientCertificate": useClientCertificate,
 			"useSSL": useSSL,
 		}
-		return fortiedr_connection.upload(url, syslogRequest)
+		return fortiedr_connection.send(url, syslogRequest)
 
 class SystemEvents:
 	'''System Events API'''
@@ -4903,10 +4903,13 @@ def validate_params(function_name, local_params):
 	global api_json_params
 	data_types = {
 		'int': int,
+		'set': set,
 		'str': str,
+		'bool': bool,
 		'dict': dict,
 		'list': list,
-		'set': set
+		'NoneType': None,
+		'BinaryIO': bytes,
 	}
 	json_params = api_json_params[function_name]
 	for key, value in local_params.items():

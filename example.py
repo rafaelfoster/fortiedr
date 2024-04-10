@@ -86,5 +86,7 @@ def main():
       print("Error while creating user...")
       print(user_data['data'])
 
+
+   print("TEsting for FortiBRDevs")
 if __name__ == "__main__":
     main()

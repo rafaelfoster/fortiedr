@@ -1,1 +1,2 @@
 include requirements.txt
+include fortiedr\api_parameters.json
