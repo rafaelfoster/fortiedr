@@ -1,6 +1,23 @@
 [project]
 name = "fortiedr"
-version = "3.5"
+version = "3.6"
+authors = [
+  { name="Rafael Foster", email="rafaelgfoster@gmail.com" },
+]
+description = "This Fortiedr module is an open-source Python library that simplifies interaction with the FortiEDR Cloud API."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/rafaelfoster/fortiedr"
+Issues = "https://github.com/rafaelfoster/fortiedr/issues"[project]
+name = "fortiedr"
+version = 3.6
 authors = [
   { name="Rafael Foster", email="rafaelgfoster@gmail.com" },
 ]
