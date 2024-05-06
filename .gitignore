@@ -20,6 +20,7 @@ config/__pycache__/*
 config/credentials.ini
 jobs
 test.py
+*test*
 *.pyc
 TO-DO.md
 *.log

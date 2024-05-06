@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.6.5 - 2024-05-03
+
+### Fixed
+- Fixing some minor bugs and incompatibilities with Pypi build
+
 ## 3.1 - 2024-04-03
 
 ### Added

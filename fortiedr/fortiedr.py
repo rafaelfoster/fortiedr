@@ -5,7 +5,7 @@ from typing import BinaryIO
 from fortiedr.auth import Auth as fedrAuth
 from fortiedr.connector import FortiEDR_API_GW
 
-version = 3.6
+version = "3.6.5"
 
 fortiedr_connection = None
 
@@ -1445,7 +1445,7 @@ class Events:
 		if deviceIps:
 			url_params.append('deviceIps=' + deviceIps)
 		if eventIds:
-			url_params.append('eventIds=' + eventIds)
+			url_params.append('eventIds=' + str(eventIds[0]))
 		if eventType:
 			url_params.append('eventType=' + eventType)
 		if expired:
@@ -4920,7 +4920,7 @@ def validate_params(function_name, local_params):
 	json_params = api_json_params[function_name]
 	for key, value in local_params.items():
 		if key == "self" or value is None: continue
-		print(json_params[key])
+		# print(json_params[key])
 		t = data_types[json_params[key]]
 		r = str(type(value))
 		if not isinstance(value, t):
@@ -4942,6 +4942,7 @@ def set_organization(orgname):
 
 def auth( host: str, user: str, passw: str, org: str = None):
 	global debug
+	global api_json_params
 	global fortiedr_connection
 	login = fedrAuth()
 
@@ -4964,7 +4965,7 @@ def auth( host: str, user: str, passw: str, org: str = None):
 
 		fortiedr_connection = FortiEDR_API_GW()
 		authentication = fortiedr_connection.conn(headers, host, debug, ssl_enabled, organization)
-                            
+
 		cur_dir = os.path.dirname(__file__)
 		json_file = f'{cur_dir}/api_parameters.json'
 		with open(json_file, 'r') as fp:
