@@ -1,6 +1,7 @@
 converter.py
 converter*.py
 fortiedr.py
+additional_functions.py
 .*.json
 *.old
 

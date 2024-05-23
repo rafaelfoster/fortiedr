@@ -1,6 +1,2 @@
 include requirements.txt
-<<<<<<< HEAD
 include fortiedr/api_parameters.json
-=======
-include fortiedr/api_parameters.json
->>>>>>> 47c13665abb30416d147382a8db2d27218fba983

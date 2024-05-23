@@ -1,10 +1,7 @@
 import json
 import logging
-import re
 import requests
-import urllib.parse
 from datetime import datetime
-from fortiedr.auth import Auth  # Ensure this import is correct based on your project structure
 
 # Globally disable SSL warnings
 requests.packages.urllib3.disable_warnings()

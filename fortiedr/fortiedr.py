@@ -1,12 +1,40 @@
+
 import os
 import json
 from typing import BinaryIO
 from fortiedr.auth import Auth as fedrAuth
 from fortiedr.connector import FortiEDR_API_GW
 
-version = "3.6.6"
+version = '3.6.7'
 
 fortiedr_connection = None
+
+class Admin:
+	'''Admin Rest Api Controller'''
+
+	def set_tray_notification_settings(self, enabledPopup: bool = None, enabledTrayNotification: bool = None, message: str = None, organization: str = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: Update tray notification settings.
+        
+		Args:
+			adminSetTrayNotificationSettingsRequest (Object): Check 'adminSetTrayNotificationSettingsRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("set_tray_notification_settings", locals())
+
+		url = '/api/admin/set-tray-notification-settings'
+
+		adminSetTrayNotificationSettingsRequest = {
+			"enabledPopup": enabledPopup,
+			"enabledTrayNotification": enabledTrayNotification,
+			"message": message,
+			"organization": organization,
+		}
+		return fortiedr_connection.send(url, adminSetTrayNotificationSettingsRequest)
 
 class ApplicationControl:
 	'''Application Control Rest Api Controller'''
@@ -46,7 +74,7 @@ class ApplicationControl:
 		if signer:
 			url_params.append('attributes.signer=' + signer)
 		if currentPage:
-			url_params.append('currentPage=' + str(currentPage))
+			url_params.append('currentPage=' + currentPage)
 		if enabled:
 			url_params.append('enabled=' + enabled)
 		if hash:
@@ -56,7 +84,7 @@ class ApplicationControl:
 		if organization:
 			url_params.append('organization=' + organization)
 		if policyIds:
-			url_params.append('policyIds=' + policyIds)
+			url_params.append('policyIds=' + ",".join(str(policyIds)))
 		if tag:
 			url_params.append('tag=' + tag)
 		url += '?' + '&'.join(url_params)
@@ -103,7 +131,7 @@ class ApplicationControl:
 		url = '/api/application-control/applications'
 		url_params = []
 		if appIds:
-			url_params.append('appIds=' + appIds)
+			url_params.append('appIds=' + ",".join(str(appIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -135,7 +163,7 @@ class ApplicationControl:
 		url = '/api/application-control/applications'
 		url_params = []
 		if applicationIds:
-			url_params.append('applicationIds=' + applicationIds)
+			url_params.append('applicationIds=' + ",".join(str(applicationIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -179,12 +207,12 @@ class ApplicationControl:
 		}
 		return fortiedr_connection.send(url, applicationControlTagCreateRequest)
 
-class Dashboard:
+class dashboardrestapicontroller:
 	'''Dashboard Rest Api Controller'''
 
 	def most_targeted_items(self, organization: str, itemType: str = None, numOfColumns: int = None, numOfDays: int = None) -> tuple[bool, None]:
 		'''
-		Class Dashboard
+		Class dashboardrestapicontroller
 		Description: Returns most targeted devices or most targeted processes, depending on the itemType parameter.
         
 		Args:
@@ -204,9 +232,9 @@ class Dashboard:
 		if itemType:
 			url_params.append('itemType=' + itemType)
 		if numOfColumns:
-			url_params.append('numOfColumns=' + str(numOfColumns))
+			url_params.append('numOfColumns=' + numOfColumns)
 		if numOfDays:
-			url_params.append('numOfDays=' + str(numOfDays))
+			url_params.append('numOfDays=' + numOfDays)
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -214,7 +242,7 @@ class Dashboard:
 
 	def unhandled_items(self, organization: str, itemType: str = None) -> tuple[bool, None]:
 		'''
-		Class Dashboard
+		Class dashboardrestapicontroller
 		Description: Returns unhandled devices or unhandled processes, depending on the itemType parameter.
         
 		Args:
@@ -238,30 +266,6 @@ class Dashboard:
 
 class Administrator:
 	'''The Administrator module enables administrators to perform administrative operations, such as handling licenses and users.'''
-
-	def set_tray_notification_settings(self, enabledPopup: bool = None, enabledTrayNotification: bool = None, message: str = None, organization: str = None) -> tuple[bool, None]:
-		'''
-		Class Admin
-		Description: Update tray notification settings.
-        
-		Args:
-			adminSetTrayNotificationSettingsRequest (Object): Check 'adminSetTrayNotificationSettingsRequest' in the API documentation for further information.
-
-		Returns:
-			bool: Status of the request (True or False). 
-			None: This function does not return any data.
-		'''
-		validate_params("set_tray_notification_settings", locals())
-
-		url = '/api/admin/set-tray-notification-settings'
-
-		adminSetTrayNotificationSettingsRequest = {
-			"enabledPopup": enabledPopup,
-			"enabledTrayNotification": enabledTrayNotification,
-			"message": message,
-			"organization": organization,
-		}
-		return fortiedr_connection.send(url, adminSetTrayNotificationSettingsRequest)
 
 	def list_collector_installers(self, organization: str = None) -> tuple[bool, None]:
 		'''
@@ -444,9 +448,9 @@ class Administrator:
 		url = '/management-rest/admin/update-collector-installer'
 		url_params = []
 		if collectorGroupIds:
-			url_params.append('collectorGroupIds=' + collectorGroupIds)
+			url_params.append('collectorGroupIds=' + ",".join(str(collectorGroupIds)))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -551,7 +555,7 @@ class CommunicationControl:
 		url = '/management-rest/comm-control/assign-collector-group'
 		url_params = []
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if forceAssign:
 			url_params.append('forceAssign=' + forceAssign)
 		if organization:
@@ -614,21 +618,21 @@ class CommunicationControl:
 		url = '/management-rest/comm-control/list-policies'
 		url_params = []
 		if decisions:
-			url_params.append('decisions=' + decisions)
+			url_params.append('decisions=' + ",".join(str(decisions)))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if organization:
 			url_params.append('organization=' + organization)
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if policies:
-			url_params.append('policies=' + policies)
+			url_params.append('policies=' + ",".join(str(policies)))
 		if rules:
-			url_params.append('rules=' + rules)
+			url_params.append('rules=' + ",".join(str(rules)))
 		if sorting:
 			url_params.append('sorting=' + sorting)
 		if sources:
-			url_params.append('sources=' + sources)
+			url_params.append('sources=' + ",".join(str(sources)))
 		if state:
 			url_params.append('state=' + state)
 		if strictMode:
@@ -686,13 +690,13 @@ class CommunicationControl:
 		if action:
 			url_params.append('action=' + action)
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if cveIdentifier:
 			url_params.append('cveIdentifier=' + cveIdentifier)
 		if destinationIp:
-			url_params.append('destinationIp=' + destinationIp)
+			url_params.append('destinationIp=' + ",".join(str(destinationIp)))
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + ",".join(str(devices)))
 		if firstConnectionTimeEnd:
 			url_params.append('firstConnectionTimeEnd=' + firstConnectionTimeEnd)
 		if firstConnectionTimeStart:
@@ -702,9 +706,9 @@ class CommunicationControl:
 		if includeStatistics:
 			url_params.append('includeStatistics=' + includeStatistics)
 		if ips:
-			url_params.append('ips=' + ips)
+			url_params.append('ips=' + ",".join(str(ips)))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastConnectionTimeEnd:
 			url_params.append('lastConnectionTimeEnd=' + lastConnectionTimeEnd)
 		if lastConnectionTimeStart:
@@ -712,21 +716,21 @@ class CommunicationControl:
 		if organization:
 			url_params.append('organization=' + organization)
 		if os:
-			url_params.append('os=' + os)
+			url_params.append('os=' + ",".join(str(os)))
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if policies:
-			url_params.append('policies=' + policies)
+			url_params.append('policies=' + ",".join(str(policies)))
 		if processHash:
 			url_params.append('processHash=' + processHash)
 		if processes:
-			url_params.append('processes=' + processes)
+			url_params.append('processes=' + ",".join(str(processes)))
 		if product:
 			url_params.append('product=' + product)
 		if products:
-			url_params.append('products=' + products)
+			url_params.append('products=' + ",".join(str(products)))
 		if reputation:
-			url_params.append('reputation=' + reputation)
+			url_params.append('reputation=' + ",".join(str(reputation)))
 		if rule:
 			url_params.append('rule=' + rule)
 		if rulePolicy:
@@ -740,13 +744,13 @@ class CommunicationControl:
 		if vendor:
 			url_params.append('vendor=' + vendor)
 		if vendors:
-			url_params.append('vendors=' + vendors)
+			url_params.append('vendors=' + ",".join(str(vendors)))
 		if version:
 			url_params.append('version=' + version)
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + ",".join(str(versions)))
 		if vulnerabilities:
-			url_params.append('vulnerabilities=' + vulnerabilities)
+			url_params.append('vulnerabilities=' + ",".join(str(vulnerabilities)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -780,15 +784,15 @@ class CommunicationControl:
 		if organization:
 			url_params.append('organization=' + organization)
 		if products:
-			url_params.append('products=' + products)
+			url_params.append('products=' + ",".join(str(products)))
 		if resolve:
 			url_params.append('resolve=' + resolve)
 		if signed:
 			url_params.append('signed=' + signed)
 		if vendors:
-			url_params.append('vendors=' + vendors)
+			url_params.append('vendors=' + ",".join(str(vendors)))
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + ",".join(str(versions)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -815,7 +819,7 @@ class CommunicationControl:
 		if organization:
 			url_params.append('organization=' + organization)
 		if policyNames:
-			url_params.append('policyNames=' + policyNames)
+			url_params.append('policyNames=' + ",".join(str(policyNames)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -849,15 +853,15 @@ class CommunicationControl:
 		if organization:
 			url_params.append('organization=' + organization)
 		if policies:
-			url_params.append('policies=' + policies)
+			url_params.append('policies=' + ",".join(str(policies)))
 		if products:
-			url_params.append('products=' + products)
+			url_params.append('products=' + ",".join(str(products)))
 		if signed:
 			url_params.append('signed=' + signed)
 		if vendors:
-			url_params.append('vendors=' + vendors)
+			url_params.append('vendors=' + ",".join(str(vendors)))
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + ",".join(str(versions)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -948,27 +952,27 @@ class Events:
 		url = '/management-rest/events'
 		url_params = []
 		if actions:
-			url_params.append('actions=' + actions)
+			url_params.append('actions=' + ",".join(str(actions)))
 		if applicationControl:
 			url_params.append('applicationControl=' + applicationControl)
 		if archived:
 			url_params.append('archived=' + archived)
 		if classifications:
-			url_params.append('classifications=' + classifications)
+			url_params.append('classifications=' + ",".join(str(classifications)))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if destinations:
-			url_params.append('destinations=' + destinations)
+			url_params.append('destinations=' + ",".join(str(destinations)))
 		if device:
 			url_params.append('device=' + device)
 		if deviceControl:
 			url_params.append('deviceControl=' + deviceControl)
 		if deviceIps:
-			url_params.append('deviceIps=' + deviceIps)
+			url_params.append('deviceIps=' + ",".join(str(deviceIps)))
 		if eventIds:
-			url_params.append('eventIds=' + eventIds)
+			url_params.append('eventIds=' + ",".join(str(eventIds)))
 		if eventType:
-			url_params.append('eventType=' + eventType)
+			url_params.append('eventType=' + ",".join(str(eventType)))
 		if expired:
 			url_params.append('expired=' + expired)
 		if fileHash:
@@ -982,7 +986,7 @@ class Events:
 		if handled:
 			url_params.append('handled=' + handled)
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeen:
 			url_params.append('lastSeen=' + lastSeen)
 		if lastSeenFrom:
@@ -992,17 +996,17 @@ class Events:
 		if loggedUser:
 			url_params.append('loggedUser=' + loggedUser)
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + ",".join(str(macAddresses)))
 		if muted:
 			url_params.append('muted=' + muted)
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + ",".join(str(operatingSystems)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if paths:
-			url_params.append('paths=' + paths)
+			url_params.append('paths=' + ",".join(str(paths)))
 		if process:
 			url_params.append('process=' + process)
 		if rule:
@@ -1010,7 +1014,7 @@ class Events:
 		if seen:
 			url_params.append('seen=' + seen)
 		if severities:
-			url_params.append('severities=' + severities)
+			url_params.append('severities=' + ",".join(str(severities)))
 		if signed:
 			url_params.append('signed=' + signed)
 		if sorting:
@@ -1088,29 +1092,29 @@ class Events:
 		url = '/management-rest/events'
 		url_params = []
 		if actions:
-			url_params.append('actions=' + actions)
+			url_params.append('actions=' + ",".join(str(actions)))
 		if applicationControl:
 			url_params.append('applicationControl=' + applicationControl)
 		if archived:
 			url_params.append('archived=' + archived)
 		if classifications:
-			url_params.append('classifications=' + classifications)
+			url_params.append('classifications=' + ",".join(str(classifications)))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if deleteAll:
 			url_params.append('deleteAll=' + deleteAll)
 		if destinations:
-			url_params.append('destinations=' + destinations)
+			url_params.append('destinations=' + ",".join(str(destinations)))
 		if device:
 			url_params.append('device=' + device)
 		if deviceControl:
 			url_params.append('deviceControl=' + deviceControl)
 		if deviceIps:
-			url_params.append('deviceIps=' + deviceIps)
+			url_params.append('deviceIps=' + ",".join(str(deviceIps)))
 		if eventIds:
-			url_params.append('eventIds=' + eventIds)
+			url_params.append('eventIds=' + ",".join(str(eventIds)))
 		if eventType:
-			url_params.append('eventType=' + eventType)
+			url_params.append('eventType=' + ",".join(str(eventType)))
 		if expired:
 			url_params.append('expired=' + expired)
 		if fileHash:
@@ -1124,7 +1128,7 @@ class Events:
 		if handled:
 			url_params.append('handled=' + handled)
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeen:
 			url_params.append('lastSeen=' + lastSeen)
 		if lastSeenFrom:
@@ -1134,17 +1138,17 @@ class Events:
 		if loggedUser:
 			url_params.append('loggedUser=' + loggedUser)
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + ",".join(str(macAddresses)))
 		if muted:
 			url_params.append('muted=' + muted)
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + ",".join(str(operatingSystems)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if paths:
-			url_params.append('paths=' + paths)
+			url_params.append('paths=' + ",".join(str(paths)))
 		if process:
 			url_params.append('process=' + process)
 		if rule:
@@ -1152,7 +1156,7 @@ class Events:
 		if seen:
 			url_params.append('seen=' + seen)
 		if severities:
-			url_params.append('severities=' + severities)
+			url_params.append('severities=' + ",".join(str(severities)))
 		if signed:
 			url_params.append('signed=' + signed)
 		if sorting:
@@ -1215,27 +1219,27 @@ class Events:
 		url = '/management-rest/events/count-events'
 		url_params = []
 		if actions:
-			url_params.append('actions=' + actions)
+			url_params.append('actions=' + ",".join(str(actions)))
 		if applicationControl:
 			url_params.append('applicationControl=' + applicationControl)
 		if archived:
 			url_params.append('archived=' + archived)
 		if classifications:
-			url_params.append('classifications=' + classifications)
+			url_params.append('classifications=' + ",".join(str(classifications)))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if destinations:
-			url_params.append('destinations=' + destinations)
+			url_params.append('destinations=' + ",".join(str(destinations)))
 		if device:
 			url_params.append('device=' + device)
 		if deviceControl:
 			url_params.append('deviceControl=' + deviceControl)
 		if deviceIps:
-			url_params.append('deviceIps=' + deviceIps)
+			url_params.append('deviceIps=' + ",".join(str(deviceIps)))
 		if eventIds:
-			url_params.append('eventIds=' + eventIds)
+			url_params.append('eventIds=' + ",".join(str(eventIds)))
 		if eventType:
-			url_params.append('eventType=' + eventType)
+			url_params.append('eventType=' + ",".join(str(eventType)))
 		if expired:
 			url_params.append('expired=' + expired)
 		if fileHash:
@@ -1249,7 +1253,7 @@ class Events:
 		if handled:
 			url_params.append('handled=' + handled)
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeen:
 			url_params.append('lastSeen=' + lastSeen)
 		if lastSeenFrom:
@@ -1259,17 +1263,17 @@ class Events:
 		if loggedUser:
 			url_params.append('loggedUser=' + loggedUser)
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + ",".join(str(macAddresses)))
 		if muted:
 			url_params.append('muted=' + muted)
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + ",".join(str(operatingSystems)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if paths:
-			url_params.append('paths=' + paths)
+			url_params.append('paths=' + ",".join(str(paths)))
 		if process:
 			url_params.append('process=' + process)
 		if rule:
@@ -1277,7 +1281,7 @@ class Events:
 		if seen:
 			url_params.append('seen=' + seen)
 		if severities:
-			url_params.append('severities=' + severities)
+			url_params.append('severities=' + ",".join(str(severities)))
 		if signed:
 			url_params.append('signed=' + signed)
 		if sorting:
@@ -1324,21 +1328,21 @@ class Events:
 		if allUsers:
 			url_params.append('allUsers=' + allUsers)
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if comment:
 			url_params.append('comment=' + comment)
 		if destinations:
-			url_params.append('destinations=' + destinations)
+			url_params.append('destinations=' + ",".join(str(destinations)))
 		if eventId:
-			url_params.append('eventId=' + str(eventId))
+			url_params.append('eventId=' + eventId)
 		if exceptionId:
-			url_params.append('exceptionId=' + str(exceptionId))
+			url_params.append('exceptionId=' + exceptionId)
 		if forceCreate:
 			url_params.append('forceCreate=' + forceCreate)
 		if organization:
 			url_params.append('organization=' + organization)
 		if users:
-			url_params.append('users=' + users)
+			url_params.append('users=' + ",".join(str(users)))
 		url += '?' + '&'.join(url_params)
 
 		exceptionRequest = {
@@ -1371,7 +1375,7 @@ class Events:
 		if rawItemIds:
 			url_params.append('rawItemIds=' + rawItemIds)
 		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.download(url, file_format='json')
+		return fortiedr_connection.get(url)
 
 	def list_events(self, actions: list = None, applicationControl: bool = None, archived: bool = None, classifications: list = None, collectorGroups: list = None, destinations: list = None, device: str = None, deviceControl: bool = None, deviceIps: list = None, eventIds: list = None, eventType: list = None, expired: bool = None, fileHash: str = None, firstSeen: str = None, firstSeenFrom: str = None, firstSeenTo: str = None, handled: bool = None, itemsPerPage: int = None, lastSeen: str = None, lastSeenFrom: str = None, lastSeenTo: str = None, loggedUser: str = None, macAddresses: list = None, muted: bool = None, operatingSystems: list = None, organization: str = None, pageNumber: int = None, paths: list = None, process: str = None, rule: str = None, seen: bool = None, severities: list = None, signed: bool = None, sorting: str = None, strictMode: bool = None) -> tuple[bool, list]:
 		'''
@@ -1426,27 +1430,27 @@ class Events:
 		url = '/management-rest/events/list-events'
 		url_params = []
 		if actions:
-			url_params.append('actions=' + actions)
+			url_params.append('actions=' + ",".join(str(actions)))
 		if applicationControl:
 			url_params.append('applicationControl=' + applicationControl)
 		if archived:
 			url_params.append('archived=' + archived)
 		if classifications:
-			url_params.append('classifications=' + classifications)
+			url_params.append('classifications=' + ",".join(str(classifications)))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if destinations:
-			url_params.append('destinations=' + destinations)
+			url_params.append('destinations=' + ",".join(str(destinations)))
 		if device:
 			url_params.append('device=' + device)
 		if deviceControl:
 			url_params.append('deviceControl=' + deviceControl)
 		if deviceIps:
-			url_params.append('deviceIps=' + deviceIps)
+			url_params.append('deviceIps=' + ",".join(str(deviceIps)))
 		if eventIds:
-			url_params.append('eventIds=' + str(eventIds[0]))
+			url_params.append('eventIds=' + ",".join(str(eventIds)))
 		if eventType:
-			url_params.append('eventType=' + eventType)
+			url_params.append('eventType=' + ",".join(str(eventType)))
 		if expired:
 			url_params.append('expired=' + expired)
 		if fileHash:
@@ -1460,7 +1464,7 @@ class Events:
 		if handled:
 			url_params.append('handled=' + handled)
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeen:
 			url_params.append('lastSeen=' + lastSeen)
 		if lastSeenFrom:
@@ -1470,17 +1474,17 @@ class Events:
 		if loggedUser:
 			url_params.append('loggedUser=' + loggedUser)
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + ",".join(str(macAddresses)))
 		if muted:
 			url_params.append('muted=' + muted)
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + ",".join(str(operatingSystems)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if paths:
-			url_params.append('paths=' + paths)
+			url_params.append('paths=' + ",".join(str(paths)))
 		if process:
 			url_params.append('process=' + process)
 		if rule:
@@ -1488,7 +1492,7 @@ class Events:
 		if seen:
 			url_params.append('seen=' + seen)
 		if severities:
-			url_params.append('severities=' + severities)
+			url_params.append('severities=' + ",".join(str(severities)))
 		if signed:
 			url_params.append('signed=' + signed)
 		if sorting:
@@ -1533,15 +1537,15 @@ class Events:
 		url = '/management-rest/events/list-raw-data-items'
 		url_params = []
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if destinations:
-			url_params.append('destinations=' + destinations)
+			url_params.append('destinations=' + ",".join(str(destinations)))
 		if device:
 			url_params.append('device=' + device)
 		if deviceIps:
-			url_params.append('deviceIps=' + deviceIps)
+			url_params.append('deviceIps=' + ",".join(str(deviceIps)))
 		if eventId:
-			url_params.append('eventId=' + str(eventId))
+			url_params.append('eventId=' + eventId)
 		if firstSeen:
 			url_params.append('firstSeen=' + firstSeen)
 		if firstSeenFrom:
@@ -1551,7 +1555,7 @@ class Events:
 		if fullDataRequested:
 			url_params.append('fullDataRequested=' + fullDataRequested)
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeen:
 			url_params.append('lastSeen=' + lastSeen)
 		if lastSeenFrom:
@@ -1563,9 +1567,9 @@ class Events:
 		if organization:
 			url_params.append('organization=' + organization)
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if rawEventIds:
-			url_params.append('rawEventIds=' + rawEventIds)
+			url_params.append('rawEventIds=' + ",".join(str(rawEventIds)))
 		if sorting:
 			url_params.append('sorting=' + sorting)
 		if strictMode:
@@ -1634,7 +1638,7 @@ class Exceptions:
 		url = '/management-rest/exceptions/delete'
 		url_params = []
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if comment:
 			url_params.append('comment=' + comment)
 		if createdAfter:
@@ -1646,9 +1650,9 @@ class Exceptions:
 		if destination:
 			url_params.append('destination=' + destination)
 		if exceptionId:
-			url_params.append('exceptionId=' + str(exceptionId))
+			url_params.append('exceptionId=' + exceptionId)
 		if exceptionIds:
-			url_params.append('exceptionIds=' + exceptionIds)
+			url_params.append('exceptionIds=' + ",".join(str(exceptionIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if path:
@@ -1656,7 +1660,7 @@ class Exceptions:
 		if process:
 			url_params.append('process=' + process)
 		if rules:
-			url_params.append('rules=' + rules)
+			url_params.append('rules=' + ",".join(str(rules)))
 		if updatedAfter:
 			url_params.append('updatedAfter=' + updatedAfter)
 		if updatedBefore:
@@ -1684,7 +1688,7 @@ class Exceptions:
 		url = '/management-rest/exceptions/get-event-exceptions'
 		url_params = []
 		if eventId:
-			url_params.append('eventId=' + str(eventId))
+			url_params.append('eventId=' + eventId)
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -1721,7 +1725,7 @@ class Exceptions:
 		url = '/management-rest/exceptions/list-exceptions'
 		url_params = []
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if comment:
 			url_params.append('comment=' + comment)
 		if createdAfter:
@@ -1731,7 +1735,7 @@ class Exceptions:
 		if destination:
 			url_params.append('destination=' + destination)
 		if exceptionIds:
-			url_params.append('exceptionIds=' + exceptionIds)
+			url_params.append('exceptionIds=' + ",".join(str(exceptionIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if path:
@@ -1739,7 +1743,7 @@ class Exceptions:
 		if process:
 			url_params.append('process=' + process)
 		if rules:
-			url_params.append('rules=' + rules)
+			url_params.append('rules=' + ",".join(str(rules)))
 		if updatedAfter:
 			url_params.append('updatedAfter=' + updatedAfter)
 		if updatedBefore:
@@ -1780,15 +1784,15 @@ class Forensics:
 		if endRange:
 			url_params.append('endRange=' + endRange)
 		if filePaths:
-			url_params.append('filePaths=' + filePaths)
+			url_params.append('filePaths=' + ",".join(str(filePaths)))
 		if memory:
 			url_params.append('memory=' + memory)
 		if organization:
 			url_params.append('organization=' + organization)
 		if processId:
-			url_params.append('processId=' + str(processId))
+			url_params.append('processId=' + processId)
 		if rawEventId:
-			url_params.append('rawEventId=' + str(rawEventId))
+			url_params.append('rawEventId=' + rawEventId)
 		if startRange:
 			url_params.append('startRange=' + startRange)
 		url += '?' + '&'.join(url_params)
@@ -1816,7 +1820,7 @@ class Forensics:
 		if device:
 			url_params.append('device=' + device)
 		if filePaths:
-			url_params.append('filePaths=' + filePaths)
+			url_params.append('filePaths=' + ",".join(str(filePaths)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if type:
@@ -1855,9 +1859,9 @@ given device.
 		if device:
 			url_params.append('device=' + device)
 		if deviceId:
-			url_params.append('deviceId=' + str(deviceId))
+			url_params.append('deviceId=' + deviceId)
 		if executablesToRemove:
-			url_params.append('executablesToRemove=' + executablesToRemove)
+			url_params.append('executablesToRemove=' + ",".join(str(executablesToRemove)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if persistenceDataAction:
@@ -1873,9 +1877,9 @@ given device.
 		if processName:
 			url_params.append('processName=' + processName)
 		if terminatedProcessId:
-			url_params.append('terminatedProcessId=' + str(terminatedProcessId))
+			url_params.append('terminatedProcessId=' + terminatedProcessId)
 		if threadId:
-			url_params.append('threadId=' + str(threadId))
+			url_params.append('threadId=' + threadId)
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -1902,7 +1906,7 @@ class HashSearch:
 		url = '/management-rest/hash/search'
 		url_params = []
 		if fileHashes:
-			url_params.append('fileHashes=' + fileHashes)
+			url_params.append('fileHashes=' + ",".join(str(fileHashes)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -2098,7 +2102,7 @@ class SystemInventory:
 		if device:
 			url_params.append('device=' + device)
 		if deviceId:
-			url_params.append('deviceId=' + str(deviceId))
+			url_params.append('deviceId=' + deviceId)
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -2146,7 +2150,7 @@ class SystemInventory:
 		if device:
 			url_params.append('device=' + device)
 		if deviceId:
-			url_params.append('deviceId=' + str(deviceId))
+			url_params.append('deviceId=' + deviceId)
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -2173,7 +2177,7 @@ class SystemInventory:
 		if device:
 			url_params.append('device=' + device)
 		if deviceId:
-			url_params.append('deviceId=' + str(deviceId))
+			url_params.append('deviceId=' + deviceId)
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -2232,7 +2236,7 @@ class SystemInventory:
 		if aggregatorAddress:
 			url_params.append('aggregatorAddress=' + aggregatorAddress)
 		if aggregatorPort:
-			url_params.append('aggregatorPort=' + str(aggregatorPort))
+			url_params.append('aggregatorPort=' + aggregatorPort)
 		if citrixPVS:
 			url_params.append('citrixPVS=' + citrixPVS)
 		if collectorGroup:
@@ -2302,15 +2306,15 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		url = '/management-rest/inventory/delete-collectors'
 		url_params = []
 		if cloudAccounts:
-			url_params.append('cloudAccounts=' + cloudAccounts)
+			url_params.append('cloudAccounts=' + ",".join(str(cloudAccounts)))
 		if cloudProviders:
-			url_params.append('cloudProviders=' + cloudProviders)
+			url_params.append('cloudProviders=' + ",".join(str(cloudProviders)))
 		if clusters:
-			url_params.append('clusters=' + clusters)
+			url_params.append('clusters=' + ",".join(str(clusters)))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if collectorGroupsIds:
-			url_params.append('collectorGroupsIds=' + collectorGroupsIds)
+			url_params.append('collectorGroupsIds=' + ",".join(str(collectorGroupsIds)))
 		if collectorType:
 			url_params.append('collectorType=' + collectorType)
 		if confirmDeletion:
@@ -2318,17 +2322,17 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if deleteAll:
 			url_params.append('deleteAll=' + deleteAll)
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
 		if firstSeen:
 			url_params.append('firstSeen=' + firstSeen)
 		if hasCrashDumps:
 			url_params.append('hasCrashDumps=' + hasCrashDumps)
 		if ips:
-			url_params.append('ips=' + ips)
+			url_params.append('ips=' + ",".join(str(ips)))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeenEnd:
 			url_params.append('lastSeenEnd=' + lastSeenEnd)
 		if lastSeenStart:
@@ -2336,23 +2340,23 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if loggedUser:
 			url_params.append('loggedUser=' + loggedUser)
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + ",".join(str(operatingSystems)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if osFamilies:
-			url_params.append('osFamilies=' + osFamilies)
+			url_params.append('osFamilies=' + ",".join(str(osFamilies)))
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if showExpired:
 			url_params.append('showExpired=' + showExpired)
 		if sorting:
 			url_params.append('sorting=' + sorting)
 		if states:
-			url_params.append('states=' + states)
+			url_params.append('states=' + ",".join(str(states)))
 		if strictMode:
 			url_params.append('strictMode=' + strictMode)
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + ",".join(str(versions)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -2375,9 +2379,9 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		url = '/management-rest/inventory/isolate-collectors'
 		url_params = []
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -2407,11 +2411,11 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if ip:
 			url_params.append('ip=' + ip)
 		if names:
-			url_params.append('names=' + names)
+			url_params.append('names=' + ",".join(str(names)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + ",".join(str(versions)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -2484,29 +2488,29 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		url = '/management-rest/inventory/list-collectors'
 		url_params = []
 		if cloudAccounts:
-			url_params.append('cloudAccounts=' + cloudAccounts)
+			url_params.append('cloudAccounts=' + ",".join(str(cloudAccounts)))
 		if cloudProviders:
-			url_params.append('cloudProviders=' + cloudProviders)
+			url_params.append('cloudProviders=' + ",".join(str(cloudProviders)))
 		if clusters:
-			url_params.append('clusters=' + clusters)
+			url_params.append('clusters=' + ",".join(str(clusters)))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if collectorGroupsIds:
-			url_params.append('collectorGroupsIds=' + collectorGroupsIds)
+			url_params.append('collectorGroupsIds=' + ",".join(str(collectorGroupsIds)))
 		if collectorType:
 			url_params.append('collectorType=' + collectorType)
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
 		if firstSeen:
 			url_params.append('firstSeen=' + firstSeen)
 		if hasCrashDumps:
 			url_params.append('hasCrashDumps=' + hasCrashDumps)
 		if ips:
-			url_params.append('ips=' + ips)
+			url_params.append('ips=' + ",".join(str(ips)))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeenEnd:
 			url_params.append('lastSeenEnd=' + lastSeenEnd)
 		if lastSeenStart:
@@ -2514,23 +2518,23 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if loggedUser:
 			url_params.append('loggedUser=' + loggedUser)
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + ",".join(str(operatingSystems)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if osFamilies:
-			url_params.append('osFamilies=' + osFamilies)
+			url_params.append('osFamilies=' + ",".join(str(osFamilies)))
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if showExpired:
 			url_params.append('showExpired=' + showExpired)
 		if sorting:
 			url_params.append('sorting=' + sorting)
 		if states:
-			url_params.append('states=' + states)
+			url_params.append('states=' + ",".join(str(states)))
 		if strictMode:
 			url_params.append('strictMode=' + strictMode)
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + ",".join(str(versions)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -2558,17 +2562,17 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		url = '/management-rest/inventory/list-cores'
 		url_params = []
 		if deploymentModes:
-			url_params.append('deploymentModes=' + deploymentModes)
+			url_params.append('deploymentModes=' + ",".join(str(deploymentModes)))
 		if hasCrashDumps:
 			url_params.append('hasCrashDumps=' + hasCrashDumps)
 		if ip:
 			url_params.append('ip=' + ip)
 		if names:
-			url_params.append('names=' + names)
+			url_params.append('names=' + ",".join(str(names)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + ",".join(str(versions)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -2611,11 +2615,11 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		url = '/management-rest/inventory/list-unmanaged-devices'
 		url_params = []
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if organization:
 			url_params.append('organization=' + organization)
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if sorting:
 			url_params.append('sorting=' + sorting)
 		if strictMode:
@@ -2647,11 +2651,11 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		url = '/management-rest/inventory/move-collectors'
 		url_params = []
 		if collectorIds:
-			url_params.append('collectorIds=' + collectorIds)
+			url_params.append('collectorIds=' + ",".join(str(collectorIds)))
 		if collectorSIDs:
-			url_params.append('collectorSIDs=' + collectorSIDs)
+			url_params.append('collectorSIDs=' + ",".join(str(collectorSIDs)))
 		if collectors:
-			url_params.append('collectors=' + collectors)
+			url_params.append('collectors=' + ",".join(str(collectors)))
 		if forceAssign:
 			url_params.append('forceAssign=' + forceAssign)
 		if organization:
@@ -2724,21 +2728,21 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		url = '/management-rest/inventory/toggle-collectors'
 		url_params = []
 		if cloudAccounts:
-			url_params.append('cloudAccounts=' + cloudAccounts)
+			url_params.append('cloudAccounts=' + ",".join(str(cloudAccounts)))
 		if cloudProviders:
-			url_params.append('cloudProviders=' + cloudProviders)
+			url_params.append('cloudProviders=' + ",".join(str(cloudProviders)))
 		if clusters:
-			url_params.append('clusters=' + clusters)
+			url_params.append('clusters=' + ",".join(str(clusters)))
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if collectorGroupsIds:
-			url_params.append('collectorGroupsIds=' + collectorGroupsIds)
+			url_params.append('collectorGroupsIds=' + ",".join(str(collectorGroupsIds)))
 		if collectorType:
 			url_params.append('collectorType=' + collectorType)
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
 		if enable:
 			url_params.append('enable=' + enable)
 		if firstSeen:
@@ -2746,9 +2750,9 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if hasCrashDumps:
 			url_params.append('hasCrashDumps=' + hasCrashDumps)
 		if ips:
-			url_params.append('ips=' + ips)
+			url_params.append('ips=' + ",".join(str(ips)))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeenEnd:
 			url_params.append('lastSeenEnd=' + lastSeenEnd)
 		if lastSeenStart:
@@ -2756,23 +2760,23 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if loggedUser:
 			url_params.append('loggedUser=' + loggedUser)
 		if operatingSystems:
-			url_params.append('operatingSystems=' + operatingSystems)
+			url_params.append('operatingSystems=' + ",".join(str(operatingSystems)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if osFamilies:
-			url_params.append('osFamilies=' + osFamilies)
+			url_params.append('osFamilies=' + ",".join(str(osFamilies)))
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if showExpired:
 			url_params.append('showExpired=' + showExpired)
 		if sorting:
 			url_params.append('sorting=' + sorting)
 		if states:
-			url_params.append('states=' + states)
+			url_params.append('states=' + ",".join(str(states)))
 		if strictMode:
 			url_params.append('strictMode=' + strictMode)
 		if versions:
-			url_params.append('versions=' + versions)
+			url_params.append('versions=' + ",".join(str(versions)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2795,9 +2799,9 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		url = '/management-rest/inventory/unisolate-collectors'
 		url_params = []
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -2869,37 +2873,37 @@ class IoT:
 		url = '/management-rest/iot/delete-devices'
 		url_params = []
 		if categories:
-			url_params.append('categories=' + categories)
+			url_params.append('categories=' + ",".join(str(categories)))
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
 		if firstSeenEnd:
 			url_params.append('firstSeenEnd=' + firstSeenEnd)
 		if firstSeenStart:
 			url_params.append('firstSeenStart=' + firstSeenStart)
 		if internalIps:
-			url_params.append('internalIps=' + internalIps)
+			url_params.append('internalIps=' + ",".join(str(internalIps)))
 		if iotGroups:
-			url_params.append('iotGroups=' + iotGroups)
+			url_params.append('iotGroups=' + ",".join(str(iotGroups)))
 		if iotGroupsIds:
-			url_params.append('iotGroupsIds=' + iotGroupsIds)
+			url_params.append('iotGroupsIds=' + ",".join(str(iotGroupsIds)))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeenEnd:
 			url_params.append('lastSeenEnd=' + lastSeenEnd)
 		if lastSeenStart:
 			url_params.append('lastSeenStart=' + lastSeenStart)
 		if locations:
-			url_params.append('locations=' + locations)
+			url_params.append('locations=' + ",".join(str(locations)))
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + ",".join(str(macAddresses)))
 		if models:
-			url_params.append('models=' + models)
+			url_params.append('models=' + ",".join(str(models)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if showExpired:
 			url_params.append('showExpired=' + showExpired)
 		if sorting:
@@ -2907,7 +2911,7 @@ class IoT:
 		if strictMode:
 			url_params.append('strictMode=' + strictMode)
 		if vendors:
-			url_params.append('vendors=' + vendors)
+			url_params.append('vendors=' + ",".join(str(vendors)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -2931,7 +2935,7 @@ class IoT:
 		url = '/management-rest/iot/export-iot-json'
 		url_params = []
 		if iotDeviceIds:
-			url_params.append('iotDeviceIds=' + iotDeviceIds)
+			url_params.append('iotDeviceIds=' + ",".join(str(iotDeviceIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -2976,37 +2980,37 @@ class IoT:
 		url = '/management-rest/iot/list-iot-devices'
 		url_params = []
 		if categories:
-			url_params.append('categories=' + categories)
+			url_params.append('categories=' + ",".join(str(categories)))
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
 		if firstSeenEnd:
 			url_params.append('firstSeenEnd=' + firstSeenEnd)
 		if firstSeenStart:
 			url_params.append('firstSeenStart=' + firstSeenStart)
 		if internalIps:
-			url_params.append('internalIps=' + internalIps)
+			url_params.append('internalIps=' + ",".join(str(internalIps)))
 		if iotGroups:
-			url_params.append('iotGroups=' + iotGroups)
+			url_params.append('iotGroups=' + ",".join(str(iotGroups)))
 		if iotGroupsIds:
-			url_params.append('iotGroupsIds=' + iotGroupsIds)
+			url_params.append('iotGroupsIds=' + ",".join(str(iotGroupsIds)))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeenEnd:
 			url_params.append('lastSeenEnd=' + lastSeenEnd)
 		if lastSeenStart:
 			url_params.append('lastSeenStart=' + lastSeenStart)
 		if locations:
-			url_params.append('locations=' + locations)
+			url_params.append('locations=' + ",".join(str(locations)))
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + ",".join(str(macAddresses)))
 		if models:
-			url_params.append('models=' + models)
+			url_params.append('models=' + ",".join(str(models)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if showExpired:
 			url_params.append('showExpired=' + showExpired)
 		if sorting:
@@ -3014,7 +3018,7 @@ class IoT:
 		if strictMode:
 			url_params.append('strictMode=' + strictMode)
 		if vendors:
-			url_params.append('vendors=' + vendors)
+			url_params.append('vendors=' + ",".join(str(vendors)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -3060,7 +3064,7 @@ class IoT:
 		url = '/management-rest/iot/move-iot-devices'
 		url_params = []
 		if iotDeviceIds:
-			url_params.append('iotDeviceIds=' + iotDeviceIds)
+			url_params.append('iotDeviceIds=' + ",".join(str(iotDeviceIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if targetIotGroup:
@@ -3107,37 +3111,37 @@ class IoT:
 		url = '/management-rest/iot/rescan-iot-device-details'
 		url_params = []
 		if categories:
-			url_params.append('categories=' + categories)
+			url_params.append('categories=' + ",".join(str(categories)))
 		if devices:
-			url_params.append('devices=' + devices)
+			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + devicesIds)
+			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
 		if firstSeenEnd:
 			url_params.append('firstSeenEnd=' + firstSeenEnd)
 		if firstSeenStart:
 			url_params.append('firstSeenStart=' + firstSeenStart)
 		if internalIps:
-			url_params.append('internalIps=' + internalIps)
+			url_params.append('internalIps=' + ",".join(str(internalIps)))
 		if iotGroups:
-			url_params.append('iotGroups=' + iotGroups)
+			url_params.append('iotGroups=' + ",".join(str(iotGroups)))
 		if iotGroupsIds:
-			url_params.append('iotGroupsIds=' + iotGroupsIds)
+			url_params.append('iotGroupsIds=' + ",".join(str(iotGroupsIds)))
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeenEnd:
 			url_params.append('lastSeenEnd=' + lastSeenEnd)
 		if lastSeenStart:
 			url_params.append('lastSeenStart=' + lastSeenStart)
 		if locations:
-			url_params.append('locations=' + locations)
+			url_params.append('locations=' + ",".join(str(locations)))
 		if macAddresses:
-			url_params.append('macAddresses=' + macAddresses)
+			url_params.append('macAddresses=' + ",".join(str(macAddresses)))
 		if models:
-			url_params.append('models=' + models)
+			url_params.append('models=' + ",".join(str(models)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if showExpired:
 			url_params.append('showExpired=' + showExpired)
 		if sorting:
@@ -3145,7 +3149,7 @@ class IoT:
 		if strictMode:
 			url_params.append('strictMode=' + strictMode)
 		if vendors:
-			url_params.append('vendors=' + vendors)
+			url_params.append('vendors=' + ",".join(str(vendors)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -3198,7 +3202,7 @@ class IPsets:
 		url = '/management-rest/ip-sets/delete-ip-set'
 		url_params = []
 		if ipSets:
-			url_params.append('ipSets=' + ipSets)
+			url_params.append('ipSets=' + ",".join(str(ipSets)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -3492,7 +3496,7 @@ class Playbookspolicies:
 		url = '/management-rest/playbooks-policies/assign-collector-group'
 		url_params = []
 		if collectorGroupNames:
-			url_params.append('collectorGroupNames=' + collectorGroupNames)
+			url_params.append('collectorGroupNames=' + ",".join(str(collectorGroupNames)))
 		if forceAssign:
 			url_params.append('forceAssign=' + forceAssign)
 		if organization:
@@ -3658,7 +3662,7 @@ class Policies:
 		url = '/management-rest/policies/assign-collector-group'
 		url_params = []
 		if collectorsGroupName:
-			url_params.append('collectorsGroupName=' + collectorsGroupName)
+			url_params.append('collectorsGroupName=' + ",".join(str(collectorsGroupName)))
 		if forceAssign:
 			url_params.append('forceAssign=' + forceAssign)
 		if organization:
@@ -3745,7 +3749,7 @@ class Policies:
 		if executableFilesOnly:
 			url_params.append('executableFilesOnly=' + executableFilesOnly)
 		if filePaths:
-			url_params.append('filePaths=' + filePaths)
+			url_params.append('filePaths=' + ",".join(str(filePaths)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if origin:
@@ -3753,7 +3757,7 @@ class Policies:
 		if scanBy:
 			url_params.append('scanBy=' + scanBy)
 		if scanSelection:
-			url_params.append('scanSelection=' + scanSelection)
+			url_params.append('scanSelection=' + ",".join(str(scanSelection)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.send(url)
 
@@ -3938,17 +3942,17 @@ class SystemEvents:
 		url = '/management-rest/system-events/list-system-events'
 		url_params = []
 		if componentNames:
-			url_params.append('componentNames=' + componentNames)
+			url_params.append('componentNames=' + ",".join(str(componentNames)))
 		if componentTypes:
-			url_params.append('componentTypes=' + componentTypes)
+			url_params.append('componentTypes=' + ",".join(str(componentTypes)))
 		if fromDate:
 			url_params.append('fromDate=' + fromDate)
 		if itemsPerPage:
-			url_params.append('itemsPerPage=' + str(itemsPerPage))
+			url_params.append('itemsPerPage=' + itemsPerPage)
 		if organization:
 			url_params.append('organization=' + organization)
 		if pageNumber:
-			url_params.append('pageNumber=' + str(pageNumber))
+			url_params.append('pageNumber=' + pageNumber)
 		if sorting:
 			url_params.append('sorting=' + sorting)
 		if strictMode:
@@ -4158,7 +4162,7 @@ class ThreatHuntingExclusions:
 		if organization:
 			url_params.append('organization=' + organization)
 		if os:
-			url_params.append('os=' + os)
+			url_params.append('os=' + ",".join(str(os)))
 		if searchText:
 			url_params.append('searchText=' + searchText)
 		url += '?' + '&'.join(url_params)
@@ -4381,7 +4385,7 @@ class ThreatHunting:
 		url = '/management-rest/threat-hunting/customize-fortinet-query'
 		url_params = []
 		if id:
-			url_params.append('id=' + str(id))
+			url_params.append('id=' + id)
 		if queryToEdit:
 			url_params.append('queryToEdit=' + queryToEdit)
 		url += '?' + '&'.join(url_params)
@@ -4433,13 +4437,13 @@ class ThreatHunting:
 		if organization:
 			url_params.append('organization=' + organization)
 		if queryIds:
-			url_params.append('queryIds=' + queryIds)
+			url_params.append('queryIds=' + ",".join(str(queryIds)))
 		if queryNames:
-			url_params.append('queryNames=' + queryNames)
+			url_params.append('queryNames=' + ",".join(str(queryNames)))
 		if scheduled:
 			url_params.append('scheduled=' + scheduled)
 		if source:
-			url_params.append('source=' + source)
+			url_params.append('source=' + ",".join(str(source)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -4466,9 +4470,9 @@ class ThreatHunting:
 		if organization:
 			url_params.append('organization=' + organization)
 		if tagIds:
-			url_params.append('tagIds=' + tagIds)
+			url_params.append('tagIds=' + ",".join(str(tagIds)))
 		if tagNames:
-			url_params.append('tagNames=' + tagNames)
+			url_params.append('tagNames=' + ",".join(str(tagNames)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
@@ -4530,7 +4534,7 @@ class ThreatHunting:
 		if scheduled:
 			url_params.append('scheduled=' + scheduled)
 		if source:
-			url_params.append('source=' + source)
+			url_params.append('source=' + ",".join(str(source)))
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
@@ -4576,7 +4580,7 @@ class ThreatHunting:
 		url = '/management-rest/threat-hunting/save-query'
 		url_params = []
 		if id:
-			url_params.append('id=' + str(id))
+			url_params.append('id=' + id)
 		if queryToEdit:
 			url_params.append('queryToEdit=' + queryToEdit)
 		url += '?' + '&'.join(url_params)
@@ -4666,11 +4670,11 @@ class ThreatHunting:
 		if organization:
 			url_params.append('organization=' + organization)
 		if queryIds:
-			url_params.append('queryIds=' + queryIds)
+			url_params.append('queryIds=' + ",".join(str(queryIds)))
 		if queryNames:
-			url_params.append('queryNames=' + queryNames)
+			url_params.append('queryNames=' + ",".join(str(queryNames)))
 		if source:
-			url_params.append('source=' + source)
+			url_params.append('source=' + ",".join(str(source)))
 		if state:
 			url_params.append('state=' + state)
 		url += '?' + '&'.join(url_params)
@@ -4893,7 +4897,6 @@ class Users:
 			"username": username,
 		}
 		return fortiedr_connection.insert(url, userRequest)
-
 
 debug = None
 ssl_enabled = True
