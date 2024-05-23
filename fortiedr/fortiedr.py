@@ -5,7 +5,7 @@ from typing import BinaryIO
 from fortiedr.auth import Auth as fedrAuth
 from fortiedr.connector import FortiEDR_API_GW
 
-version = "3.6.5"
+version = "3.6.6"
 
 fortiedr_connection = None
 
@@ -2491,7 +2491,8 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if clusters:
 			url_params.append('clusters=' + clusters)
 		if collectorGroups:
-			url_params.append('collectorGroups=' + collectorGroups)
+			collectorGroupsStr = ','.join(collectorGroups)
+			url_params.append('collectorGroups=' + collectorGroupsStr)
 		if collectorGroupsIds:
 			url_params.append('collectorGroupsIds=' + collectorGroupsIds)
 		if collectorType:
