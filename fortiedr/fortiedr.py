@@ -1,4 +1,3 @@
-
 import os
 import json
 from typing import BinaryIO
@@ -2491,8 +2490,7 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if clusters:
 			url_params.append('clusters=' + clusters)
 		if collectorGroups:
-			collectorGroupsStr = ','.join(collectorGroups)
-			url_params.append('collectorGroups=' + collectorGroupsStr)
+			url_params.append('collectorGroups=' + collectorGroups)
 		if collectorGroupsIds:
 			url_params.append('collectorGroupsIds=' + collectorGroupsIds)
 		if collectorType:
