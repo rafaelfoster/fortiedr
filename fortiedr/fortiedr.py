@@ -5,7 +5,7 @@ from typing import BinaryIO
 from fortiedr.auth import Auth as fedrAuth
 from fortiedr.connector import FortiEDR_API_GW
 
-version = '3.6.7'
+version = '3.6.8'
 
 fortiedr_connection = None
 
@@ -57,6 +57,7 @@ class ApplicationControl:
 			operatingSystem (str): Specifies the operating system of the application control.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			policyIds (list): Specifies the IDs of the relevant policies for application control.
+			integer (list): Specifies the IDs of the relevant policies for application control.
 			tag (str): Specifies the tag related to application control.
 
 		Returns:
@@ -84,7 +85,7 @@ class ApplicationControl:
 		if organization:
 			url_params.append('organization=' + organization)
 		if policyIds:
-			url_params.append('policyIds=' + ",".join(str(policyIds)))
+			url_params.append('policyIds=' + ",".join(map(str, policyIds)))
 		if tag:
 			url_params.append('tag=' + tag)
 		url += '?' + '&'.join(url_params)
@@ -119,6 +120,7 @@ class ApplicationControl:
         
 		Args:
 			appIds (list): The relevant application IDs to edit.
+			integer (list): The relevant application IDs to edit.
 			modifiedFields (Object): Check 'modifiedFields' in the API documentation for further information.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 
@@ -131,7 +133,7 @@ class ApplicationControl:
 		url = '/api/application-control/applications'
 		url_params = []
 		if appIds:
-			url_params.append('appIds=' + ",".join(str(appIds)))
+			url_params.append('appIds=' + ",".join(map(str, appIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -152,6 +154,7 @@ class ApplicationControl:
         
 		Args:
 			applicationIds (list): The IDs of the applications to be deleted.
+			integer (list): The IDs of the applications to be deleted.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 
 		Returns:
@@ -163,7 +166,7 @@ class ApplicationControl:
 		url = '/api/application-control/applications'
 		url_params = []
 		if applicationIds:
-			url_params.append('applicationIds=' + ",".join(str(applicationIds)))
+			url_params.append('applicationIds=' + ",".join(map(str, applicationIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -433,7 +436,9 @@ class Administrator:
         
 		Args:
 			collectorGroupIds (list): Specifies the list of IDs of all the collector groups which should be updated..
+			integer (list): Specifies the list of IDs of all the collector groups which should be updated..
 			collectorGroups (list): Specifies the list of all the collector groups which should be updated..
+			string (list): Specifies the list of all the collector groups which should be updated..
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
@@ -448,7 +453,7 @@ class Administrator:
 		url = '/management-rest/admin/update-collector-installer'
 		url_params = []
 		if collectorGroupIds:
-			url_params.append('collectorGroupIds=' + ",".join(str(collectorGroupIds)))
+			url_params.append('collectorGroupIds=' + ",".join(map(str, collectorGroupIds)))
 		if collectorGroups:
 			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if organization:
@@ -542,6 +547,7 @@ class CommunicationControl:
         
 		Args:
 			collectorGroups (list):  Specifies the collector groups whose collector reported the events.
+			string (list):  Specifies the collector groups whose collector reported the events.
 			forceAssign (bool): Indicates whether to force the assignment even if the group is assigned to similar policies.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			policyName (str): Specifies the list of policies.
@@ -599,13 +605,17 @@ class CommunicationControl:
         
 		Args:
 			decisions (list): Indicates the action.
+			string (list): Indicates the action.
 			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			pageNumber (int): An integer used for paging that indicates the required page number.
 			policies (list): Specifies the list of policy names.
+			string (list): Specifies the list of policy names.
 			rules (list): Specifies the list of rules.
+			string (list): Specifies the list of rules.
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on.
 			sources (list): Specifies who created the policy.
+			string (list): Specifies who created the policy.
 			state (str): Policy rule state.
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
 
@@ -648,26 +658,35 @@ class CommunicationControl:
 		Args:
 			action (str): Indicates the action: Allow/Deny. This parameter is irrelevant without policies parameter.
 			collectorGroups (list): Specifies the list of collector groups where the products were seen.
+			string (list): Specifies the list of collector groups where the products were seen.
 			cveIdentifier (str): Specifies the CVE identifier.
 			destinationIp (list): Destination IPs.
+			string (list): Destination IPs.
 			devices (list): Specifies the list of device names where the products were seen.
+			string (list): Specifies the list of device names where the products were seen.
 			firstConnectionTimeEnd (str):  Retrieves products whose first connection time is less than the value assigned to this date.
 			firstConnectionTimeStart (str):  Retrieves products whose first connection time is greater than the value assigned to this date.
 			handled (bool): A true/false parameter indicating whether events were handled/unhandled.
 			includeStatistics (bool): A true/false parameter indicating including statistics data.
 			ips (list): Specifies the list of IPs where the products were seen.
+			string (list): Specifies the list of IPs where the products were seen.
 			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000.
 			lastConnectionTimeEnd (str):  Retrieves products whose last connection time is less than the value assigned to this date.
 			lastConnectionTimeStart (str):  Retrieves products whose last connection time is greater than the value assigned to this date.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			os (list): Specifies the list of operating system families where the products were seen.
+			string (list): Specifies the list of operating system families where the products were seen.
 			pageNumber (int): An integer used for paging that indicates the required page number.
 			policies (list): Specifies the list of policy names whose products have a specific decision, as specified in the action parameter.
+			string (list): Specifies the list of policy names whose products have a specific decision, as specified in the action parameter.
 			processHash (str): Specifies the process hash name.
 			processes (list): Specifies the list of process names running alongside the products.
+			string (list): Specifies the list of process names running alongside the products.
 			product (str): Specifies a single value for the product name. By default, strictMode is false.
 			products (list): Specifies the list of product names. Names must match exactly (strictMode is always true).
+			string (list): Specifies the list of product names. Names must match exactly (strictMode is always true).
 			reputation (list): Specifies the recommendation of the application: Unknown, Known bad, Assumed bad, Contradiction, Assumed good or Known good.
+			string (list): Specifies the recommendation of the application: Unknown, Known bad, Assumed bad, Contradiction, Assumed good or Known good.
 			rule (str): Indicates the rule. This parameter is irrelevant without rulePolicy parameter.
 			rulePolicy (str): Specifies the policy name whose products have a specific rule, as specified in the rule parameter.
 			seen (bool): A true/false parameter indicating whether events were read/unread by the user operating the API.
@@ -675,9 +694,12 @@ class CommunicationControl:
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
 			vendor (str): Specifies a single value for the vendor name. By default, strictMode is false.
 			vendors (list): Specifies the list of vendor names. Names must match exactly (strictMode is always true).
+			string (list): Specifies the list of vendor names. Names must match exactly (strictMode is always true).
 			version (str): Specifies a single value for the version name. By default, strictMode is false.
 			versions (list): Specifies the list of versions. Names must match exactly (strictMode is always true).
+			string (list): Specifies the list of versions. Names must match exactly (strictMode is always true).
 			vulnerabilities (list): Specifies the list of vulnerabilities where the products were seen.
+			string (list): Specifies the list of vulnerabilities where the products were seen.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -764,10 +786,13 @@ class CommunicationControl:
 			comment (str): Specifies a user-defined string to attach to the policy.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			products (list): Specifies the list of product names. Names must match exactly (strictMode is always true).
+			string (list): Specifies the list of product names. Names must match exactly (strictMode is always true).
 			resolve (bool): A true/false parameter indicating update the application resolve/unresolve.
 			signed (bool): A true/false parameter indicating if the policy is signed.
 			vendors (list): Specifies the list of vendor names. Names must match exactly (strictMode is always true).
+			string (list): Specifies the list of vendor names. Names must match exactly (strictMode is always true).
 			versions (list): Specifies the list of versions. Names must match exactly (strictMode is always true).
+			string (list): Specifies the list of versions. Names must match exactly (strictMode is always true).
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -805,6 +830,7 @@ class CommunicationControl:
 			mode (str): Operation mode.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			policyNames (list): Specifies the list of policies.
+			string (list): Specifies the list of policies.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -833,10 +859,14 @@ class CommunicationControl:
 			decision (str): Indicates the action.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			policies (list): Specifies the list of policies names.
+			string (list): Specifies the list of policies names.
 			products (list): Specifies the list of product names. Names must match exactly (strictMode is always true).
+			string (list): Specifies the list of product names. Names must match exactly (strictMode is always true).
 			signed (bool): A true/false parameter indicating if the policy is signed.
 			vendors (list): Specifies the list of vendor names. Names must match exactly (strictMode is always true).
+			string (list): Specifies the list of vendor names. Names must match exactly (strictMode is always true).
 			versions (list): Specifies the list of versions. Names must match exactly (strictMode is always true).
+			string (list): Specifies the list of versions. Names must match exactly (strictMode is always true).
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -905,16 +935,23 @@ class Events:
         
 		Args:
 			actions (list): Specifies the action of the event.
+			string (list): Specifies the action of the event.
 			applicationControl (bool): A true/false parameter indicating whether to include only application control events.
 			archived (bool): A true/false parameter indicating whether to include only archived events.
 			classifications (list): Specifies the classification of the event.
+			string (list): Specifies the classification of the event.
 			collectorGroups (list): Specifies the collector groups whose collector reported the events.
+			string (list): Specifies the collector groups whose collector reported the events.
 			destinations (list): Specifies the connection destination(s) of the events.
+			string (list): Specifies the connection destination(s) of the events.
 			device (str): Specifies the device name where the events occurred.
 			deviceControl (bool): A true/false parameter indicating whether to include only device control events.
 			deviceIps (list): Specifies the IPs of the devices where the event occurred.
+			string (list): Specifies the IPs of the devices where the event occurred.
 			eventIds (list): Specifies the required event IDs.
+			integer (list): Specifies the required event IDs.
 			eventType (list): Specifies the type of the event.
+			string (list): Specifies the type of the event.
 			expired (bool): A true/false parameter indicating whether to include only expired events.
 			fileHash (str): Specifies the hash signature of the main process of the event.
 			firstSeen (str):  Specifies the date when the event was first seen (Deprecated).
@@ -927,17 +964,21 @@ class Events:
 			lastSeenTo (str): Specifies the to date when the event was last seen.
 			loggedUser (str): Specifies the logged user.
 			macAddresses (list): Specifies the mac addresses where the event occurred.
+			string (list): Specifies the mac addresses where the event occurred.
 			muted (bool): A true/false parameter indicating if the event is muted.
 			operatingSystems (list): Specifies the operating system of the devices where the events occurred.
+			string (list): Specifies the operating system of the devices where the events occurred.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
 			pageNumber (int): An integer used for paging that indicates the required page number.
 			paths (list): Specifies the paths of the processes related to the event.
+			string (list): Specifies the paths of the processes related to the event.
 			process (str): Specifies the main process of the event.
 			rule (str): Specifies the short rule name of the rule that triggered the events.
 			seen (bool): A true/false parameter indicating whether events were read/unread by the user operating the API.
 			severities (list): Specifies the severity of the event (Deprecated).
+			string (list): Specifies the severity of the event (Deprecated).
 			signed (bool): A true/false parameter indicating if the event is signed.
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on.
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
@@ -970,7 +1011,7 @@ class Events:
 		if deviceIps:
 			url_params.append('deviceIps=' + ",".join(str(deviceIps)))
 		if eventIds:
-			url_params.append('eventIds=' + ",".join(str(eventIds)))
+			url_params.append('eventIds=' + ",".join(map(str, eventIds)))
 		if eventType:
 			url_params.append('eventType=' + ",".join(str(eventType)))
 		if expired:
@@ -1045,17 +1086,24 @@ class Events:
         
 		Args:
 			actions (list): Specifies the action of the event.
+			string (list): Specifies the action of the event.
 			applicationControl (bool): A true/false parameter indicating whether to include only application control events.
 			archived (bool): A true/false parameter indicating whether to include only archived events.
 			classifications (list): Specifies the classification of the event.
+			string (list): Specifies the classification of the event.
 			collectorGroups (list): Specifies the collector groups whose collector reported the events.
+			string (list): Specifies the collector groups whose collector reported the events.
 			deleteAll (bool): A true/false parameter indicating if all events should be deleted.
 			destinations (list): Specifies the connection destination(s) of the events.
+			string (list): Specifies the connection destination(s) of the events.
 			device (str): Specifies the device name where the events occurred.
 			deviceControl (bool): A true/false parameter indicating whether to include only device control events.
 			deviceIps (list): Specifies the IPs of the devices where the event occurred.
+			string (list): Specifies the IPs of the devices where the event occurred.
 			eventIds (list): Specifies the required event IDs.
+			integer (list): Specifies the required event IDs.
 			eventType (list): Specifies the type of the event.
+			string (list): Specifies the type of the event.
 			expired (bool): A true/false parameter indicating whether to include only expired events.
 			fileHash (str): Specifies the hash signature of the main process of the event.
 			firstSeen (str):  Specifies the date when the event was first seen (Deprecated).
@@ -1068,17 +1116,21 @@ class Events:
 			lastSeenTo (str): Specifies the to date when the event was last seen.
 			loggedUser (str): Specifies the logged user.
 			macAddresses (list): Specifies the mac addresses where the event occurred.
+			string (list): Specifies the mac addresses where the event occurred.
 			muted (bool): A true/false parameter indicating if the event is muted.
 			operatingSystems (list): Specifies the operating system of the devices where the events occurred.
+			string (list): Specifies the operating system of the devices where the events occurred.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
 			pageNumber (int): An integer used for paging that indicates the required page number.
 			paths (list): Specifies the paths of the processes related to the event.
+			string (list): Specifies the paths of the processes related to the event.
 			process (str): Specifies the main process of the event.
 			rule (str): Specifies the short rule name of the rule that triggered the events.
 			seen (bool): A true/false parameter indicating whether events were read/unread by the user operating the API.
 			severities (list): Specifies the severity of the event (Deprecated).
+			string (list): Specifies the severity of the event (Deprecated).
 			signed (bool): A true/false parameter indicating if the event is signed.
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on.
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
@@ -1112,7 +1164,7 @@ class Events:
 		if deviceIps:
 			url_params.append('deviceIps=' + ",".join(str(deviceIps)))
 		if eventIds:
-			url_params.append('eventIds=' + ",".join(str(eventIds)))
+			url_params.append('eventIds=' + ",".join(map(str, eventIds)))
 		if eventType:
 			url_params.append('eventType=' + ",".join(str(eventType)))
 		if expired:
@@ -1173,16 +1225,23 @@ class Events:
         
 		Args:
 			actions (list): Specifies the action of the event.
+			string (list): Specifies the action of the event.
 			applicationControl (bool): A true/false parameter indicating whether to include only application control events.
 			archived (bool): A true/false parameter indicating whether to include only archived events.
 			classifications (list): Specifies the classification of the event.
+			string (list): Specifies the classification of the event.
 			collectorGroups (list): Specifies the collector groups whose collector reported the events.
+			string (list): Specifies the collector groups whose collector reported the events.
 			destinations (list): Specifies the connection destination(s) of the events.
+			string (list): Specifies the connection destination(s) of the events.
 			device (str): Specifies the device name where the events occurred.
 			deviceControl (bool): A true/false parameter indicating whether to include only device control events.
 			deviceIps (list): Specifies the IPs of the devices where the event occurred.
+			string (list): Specifies the IPs of the devices where the event occurred.
 			eventIds (list): Specifies the required event IDs.
+			integer (list): Specifies the required event IDs.
 			eventType (list): Specifies the type of the event.
+			string (list): Specifies the type of the event.
 			expired (bool): A true/false parameter indicating whether to include only expired events.
 			fileHash (str): Specifies the hash signature of the main process of the event.
 			firstSeen (str):  Specifies the date when the event was first seen (Deprecated).
@@ -1195,17 +1254,21 @@ class Events:
 			lastSeenTo (str): Specifies the to date when the event was last seen.
 			loggedUser (str): Specifies the logged user.
 			macAddresses (list): Specifies the mac addresses where the event occurred.
+			string (list): Specifies the mac addresses where the event occurred.
 			muted (bool): A true/false parameter indicating if the event is muted.
 			operatingSystems (list): Specifies the operating system of the devices where the events occurred.
+			string (list): Specifies the operating system of the devices where the events occurred.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
 			pageNumber (int): An integer used for paging that indicates the required page number.
 			paths (list): Specifies the paths of the processes related to the event.
+			string (list): Specifies the paths of the processes related to the event.
 			process (str): Specifies the main process of the event.
 			rule (str): Specifies the short rule name of the rule that triggered the events.
 			seen (bool): A true/false parameter indicating whether events were read/unread by the user operating the API.
 			severities (list): Specifies the severity of the event (Deprecated).
+			string (list): Specifies the severity of the event (Deprecated).
 			signed (bool): A true/false parameter indicating if the event is signed.
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on.
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
@@ -1237,7 +1300,7 @@ class Events:
 		if deviceIps:
 			url_params.append('deviceIps=' + ",".join(str(deviceIps)))
 		if eventIds:
-			url_params.append('eventIds=' + ",".join(str(eventIds)))
+			url_params.append('eventIds=' + ",".join(map(str, eventIds)))
 		if eventType:
 			url_params.append('eventType=' + ",".join(str(eventType)))
 		if expired:
@@ -1302,14 +1365,17 @@ class Events:
 			allOrganizations (bool): A true/false parameter indicating whether the exception should be applied to all the organizations (tenants). This parameter is only relevant in multi-tenancy environment. This parameter is only allowed for user with Hoster privilege (general admin).
 			allUsers (bool): A true/false parameter indicating whether the exception should be applied to all users. When not used, all users are selected.
 			collectorGroups (list): Specifies the list of all the collector groups to which the exception should be applied. When not used, all collector groups are selected.
+			string (list): Specifies the list of all the collector groups to which the exception should be applied. When not used, all collector groups are selected.
 			comment (str): Specifies a user-defined string to attach to the exception.
 			destinations (list): A list of IPs to which the exception applies and/or the value all internal destinations.
+			string (list): A list of IPs to which the exception applies and/or the value all internal destinations.
 			eventId (int): Specifies the event ID on which to create the exception.
 			exceptionId (int): Specifies the exception ID to edit.
 			exceptionRequest (Object): Check 'exceptionRequest' in the API documentation for further information.
 			forceCreate (bool): A true/false parameter indicating whether to create the exception, even if there are already exceptions that cover this given event.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			users (list): A list of users to which the exception.
+			string (list): A list of users to which the exception.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -1384,16 +1450,23 @@ class Events:
         
 		Args:
 			actions (list): Specifies the action of the event.
+			string (list): Specifies the action of the event.
 			applicationControl (bool): A true/false parameter indicating whether to include only application control events.
 			archived (bool): A true/false parameter indicating whether to include only archived events.
 			classifications (list): Specifies the classification of the event.
+			string (list): Specifies the classification of the event.
 			collectorGroups (list): Specifies the collector groups whose collector reported the events.
+			string (list): Specifies the collector groups whose collector reported the events.
 			destinations (list): Specifies the connection destination(s) of the events.
+			string (list): Specifies the connection destination(s) of the events.
 			device (str): Specifies the device name where the events occurred.
 			deviceControl (bool): A true/false parameter indicating whether to include only device control events.
 			deviceIps (list): Specifies the IPs of the devices where the event occurred.
+			string (list): Specifies the IPs of the devices where the event occurred.
 			eventIds (list): Specifies the required event IDs.
+			integer (list): Specifies the required event IDs.
 			eventType (list): Specifies the type of the event.
+			string (list): Specifies the type of the event.
 			expired (bool): A true/false parameter indicating whether to include only expired events.
 			fileHash (str): Specifies the hash signature of the main process of the event.
 			firstSeen (str):  Specifies the date when the event was first seen (Deprecated).
@@ -1406,17 +1479,21 @@ class Events:
 			lastSeenTo (str): Specifies the to date when the event was last seen.
 			loggedUser (str): Specifies the logged user.
 			macAddresses (list): Specifies the mac addresses where the event occurred.
+			string (list): Specifies the mac addresses where the event occurred.
 			muted (bool): A true/false parameter indicating if the event is muted.
 			operatingSystems (list): Specifies the operating system of the devices where the events occurred.
+			string (list): Specifies the operating system of the devices where the events occurred.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
 			pageNumber (int): An integer used for paging that indicates the required page number.
 			paths (list): Specifies the paths of the processes related to the event.
+			string (list): Specifies the paths of the processes related to the event.
 			process (str): Specifies the main process of the event.
 			rule (str): Specifies the short rule name of the rule that triggered the events.
 			seen (bool): A true/false parameter indicating whether events were read/unread by the user operating the API.
 			severities (list): Specifies the severity of the event (Deprecated).
+			string (list): Specifies the severity of the event (Deprecated).
 			signed (bool): A true/false parameter indicating if the event is signed.
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on.
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
@@ -1448,7 +1525,7 @@ class Events:
 		if deviceIps:
 			url_params.append('deviceIps=' + ",".join(str(deviceIps)))
 		if eventIds:
-			url_params.append('eventIds=' + ",".join(str(eventIds)))
+			url_params.append('eventIds=' + ",".join(map(str, eventIds)))
 		if eventType:
 			url_params.append('eventType=' + ",".join(str(eventType)))
 		if expired:
@@ -1509,9 +1586,12 @@ class Events:
         
 		Args:
 			collectorGroups (list): Specifies the collector groups whose collector reported the raw events.
+			string (list): Specifies the collector groups whose collector reported the raw events.
 			destinations (list): Specifies the connection destination(s) of the events.
+			string (list): Specifies the connection destination(s) of the events.
 			device (str): Specifies the name of the device where the raw event occurred.
 			deviceIps (list): Specifies the IPs of the devices where the event occurred.
+			string (list): Specifies the IPs of the devices where the event occurred.
 			eventId (int): Specifies the ID of the event that holds the raw data items.
 			firstSeen (str): Specifies the date when the raw data item was first seen (Deprecated).
 			firstSeenFrom (str): Specifies the from date when the raw data item was first seen.
@@ -1525,6 +1605,7 @@ class Events:
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			pageNumber (int): An integer used for paging that indicates the required page number.
 			rawEventIds (list): Specifies the list of raw data item event IDs.
+			integer (list): Specifies the list of raw data item event IDs.
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on.
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
 
@@ -1569,7 +1650,7 @@ class Events:
 		if pageNumber:
 			url_params.append('pageNumber=' + pageNumber)
 		if rawEventIds:
-			url_params.append('rawEventIds=' + ",".join(str(rawEventIds)))
+			url_params.append('rawEventIds=' + ",".join(map(str, rawEventIds)))
 		if sorting:
 			url_params.append('sorting=' + sorting)
 		if strictMode:
@@ -1612,6 +1693,7 @@ class Exceptions:
         
 		Args:
 			collectorGroups (list): Specifies the list of all the collector groups to which the exception applied.
+			string (list): Specifies the list of all the collector groups to which the exception applied.
 			comment (str): Specifies a comment attach to the exception.
 			createdAfter (str): Specifies the date after which the exception was created. Specify the date using the yyyy-MM-dd HH:mm:ss format.
 			createdBefore (str): Specifies the date before which the exception was created. Specify the date using the yyyy-MM-dd HH:mm:ss format.
@@ -1619,12 +1701,14 @@ class Exceptions:
 			destination (str): Specifies a destination IP of the exception.
 			exceptionId (int): Specifies the required exception ID.
 			exceptionIds (list): Specifies a list of exception ids.
+			integer (list): Specifies a list of exception ids.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
 			path (str): Specifies the path of the exception.
 			process (str): Specifies the process of the exception.
 			rules (list): Specifies a list of rule names.
+			string (list): Specifies a list of rule names.
 			updatedAfter (str): Specifies the date after which the exception was updated. Specify the date using the yyyy-MM-dd HH:mm:ss format.
 			updatedBefore (str): Specifies the date before which the exception was updated. Specify the date using the yyyy-MM-dd HH:mm:ss format.
 			user (str): Specifies a user of the exception.
@@ -1652,7 +1736,7 @@ class Exceptions:
 		if exceptionId:
 			url_params.append('exceptionId=' + exceptionId)
 		if exceptionIds:
-			url_params.append('exceptionIds=' + ",".join(str(exceptionIds)))
+			url_params.append('exceptionIds=' + ",".join(map(str, exceptionIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if path:
@@ -1701,17 +1785,20 @@ class Exceptions:
         
 		Args:
 			collectorGroups (list): Specifies the list of all the collector groups to which the exception applied.
+			string (list): Specifies the list of all the collector groups to which the exception applied.
 			comment (str): Specifies a comment attach to the exception.
 			createdAfter (str): Specifies the date after which the exception was created. Specify the date using the yyyy-MM-dd HH:mm:ss format.
 			createdBefore (str): Specifies the date before which the exception was created. Specify the date using the yyyy-MM-dd HH:mm:ss format.
 			destination (str): Specifies a destination IP of the exception.
 			exceptionIds (list): Specifies a list of exception ids.
+			integer (list): Specifies a list of exception ids.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
 			path (str): Specifies the path of the exception.
 			process (str): Specifies the process of the exception.
 			rules (list): Specifies a list of rule names.
+			string (list): Specifies a list of rule names.
 			updatedAfter (str): Specifies the date after which the exception was updated. Specify the date using the yyyy-MM-dd HH:mm:ss format.
 			updatedBefore (str): Specifies the date before which the exception was updated. Specify the date using the yyyy-MM-dd HH:mm:ss format.
 			user (str): Specifies a user of the exception.
@@ -1735,7 +1822,7 @@ class Exceptions:
 		if destination:
 			url_params.append('destination=' + destination)
 		if exceptionIds:
-			url_params.append('exceptionIds=' + ",".join(str(exceptionIds)))
+			url_params.append('exceptionIds=' + ",".join(map(str, exceptionIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if path:
@@ -1765,6 +1852,7 @@ class Forensics:
 			disk (bool): A true/false parameter indicating whether find in the disk.
 			endRange (str): Specifies the memory end range, in Hexadecimal format.
 			filePaths (list): Specifies the list of file paths.
+			string (list): Specifies the list of file paths.
 			memory (bool): A true/false parameter indicating whether find in the memory.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			processId (int): Specifies the ID of the process from which to take a memory image. required for memory base action.
@@ -1806,6 +1894,7 @@ class Forensics:
 		Args:
 			device (str): Specifies the name or id of the device to remediate.
 			filePaths (list): Specifies the list of file paths.
+			string (list): Specifies the list of file paths.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			type (str): Specifies the device parameter type used in the request : Name or ID.
 
@@ -1837,6 +1926,8 @@ class Forensics:
 			device (str): Specifies the name of the device to remediate. You must specify a value for either device or deviceId (see below).
 			deviceId (int): Specifies the unique identifier (ID) of the device to remediate. You must specify a value for either deviceId or device (see above).
 			executablesToRemove (list): Specifies the list of full paths of executable files (*.exe) to delete on the
+given device.
+			string (list): Specifies the list of full paths of executable files (*.exe) to delete on the
 given device.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			persistenceDataAction (str): persistence data desired action.
@@ -1893,6 +1984,7 @@ class HashSearch:
         
 		Args:
 			fileHashes (list): Specifies the list of files hashes.
+			string (list): Specifies the list of files hashes.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
@@ -2265,37 +2357,52 @@ class SystemInventory:
         
 		Args:
 			cloudAccounts (list): Specifies the list cloud account names.
+			string (list): Specifies the list cloud account names.
 			cloudProviders (list): Specifies the list of cloud providers: AWS, Azure, GCP.
+			string (list): Specifies the list of cloud providers: AWS, Azure, GCP.
 			clusters (list): Specifies the list of cluster.
+			string (list): Specifies the list of cluster.
 			collectorGroups (list): Specifies the list of collector group names and retrieves collectors under the
 given groups.
+			string (list): Specifies the list of collector group names and retrieves collectors under the
+given groups.
 			collectorGroupsIds (list): Specifies the list of collector group Ids and retrieves collectors under the
+given groups.
+			integer (list): Specifies the list of collector group Ids and retrieves collectors under the
 given groups.
 			collectorType (str): Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default.
 			confirmDeletion (bool): A true/false parameter indicating if to detach/delete relevant exceptions from Collector groups about to be deleted.
 			deleteAll (bool): A true/false parameter indicating if all collectors should be deleted.
 			devices (list): Specifies the list of device names.
+			string (list): Specifies the list of device names.
 			devicesIds (list): Specifies the list of device ids.
+			integer (list): Specifies the list of device ids.
 			firstSeen (str): Retrieves collectors that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			hasCrashDumps (bool): Retrieves collectors that have crash dumps.
 			ips (list): Specifies the list of IP values.
+			string (list): Specifies the list of IP values.
 			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000.
 			lastSeenEnd (str): Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			lastSeenStart (str): Retrieves collectors that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			loggedUser (str): Specifies the user that was logged when the event occurred.
 			operatingSystems (list): Specifies the list of specific operating systems. For example, Windows 7 Pro.
+			string (list): Specifies the list of specific operating systems. For example, Windows 7 Pro.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 .
 			osFamilies (list): Specifies the list of operating system families: Windows, Windows Server or OS X.
+			string (list): Specifies the list of operating system families: Windows, Windows Server or OS X.
 			pageNumber (int): An integer used for paging that indicates the required page number.
 			showExpired (bool): Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired.
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on.
 			states (list): Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, 
 Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
+			string (list): Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, 
+Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
 			versions (list): Specifies the list of collector versions.
+			string (list): Specifies the list of collector versions.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -2314,7 +2421,7 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if collectorGroups:
 			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if collectorGroupsIds:
-			url_params.append('collectorGroupsIds=' + ",".join(str(collectorGroupsIds)))
+			url_params.append('collectorGroupsIds=' + ",".join(map(str, collectorGroupsIds)))
 		if collectorType:
 			url_params.append('collectorType=' + collectorType)
 		if confirmDeletion:
@@ -2324,7 +2431,7 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if devices:
 			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
+			url_params.append('devicesIds=' + ",".join(map(str, devicesIds)))
 		if firstSeen:
 			url_params.append('firstSeen=' + firstSeen)
 		if hasCrashDumps:
@@ -2367,7 +2474,9 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
         
 		Args:
 			devices (list): Specifies the list of device names.
+			string (list): Specifies the list of device names.
 			devicesIds (list): Specifies the list of device ids.
+			integer (list): Specifies the list of device ids.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 
 		Returns:
@@ -2381,7 +2490,7 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if devices:
 			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
+			url_params.append('devicesIds=' + ",".join(map(str, devicesIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -2395,10 +2504,12 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		Args:
 			ip (str): IP.
 			names (list): List of aggregators names.
+			string (list): List of aggregators names.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
 			versions (list): List of aggregators versions.
+			string (list): List of aggregators versions.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -2449,35 +2560,50 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
         
 		Args:
 			cloudAccounts (list): Specifies the list cloud account names.
+			string (list): Specifies the list cloud account names.
 			cloudProviders (list): Specifies the list of cloud providers: AWS, Azure, GCP.
+			string (list): Specifies the list of cloud providers: AWS, Azure, GCP.
 			clusters (list): Specifies the list of cluster.
+			string (list): Specifies the list of cluster.
 			collectorGroups (list): Specifies the list of collector group names and retrieves collectors under the
+given groups.
+			string (list): Specifies the list of collector group names and retrieves collectors under the
 given groups.
 			collectorGroupsIds (list): Specifies the list of collector group Ids and retrieves collectors under the
 given groups.
+			integer (list): Specifies the list of collector group Ids and retrieves collectors under the
+given groups.
 			collectorType (str): Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default.
 			devices (list): Specifies the list of device names.
+			string (list): Specifies the list of device names.
 			devicesIds (list): Specifies the list of device ids.
+			integer (list): Specifies the list of device ids.
 			firstSeen (str): Retrieves collectors that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			hasCrashDumps (bool): Retrieves collectors that have crash dumps.
 			ips (list): Specifies the list of IP values.
+			string (list): Specifies the list of IP values.
 			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000.
 			lastSeenEnd (str): Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			lastSeenStart (str): Retrieves collectors that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			loggedUser (str): Specifies the user that was logged when the event occurred.
 			operatingSystems (list): Specifies the list of specific operating systems. For example, Windows 7 Pro.
+			string (list): Specifies the list of specific operating systems. For example, Windows 7 Pro.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 .
 			osFamilies (list): Specifies the list of operating system families: Windows, Windows Server or OS X.
+			string (list): Specifies the list of operating system families: Windows, Windows Server or OS X.
 			pageNumber (int): An integer used for paging that indicates the required page number.
 			showExpired (bool): Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired.
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on.
 			states (list): Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, 
 Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
+			string (list): Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, 
+Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
 			versions (list): Specifies the list of collector versions.
+			string (list): Specifies the list of collector versions.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -2496,13 +2622,13 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if collectorGroups:
 			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if collectorGroupsIds:
-			url_params.append('collectorGroupsIds=' + ",".join(str(collectorGroupsIds)))
+			url_params.append('collectorGroupsIds=' + ",".join(map(str, collectorGroupsIds)))
 		if collectorType:
 			url_params.append('collectorType=' + collectorType)
 		if devices:
 			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
+			url_params.append('devicesIds=' + ",".join(map(str, devicesIds)))
 		if firstSeen:
 			url_params.append('firstSeen=' + firstSeen)
 		if hasCrashDumps:
@@ -2545,13 +2671,16 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
         
 		Args:
 			deploymentModes (list): List of cores deployments modes.
+			string (list): List of cores deployments modes.
 			hasCrashDumps (bool): Has crash dumps.
 			ip (str): IP.
 			names (list): List of cores names.
+			string (list): List of cores names.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
 			versions (list): List of cores versions.
+			string (list): List of cores versions.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -2634,8 +2763,11 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
         
 		Args:
 			collectorIds (list): value = Array of collectors Ids. To move collectors from one organization to another.
+			integer (list): value = Array of collectors Ids. To move collectors from one organization to another.
 			collectorSIDs (list): value = Array of collectors SIDS. To move collectors from one organization to another.
+			string (list): value = Array of collectors SIDS. To move collectors from one organization to another.
 			collectors (list): Array of collectors names. To move collectors from one organization to another, for each collector please add the organization name before the collector name (<organization-name>\\<collector-name>).
+			string (list): Array of collectors names. To move collectors from one organization to another, for each collector please add the organization name before the collector name (<organization-name>\\<collector-name>).
 			forceAssign (bool): Indicates whether to force the assignment even if the organization of the target Collector group is under migration.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
@@ -2651,7 +2783,7 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		url = '/management-rest/inventory/move-collectors'
 		url_params = []
 		if collectorIds:
-			url_params.append('collectorIds=' + ",".join(str(collectorIds)))
+			url_params.append('collectorIds=' + ",".join(map(str, collectorIds)))
 		if collectorSIDs:
 			url_params.append('collectorSIDs=' + ",".join(str(collectorSIDs)))
 		if collectors:
@@ -2688,36 +2820,51 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
         
 		Args:
 			cloudAccounts (list): Specifies the list cloud account names.
+			string (list): Specifies the list cloud account names.
 			cloudProviders (list): Specifies the list of cloud providers: AWS, Azure, GCP.
+			string (list): Specifies the list of cloud providers: AWS, Azure, GCP.
 			clusters (list): Specifies the list of cluster.
+			string (list): Specifies the list of cluster.
 			collectorGroups (list): Specifies the list of collector group names and retrieves collectors under the
+given groups.
+			string (list): Specifies the list of collector group names and retrieves collectors under the
 given groups.
 			collectorGroupsIds (list): Specifies the list of collector group Ids and retrieves collectors under the
 given groups.
+			integer (list): Specifies the list of collector group Ids and retrieves collectors under the
+given groups.
 			collectorType (str): Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default.
 			devices (list): Specifies the list of device names.
+			string (list): Specifies the list of device names.
 			devicesIds (list): Specifies the list of device ids.
+			integer (list): Specifies the list of device ids.
 			enable (bool): Toggle enable.
 			firstSeen (str): Retrieves collectors that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			hasCrashDumps (bool): Retrieves collectors that have crash dumps.
 			ips (list): Specifies the list of IP values.
+			string (list): Specifies the list of IP values.
 			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000.
 			lastSeenEnd (str): Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			lastSeenStart (str): Retrieves collectors that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			loggedUser (str): Specifies the user that was logged when the event occurred.
 			operatingSystems (list): Specifies the list of specific operating systems. For example, Windows 7 Pro.
+			string (list): Specifies the list of specific operating systems. For example, Windows 7 Pro.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 .
 			osFamilies (list): Specifies the list of operating system families: Windows, Windows Server or OS X.
+			string (list): Specifies the list of operating system families: Windows, Windows Server or OS X.
 			pageNumber (int): An integer used for paging that indicates the required page number.
 			showExpired (bool): Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired.
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on.
 			states (list): Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, 
 Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
+			string (list): Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, 
+Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
 			versions (list): Specifies the list of collector versions.
+			string (list): Specifies the list of collector versions.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -2736,13 +2883,13 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if collectorGroups:
 			url_params.append('collectorGroups=' + ",".join(str(collectorGroups)))
 		if collectorGroupsIds:
-			url_params.append('collectorGroupsIds=' + ",".join(str(collectorGroupsIds)))
+			url_params.append('collectorGroupsIds=' + ",".join(map(str, collectorGroupsIds)))
 		if collectorType:
 			url_params.append('collectorType=' + collectorType)
 		if devices:
 			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
+			url_params.append('devicesIds=' + ",".join(map(str, devicesIds)))
 		if enable:
 			url_params.append('enable=' + enable)
 		if firstSeen:
@@ -2787,7 +2934,9 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
         
 		Args:
 			devices (list): Specifies the list of device names.
+			string (list): Specifies the list of device names.
 			devicesIds (list): Specifies the list of device ids.
+			integer (list): Specifies the list of device ids.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 
 		Returns:
@@ -2801,7 +2950,7 @@ Pending Reboot, Isolated, Expired, Migrated or Pending Migration.
 		if devices:
 			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
+			url_params.append('devicesIds=' + ",".join(map(str, devicesIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -2841,19 +2990,28 @@ class IoT:
         
 		Args:
 			categories (list): Specifies the list of categories values.
+			string (list): Specifies the list of categories values.
 			devices (list): Specifies the list of device names.
+			string (list): Specifies the list of device names.
 			devicesIds (list): Specifies the list of device ids.
+			integer (list): Specifies the list of device ids.
 			firstSeenEnd (str): Retrieves IoT devices that were first seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			firstSeenStart (str): Retrieves IoT devices that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			internalIps (list): Specifies the list of IP values.
+			string (list): Specifies the list of IP values.
 			iotGroups (list): Specifies the list of collector group names and retrieves collectors under the given groups.
+			string (list): Specifies the list of collector group names and retrieves collectors under the given groups.
 			iotGroupsIds (list): Specifies the list of collector group ids and retrieves collectors under the given groups.
+			integer (list): Specifies the list of collector group ids and retrieves collectors under the given groups.
 			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000.
 			lastSeenEnd (str): Retrieves IoT devices that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			lastSeenStart (str): Retrieves IoT devices that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			locations (list): Specifies the list of locations values.
+			string (list): Specifies the list of locations values.
 			macAddresses (list): Specifies the list of mac address values.
+			string (list): Specifies the list of mac address values.
 			models (list): Specifies the list of models values.
+			string (list): Specifies the list of models values.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
@@ -2863,6 +3021,7 @@ class IoT:
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on.
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
 			vendors (list): Specifies the list of vendors values.
+			string (list): Specifies the list of vendors values.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -2877,7 +3036,7 @@ class IoT:
 		if devices:
 			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
+			url_params.append('devicesIds=' + ",".join(map(str, devicesIds)))
 		if firstSeenEnd:
 			url_params.append('firstSeenEnd=' + firstSeenEnd)
 		if firstSeenStart:
@@ -2887,7 +3046,7 @@ class IoT:
 		if iotGroups:
 			url_params.append('iotGroups=' + ",".join(str(iotGroups)))
 		if iotGroupsIds:
-			url_params.append('iotGroupsIds=' + ",".join(str(iotGroupsIds)))
+			url_params.append('iotGroupsIds=' + ",".join(map(str, iotGroupsIds)))
 		if itemsPerPage:
 			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeenEnd:
@@ -2922,6 +3081,7 @@ class IoT:
         
 		Args:
 			iotDeviceIds (list): Specifies the list of device ids.
+			integer (list): Specifies the list of device ids.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
@@ -2935,7 +3095,7 @@ class IoT:
 		url = '/management-rest/iot/export-iot-json'
 		url_params = []
 		if iotDeviceIds:
-			url_params.append('iotDeviceIds=' + ",".join(str(iotDeviceIds)))
+			url_params.append('iotDeviceIds=' + ",".join(map(str, iotDeviceIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		url += '?' + '&'.join(url_params)
@@ -2948,19 +3108,28 @@ class IoT:
         
 		Args:
 			categories (list): Specifies the list of categories values.
+			string (list): Specifies the list of categories values.
 			devices (list): Specifies the list of device names.
+			string (list): Specifies the list of device names.
 			devicesIds (list): Specifies the list of device ids.
+			integer (list): Specifies the list of device ids.
 			firstSeenEnd (str): Retrieves IoT devices that were first seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			firstSeenStart (str): Retrieves IoT devices that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			internalIps (list): Specifies the list of IP values.
+			string (list): Specifies the list of IP values.
 			iotGroups (list): Specifies the list of collector group names and retrieves collectors under the given groups.
+			string (list): Specifies the list of collector group names and retrieves collectors under the given groups.
 			iotGroupsIds (list): Specifies the list of collector group ids and retrieves collectors under the given groups.
+			integer (list): Specifies the list of collector group ids and retrieves collectors under the given groups.
 			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000.
 			lastSeenEnd (str): Retrieves IoT devices that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			lastSeenStart (str): Retrieves IoT devices that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			locations (list): Specifies the list of locations values.
+			string (list): Specifies the list of locations values.
 			macAddresses (list): Specifies the list of mac address values.
+			string (list): Specifies the list of mac address values.
 			models (list): Specifies the list of models values.
+			string (list): Specifies the list of models values.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
@@ -2970,6 +3139,7 @@ class IoT:
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on.
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
 			vendors (list): Specifies the list of vendors values.
+			string (list): Specifies the list of vendors values.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -2984,7 +3154,7 @@ class IoT:
 		if devices:
 			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
+			url_params.append('devicesIds=' + ",".join(map(str, devicesIds)))
 		if firstSeenEnd:
 			url_params.append('firstSeenEnd=' + firstSeenEnd)
 		if firstSeenStart:
@@ -2994,7 +3164,7 @@ class IoT:
 		if iotGroups:
 			url_params.append('iotGroups=' + ",".join(str(iotGroups)))
 		if iotGroupsIds:
-			url_params.append('iotGroupsIds=' + ",".join(str(iotGroupsIds)))
+			url_params.append('iotGroupsIds=' + ",".join(map(str, iotGroupsIds)))
 		if itemsPerPage:
 			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeenEnd:
@@ -3052,6 +3222,7 @@ class IoT:
         
 		Args:
 			iotDeviceIds (list): Array of IoT device ids.
+			integer (list): Array of IoT device ids.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			targetIotGroup (str): IoT target group name.
 
@@ -3064,7 +3235,7 @@ class IoT:
 		url = '/management-rest/iot/move-iot-devices'
 		url_params = []
 		if iotDeviceIds:
-			url_params.append('iotDeviceIds=' + ",".join(str(iotDeviceIds)))
+			url_params.append('iotDeviceIds=' + ",".join(map(str, iotDeviceIds)))
 		if organization:
 			url_params.append('organization=' + organization)
 		if targetIotGroup:
@@ -3079,19 +3250,28 @@ class IoT:
         
 		Args:
 			categories (list): Specifies the list of categories values.
+			string (list): Specifies the list of categories values.
 			devices (list): Specifies the list of device names.
+			string (list): Specifies the list of device names.
 			devicesIds (list): Specifies the list of device ids.
+			integer (list): Specifies the list of device ids.
 			firstSeenEnd (str): Retrieves IoT devices that were first seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			firstSeenStart (str): Retrieves IoT devices that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			internalIps (list): Specifies the list of IP values.
+			string (list): Specifies the list of IP values.
 			iotGroups (list): Specifies the list of collector group names and retrieves collectors under the given groups.
+			string (list): Specifies the list of collector group names and retrieves collectors under the given groups.
 			iotGroupsIds (list): Specifies the list of collector group ids and retrieves collectors under the given groups.
+			integer (list): Specifies the list of collector group ids and retrieves collectors under the given groups.
 			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000.
 			lastSeenEnd (str): Retrieves IoT devices that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			lastSeenStart (str): Retrieves IoT devices that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss.
 			locations (list): Specifies the list of locations values.
+			string (list): Specifies the list of locations values.
 			macAddresses (list): Specifies the list of mac address values.
+			string (list): Specifies the list of mac address values.
 			models (list): Specifies the list of models values.
+			string (list): Specifies the list of models values.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
@@ -3101,6 +3281,7 @@ class IoT:
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on.
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False.
 			vendors (list): Specifies the list of vendors values.
+			string (list): Specifies the list of vendors values.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -3115,7 +3296,7 @@ class IoT:
 		if devices:
 			url_params.append('devices=' + ",".join(str(devices)))
 		if devicesIds:
-			url_params.append('devicesIds=' + ",".join(str(devicesIds)))
+			url_params.append('devicesIds=' + ",".join(map(str, devicesIds)))
 		if firstSeenEnd:
 			url_params.append('firstSeenEnd=' + firstSeenEnd)
 		if firstSeenStart:
@@ -3125,7 +3306,7 @@ class IoT:
 		if iotGroups:
 			url_params.append('iotGroups=' + ",".join(str(iotGroups)))
 		if iotGroupsIds:
-			url_params.append('iotGroupsIds=' + ",".join(str(iotGroupsIds)))
+			url_params.append('iotGroupsIds=' + ",".join(map(str, iotGroupsIds)))
 		if itemsPerPage:
 			url_params.append('itemsPerPage=' + itemsPerPage)
 		if lastSeenEnd:
@@ -3189,6 +3370,7 @@ class IPsets:
         
 		Args:
 			ipSets (list): Specifies the list of IP name to delete.
+			string (list): Specifies the list of IP name to delete.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
@@ -3483,6 +3665,7 @@ class Playbookspolicies:
         
 		Args:
 			collectorGroupNames (list): Specifies the list of collector group names.
+			string (list): Specifies the list of collector group names.
 			forceAssign (bool): Indicates whether to force the assignment even if the group is assigned to similar policies.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			policyName (str): Specifies policy name.
@@ -3649,6 +3832,7 @@ class Policies:
         
 		Args:
 			collectorsGroupName (list): Specifies the list of collector group names.
+			string (list): Specifies the list of collector group names.
 			forceAssign (bool): Indicates whether to force the assignment even if the group is assigned to similar policies.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			policyName (str): Specifies security policy name.
@@ -3731,10 +3915,12 @@ class Policies:
 			applyRecursiveScan (bool): Specifies if execution includes recursive scan.
 			executableFilesOnly (bool): Specifies if execution includes only files.
 			filePaths (list): Specifies file path.
+			string (list): Specifies file path.
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			origin (str): Specifies scan origin.
 			scanBy (str): Specifies scan by choice.
 			scanSelection (list): Specifies scan selection.
+			string (list): Specifies scan selection.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -3922,7 +4108,9 @@ class SystemEvents:
         
 		Args:
 			componentNames (list):  Specifies one or more names. The name is the customer name for license-related system events and the device name for all others events.
+			string (list):  Specifies one or more names. The name is the customer name for license-related system events and the device name for all others events.
 			componentTypes (list): Specifies one or more component type.
+			string (list): Specifies one or more component type.
 			fromDate (str): Searches for system events that occurred after this date.
 			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
@@ -4149,6 +4337,7 @@ class ThreatHuntingExclusions:
 		Args:
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
 			os (list): OS identifiers list..
+			string (list): OS identifiers list..
 			searchText (str): The free text search string. The API will return every exclusion list that contains this string, or contains an exclusion with any field that contains it..
 
 		Returns:
@@ -4418,9 +4607,12 @@ class ThreatHunting:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
 			queryIds (list): Specifies the query IDs list.
+			integer (list): Specifies the query IDs list.
 			queryNames (list): Specifies the query names list.
+			string (list): Specifies the query names list.
 			scheduled (bool): A true/false parameter indicating whether the query is scheduled.
 			source (list): Specifies the query source list.
+			string (list): Specifies the query source list.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -4437,7 +4629,7 @@ class ThreatHunting:
 		if organization:
 			url_params.append('organization=' + organization)
 		if queryIds:
-			url_params.append('queryIds=' + ",".join(str(queryIds)))
+			url_params.append('queryIds=' + ",".join(map(str, queryIds)))
 		if queryNames:
 			url_params.append('queryNames=' + ",".join(str(queryNames)))
 		if scheduled:
@@ -4457,7 +4649,9 @@ class ThreatHunting:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
 			tagIds (list): Specifies the tag ID list.
+			integer (list): Specifies the tag ID list.
 			tagNames (list): Specifies the tag name list.
+			string (list): Specifies the tag name list.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -4470,7 +4664,7 @@ class ThreatHunting:
 		if organization:
 			url_params.append('organization=' + organization)
 		if tagIds:
-			url_params.append('tagIds=' + ",".join(str(tagIds)))
+			url_params.append('tagIds=' + ",".join(map(str, tagIds)))
 		if tagNames:
 			url_params.append('tagNames=' + ",".join(str(tagNames)))
 		url += '?' + '&'.join(url_params)
@@ -4520,6 +4714,7 @@ class ThreatHunting:
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
 			scheduled (bool): A true/false parameter indicating whether the query is scheduled.
 			source (list): Specifies the query source list.
+			string (list): Specifies the query source list.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -4653,8 +4848,11 @@ class ThreatHunting:
 ���	Exact organization name ��� Specifies the name of a specific organization. The value that you specify here must match exactly.
 ���	All organizations ��� Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations..
 			queryIds (list): Specifies the query ID list.
+			integer (list): Specifies the query ID list.
 			queryNames (list): Specifies the query name list.
+			string (list): Specifies the query name list.
 			source (list): Specifies the query source list.
+			string (list): Specifies the query source list.
 			state (bool): A true/false parameter indicating whether to save the query as enabled.
 
 		Returns:
@@ -4670,7 +4868,7 @@ class ThreatHunting:
 		if organization:
 			url_params.append('organization=' + organization)
 		if queryIds:
-			url_params.append('queryIds=' + ",".join(str(queryIds)))
+			url_params.append('queryIds=' + ",".join(map(str, queryIds)))
 		if queryNames:
 			url_params.append('queryNames=' + ",".join(str(queryNames)))
 		if source:
@@ -4897,6 +5095,8 @@ class Users:
 			"username": username,
 		}
 		return fortiedr_connection.insert(url, userRequest)
+
+
 
 debug = None
 ssl_enabled = True

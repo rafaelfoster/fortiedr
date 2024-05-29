@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.6.8 - 2024-05-28
+
+### Fixed
+- Fixing some errors when handling lists of integers
+
 ## 3.6.5 - 2024-05-03
 
 ### Fixed
