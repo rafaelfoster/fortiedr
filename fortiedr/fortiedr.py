@@ -5,36 +5,9 @@ from typing import BinaryIO
 from fortiedr.auth import Auth as fedrAuth
 from fortiedr.connector import FortiEDR_API_GW
 
-version = '3.6.9'
+version = '3.7'
 
 fortiedr_connection = None
-
-class Admin:
-	'''Admin Rest Api Controller'''
-
-	def set_tray_notification_settings(self, enabledPopup: bool = None, enabledTrayNotification: bool = None, message: str = None, organization: str = None) -> tuple[bool, None]:
-		'''
-		Class Admin
-		Description: Update tray notification settings.
-        
-		Args:
-			adminSetTrayNotificationSettingsRequest (Object): Check 'adminSetTrayNotificationSettingsRequest' in the API documentation for further information.
-
-		Returns:
-			bool: Status of the request (True or False). 
-			None: This function does not return any data.
-		'''
-		validate_params("set_tray_notification_settings", locals())
-
-		url = '/api/admin/set-tray-notification-settings'
-
-		adminSetTrayNotificationSettingsRequest = {}
-		if enabledPopup: adminSetTrayNotificationSettingsRequest["enabledPopup"] = enabledPopup
-		if enabledTrayNotification: adminSetTrayNotificationSettingsRequest["enabledTrayNotification"] = enabledTrayNotification
-		if message: adminSetTrayNotificationSettingsRequest["message"] = message
-		if organization: adminSetTrayNotificationSettingsRequest["organization"] = organization
-
-		return fortiedr_connection.send(url, adminSetTrayNotificationSettingsRequest)
 
 class ApplicationControl:
 	'''Application Control Rest Api Controller'''
@@ -210,65 +183,33 @@ class ApplicationControl:
 
 		return fortiedr_connection.send(url, applicationControlTagCreateRequest)
 
-class dashboardrestapicontroller:
-	'''Dashboard Rest Api Controller'''
-
-	def most_targeted_items(self, organization: str, itemType: str = None, numOfColumns: int = None, numOfDays: int = None) -> tuple[bool, None]:
-		'''
-		Class dashboardrestapicontroller
-		Description: Returns most targeted devices or most targeted processes, depending on the itemType parameter.
-        
-		Args:
-			itemType (str): Specifies the type of items.
-			numOfColumns (int): Specifies the number of columns to present.
-			numOfDays (int): Specifies the number of days to present.
-			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
-
-		Returns:
-			bool: Status of the request (True or False). 
-			None: This function does not return any data.
-		'''
-		validate_params("most_targeted_items", locals())
-
-		url = '/api/dashboard/most-targeted-items'
-		url_params = []
-		if itemType:
-			url_params.append('itemType=' + itemType)
-		if numOfColumns:
-			url_params.append('numOfColumns=' + numOfColumns)
-		if numOfDays:
-			url_params.append('numOfDays=' + numOfDays)
-		if organization:
-			url_params.append('organization=' + organization)
-		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.get(url)
-
-	def unhandled_items(self, organization: str, itemType: str = None) -> tuple[bool, None]:
-		'''
-		Class dashboardrestapicontroller
-		Description: Returns unhandled devices or unhandled processes, depending on the itemType parameter.
-        
-		Args:
-			itemType (str): Specifies the type of items.
-			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
-
-		Returns:
-			bool: Status of the request (True or False). 
-			None: This function does not return any data.
-		'''
-		validate_params("unhandled_items", locals())
-
-		url = '/api/dashboard/unhandled-items'
-		url_params = []
-		if itemType:
-			url_params.append('itemType=' + itemType)
-		if organization:
-			url_params.append('organization=' + organization)
-		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.get(url)
-
 class Administrator:
 	'''The Administrator module enables administrators to perform administrative operations, such as handling licenses and users.'''
+
+	def set_tray_notification_settings(self, enabledPopup: bool = None, enabledTrayNotification: bool = None, message: str = None, organization: str = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: Update tray notification settings.
+        
+		Args:
+			adminSetTrayNotificationSettingsRequest (Object): Check 'adminSetTrayNotificationSettingsRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("set_tray_notification_settings", locals())
+
+		url = '/api/admin/set-tray-notification-settings'
+
+		adminSetTrayNotificationSettingsRequest = {}
+		if enabledPopup: adminSetTrayNotificationSettingsRequest["enabledPopup"] = enabledPopup
+		if enabledTrayNotification: adminSetTrayNotificationSettingsRequest["enabledTrayNotification"] = enabledTrayNotification
+		if message: adminSetTrayNotificationSettingsRequest["message"] = message
+		if organization: adminSetTrayNotificationSettingsRequest["organization"] = organization
+
+		return fortiedr_connection.send(url, adminSetTrayNotificationSettingsRequest)
+
 
 	def list_collector_installers(self, organization: str = None) -> tuple[bool, None]:
 		'''
@@ -2300,57 +2241,6 @@ class SystemInventory:
 			url_params.append('name=' + name)
 		if organization:
 			url_params.append('organization=' + organization)
-		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.send(url)
-
-	def create_ems_custom_installer(self, osType: str, aggregatorAddress: str = None, aggregatorPort: int = None, citrixPVS: bool = None, collectorGroup: str = None, collectorVersion: str = None, distro: str = None, is64bit: bool = None, organization: str = None, proxy: bool = None, vdi: bool = None) -> tuple[bool, None]:
-		'''
-		Class SystemInventory
-		Description: This API call sends request for creating custom-installer for EMS integration.
-        
-		Args:
-			aggregatorAddress (str): Specifies the aggregator ip or dns address.
-			aggregatorPort (int): Specifies the aggregator port.
-			citrixPVS (bool): Specifies whether the collector installed with citrix in pvs mode.
-			collectorGroup (str): Specifies the requested collector group.
-			collectorVersion (str): Specifies the requested collector version.
-			distro (str): Specifies the Linux distribution. For example: CentOS_6, CentOS_7, CentOS_8, CentOS_9, Amazon, Oracle_6, Oracle_7, Oracle_8, SLES_12, SLES_15, Ubuntu_16.04, Ubuntu_18.04, Ubuntu_20.04, Ubuntu_22.04.
-			is64bit (bool): Specifies the Windows os bit version.
-			organization (str): Specifies the requested organization.
-			osType (str): Specifies the operating system type.
-			proxy (bool): Specifies the system proxy settings (Only applies to Collector versions 3.1 and above).
-			vdi (bool): Specifies the VDI (Virtual Desktop Infrastructure) installation.
-
-		Returns:
-			bool: Status of the request (True or False). 
-			None: This function does not return any data.
-		'''
-		validate_params("create_ems_custom_installer", locals())
-
-		url = '/management-rest/inventory/create-ems-custom-installer'
-		url_params = []
-		if aggregatorAddress:
-			url_params.append('aggregatorAddress=' + aggregatorAddress)
-		if aggregatorPort:
-			url_params.append('aggregatorPort=' + aggregatorPort)
-		if citrixPVS:
-			url_params.append('citrixPVS=' + citrixPVS)
-		if collectorGroup:
-			url_params.append('collectorGroup=' + collectorGroup)
-		if collectorVersion:
-			url_params.append('collectorVersion=' + collectorVersion)
-		if distro:
-			url_params.append('distro=' + distro)
-		if is64bit:
-			url_params.append('is64bit=' + is64bit)
-		if organization:
-			url_params.append('organization=' + organization)
-		if osType:
-			url_params.append('osType=' + osType)
-		if proxy:
-			url_params.append('proxy=' + proxy)
-		if vdi:
-			url_params.append('vdi=' + vdi)
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.send(url)
 
