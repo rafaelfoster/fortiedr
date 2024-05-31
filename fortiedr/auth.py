@@ -12,7 +12,7 @@ class Auth:
     @staticmethod
     def test_authentication(headers, host):
         response_headers = None
-        url = f'https://{host}/management-rest/admin/ready'
+        url = f'https://{host}/management-rest/admin/list-system-summary'
 
         try:
             res = requests.get(url, headers=headers, verify=False)

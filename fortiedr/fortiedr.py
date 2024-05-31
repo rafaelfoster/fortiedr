@@ -1,11 +1,12 @@
 
+import re
 import os
 import json
 from typing import BinaryIO
 from fortiedr.auth import Auth as fedrAuth
 from fortiedr.connector import FortiEDR_API_GW
 
-version = '3.7'
+version = '3.7.1'
 
 fortiedr_connection = None
 
@@ -5044,6 +5045,10 @@ def auth( host: str, user: str, passw: str, org: str = None):
 	global api_json_params
 	global fortiedr_connection
 	login = fedrAuth()
+
+	ManagementHost = re.search(r'(https?://)?(([a-zA-Z0-9]+)(\.[a-zA-Z0-9.-]+))', host)
+	host = ManagementHost.group(2)
+
 
 	if org:
 		set_organization(org)
