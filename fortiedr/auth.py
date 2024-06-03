@@ -11,30 +11,37 @@ class Auth:
 
     @staticmethod
     def test_authentication(headers, host):
+        data = None
+        status = False
         response_headers = None
-        url = f'https://{host}/management-rest/events/list-events?pageNumber=0&itemsPerPage=1'
+        urls = ['admin/list-system-summary', 'events/list-events?pageNumber=0&itemsPerPage=1']
 
-        try:
-            res = requests.get(url, headers=headers, verify=False)
-            res_code = res.status_code
-            status = False
-            if res_code == 401:
-                data = "Unauthorized"
-            elif res_code == 403:
-                data = "Forbidden"
-            elif res_code == 404:
-                data = "Not Found"
-            elif res_code == 500:
-                data = "Internal Server Error"
-            else:
-                data = res
-                status = True
-                response_headers = res.headers
+        for url in urls:
 
-            return status, data, response_headers
+            url = f'https://{host}/management-rest/{url}'
+            try:
+                res = requests.get(url, headers=headers, verify=False)
+                res_code = res.status_code
+                status = False
+                if res_code == 401:
+                    data = "Unauthorized"
+                elif res_code == 403:
+                    data = "Forbidden"
+                elif res_code == 404:
+                    data = "Not Found"
+                elif res_code == 500:
+                    data = "Internal Server Error"
+                else:
+                    data = res
+                    status = True
+                    response_headers = res.headers
+                    return status, data, response_headers
 
-        except requests.exceptions.RequestException as err:
-            raise SystemExit(err) from err
+            except requests.exceptions.RequestException as err:
+                raise SystemExit(err) from err
+        
+        return status, data, response_headers
+
 
     @staticmethod
     def get_headers(fedr_host, fedr_user, fedr_pass, fedr_org=None):
