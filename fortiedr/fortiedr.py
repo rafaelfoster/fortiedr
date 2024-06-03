@@ -10,33 +10,6 @@ version = '3.7.2'
 
 fortiedr_connection = None
 
-class Admin:
-	'''Admin Rest Api Controller'''
-
-	def set_tray_notification_settings(self, enabledPopup: bool = None, enabledTrayNotification: bool = None, message: str = None, organization: str = None) -> tuple[bool, None]:
-		'''
-		Class Admin
-		Description: Update tray notification settings.
-        
-		Args:
-			adminSetTrayNotificationSettingsRequest (Object): Check 'adminSetTrayNotificationSettingsRequest' in the API documentation for further information.
-
-		Returns:
-			bool: Status of the request (True or False). 
-			None: This function does not return any data.
-		'''
-		validate_params("set_tray_notification_settings", locals())
-
-		url = '/api/admin/set-tray-notification-settings'
-
-		adminSetTrayNotificationSettingsRequest = {}
-		if enabledPopup: adminSetTrayNotificationSettingsRequest["enabledPopup"] = enabledPopup
-		if enabledTrayNotification: adminSetTrayNotificationSettingsRequest["enabledTrayNotification"] = enabledTrayNotification
-		if message: adminSetTrayNotificationSettingsRequest["message"] = message
-		if organization: adminSetTrayNotificationSettingsRequest["organization"] = organization
-
-		return fortiedr_connection.send(url, adminSetTrayNotificationSettingsRequest)
-
 class ApplicationControl:
 	'''Application Control Rest Api Controller'''
 
@@ -211,65 +184,32 @@ class ApplicationControl:
 
 		return fortiedr_connection.send(url, applicationControlTagCreateRequest)
 
-class dashboardrestapicontroller:
-	'''Dashboard Rest Api Controller'''
-
-	def most_targeted_items(self, organization: str, itemType: str = None, numOfColumns: int = None, numOfDays: int = None) -> tuple[bool, None]:
-		'''
-		Class dashboardrestapicontroller
-		Description: Returns most targeted devices or most targeted processes, depending on the itemType parameter.
-        
-		Args:
-			itemType (str): Specifies the type of items.
-			numOfColumns (int): Specifies the number of columns to present.
-			numOfDays (int): Specifies the number of days to present.
-			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
-
-		Returns:
-			bool: Status of the request (True or False). 
-			None: This function does not return any data.
-		'''
-		validate_params("most_targeted_items", locals())
-
-		url = '/api/dashboard/most-targeted-items'
-		url_params = []
-		if itemType:
-			url_params.append('itemType=' + itemType)
-		if numOfColumns:
-			url_params.append('numOfColumns=' + str(numOfColumns))
-		if numOfDays:
-			url_params.append('numOfDays=' + str(numOfDays))
-		if organization:
-			url_params.append('organization=' + organization)
-		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.get(url)
-
-	def unhandled_items(self, organization: str, itemType: str = None) -> tuple[bool, None]:
-		'''
-		Class dashboardrestapicontroller
-		Description: Returns unhandled devices or unhandled processes, depending on the itemType parameter.
-        
-		Args:
-			itemType (str): Specifies the type of items.
-			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly.
-
-		Returns:
-			bool: Status of the request (True or False). 
-			None: This function does not return any data.
-		'''
-		validate_params("unhandled_items", locals())
-
-		url = '/api/dashboard/unhandled-items'
-		url_params = []
-		if itemType:
-			url_params.append('itemType=' + itemType)
-		if organization:
-			url_params.append('organization=' + organization)
-		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.get(url)
-
 class Administrator:
 	'''The Administrator module enables administrators to perform administrative operations, such as handling licenses and users.'''
+
+	def set_tray_notification_settings(self, enabledPopup: bool = None, enabledTrayNotification: bool = None, message: str = None, organization: str = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: Update tray notification settings.
+        
+		Args:
+			adminSetTrayNotificationSettingsRequest (Object): Check 'adminSetTrayNotificationSettingsRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("set_tray_notification_settings", locals())
+
+		url = '/api/admin/set-tray-notification-settings'
+
+		adminSetTrayNotificationSettingsRequest = {}
+		if enabledPopup: adminSetTrayNotificationSettingsRequest["enabledPopup"] = enabledPopup
+		if enabledTrayNotification: adminSetTrayNotificationSettingsRequest["enabledTrayNotification"] = enabledTrayNotification
+		if message: adminSetTrayNotificationSettingsRequest["message"] = message
+		if organization: adminSetTrayNotificationSettingsRequest["organization"] = organization
+
+		return fortiedr_connection.send(url, adminSetTrayNotificationSettingsRequest)
 
 	def list_collector_installers(self, organization: str = None) -> tuple[bool, None]:
 		'''
