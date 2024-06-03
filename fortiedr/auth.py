@@ -12,8 +12,6 @@ class Auth:
     @staticmethod
     def test_authentication(headers, host):
         response_headers = None
-        # url = f'https://{host}/management-rest/admin/list-system-summary'
-        # url = f'https://{host}/management-rest/inventory/list-collector-groups'
         url = f'https://{host}/management-rest/events/list-events?pageNumber=0&itemsPerPage=1'
 
         try:
