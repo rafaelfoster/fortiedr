@@ -30,7 +30,7 @@ def main():
    
    # A example for getting Tenant administration data.
    #
-   admin_data = admin.list_system_summary(organization)
+   admin_data = admin.list_system_summary(organization=organization)
    data = admin_data['data']
    if admin_data['status']:
       print("Management Hostname: ",     str(data['managementHostname']))
