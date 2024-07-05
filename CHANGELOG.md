@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.8 - 2024-07-05
+
+### Added
+- The following functions have been added from the new FortiEDR Central Manager 6.2.0.0451 version:
+  -  Administrator.set_enable_default_application_control_state()
+
+### Changed
+- We have changed how to handle lists. If the API requires a list, but a single item was specified, such as a string or an integer, it will handle this and parse correctly to the API.
+
+### Fixed
+- Fixing how to handle boleans. Thanks to Mr. Algaba for the feedback and suggestion.
+- Fixing lots of errors when handling parameters expecting lists but containing other variable types. 
+- Removing unecessary URLs and functions from API.
+
 ## 3.6.8 - 2024-05-28
 
 ### Fixed
