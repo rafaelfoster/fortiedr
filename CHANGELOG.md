@@ -9,12 +9,12 @@ All notable changes to this project will be documented in this file.
   -  Administrator.set_enable_default_application_control_state()
 
 ### Changed
-- We have changed how to handle lists. If the API requires a list, but a single item was specified, such as a string or an integer, it will handle this and parse correctly to the API.
+- We have changed how we handle lists. If the API requires a list but a single item is specified, such as a string or an integer, it will handle this and parse correctly to the API.
 
 ### Fixed
-- Fixing how to handle boleans. Thanks to Mr. Algaba for the feedback and suggestion.
-- Fixing lots of errors when handling parameters expecting lists but containing other variable types. 
-- Removing unecessary URLs and functions from API.
+- Fixing how to handle booleans. Thanks to Mr. Algaba for the feedback and suggestions.
+- Fixing many errors when handling parameters expecting lists but containing other variable types. 
+- Remove unnecessary URLs and functions from API.
 
 ## 3.6.8 - 2024-05-28
 
