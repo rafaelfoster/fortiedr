@@ -1,8 +1,6 @@
 # FortiEDR Python module
 An open-source Python package intended to help interact with FortiEDR API.
 
-It was based and tested in FortiEDR Cloud version 6.2.0.0436.
-
 See [changelog](CHANGELOG.md) for more.
 
 ## How do I install the FortiEDR Python module?
