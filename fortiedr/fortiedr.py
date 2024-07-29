@@ -6,14 +6,14 @@ from typing import BinaryIO
 from fortiedr.auth import Auth as fedrAuth
 from fortiedr.connector import FortiEDR_API_GW
 
-version = '3.8.1'
+version = '3.9'
 
 fortiedr_connection = None
 
 class ApplicationControl:
 	'''Application Control Rest Api Controller'''
 
-	def get_applications(self, currentPage: int, organization: str, fileName: str = None, path: str = None, signer: str = None, enabled: bool = None, hash: str = None, operatingSystem: str = None, policyIds: list = None, tag: str = None) -> tuple[bool, None]:
+	def get_applications(self, currentPage: int, organization: str, fileName: str = None, path: str = None, signer: str = None, enabled: bool = None, groupIds: list = None, hash: str = None, operatingSystem: str = None, policyIds: list = None, tag: str = None) -> tuple[bool, None]:
 		'''
 		Class ApplicationControl
 		Description: Get application controls.
@@ -24,6 +24,7 @@ class ApplicationControl:
 			signer (str): Specifies the value, if contains special characters - encode to HTML URL Encoding
 			currentPage (int): Specifies the current page
 			enabled (bool): Specifies the state of the application control
+			groupIds (list): Specifies the IDs of the relevant groups for application control
 			hash (str): Specifies the hash of the application control
 			operatingSystem (str): Specifies the operating system of the application control
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
@@ -48,6 +49,9 @@ class ApplicationControl:
 			url_params.append(f'currentPage={currentPage}')
 		if enabled != None:
 			url_params.append(f'enabled={enabled}')
+		if groupIds != None:
+			groupIds = ",".join(map(str, groupIds)) if isinstance(groupIds, list) else groupIds
+			url_params.append(f'groupIds={groupIds}')
 		if hash != None:
 			url_params.append(f'hash={hash}')
 		if operatingSystem != None:
@@ -86,7 +90,7 @@ class ApplicationControl:
 
 		return fortiedr_connection.send(url, applicationControlSaveRequest)
 
-	def insert_applications(self, appIds: list, organization: str, enabled: bool = None, groupIds: list = None, isOverridePolicies: bool = None, policyIds: list = None, tagId: int = None) -> tuple[bool, list]:
+	def insert_applications(self, appIds: list, organization: str, enabled: bool = None, groupIds: list = None, isOverridePolicies: bool = None, name: str = None, policyIds: list = None, tagId: int = None) -> tuple[bool, list]:
 		'''
 		Class ApplicationControl
 		Description: Edits existing application control and returns the affected ones.
@@ -118,6 +122,8 @@ class ApplicationControl:
 			modifiedFields["groupIds"] = f"{groupIds}"
 		if isOverridePolicies:
 			modifiedFields["isOverridePolicies"] = f"{isOverridePolicies}"
+		if name:
+			modifiedFields["name"] = f"{name}"
 		if policyIds:
 			modifiedFields["policyIds"] = f"{policyIds}"
 		if tagId != None:
@@ -217,7 +223,7 @@ class Administrator:
 
 		return fortiedr_connection.insert(url, adminSetEnableDefaultApplicationControlRequest)
 
-	def set_tray_notification_settings(self, enabledPopup: bool = None, enabledTrayNotification: bool = None, message: str = None, organization: str = None) -> tuple[bool, None]:
+	def set_tray_notification_settings(self, enableFortiClientNotification: bool = None, enabledPopup: bool = None, enabledTrayNotification: bool = None, message: str = None, organization: str = None, showNotificationOnFileReadAttempt: bool = None) -> tuple[bool, None]:
 		'''
 		Class Administrator
 		Description: Update tray notification settings.
@@ -234,6 +240,8 @@ class Administrator:
 		url = '/api/admin/set-tray-notification-settings'
 
 		adminSetTrayNotificationSettingsRequest = {}
+		if enableFortiClientNotification:
+			adminSetTrayNotificationSettingsRequest["enableFortiClientNotification"] = f"{enableFortiClientNotification}"
 		if enabledPopup:
 			adminSetTrayNotificationSettingsRequest["enabledPopup"] = f"{enabledPopup}"
 		if enabledTrayNotification:
@@ -242,6 +250,8 @@ class Administrator:
 			adminSetTrayNotificationSettingsRequest["message"] = f"{message}"
 		if organization:
 			adminSetTrayNotificationSettingsRequest["organization"] = f"{organization}"
+		if showNotificationOnFileReadAttempt:
+			adminSetTrayNotificationSettingsRequest["showNotificationOnFileReadAttempt"] = f"{showNotificationOnFileReadAttempt}"
 
 		return fortiedr_connection.send(url, adminSetTrayNotificationSettingsRequest)
 
@@ -911,7 +921,7 @@ class CommunicationControl:
 class Events:
 	'''This API call outputs all the events in the system that match the condition(s) you specify in the call. An AND relationship exists when specifying multiple input parameters. When no input parameters are matched, an empty result set is returned'''
 
-	def insert_events(self, actions: list = None, applicationControl: bool = None, archived: bool = None, classifications: list = None, collectorGroups: list = None, destinations: list = None, device: str = None, deviceControl: bool = None, deviceIps: list = None, eventIds: list = None, eventType: list = None, expired: bool = None, fileHash: str = None, firstSeen: str = None, firstSeenFrom: str = None, firstSeenTo: str = None, handled: bool = None, itemsPerPage: int = None, lastSeen: str = None, lastSeenFrom: str = None, lastSeenTo: str = None, loggedUser: str = None, macAddresses: list = None, muted: bool = None, operatingSystems: list = None, organization: str = None, pageNumber: int = None, paths: list = None, process: str = None, rule: str = None, seen: bool = None, severities: list = None, signed: bool = None, sorting: str = None, strictMode: bool = None, archive: bool = None, classification: str = None, comment: str = None, familyName: str = None, forceUnmute: bool = None, handle: bool = None, malwareType: str = None, mute: bool = None, muteDuration: str = None, read: bool = None, threatName: str = None) -> tuple[bool, None]:
+	def insert_events(self, actions: list = None, applicationControl: bool = None, archived: bool = None, classifications: list = None, collectorGroups: list = None, collectorIds: list = None, destinations: list = None, device: str = None, deviceControl: bool = None, deviceIps: list = None, eventIds: list = None, eventType: list = None, expired: bool = None, fileHash: str = None, firstSeen: str = None, firstSeenFrom: str = None, firstSeenTo: str = None, handled: bool = None, itemsPerPage: int = None, lastSeen: str = None, lastSeenFrom: str = None, lastSeenTo: str = None, loggedUser: str = None, macAddresses: list = None, muted: bool = None, operatingSystems: list = None, organization: str = None, pageNumber: int = None, paths: list = None, process: str = None, rule: str = None, seen: bool = None, severities: list = None, signed: bool = None, sorting: str = None, strictMode: bool = None, archive: bool = None, classification: str = None, comment: str = None, familyName: str = None, forceUnmute: bool = None, handle: bool = None, malwareType: str = None, mute: bool = None, muteDuration: str = None, read: bool = None, threatName: str = None) -> tuple[bool, None]:
 		'''
 		Class Events
 		Description: This API call updates the read/unread, handled/unhandled or archived/unarchived state of an event. The output of this call is a message indicating whether the update succeeded or failed.
@@ -922,6 +932,7 @@ class Events:
 			archived (bool): A true/false parameter indicating whether to include only archived events
 			classifications (list): Specifies the classification of the event
 			collectorGroups (list): Specifies the collector groups whose collector reported the events
+			collectorIds (list): Specifies the collectorIds where the events occurred
 			destinations (list): Specifies the connection destination(s) of the events
 			device (str): Specifies the device name where the events occurred
 			deviceControl (bool): A true/false parameter indicating whether to include only device control events
@@ -977,6 +988,9 @@ class Events:
 		if collectorGroups != None:
 			collectorGroups = ",".join(collectorGroups) if isinstance(collectorGroups, list) else collectorGroups
 			url_params.append(f'collectorGroups={collectorGroups}')
+		if collectorIds != None:
+			collectorIds = ",".join(map(str, collectorIds)) if isinstance(collectorIds, list) else collectorIds
+			url_params.append(f'collectorIds={collectorIds}')
 		if destinations != None:
 			destinations = ",".join(destinations) if isinstance(destinations, list) else destinations
 			url_params.append(f'destinations={destinations}')
@@ -1073,7 +1087,7 @@ class Events:
 
 		return fortiedr_connection.insert(url, updateEventsRequest)
 
-	def delete_events(self, actions: list = None, applicationControl: bool = None, archived: bool = None, classifications: list = None, collectorGroups: list = None, deleteAll: bool = None, destinations: list = None, device: str = None, deviceControl: bool = None, deviceIps: list = None, eventIds: list = None, eventType: list = None, expired: bool = None, fileHash: str = None, firstSeen: str = None, firstSeenFrom: str = None, firstSeenTo: str = None, handled: bool = None, itemsPerPage: int = None, lastSeen: str = None, lastSeenFrom: str = None, lastSeenTo: str = None, loggedUser: str = None, macAddresses: list = None, muted: bool = None, operatingSystems: list = None, organization: str = None, pageNumber: int = None, paths: list = None, process: str = None, rule: str = None, seen: bool = None, severities: list = None, signed: bool = None, sorting: str = None, strictMode: bool = None) -> tuple[bool, None]:
+	def delete_events(self, actions: list = None, applicationControl: bool = None, archived: bool = None, classifications: list = None, collectorGroups: list = None, collectorIds: list = None, deleteAll: bool = None, destinations: list = None, device: str = None, deviceControl: bool = None, deviceIps: list = None, eventIds: list = None, eventType: list = None, expired: bool = None, fileHash: str = None, firstSeen: str = None, firstSeenFrom: str = None, firstSeenTo: str = None, handled: bool = None, itemsPerPage: int = None, lastSeen: str = None, lastSeenFrom: str = None, lastSeenTo: str = None, loggedUser: str = None, macAddresses: list = None, muted: bool = None, operatingSystems: list = None, organization: str = None, pageNumber: int = None, paths: list = None, process: str = None, rule: str = None, seen: bool = None, severities: list = None, signed: bool = None, sorting: str = None, strictMode: bool = None) -> tuple[bool, None]:
 		'''
 		Class Events
 		Description: This API call delete events.
@@ -1084,6 +1098,7 @@ class Events:
 			archived (bool): A true/false parameter indicating whether to include only archived events
 			classifications (list): Specifies the classification of the event
 			collectorGroups (list): Specifies the collector groups whose collector reported the events
+			collectorIds (list): Specifies the collectorIds where the events occurred
 			deleteAll (bool): A true/false parameter indicating if all events should be deleted
 			destinations (list): Specifies the connection destination(s) of the events
 			device (str): Specifies the device name where the events occurred
@@ -1139,6 +1154,9 @@ class Events:
 		if collectorGroups != None:
 			collectorGroups = ",".join(collectorGroups) if isinstance(collectorGroups, list) else collectorGroups
 			url_params.append(f'collectorGroups={collectorGroups}')
+		if collectorIds != None:
+			collectorIds = ",".join(map(str, collectorIds)) if isinstance(collectorIds, list) else collectorIds
+			url_params.append(f'collectorIds={collectorIds}')
 		if deleteAll != None:
 			url_params.append(f'deleteAll={deleteAll}')
 		if destinations != None:
@@ -1212,7 +1230,7 @@ class Events:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
-	def count_events(self, actions: list = None, applicationControl: bool = None, archived: bool = None, classifications: list = None, collectorGroups: list = None, destinations: list = None, device: str = None, deviceControl: bool = None, deviceIps: list = None, eventIds: list = None, eventType: list = None, expired: bool = None, fileHash: str = None, firstSeen: str = None, firstSeenFrom: str = None, firstSeenTo: str = None, handled: bool = None, itemsPerPage: int = None, lastSeen: str = None, lastSeenFrom: str = None, lastSeenTo: str = None, loggedUser: str = None, macAddresses: list = None, muted: bool = None, operatingSystems: list = None, organization: str = None, pageNumber: int = None, paths: list = None, process: str = None, rule: str = None, seen: bool = None, severities: list = None, signed: bool = None, sorting: str = None, strictMode: bool = None) -> tuple[bool, int]:
+	def count_events(self, actions: list = None, applicationControl: bool = None, archived: bool = None, classifications: list = None, collectorGroups: list = None, collectorIds: list = None, destinations: list = None, device: str = None, deviceControl: bool = None, deviceIps: list = None, eventIds: list = None, eventType: list = None, expired: bool = None, fileHash: str = None, firstSeen: str = None, firstSeenFrom: str = None, firstSeenTo: str = None, handled: bool = None, itemsPerPage: int = None, lastSeen: str = None, lastSeenFrom: str = None, lastSeenTo: str = None, loggedUser: str = None, macAddresses: list = None, muted: bool = None, operatingSystems: list = None, organization: str = None, pageNumber: int = None, paths: list = None, process: str = None, rule: str = None, seen: bool = None, severities: list = None, signed: bool = None, sorting: str = None, strictMode: bool = None) -> tuple[bool, int]:
 		'''
 		Class Events
 		Description: Count Events.
@@ -1223,6 +1241,7 @@ class Events:
 			archived (bool): A true/false parameter indicating whether to include only archived events
 			classifications (list): Specifies the classification of the event
 			collectorGroups (list): Specifies the collector groups whose collector reported the events
+			collectorIds (list): Specifies the collectorIds where the events occurred
 			destinations (list): Specifies the connection destination(s) of the events
 			device (str): Specifies the device name where the events occurred
 			deviceControl (bool): A true/false parameter indicating whether to include only device control events
@@ -1277,6 +1296,9 @@ class Events:
 		if collectorGroups != None:
 			collectorGroups = ",".join(collectorGroups) if isinstance(collectorGroups, list) else collectorGroups
 			url_params.append(f'collectorGroups={collectorGroups}')
+		if collectorIds != None:
+			collectorIds = ",".join(map(str, collectorIds)) if isinstance(collectorIds, list) else collectorIds
+			url_params.append(f'collectorIds={collectorIds}')
 		if destinations != None:
 			destinations = ",".join(destinations) if isinstance(destinations, list) else destinations
 			url_params.append(f'destinations={destinations}')
@@ -1348,7 +1370,7 @@ class Events:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def create_exception(self, allCollectorGroups: bool = None, allDestinations: bool = None, allOrganizations: bool = None, allUsers: bool = None, collectorGroups: list = None, comment: str = None, destinations: list = None, eventId: int = None, exceptionId: int = None, useAnyPath: object = None, useInException: object = None, wildcardFiles: object = None, wildcardPaths: object = None, forceCreate: bool = None, organization: str = None, users: list = None) -> tuple[bool, str]:
+	def create_exception(self, allCollectorGroups: bool = None, allDestinations: bool = None, allOrganizations: bool = None, allUsers: bool = None, collectorGroups: list = None, comment: str = None, destinations: list = None, eventId: int = None, exceptionId: int = None, useAnyPath: object = None, useCommandLine: object = None, useInException: object = None, wildcardFiles: object = None, wildcardPaths: object = None, forceCreate: bool = None, isHidden: bool = None, organization: str = None, users: list = None) -> tuple[bool, str]:
 		'''
 		Class Events
 		Description: This API call adds an exception to a specific event. The output of this call is a message indicating whether the creation of the exception .
@@ -1365,6 +1387,7 @@ class Events:
 			exceptionId (int): Specifies the exception ID to edit
 			exceptionRequest (Object): Check 'exceptionRequest' in the API documentation for further information.
 			forceCreate (bool): A true/false parameter indicating whether to create the exception, even if there are already exceptions that cover this given event
+			isHidden (bool): A true/false parameter indicating whether the event is hidden
 			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
 			users (list): A list of users to which the exception
 
@@ -1398,6 +1421,8 @@ class Events:
 			url_params.append(f'exceptionId={exceptionId}')
 		if forceCreate != None:
 			url_params.append(f'forceCreate={forceCreate}')
+		if isHidden != None:
+			url_params.append(f'isHidden={isHidden}')
 		if organization != None:
 			url_params.append(f'organization={organization}')
 		if users != None:
@@ -1408,6 +1433,8 @@ class Events:
 		exceptionRequest = {}
 		if useAnyPath:
 			exceptionRequest["useAnyPath"] = f"{useAnyPath}"
+		if useCommandLine:
+			exceptionRequest["useCommandLine"] = f"{useCommandLine}"
 		if useInException:
 			exceptionRequest["useInException"] = f"{useInException}"
 		if wildcardFiles:
@@ -1441,7 +1468,7 @@ class Events:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.download(url, download_folder=download_folder, file_format='json')
 
-	def list_events(self, actions: list = None, applicationControl: bool = None, archived: bool = None, classifications: list = None, collectorGroups: list = None, destinations: list = None, device: str = None, deviceControl: bool = None, deviceIps: list = None, eventIds: list = None, eventType: list = None, expired: bool = None, fileHash: str = None, firstSeen: str = None, firstSeenFrom: str = None, firstSeenTo: str = None, handled: bool = None, itemsPerPage: int = None, lastSeen: str = None, lastSeenFrom: str = None, lastSeenTo: str = None, loggedUser: str = None, macAddresses: list = None, muted: bool = None, operatingSystems: list = None, organization: str = None, pageNumber: int = None, paths: list = None, process: str = None, rule: str = None, seen: bool = None, severities: list = None, signed: bool = None, sorting: str = None, strictMode: bool = None) -> tuple[bool, list]:
+	def list_events(self, actions: list = None, applicationControl: bool = None, archived: bool = None, classifications: list = None, collectorGroups: list = None, collectorIds: list = None, destinations: list = None, device: str = None, deviceControl: bool = None, deviceIps: list = None, eventIds: list = None, eventType: list = None, expired: bool = None, fileHash: str = None, firstSeen: str = None, firstSeenFrom: str = None, firstSeenTo: str = None, handled: bool = None, itemsPerPage: int = None, lastSeen: str = None, lastSeenFrom: str = None, lastSeenTo: str = None, loggedUser: str = None, macAddresses: list = None, muted: bool = None, operatingSystems: list = None, organization: str = None, pageNumber: int = None, paths: list = None, process: str = None, rule: str = None, seen: bool = None, severities: list = None, signed: bool = None, sorting: str = None, strictMode: bool = None) -> tuple[bool, list]:
 		'''
 		Class Events
 		Description: List Events.
@@ -1452,6 +1479,7 @@ class Events:
 			archived (bool): A true/false parameter indicating whether to include only archived events
 			classifications (list): Specifies the classification of the event
 			collectorGroups (list): Specifies the collector groups whose collector reported the events
+			collectorIds (list): Specifies the collectorIds where the events occurred
 			destinations (list): Specifies the connection destination(s) of the events
 			device (str): Specifies the device name where the events occurred
 			deviceControl (bool): A true/false parameter indicating whether to include only device control events
@@ -1506,6 +1534,9 @@ class Events:
 		if collectorGroups != None:
 			collectorGroups = ",".join(collectorGroups) if isinstance(collectorGroups, list) else collectorGroups
 			url_params.append(f'collectorGroups={collectorGroups}')
+		if collectorIds != None:
+			collectorIds = ",".join(map(str, collectorIds)) if isinstance(collectorIds, list) else collectorIds
+			url_params.append(f'collectorIds={collectorIds}')
 		if destinations != None:
 			destinations = ",".join(destinations) if isinstance(destinations, list) else destinations
 			url_params.append(f'destinations={destinations}')
@@ -1840,6 +1871,27 @@ class Exceptions:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
+	def update_exceptions_to_all_accounts_groups_coverage(self, organization: str, ) -> tuple[bool, None]:
+		'''
+		Class Exceptions
+		Description: This API call set an exception to a 'All organizations agents groups'.
+        
+		Args:
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_exceptions_to_all_accounts_groups_coverage", locals())
+
+		url = '/management-rest/exceptions/update-exceptions-to-all-accounts-groups-coverage'
+		url_params = []
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.send(url)
+
 class Forensics:
 	'''The Forensics module facilitates deep analysis into the actual internals of the communicating devices operating system that led up to an event.'''
 
@@ -1884,7 +1936,7 @@ class Forensics:
 		if startRange != None:
 			url_params.append(f'startRange={startRange}')
 		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.download(url, download_folder)
+		return fortiedr_connection.download(url, download_folder=download_folder)
 
 	def get_file(self, device: str, filePaths: list, type: str, organization: str = None, download_folder = None) -> tuple[bool, None]:
 		'''
@@ -1915,7 +1967,7 @@ class Forensics:
 		if type != None:
 			url_params.append(f'type={type}')
 		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.download(url, download_folder)
+		return fortiedr_connection.download(url, download_folder=download_folder)
 
 	def remediate_device(self, terminatedProcessId: int, device: str = None, deviceId: int = None, executablesToRemove: list = None, organization: str = None, persistenceDataAction: str = None, persistenceDataNewContent: str = None, persistenceDataPath: str = None, persistenceDataValueName: str = None, persistenceDataValueNewType: str = None, processName: str = None, threadId: int = None) -> tuple[bool, None]:
 		'''
@@ -2709,12 +2761,12 @@ class SystemInventory:
 		Args:
 			collectorIds (list): value = Array of collectors Ids. To move collectors from one organization to another
 			collectorSIDs (list): value = Array of collectors SIDS. To move collectors from one organization to another
-			collectors (list): Array of collectors names. To move collectors from one organization to another, for each collector please add the organization name before the collector name (<organization-name>\\<collector-name>)
+			collectors (list): Array of collectors names. To move collectors from one organization to another, for each collector please add the organization name before the collector name (<organization-name>//<collector-name>)
 			forceAssign (bool): Indicates whether to force the assignment even if the organization of the target Collector group is under migration
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
 				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
 				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
-			targetCollectorGroup (str): Collector group. To move collectors from one organization to another, please add the organization name before the target collector group (<organization-name>\\<collector-group-name>)
+			targetCollectorGroup (str): Collector group. To move collectors from one organization to another, please add the organization name before the target collector group (<organization-name>//<collector-group-name>)
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -2739,6 +2791,117 @@ class SystemInventory:
 			url_params.append(f'organization={organization}')
 		if targetCollectorGroup != None:
 			url_params.append(f'targetCollectorGroup={targetCollectorGroup}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.insert(url)
+
+	def release_license(self, releaseLicense: bool, cloudAccounts: list = None, cloudProviders: list = None, clusters: list = None, collectorGroups: list = None, collectorGroupsIds: list = None, collectorType: str = None, devices: list = None, devicesIds: list = None, firstSeen: str = None, hasCrashDumps: bool = None, ips: list = None, itemsPerPage: int = None, lastSeenEnd: str = None, lastSeenStart: str = None, loggedUser: str = None, operatingSystems: list = None, organization: str = None, osFamilies: list = None, pageNumber: int = None, showExpired: bool = None, sorting: str = None, states: list = None, strictMode: bool = None, versions: list = None) -> tuple[bool, list]:
+		'''
+		Class SystemInventory
+		Description: This API call enables/disables a Collector(s) and release it license. You must specify whether the License must be released or acquired! Cooldown between the requests should be 2-3 minutes!.
+        
+		Args:
+			cloudAccounts (list): Specifies the list cloud account names
+			cloudProviders (list): Specifies the list of cloud providers: AWS, Azure, GCP
+			clusters (list): Specifies the list of cluster
+			collectorGroups (list): Specifies the list of collector group names and retrieves collectors under the
+			given groups
+			collectorGroupsIds (list): Specifies the list of collector group Ids and retrieves collectors under the
+			given groups
+			collectorType (str): Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default
+			devices (list): Specifies the list of device names
+			devicesIds (list): Specifies the list of device ids
+			firstSeen (str): Retrieves collectors that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss
+			hasCrashDumps (bool): Retrieves collectors that have crash dumps
+			ips (list): Specifies the list of IP values
+			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000
+			lastSeenEnd (str): Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss
+			lastSeenStart (str): Retrieves collectors that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss
+			loggedUser (str): Specifies the user that was logged when the event occurred
+			operatingSystems (list): Specifies the list of specific operating systems. For example, Windows 7 Pro
+			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
+				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
+				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			
+			osFamilies (list): Specifies the list of operating system families: Windows, Windows Server or OS X
+			pageNumber (int): An integer used for paging that indicates the required page number
+			releaseLicense (bool): Collector releaseLicense
+			showExpired (bool): Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired
+			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on
+			states (list): Specifies the list of collector states: Running, Disconnected, Disabled, Degraded, 
+			Pending Reboot, Isolated, Expired, Migrated or Pending Migration
+			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False
+			versions (list): Specifies the list of collector versions
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("release_license", locals())
+
+		url = '/management-rest/inventory/release-license'
+		url_params = []
+		if cloudAccounts != None:
+			cloudAccounts = ",".join(cloudAccounts) if isinstance(cloudAccounts, list) else cloudAccounts
+			url_params.append(f'cloudAccounts={cloudAccounts}')
+		if cloudProviders != None:
+			cloudProviders = ",".join(cloudProviders) if isinstance(cloudProviders, list) else cloudProviders
+			url_params.append(f'cloudProviders={cloudProviders}')
+		if clusters != None:
+			clusters = ",".join(clusters) if isinstance(clusters, list) else clusters
+			url_params.append(f'clusters={clusters}')
+		if collectorGroups != None:
+			collectorGroups = ",".join(collectorGroups) if isinstance(collectorGroups, list) else collectorGroups
+			url_params.append(f'collectorGroups={collectorGroups}')
+		if collectorGroupsIds != None:
+			collectorGroupsIds = ",".join(map(str, collectorGroupsIds)) if isinstance(collectorGroupsIds, list) else collectorGroupsIds
+			url_params.append(f'collectorGroupsIds={collectorGroupsIds}')
+		if collectorType != None:
+			url_params.append(f'collectorType={collectorType}')
+		if devices != None:
+			devices = ",".join(devices) if isinstance(devices, list) else devices
+			url_params.append(f'devices={devices}')
+		if devicesIds != None:
+			devicesIds = ",".join(map(str, devicesIds)) if isinstance(devicesIds, list) else devicesIds
+			url_params.append(f'devicesIds={devicesIds}')
+		if firstSeen != None:
+			url_params.append(f'firstSeen={firstSeen}')
+		if hasCrashDumps != None:
+			url_params.append(f'hasCrashDumps={hasCrashDumps}')
+		if ips != None:
+			ips = ",".join(ips) if isinstance(ips, list) else ips
+			url_params.append(f'ips={ips}')
+		if itemsPerPage != None:
+			url_params.append(f'itemsPerPage={itemsPerPage}')
+		if lastSeenEnd != None:
+			url_params.append(f'lastSeenEnd={lastSeenEnd}')
+		if lastSeenStart != None:
+			url_params.append(f'lastSeenStart={lastSeenStart}')
+		if loggedUser != None:
+			url_params.append(f'loggedUser={loggedUser}')
+		if operatingSystems != None:
+			operatingSystems = ",".join(operatingSystems) if isinstance(operatingSystems, list) else operatingSystems
+			url_params.append(f'operatingSystems={operatingSystems}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if osFamilies != None:
+			osFamilies = ",".join(osFamilies) if isinstance(osFamilies, list) else osFamilies
+			url_params.append(f'osFamilies={osFamilies}')
+		if pageNumber != None:
+			url_params.append(f'pageNumber={pageNumber}')
+		if releaseLicense != None:
+			url_params.append(f'releaseLicense={releaseLicense}')
+		if showExpired != None:
+			url_params.append(f'showExpired={showExpired}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if states != None:
+			states = ",".join(states) if isinstance(states, list) else states
+			url_params.append(f'states={states}')
+		if strictMode != None:
+			url_params.append(f'strictMode={strictMode}')
+		if versions != None:
+			versions = ",".join(versions) if isinstance(versions, list) else versions
+			url_params.append(f'versions={versions}')
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
@@ -2868,6 +3031,35 @@ class SystemInventory:
 			url_params.append(f'versions={versions}')
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
+
+	def uninstall_collectors(self, collectorIDs: list = None, collectorSIDs: list = None, organization: str = None) -> tuple[bool, list]:
+		'''
+		Class SystemInventory
+		Description: This API uninstall collectors.
+        
+		Args:
+			collectorIDs (list): Specifies the list of device ids
+			collectorSIDs (list): Specifies the list of device machine SID
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("uninstall_collectors", locals())
+
+		url = '/management-rest/inventory/uninstall-collectors'
+		url_params = []
+		if collectorIDs != None:
+			collectorIDs = ",".join(map(str, collectorIDs)) if isinstance(collectorIDs, list) else collectorIDs
+			url_params.append(f'collectorIDs={collectorIDs}')
+		if collectorSIDs != None:
+			collectorSIDs = ",".join(collectorSIDs) if isinstance(collectorSIDs, list) else collectorSIDs
+			url_params.append(f'collectorSIDs={collectorSIDs}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.send(url)
 
 	def unisolate_collectors(self, devices: list = None, devicesIds: list = None, organization: str = None) -> tuple[bool, None]:
 		'''
@@ -3501,7 +3693,7 @@ class Organizations:
 		if organization != None:
 			url_params.append(f'organization={organization}')
 		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.download(url, download_folder)
+		return fortiedr_connection.download(url, download_folder=download_folder)
 
 	def import_organization(self, file: BinaryIO = None) -> tuple[bool, None]:
 		'''
@@ -4058,7 +4250,7 @@ class SendableEntities:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
-	def syslog(self, organization: str = None, certificateBlob: str = None, host: str = None, name: str = None, port: int = None, privateKeyFile: str = None, privateKeyPassword: str = None, protocol: str = None, syslogFormat: str = None, useClientCertificate: bool = None, useSSL: bool = None) -> tuple[bool, None]:
+	def syslog(self, organization: str = None, certificateBlob: str = None, host: str = None, name: str = None, port: int = None, privateKeyFile: str = None, privateKeyPassword: str = None, protocol: str = None, syslogFormat: str = None, syslogRFCFormat: str = None, useClientCertificate: bool = None, useSSL: bool = None) -> tuple[bool, None]:
 		'''
 		Class SendableEntities
 		Description: This API creates syslog.
@@ -4098,6 +4290,8 @@ class SendableEntities:
 			syslogRequest["protocol"] = f"{protocol}"
 		if syslogFormat:
 			syslogRequest["syslogFormat"] = f"{syslogFormat}"
+		if syslogRFCFormat:
+			syslogRequest["syslogRFCFormat"] = f"{syslogRFCFormat}"
 		if useClientCertificate:
 			syslogRequest["useClientCertificate"] = f"{useClientCertificate}"
 		if useSSL:
