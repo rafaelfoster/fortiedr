@@ -48,7 +48,8 @@ class FortiEDR_API_GW:
     def delete(self, url, params=None, request_type=None):
         return self._exec("DELETE", url, params, request_type=request_type)
     
-    def download(self, url, params=None, request_type=None, file_format = 'zip'):
+    def download(self, url, params=None, request_type=None, file_format = 'zip', download_folder = ''):
+        self.download_folder = download_folder
         return self._exec("GET", url, params, request_type=request_type, download_file=True, file_format=file_format)
     
     def upload(self, url, file, params=None, request_type=None ):
@@ -64,8 +65,6 @@ class FortiEDR_API_GW:
         params = {k: v for k, v in (params or {}).items() if v is not None}
         url = f"https://{self.host}{url}"
 
-        # if request_type == "query":
-        #     url = f"{url}?{urllib.parse.urlencode(params)}"
         if request_type:
             self.headers['Content-Type'] = request_type
 
@@ -74,16 +73,27 @@ class FortiEDR_API_GW:
             print(json.dumps(self.headers, indent=4))
             print(json.dumps(params, indent=4))
 
-        response = requests.request(
-            method,
-            url,
-            headers=self.headers,
-            json=params if method in ['POST', 'PUT', 'PATCH'] else None,
-            params=params if method == 'GET' else None,
-            verify=self.SSL_Verify,
-            stream=download_file,
-            files=upload_file
-        )
+        try:
+            response = requests.request(
+                method,
+                url,
+                headers=self.headers,
+                json=params if method in ['POST', 'PUT', 'PATCH'] else None,
+                params=params if method == 'GET' else None,
+                verify=self.SSL_Verify,
+                stream=download_file,
+                files=upload_file
+            )
+        except requests.exceptions.ConnectionError as e:
+             return {
+                'status': False,
+                'data': {'status_code': 500, 'error_message': f'Failed to connect to {url}. Error: {e}'}
+            }
+        except requests.exceptions.RequestException as e:
+            return {
+                'status': False,
+                'data': {'status_code': 500, 'error_message': e}
+            }
 
         if not response.ok:
             try:
@@ -96,16 +106,20 @@ class FortiEDR_API_GW:
             }
 
         if download_file:
-            return self._handle_file_download(response, file_format)
+            filename_function = url.split('/')[-1].replace('-','_')
+            filename_function = filename_function.split('?')[0]
+            if not self.download_folder:
+                self.download_folder = '.'
+            return self._handle_file_download(response, filename_function, file_format)
 
         try:
             return {'status': True, 'data': response.json()}
         except ValueError:  # If response is not JSON
             return {'status': True, 'data': response.text}
 
-    def _handle_file_download(self, response, file_format='zip'):
-        date_now = datetime.now().strftime("%Y%m%d-%H%M%S")
-        filename = f"{date_now}.{file_format}"
+    def _handle_file_download(self, response, filename_prefix, file_format='zip'):
+        date_now = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"{self.download_folder}/{filename_prefix}_{date_now}.{file_format}"
         with open(filename, 'wb') as f:
             for chunk in response.iter_content(chunk_size=1024):
                 f.write(chunk)

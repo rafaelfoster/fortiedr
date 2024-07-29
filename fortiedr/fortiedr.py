@@ -6,7 +6,7 @@ from typing import BinaryIO
 from fortiedr.auth import Auth as fedrAuth
 from fortiedr.connector import FortiEDR_API_GW
 
-version = '3.8'
+version = '3.8.1'
 
 fortiedr_connection = None
 
@@ -1417,7 +1417,7 @@ class Events:
 
 		return fortiedr_connection.send(url, exceptionRequest)
 
-	def export_raw_data_items_json(self, organization: str = None, rawItemIds: str = None) -> tuple[bool, None]:
+	def export_raw_data_items_json(self, organization: str = None, rawItemIds: str = None, download_folder = None) -> tuple[bool, None]:
 		'''
 		Class Events
 		Description: Get event as Json format.
@@ -1439,7 +1439,7 @@ class Events:
 		if rawItemIds != None:
 			url_params.append(f'rawItemIds={rawItemIds}')
 		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.get(url)
+		return fortiedr_connection.download(url, download_folder=download_folder, file_format='json')
 
 	def list_events(self, actions: list = None, applicationControl: bool = None, archived: bool = None, classifications: list = None, collectorGroups: list = None, destinations: list = None, device: str = None, deviceControl: bool = None, deviceIps: list = None, eventIds: list = None, eventType: list = None, expired: bool = None, fileHash: str = None, firstSeen: str = None, firstSeenFrom: str = None, firstSeenTo: str = None, handled: bool = None, itemsPerPage: int = None, lastSeen: str = None, lastSeenFrom: str = None, lastSeenTo: str = None, loggedUser: str = None, macAddresses: list = None, muted: bool = None, operatingSystems: list = None, organization: str = None, pageNumber: int = None, paths: list = None, process: str = None, rule: str = None, seen: bool = None, severities: list = None, signed: bool = None, sorting: str = None, strictMode: bool = None) -> tuple[bool, list]:
 		'''
@@ -1843,7 +1843,7 @@ class Exceptions:
 class Forensics:
 	'''The Forensics module facilitates deep analysis into the actual internals of the communicating devices operating system that led up to an event.'''
 
-	def get_event_file(self, rawEventId: int, disk: bool = None, endRange: str = None, filePaths: list = None, memory: bool = None, organization: str = None, processId: int = None, startRange: str = None) -> tuple[bool, None]:
+	def get_event_file(self, rawEventId: int, disk: bool = None, endRange: str = None, filePaths: list = None, memory: bool = None, organization: str = None, processId: int = None, startRange: str = None, download_folder = None) -> tuple[bool, None]:
 		'''
 		Class Forensics
 		Description: This API call retrieves a file or memory.
@@ -1884,9 +1884,9 @@ class Forensics:
 		if startRange != None:
 			url_params.append(f'startRange={startRange}')
 		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.get(url)
+		return fortiedr_connection.download(url, download_folder)
 
-	def get_file(self, device: str, filePaths: list, type: str, organization: str = None) -> tuple[bool, None]:
+	def get_file(self, device: str, filePaths: list, type: str, organization: str = None, download_folder = None) -> tuple[bool, None]:
 		'''
 		Class Forensics
 		Description: This API call retrieves a file or memory.
@@ -1915,7 +1915,7 @@ class Forensics:
 		if type != None:
 			url_params.append(f'type={type}')
 		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.get(url)
+		return fortiedr_connection.download(url, download_folder)
 
 	def remediate_device(self, terminatedProcessId: int, device: str = None, deviceId: int = None, executablesToRemove: list = None, organization: str = None, persistenceDataAction: str = None, persistenceDataNewContent: str = None, persistenceDataPath: str = None, persistenceDataValueName: str = None, persistenceDataValueNewType: str = None, processName: str = None, threadId: int = None) -> tuple[bool, None]:
 		'''
@@ -2049,7 +2049,7 @@ class Integrations:
 		if connectorActions:
 			createConnectorRequest["connectorActions"] = f"{connectorActions}"
 		if coreId != None:
-			createConnectorRequest["coreId"] = coreId
+			createConnectorRequest["coreId"] = f"{coreId}"
 		if enabled:
 			createConnectorRequest["enabled"] = f"{enabled}"
 		if host:
@@ -3479,7 +3479,7 @@ class Organizations:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
-	def export_organization(self, destinationName: str = None, organization: str = None) -> tuple[bool, None]:
+	def export_organization(self, destinationName: str = None, organization: str = None, download_folder = None) -> tuple[bool, None]:
 		'''
 		Class Organizations
 		Description: Export organization data as zip file.
@@ -3501,7 +3501,7 @@ class Organizations:
 		if organization != None:
 			url_params.append(f'organization={organization}')
 		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.get(url)
+		return fortiedr_connection.download(url, download_folder)
 
 	def import_organization(self, file: BinaryIO = None) -> tuple[bool, None]:
 		'''
@@ -5248,7 +5248,7 @@ def validate_params(function_name, local_params):
 	}
 	json_params = api_json_params[function_name]
 	for key, value in local_params.items():
-		if key == "self" or value is None: continue
+		if key == "self" or value is None or key not in json_params.keys() : continue
 		if json_params[key] == 'list': continue
 
 		t = data_types[json_params[key]]
