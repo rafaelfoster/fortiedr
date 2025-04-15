@@ -6,12 +6,68 @@ from typing import BinaryIO
 from fortiedr.auth import Auth as fedrAuth
 from fortiedr.connector import FortiEDR_API_GW
 
-version = '3.9'
+version = '3.9.2'
 
 fortiedr_connection = None
 
 class ApplicationControl:
 	'''Application Control Rest Api Controller'''
+
+	def set_enable_default_application_control_state(self, isEnableDefaultApplicationControl: bool = None, organization: str = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: Update default application control state.
+        
+		Args:
+			adminSetEnableDefaultApplicationControlRequest (Object): Check 'adminSetEnableDefaultApplicationControlRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("set_enable_default_application_control_state", locals())
+
+		url = '/api/admin/set-enable-default-application-control-state'
+
+		adminSetEnableDefaultApplicationControlRequest = {}
+		if isEnableDefaultApplicationControl:
+			adminSetEnableDefaultApplicationControlRequest["isEnableDefaultApplicationControl"] = f"{isEnableDefaultApplicationControl}"
+		if organization:
+			adminSetEnableDefaultApplicationControlRequest["organization"] = f"{organization}"
+
+		return fortiedr_connection.insert(url, adminSetEnableDefaultApplicationControlRequest)
+
+	def set_tray_notification_settings(self, enableFortiClientNotification: bool = None, enabledPopup: bool = None, enabledTrayNotification: bool = None, message: str = None, organization: str = None, showNotificationOnFileReadAttempt: bool = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: Update tray notification settings.
+        
+		Args:
+			adminSetTrayNotificationSettingsRequest (Object): Check 'adminSetTrayNotificationSettingsRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("set_tray_notification_settings", locals())
+
+		url = '/api/admin/set-tray-notification-settings'
+
+		adminSetTrayNotificationSettingsRequest = {}
+		if enableFortiClientNotification:
+			adminSetTrayNotificationSettingsRequest["enableFortiClientNotification"] = f"{enableFortiClientNotification}"
+		if enabledPopup:
+			adminSetTrayNotificationSettingsRequest["enabledPopup"] = f"{enabledPopup}"
+		if enabledTrayNotification:
+			adminSetTrayNotificationSettingsRequest["enabledTrayNotification"] = f"{enabledTrayNotification}"
+		if message:
+			adminSetTrayNotificationSettingsRequest["message"] = f"{message}"
+		if organization:
+			adminSetTrayNotificationSettingsRequest["organization"] = f"{organization}"
+		if showNotificationOnFileReadAttempt:
+			adminSetTrayNotificationSettingsRequest["showNotificationOnFileReadAttempt"] = f"{showNotificationOnFileReadAttempt}"
+
+		return fortiedr_connection.send(url, adminSetTrayNotificationSettingsRequest)
 
 	def get_applications(self, currentPage: int, organization: str, fileName: str = None, path: str = None, signer: str = None, enabled: bool = None, groupIds: list = None, hash: str = None, operatingSystem: str = None, policyIds: list = None, tag: str = None) -> tuple[bool, None]:
 		'''
@@ -84,7 +140,7 @@ class ApplicationControl:
 
 		applicationControlSaveRequest = {}
 		if applicationControls:
-			applicationControlSaveRequest["applicationControls"] = f"{applicationControls}"
+			applicationControlSaveRequest["applicationControls"] = applicationControls
 		if organization:
 			applicationControlSaveRequest["organization"] = f"{organization}"
 
@@ -199,62 +255,6 @@ class ApplicationControl:
 class Administrator:
 	'''The Administrator module enables administrators to perform administrative operations, such as handling licenses and users.'''
 
-	def set_enable_default_application_control_state(self, isEnableDefaultApplicationControl: bool = None, organization: str = None) -> tuple[bool, None]:
-		'''
-		Class Administrator
-		Description: Update default application control state.
-        
-		Args:
-			adminSetEnableDefaultApplicationControlRequest (Object): Check 'adminSetEnableDefaultApplicationControlRequest' in the API documentation for further information.
-
-		Returns:
-			bool: Status of the request (True or False). 
-			None: This function does not return any data.
-		'''
-		validate_params("set_enable_default_application_control_state", locals())
-
-		url = '/api/admin/set-enable-default-application-control-state'
-
-		adminSetEnableDefaultApplicationControlRequest = {}
-		if isEnableDefaultApplicationControl:
-			adminSetEnableDefaultApplicationControlRequest["isEnableDefaultApplicationControl"] = f"{isEnableDefaultApplicationControl}"
-		if organization:
-			adminSetEnableDefaultApplicationControlRequest["organization"] = f"{organization}"
-
-		return fortiedr_connection.insert(url, adminSetEnableDefaultApplicationControlRequest)
-
-	def set_tray_notification_settings(self, enableFortiClientNotification: bool = None, enabledPopup: bool = None, enabledTrayNotification: bool = None, message: str = None, organization: str = None, showNotificationOnFileReadAttempt: bool = None) -> tuple[bool, None]:
-		'''
-		Class Administrator
-		Description: Update tray notification settings.
-        
-		Args:
-			adminSetTrayNotificationSettingsRequest (Object): Check 'adminSetTrayNotificationSettingsRequest' in the API documentation for further information.
-
-		Returns:
-			bool: Status of the request (True or False). 
-			None: This function does not return any data.
-		'''
-		validate_params("set_tray_notification_settings", locals())
-
-		url = '/api/admin/set-tray-notification-settings'
-
-		adminSetTrayNotificationSettingsRequest = {}
-		if enableFortiClientNotification:
-			adminSetTrayNotificationSettingsRequest["enableFortiClientNotification"] = f"{enableFortiClientNotification}"
-		if enabledPopup:
-			adminSetTrayNotificationSettingsRequest["enabledPopup"] = f"{enabledPopup}"
-		if enabledTrayNotification:
-			adminSetTrayNotificationSettingsRequest["enabledTrayNotification"] = f"{enabledTrayNotification}"
-		if message:
-			adminSetTrayNotificationSettingsRequest["message"] = f"{message}"
-		if organization:
-			adminSetTrayNotificationSettingsRequest["organization"] = f"{organization}"
-		if showNotificationOnFileReadAttempt:
-			adminSetTrayNotificationSettingsRequest["showNotificationOnFileReadAttempt"] = f"{showNotificationOnFileReadAttempt}"
-
-		return fortiedr_connection.send(url, adminSetTrayNotificationSettingsRequest)
-
 	def list_collector_installers(self, organization: str = None) -> tuple[bool, None]:
 		'''
 		Class Administrator
@@ -262,8 +262,8 @@ class Administrator:
         
 		Args:
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -286,8 +286,8 @@ class Administrator:
 		Args:
 			addLicenseBlob (bool): Indicates whether to put license blob to response. By default addLicenseBlob is false
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -398,8 +398,8 @@ class Administrator:
 			forceAll (bool): Indicates whether to force set all the policies in 'Prevention' mode
 			mode (str): Operation mode
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -427,8 +427,8 @@ class Administrator:
 			collectorGroupIds (list): Specifies the list of IDs of all the collector groups which should be updated.
 			collectorGroups (list): Specifies the list of all the collector groups which should be updated.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			requestUpdateData (Object): Check 'requestUpdateData' in the API documentation for further information.
 
 		Returns:
@@ -509,8 +509,8 @@ class Audit:
 		Args:
 			fromTime (str): Retrieves audit that were written after the given date. Date Format: yyyy-MM-dd (Default is current date)
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			toTime (str): Retrieves audit that were written before the given date. Date Format: yyyy-MM-dd (Default is current date)
 
 		Returns:
@@ -954,8 +954,8 @@ class Events:
 			muted (bool): A true/false parameter indicating if the event is muted
 			operatingSystems (list): Specifies the operating system of the devices where the events occurred
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			pageNumber (int): An integer used for paging that indicates the required page number
 			paths (list): Specifies the paths of the processes related to the event
 			process (str): Specifies the main process of the event
@@ -1121,8 +1121,8 @@ class Events:
 			muted (bool): A true/false parameter indicating if the event is muted
 			operatingSystems (list): Specifies the operating system of the devices where the events occurred
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			pageNumber (int): An integer used for paging that indicates the required page number
 			paths (list): Specifies the paths of the processes related to the event
 			process (str): Specifies the main process of the event
@@ -1263,8 +1263,8 @@ class Events:
 			muted (bool): A true/false parameter indicating if the event is muted
 			operatingSystems (list): Specifies the operating system of the devices where the events occurred
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			pageNumber (int): An integer used for paging that indicates the required page number
 			paths (list): Specifies the paths of the processes related to the event
 			process (str): Specifies the main process of the event
@@ -1466,7 +1466,7 @@ class Events:
 		if rawItemIds != None:
 			url_params.append(f'rawItemIds={rawItemIds}')
 		url += '?' + '&'.join(url_params)
-		return fortiedr_connection.download(url, download_folder=download_folder, file_format='json')
+		return fortiedr_connection.download(url, download_folder=download_folder)
 
 	def list_events(self, actions: list = None, applicationControl: bool = None, archived: bool = None, classifications: list = None, collectorGroups: list = None, collectorIds: list = None, destinations: list = None, device: str = None, deviceControl: bool = None, deviceIps: list = None, eventIds: list = None, eventType: list = None, expired: bool = None, fileHash: str = None, firstSeen: str = None, firstSeenFrom: str = None, firstSeenTo: str = None, handled: bool = None, itemsPerPage: int = None, lastSeen: str = None, lastSeenFrom: str = None, lastSeenTo: str = None, loggedUser: str = None, macAddresses: list = None, muted: bool = None, operatingSystems: list = None, organization: str = None, pageNumber: int = None, paths: list = None, process: str = None, rule: str = None, seen: bool = None, severities: list = None, signed: bool = None, sorting: str = None, strictMode: bool = None) -> tuple[bool, list]:
 		'''
@@ -1501,8 +1501,8 @@ class Events:
 			muted (bool): A true/false parameter indicating if the event is muted
 			operatingSystems (list): Specifies the operating system of the devices where the events occurred
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			pageNumber (int): An integer used for paging that indicates the required page number
 			paths (list): Specifies the paths of the processes related to the event
 			process (str): Specifies the main process of the event
@@ -1732,8 +1732,8 @@ class Exceptions:
 			exceptionId (int): Specifies the required exception ID
 			exceptionIds (list): Specifies a list of exception ids
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			path (str): Specifies the path of the exception
 			process (str): Specifies the process of the exception
 			rules (list): Specifies a list of rule names
@@ -1822,8 +1822,8 @@ class Exceptions:
 			destination (str): Specifies a destination IP of the exception
 			exceptionIds (list): Specifies a list of exception ids
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			path (str): Specifies the path of the exception
 			process (str): Specifies the process of the exception
 			rules (list): Specifies a list of rule names
@@ -2036,8 +2036,8 @@ class HashSearch:
 		Args:
 			fileHashes (list): Specifies the list of files hashes
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -2380,8 +2380,8 @@ class SystemInventory:
 			loggedUser (str): Specifies the user that was logged when the event occurred
 			operatingSystems (list): Specifies the list of specific operating systems. For example, Windows 7 Pro
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			
 			osFamilies (list): Specifies the list of operating system families: Windows, Windows Server or OS X
 			pageNumber (int): An integer used for paging that indicates the required page number
@@ -2505,8 +2505,8 @@ class SystemInventory:
 			ip (str): IP
 			names (list): List of aggregators names
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			versions (list): List of aggregators versions
 
 		Returns:
@@ -2537,8 +2537,8 @@ class SystemInventory:
         
 		Args:
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -2578,8 +2578,8 @@ class SystemInventory:
 			loggedUser (str): Specifies the user that was logged when the event occurred
 			operatingSystems (list): Specifies the list of specific operating systems. For example, Windows 7 Pro
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			
 			osFamilies (list): Specifies the list of operating system families: Windows, Windows Server or OS X
 			pageNumber (int): An integer used for paging that indicates the required page number
@@ -2672,8 +2672,8 @@ class SystemInventory:
 			ip (str): IP
 			names (list): List of cores names
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			versions (list): List of cores versions
 
 		Returns:
@@ -2726,8 +2726,8 @@ class SystemInventory:
 		Args:
 			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			pageNumber (int): An integer used for paging that indicates the required page number
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False
@@ -2764,8 +2764,8 @@ class SystemInventory:
 			collectors (list): Array of collectors names. To move collectors from one organization to another, for each collector please add the organization name before the collector name (<organization-name>//<collector-name>)
 			forceAssign (bool): Indicates whether to force the assignment even if the organization of the target Collector group is under migration
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			targetCollectorGroup (str): Collector group. To move collectors from one organization to another, please add the organization name before the target collector group (<organization-name>//<collector-group-name>)
 
 		Returns:
@@ -2819,8 +2819,8 @@ class SystemInventory:
 			loggedUser (str): Specifies the user that was logged when the event occurred
 			operatingSystems (list): Specifies the list of specific operating systems. For example, Windows 7 Pro
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			
 			osFamilies (list): Specifies the list of operating system families: Windows, Windows Server or OS X
 			pageNumber (int): An integer used for paging that indicates the required page number
@@ -2947,8 +2947,8 @@ class SystemInventory:
 			loggedUser (str): Specifies the user that was logged when the event occurred
 			operatingSystems (list): Specifies the list of specific operating systems. For example, Windows 7 Pro
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			
 			osFamilies (list): Specifies the list of operating system families: Windows, Windows Server or OS X
 			pageNumber (int): An integer used for paging that indicates the required page number
@@ -3090,6 +3090,30 @@ class SystemInventory:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
+	def update_collector_group_name(self, collectorGroupId: int, groupName: str, ) -> tuple[bool, None]:
+		'''
+		Class SystemInventory
+		Description: This API updates collector group name!.
+        
+		Args:
+			collectorGroupId (int): Collector Group id
+			groupName (str): New group name
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_collector_group_name", locals())
+
+		url = '/management-rest/inventory/update-collector-group-name'
+		url_params = []
+		if collectorGroupId != None:
+			url_params.append(f'collectorGroupId={collectorGroupId}')
+		if groupName != None:
+			url_params.append(f'groupName={groupName}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.insert(url)
+
 class IoT:
 	'''The IoT module enables you to monitor the devices found in IoT scans and create/move IoT Groups.'''
 
@@ -3138,8 +3162,8 @@ class IoT:
 			macAddresses (list): Specifies the list of mac address values
 			models (list): Specifies the list of models values
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			
 			pageNumber (int): An integer used for paging that indicates the required page number
 			showExpired (bool): Specifies whether to include IoT devices which have been disconnected for more than 3 days (sequentially) and are marked as Expired
@@ -3216,8 +3240,8 @@ class IoT:
 		Args:
 			iotDeviceIds (list): Specifies the list of device ids
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -3256,8 +3280,8 @@ class IoT:
 			macAddresses (list): Specifies the list of mac address values
 			models (list): Specifies the list of models values
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			
 			pageNumber (int): An integer used for paging that indicates the required page number
 			showExpired (bool): Specifies whether to include IoT devices which have been disconnected for more than 3 days (sequentially) and are marked as Expired
@@ -3333,8 +3357,8 @@ class IoT:
         
 		Args:
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -3398,8 +3422,8 @@ class IoT:
 			macAddresses (list): Specifies the list of mac address values
 			models (list): Specifies the list of models values
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			
 			pageNumber (int): An integer used for paging that indicates the required page number
 			showExpired (bool): Specifies whether to include IoT devices which have been disconnected for more than 3 days (sequentially) and are marked as Expired
@@ -3510,8 +3534,8 @@ class IPsets:
 		Args:
 			ipSets (list): Specifies the list of IP name to delete
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -3537,8 +3561,8 @@ class IPsets:
 		Args:
 			ip (str): Specifies the IP of the requested sets
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -3563,9 +3587,9 @@ class IPsets:
 		Args:
 			ipGroupsRequest (Object): Check 'ipGroupsRequest' in the API documentation for further information.
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
-				each  Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	each – Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -3906,8 +3930,8 @@ class Playbookspolicies:
         
 		Args:
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -4079,8 +4103,8 @@ class Policies:
         
 		Args:
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -4250,15 +4274,13 @@ class SendableEntities:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
-	def syslog(self, organization: str = None, certificateBlob: str = None, host: str = None, name: str = None, port: int = None, privateKeyFile: str = None, privateKeyPassword: str = None, protocol: str = None, syslogFormat: str = None, syslogRFCFormat: str = None, useClientCertificate: bool = None, useSSL: bool = None) -> tuple[bool, None]:
+	def syslog(self, organization: str = None, certificateBlob: str = None, fazDevId: str = None, host: str = None, name: str = None, port: int = None, privateKeyFile: str = None, privateKeyPassword: str = None, protocol: str = None, syslogFormat: str = None, syslogRFCFormat: str = None, useClientCertificate: bool = None, useSSL: bool = None) -> tuple[bool, None]:
 		'''
 		Class SendableEntities
 		Description: This API creates syslog.
         
 		Args:
-			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				each  Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
 			syslogRequest (Object): Check 'syslogRequest' in the API documentation for further information.
 
 		Returns:
@@ -4276,10 +4298,14 @@ class SendableEntities:
 		syslogRequest = {}
 		if certificateBlob:
 			syslogRequest["certificateBlob"] = f"{certificateBlob}"
+		if fazDevId:
+			syslogRequest["fazDevId"] = f"{fazDevId}"
 		if host:
 			syslogRequest["host"] = f"{host}"
 		if name:
 			syslogRequest["name"] = f"{name}"
+		if organization:
+			syslogRequest["organization"] = f"{organization}"
 		if port != None:
 			syslogRequest["port"] = f"{port}"
 		if privateKeyFile:
@@ -4313,8 +4339,8 @@ class SystemEvents:
 			fromDate (str): Searches for system events that occurred after this date
 			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			pageNumber (int): An integer used for paging that indicates the required page number
 			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on
 			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False
@@ -4856,8 +4882,8 @@ class ThreatHunting:
 			deleteAll (bool): A true/false parameter indicating whether all queries should be deleted. False by default
 			deleteFromCommunity (bool): A true/false parameter indicating if whether to delete a query from the FortiEDR Community also
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			queryIds (list): Specifies the query IDs list
 			queryNames (list): Specifies the query names list
 			scheduled (bool): A true/false parameter indicating whether the query is scheduled
@@ -4898,8 +4924,8 @@ class ThreatHunting:
         
 		Args:
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			tagIds (list): Specifies the tag ID list
 			tagNames (list): Specifies the tag name list
 
@@ -4975,8 +5001,8 @@ class ThreatHunting:
         
 		Args:
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			scheduled (bool): A true/false parameter indicating whether the query is scheduled
 			source (list): Specifies the query source list
 
@@ -5005,8 +5031,8 @@ class ThreatHunting:
         
 		Args:
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -5143,8 +5169,8 @@ class ThreatHunting:
 		Args:
 			markAll (bool): A true/false parameter indicating whether all queries should be marked with the same value as 'state' property. False by default
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 			queryIds (list): Specifies the query ID list
 			queryNames (list): Specifies the query name list
 			source (list): Specifies the query source list
@@ -5186,8 +5212,8 @@ class Users:
         
 		Args:
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				each  Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	each – Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.
 			userRequest (Object): Check 'userRequest' in the API documentation for further information.
 
 		Returns:
@@ -5301,8 +5327,8 @@ class Users:
         
 		Args:
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				All organizations  Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations.
 
 		Returns:
 			bool: Status of the request (True or False). 
@@ -5377,8 +5403,8 @@ class Users:
         
 		Args:
 			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non-shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies:
-				Exact organization name  Specifies the name of a specific organization. The value that you specify here must match exactly.
-				each  Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.
+			•	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly.
+			•	each – Indicates that the operation applies independently to each organization. For example, let's assume that the same user exists in multiple organizations. When each is specified in the organization parameter, then each organization can update this user separately.
 			userRequest (Object): Check 'userRequest' in the API documentation for further information.
 			username (str): Specifies the name of the user
 
@@ -5422,7 +5448,20 @@ class Users:
 debug = None
 ssl_enabled = True
 organization = None
-api_json_params = None
+               
+def ignore_certificate():
+	global ssl_enabled
+	ssl_enabled = False
+	print("[!] - We strongly advise you to enable SSL validations. Use this at your own risk!")
+
+def enable_debug():
+	global debug
+	debug = True
+
+def set_organization(orgname):
+	global organization
+	organization = orgname
+
 
 def validate_params(function_name, local_params):
 	global api_json_params
@@ -5450,19 +5489,7 @@ def validate_params(function_name, local_params):
 		if not isinstance(value, t):
 			print(f"Error on defined params!\nParam '{key}' should be defined as type '{json_params[key]}', not {r}")
 			exit()
-                        
-def ignore_certificate():
-	global ssl_enabled
-	ssl_enabled = False
-	print("[!] - We strongly advise you to enable SSL validations. Use this at your own risk!")
-
-def enable_debug():
-	global debug
-	debug = True
-
-def set_organization(orgname):
-	global organization
-	organization = orgname
+         
 
 def auth( host: str, user: str, passw: str, org: str = None):
 	global debug
