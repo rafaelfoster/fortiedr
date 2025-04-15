@@ -84,7 +84,7 @@ class ApplicationControl:
 
 		applicationControlSaveRequest = {}
 		if applicationControls:
-			applicationControlSaveRequest["applicationControls"] = f"{applicationControls}"
+			applicationControlSaveRequest["applicationControls"] = applicationControls
 		if organization:
 			applicationControlSaveRequest["organization"] = f"{organization}"
 
