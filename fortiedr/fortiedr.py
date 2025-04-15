@@ -6,7 +6,7 @@ from typing import BinaryIO
 from fortiedr.auth import Auth as fedrAuth
 from fortiedr.connector import FortiEDR_API_GW
 
-version = '3.9'
+version = '3.9.2'
 
 fortiedr_connection = None
 
