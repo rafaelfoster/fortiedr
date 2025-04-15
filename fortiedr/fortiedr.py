@@ -139,6 +139,7 @@ class ApplicationControl:
 		url = '/api/application-control/applications'
 
 		applicationControlSaveRequest = {}
+		
 		if applicationControls:
 			applicationControlSaveRequest["applicationControls"] = applicationControls
 		if organization:
