@@ -5140,7 +5140,7 @@ class ThreatHunting:
 		if category:
 			edrRequest["category"] = f"{category}"
 		if devices:
-			edrRequest["devices"] = f"{devices}"
+			edrRequest["devices"] = devices if isinstance(devices, list) else [devices]
 		if filters:
 			edrRequest["filters"] = f"{filters}"
 		if fromTime:
