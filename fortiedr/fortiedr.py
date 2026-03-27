@@ -527,7 +527,7 @@ class Administrator:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
-	def create_upload_content(self, file: BinaryIO) -> tuple[bool, str]:
+	def upload_content_file(self, file: BinaryIO) -> tuple[bool, str]:
 		'''
 		Class Administrator
 		Description: Upload content to the system.
@@ -6592,7 +6592,7 @@ class Admin:
 		url = '/api/admin/admin-tab-indication'
 		return fortiedr_connection.get(url)
 
-	def upload_license(self, confirmInternalLicense: bool = None, licenseBlob: str = None) -> tuple[bool, None]:
+	def update_license(self, confirmInternalLicense: bool = None, licenseBlob: str = None) -> tuple[bool, None]:
 		'''
 		Class Admin
 		Description: Upload license to the system.
@@ -6764,7 +6764,7 @@ class Admin:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def trigger_scan(self, accountId: int = None, applyRecursiveScan: bool = None, executableOnly: bool = None, filePaths: list = None, origin: str = None, scanBy: str = None, scanSelection: list = None) -> tuple[bool, None]:
+	def trigger_av_scan(self, accountId: int = None, applyRecursiveScan: bool = None, executableOnly: bool = None, filePaths: list = None, origin: str = None, scanBy: str = None, scanSelection: list = None) -> tuple[bool, None]:
 		'''
 		Class Admin
 		Description: trigger-scan.
@@ -6797,7 +6797,7 @@ class Admin:
 
 		return fortiedr_connection.send(url, requestBody)
 
-	def default_application_control_state(self, isDefault: bool, accountId: int = None) -> tuple[bool, None]:
+	def set_default_application_control_state(self, isDefault: bool, accountId: int = None) -> tuple[bool, None]:
 		'''
 		Class Admin
 		Description: default-application-control-state.
@@ -7044,7 +7044,7 @@ class Admin:
 
 		return fortiedr_connection.get(url, accountId)
 
-	def session_time_out(self) -> tuple[bool, None]:
+	def get_session_timeout(self) -> tuple[bool, None]:
 		'''
 		Class Admin
 		Description: session-time-out.
@@ -7061,7 +7061,7 @@ class Admin:
 		url = '/api/admin/settings/session-time-out'
 		return fortiedr_connection.get(url)
 
-	def update_session_time_out(self, sessionTimeoutInSeconds: int = None) -> tuple[bool, None]:
+	def update_session_timeout(self, sessionTimeoutInSeconds: int = None) -> tuple[bool, None]:
 		'''
 		Class Admin
 		Description: session-time-out.
@@ -7250,7 +7250,7 @@ class SystemComponents:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def Delete_aggregators(self, aggregatorIds: list = None, aggregators: list = None, freeTextSearch: str = None, ip: str = None, organizationId: int = None, status: str = None, versions: list = None) -> tuple[bool, None]:
+	def delete_aggregators(self, aggregatorIds: list = None, aggregators: list = None, freeTextSearch: str = None, ip: str = None, organizationId: int = None, status: str = None, versions: list = None) -> tuple[bool, None]:
 		'''
 		Class SystemComponents
 		Description: Delete aggregators.
@@ -7374,7 +7374,7 @@ class SystemComponents:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def Delete_cores(self, coreIds: list = None, cores: list = None, deploymentModes: list = None, freeTextSearch: str = None, ip: str = None, organizationId: int = None, status: str = None, versions: list = None) -> tuple[bool, None]:
+	def delete_cores(self, coreIds: list = None, cores: list = None, deploymentModes: list = None, freeTextSearch: str = None, ip: str = None, organizationId: int = None, status: str = None, versions: list = None) -> tuple[bool, None]:
 		'''
 		Class SystemComponents
 		Description: Delete cores.
@@ -7438,7 +7438,7 @@ class SystemComponents:
 
 		return fortiedr_connection.get(url, organizationId)
 
-	def get_repositories(self) -> tuple[bool, list]:
+	def list_repositories(self) -> tuple[bool, list]:
 		'''
 		Class SystemComponents
 		Description: Return repositories.
@@ -7483,7 +7483,7 @@ class SystemComponents:
 
 
 
-class WorkloadsDeploymentRestApiController:
+class WorkloadsDeployment:
 	'''Workloads Deployment Rest Api Controller'''
 	def connect_account(self, accountData: object = None, accountName: str = None, cloudProvider: str = None, organizationId: int = None) -> tuple[bool, None]:
 		'''
@@ -7592,7 +7592,7 @@ class WorkloadsDeploymentRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def install_Agents(self, accountNames: list = None, aggregatorIp: str = None, cloudProviders: list = None, clusterIds: list = None, group: str = None, organizationId: int = None, search: str = None, tag: str = None) -> tuple[bool, None]:
+	def install_agents(self, accountNames: list = None, aggregatorIp: str = None, cloudProviders: list = None, clusterIds: list = None, group: str = None, organizationId: int = None, search: str = None, tag: str = None) -> tuple[bool, None]:
 		'''
 		Class WorkloadsDeploymentRestApiController
 		Description: install Agents.
@@ -7778,7 +7778,7 @@ class WorkloadsDeploymentRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
-	def upgrade_Agents(self, accountNames: list = None, cloudProviders: list = None, clusterIds: list = None, organizationId: int = None, search: str = None, tag: str = None) -> tuple[bool, None]:
+	def upgrade_agents(self, accountNames: list = None, cloudProviders: list = None, clusterIds: list = None, organizationId: int = None, search: str = None, tag: str = None) -> tuple[bool, None]:
 		'''
 		Class WorkloadsDeploymentRestApiController
 		Description: upgrade Agents.
@@ -7812,9 +7812,9 @@ class WorkloadsDeploymentRestApiController:
 
 
 
-class AvScannerFileController:
+class AvScannerFile:
 	'''Av Scanner File Rest Api Controller'''
-	def Stream_AV_Scanner_File(self, version: str) -> tuple[bool, None]:
+	def stream_av_scanner_file(self, version: str) -> tuple[bool, None]:
 		'''
 		Class AvScannerFileController
 		Description: Streams a file from GCS directly to client.
@@ -7922,7 +7922,7 @@ class AvSignatureUpdate:
 
 		return fortiedr_connection.send(url, clonePolicyRequest)
 
-	def Retrieve_the_latest_AV_signature_file_version_by_type(self, organizationId: int) -> tuple[bool, None]:
+	def get_latest_av_signature_file_version_by_type(self, organizationId: int) -> tuple[bool, None]:
 		'''
 		Class AvSignatureUpdate
 		Description: Retrieve the latest AV signature file version by type.
@@ -7976,7 +7976,7 @@ class AvSignatureUpdate:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def policy(self, organization: str, deleteAll: bool = None, freeTextSearch: str = None, idToDelete: list = None, requirePolicyAssociation: bool = None) -> tuple[bool, None]:
+	def delete_policies(self, organization: str, deleteAll: bool = None, freeTextSearch: str = None, idToDelete: list = None, requirePolicyAssociation: bool = None) -> tuple[bool, None]:
 		'''
 		Class AvSignatureUpdate
 		Description: Deletes an av signature policy.
@@ -8010,7 +8010,7 @@ class AvSignatureUpdate:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
-	def state(self, IsDefault: bool = None, description: str = None, enabled: bool = None, extraConfiguration: object = None, groupsIds: list = None, id: int = None, isActiveEnabled: bool = None, isExtendedEnabled: bool = None, isExtremeEnabled: bool = None, isUrlDBEnabled: bool = None, name: str = None, organizationId: int = None, organizationName: str = None, policiesIds: list = None, updateMethod: str = None) -> tuple[bool, list]:
+	def update_policy_state(self, IsDefault: bool = None, description: str = None, enabled: bool = None, extraConfiguration: object = None, groupsIds: list = None, id: int = None, isActiveEnabled: bool = None, isExtendedEnabled: bool = None, isExtremeEnabled: bool = None, isUrlDBEnabled: bool = None, name: str = None, organizationId: int = None, organizationName: str = None, policiesIds: list = None, updateMethod: str = None) -> tuple[bool, list]:
 		'''
 		Class AvSignatureUpdate
 		Description: set policy state.
@@ -8367,7 +8367,7 @@ class CollectorSettings:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def policy(self, organization: str, deleteAll: bool = None, freeTextSearch: str = None, idToDelete: list = None, requirePolicyAssociation: bool = None) -> tuple[bool, None]:
+	def delete_policies(self, organization: str, deleteAll: bool = None, freeTextSearch: str = None, idToDelete: list = None, requirePolicyAssociation: bool = None) -> tuple[bool, None]:
 		'''
 		Class CollectorSettings
 		Description: Deletes a collector settings policy.
@@ -8401,7 +8401,7 @@ class CollectorSettings:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
-	def state(self, IsDefault: bool = None, closeExistingConnections: bool = None, description: str = None, enabled: bool = None, groupsIds: list = None, id: int = None, name: str = None, organizationId: int = None, organizationName: str = None, policiesIds: list = None, timeConfig: list = None, updateMethod: str = None) -> tuple[bool, list]:
+	def update_policy_state(self, IsDefault: bool = None, closeExistingConnections: bool = None, description: str = None, enabled: bool = None, groupsIds: list = None, id: int = None, name: str = None, organizationId: int = None, organizationName: str = None, policiesIds: list = None, timeConfig: list = None, updateMethod: str = None) -> tuple[bool, list]:
 		'''
 		Class CollectorSettings
 		Description: set policy state.
@@ -8512,7 +8512,7 @@ class CollectorSettings:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def get_get_policy(self, id: int, organizationId: int) -> tuple[bool, None]:
+	def get_policy_by_id(self, id: int, organizationId: int) -> tuple[bool, None]:
 		'''
 		Class CollectorSettings
 		Description: get a collector settings policy.
@@ -8576,7 +8576,7 @@ class CollectorSettings:
 
 
 
-class DashboardRestApiController:
+class Dashboard:
 	'''Dashboard Rest Api Controller'''
 	def collectors(self, organization: str, endDate: int = None, key: str = None, os: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
 		'''
@@ -9615,9 +9615,9 @@ class DistributionLists:
 
 
 
-class ExclusionsRestApiController:
+class Exclusions:
 	'''Exclusions Rest Api Controller'''
-	def Save_exclusions(self, exclusions: list = None, exclusionsListId: int = None, organizationId: int = None) -> tuple[bool, list]:
+	def save_exclusions(self, exclusions: list = None, exclusionsListId: int = None, organizationId: int = None) -> tuple[bool, list]:
 		'''
 		Class ExclusionsRestApiController
 		Description: Save security exclusions.
@@ -9643,7 +9643,7 @@ class ExclusionsRestApiController:
 
 		return fortiedr_connection.send(url, request)
 
-	def Create_exclusions_list(self, name: str = None, organizationId: int = None) -> tuple[bool, None]:
+	def create_exclusions_list(self, name: str = None, organizationId: int = None) -> tuple[bool, None]:
 		'''
 		Class ExclusionsRestApiController
 		Description: Creates a new security exclusions list.
@@ -9667,7 +9667,7 @@ class ExclusionsRestApiController:
 
 		return fortiedr_connection.send(url, request)
 
-	def Get_exclusions_lists(self, organizationId: int) -> tuple[bool, list]:
+	def get_exclusions_lists(self, organizationId: int) -> tuple[bool, list]:
 		'''
 		Class ExclusionsRestApiController
 		Description: Returns all security exclusion lists for the given organization.
@@ -9684,7 +9684,7 @@ class ExclusionsRestApiController:
 		url = f'/api/exclusions/lists/{organizationId}'
 		return fortiedr_connection.get(url)
 
-	def Delete_exclusions_list(self, organizationId: int, policyId: int) -> tuple[bool, None]:
+	def delete_exclusions_list(self, organizationId: int, policyId: int) -> tuple[bool, None]:
 		'''
 		Class ExclusionsRestApiController
 		Description: Deletes the security exclusions list for the given policy ID.
@@ -9702,7 +9702,7 @@ class ExclusionsRestApiController:
 		url = f'/api/exclusions/lists/{organizationId}/{policyId}'
 		return fortiedr_connection.delete(url)
 
-	def Delete_exclusions(self, organizationId: int, ruleIds: str) -> tuple[bool, None]:
+	def delete_exclusions(self, organizationId: int, ruleIds: str) -> tuple[bool, None]:
 		'''
 		Class ExclusionsRestApiController
 		Description: Deletes the specified security exclusions by their rule IDs.
@@ -9724,7 +9724,7 @@ class ExclusionsRestApiController:
 
 class Mobile:
 	'''Mobile Exclusions Rest Api Controller'''
-	def Save_exclusions_Mobile(self, exclusionGroupId: int = None, exclusions: list = None, organizationId: int = None) -> tuple[bool, None]:
+	def save_mobile_exclusions(self, exclusionGroupId: int = None, exclusions: list = None, organizationId: int = None) -> tuple[bool, None]:
 		'''
 		Class Mobile
 		Description: Save security exclusions (mobile).
@@ -9750,7 +9750,7 @@ class Mobile:
 
 		return fortiedr_connection.send(url, request)
 
-	def Create_exclusions_list_Mobile(self, name: str = None, organizationId: int = None) -> tuple[bool, None]:
+	def create_mobile_exclusions_list(self, name: str = None, organizationId: int = None) -> tuple[bool, None]:
 		'''
 		Class Mobile
 		Description: Creates a new security exclusions list (mobile).
@@ -9774,7 +9774,7 @@ class Mobile:
 
 		return fortiedr_connection.send(url, request)
 
-	def Get_exclusions_lists_Mobile(self, organizationId: int) -> tuple[bool, None]:
+	def get_mobile_exclusions_lists(self, organizationId: int) -> tuple[bool, None]:
 		'''
 		Class Mobile
 		Description: Returns all security exclusion lists for the given organization (mobile).
@@ -9791,7 +9791,7 @@ class Mobile:
 		url = f'/api/exclusions/mobile/lists/{organizationId}'
 		return fortiedr_connection.get(url)
 
-	def Delete_exclusions_list_Mobile(self, organizationId: int, policyId: int) -> tuple[bool, None]:
+	def delete_mobile_exclusions_list(self, organizationId: int, policyId: int) -> tuple[bool, None]:
 		'''
 		Class Mobile
 		Description: Deletes the security exclusions list for the given policy ID (mobile).
@@ -9809,7 +9809,7 @@ class Mobile:
 		url = f'/api/exclusions/mobile/lists/{organizationId}/{policyId}'
 		return fortiedr_connection.delete(url)
 
-	def incidents(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, tags: list = None, tagsIds: list = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+	def list_mobile_incidents(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, tags: list = None, tagsIds: list = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
 		'''
 		Class Mobile
 		Description: Get incidents.
@@ -9957,7 +9957,7 @@ class Mobile:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
-	def update_modification_status(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None, userId: int = None, userName: str = None) -> tuple[bool, None]:
+	def assign_mobile_user(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None, userId: int = None, userName: str = None) -> tuple[bool, None]:
 		'''
 		Class Mobile
 		Description: update modification status.
@@ -10148,7 +10148,7 @@ class Mobile:
 		url = f'/api/incidents/mobile/incident/{incidentId}'
 		return fortiedr_connection.get(url)
 
-	def create_update_modification_status(self, incidentId: int, modificationStatus: str) -> tuple[bool, None]:
+	def update_mobile_modification_status(self, incidentId: int, modificationStatus: str) -> tuple[bool, None]:
 		'''
 		Class Mobile
 		Description: update modification status.
@@ -10195,7 +10195,7 @@ class Mobile:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def events(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+	def list_mobile_incident_events(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
 		'''
 		Class Mobile
 		Description: Get events.
@@ -10259,7 +10259,7 @@ class Mobile:
 
 
 
-class FeaturesRestApiController:
+class Features:
 	'''Features Rest Api Controller'''
 	def list_features(self) -> tuple[bool, list]:
 		'''
@@ -10306,7 +10306,7 @@ class FeaturesRestApiController:
 
 		return fortiedr_connection.send(url, item)
 
-	def features_state(self, organizationId: int, featureName: str = None) -> tuple[bool, None]:
+	def get_features_state(self, organizationId: int, featureName: str = None) -> tuple[bool, None]:
 		'''
 		Class FeaturesRestApiController
 		Description: This API retrieve feature state by account..
@@ -10330,7 +10330,7 @@ class FeaturesRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def features_url(self) -> tuple[bool, None]:
+	def get_features_url(self) -> tuple[bool, None]:
 		'''
 		Class FeaturesRestApiController
 		Description: This API retrieve urls associated with feature..
@@ -10547,7 +10547,7 @@ class FeaturesRestApiController:
 
 
 
-class ForensicsRestApiController:
+class ForensicsEvents:
 	'''Forensics Rest Api Controller'''
 	def get_events(self, advancedFilters: str = None, endDate: int = None, eventIds: list = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, offset: int = None, organizationId: int = None, pageSize: int = None, selectedEventIds: list = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
 		'''
@@ -10603,7 +10603,7 @@ class ForensicsRestApiController:
 
 class Incidents:
 	'''Incidents Rest Api Controller'''
-	def incidents(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, tags: list = None, tagsIds: list = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+	def list_incidents(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, tags: list = None, tagsIds: list = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
 		'''
 		Class Incidents
 		Description: Get incidents.
@@ -10908,7 +10908,7 @@ class Incidents:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def create_incidents(self, advancedFilters: str = None, allSelectedEventsParentIds: list = None, endDate: int = None, eventIds: list = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, tags: list = None, tagsIds: list = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+	def generate_report(self, advancedFilters: str = None, allSelectedEventsParentIds: list = None, endDate: int = None, eventIds: list = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, tags: list = None, tagsIds: list = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
 		'''
 		Class Incidents
 		Description: exports incidents.
@@ -11058,7 +11058,7 @@ class Incidents:
 
 		return fortiedr_connection.get(url, organizationId)
 
-	def tag(self, tagName: str, organizationId: int = None, tagId: int = None) -> tuple[bool, None]:
+	def create_tag(self, tagName: str, organizationId: int = None, tagId: int = None) -> tuple[bool, None]:
 		'''
 		Class Incidents
 		Description: Create incidents tag.
@@ -11110,7 +11110,7 @@ class Incidents:
 
 		return fortiedr_connection.insert(url, request)
 
-	def tags(self, tagId: int) -> tuple[bool, None]:
+	def delete_tags(self, tagId: int) -> tuple[bool, None]:
 		'''
 		Class Incidents
 		Description: Deletes incident tags.
@@ -11168,7 +11168,7 @@ class Incidents:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def events(self, incidentId: int, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+	def list_incident_events(self, incidentId: int, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
 		'''
 		Class Incidents
 		Description: Get events.
@@ -11258,7 +11258,7 @@ class Incidents:
 		url = f'/api/incidents/{incidentId}/processes'
 		return fortiedr_connection.get(url)
 
-	def get_get_tags(self, incidentId: int) -> tuple[bool, list]:
+	def get_incident_tags(self, incidentId: int) -> tuple[bool, list]:
 		'''
 		Class Incidents
 		Description: Return incident's tags.
@@ -11275,7 +11275,7 @@ class Incidents:
 		url = f'/api/incidents/{incidentId}/tags'
 		return fortiedr_connection.get(url)
 
-	def create_get_tags(self, incidentId: int, tagsIds: list) -> tuple[bool, None]:
+	def add_incident_tags(self, incidentId: int, tagsIds: list) -> tuple[bool, None]:
 		'''
 		Class Incidents
 		Description: Return incident's tags.
@@ -11300,9 +11300,9 @@ class Incidents:
 
 
 
-class CollectorInventoryRestApiController:
+class CollectorInventory:
 	'''Collector Inventory Rest Api Controller'''
-	def collectors(self, collectorGroups: list = None, collectorIds: list = None, collectorType: str = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+	def delete_collector_groups(self, collectorGroups: list = None, collectorIds: list = None, collectorType: str = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: Delete collectors.
@@ -11377,7 +11377,7 @@ class CollectorInventoryRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
-	def get_collectors_notification_info(self, organizationId: int) -> tuple[bool, None]:
+	def get_advanced_search_info(self, organizationId: int) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: get collectors notification info.
@@ -11398,7 +11398,7 @@ class CollectorInventoryRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def get_collectors(self, collectorGroups: list = None, collectorIds: list = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, int]:
+	def count_collectors(self, collectorGroups: list = None, collectorIds: list = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, int]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: Return collectors.
@@ -11524,7 +11524,7 @@ class CollectorInventoryRestApiController:
 
 		return fortiedr_connection.insert(url, request)
 
-	def create_group(self, name: str = None, organizationId: int = None) -> tuple[bool, None]:
+	def create_collector_group(self, name: str = None, organizationId: int = None) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: Create a Collector group.
@@ -11660,7 +11660,7 @@ class CollectorInventoryRestApiController:
 
 		return fortiedr_connection.send(url, request)
 
-	def get_groups(self, organization: str, collectorGroups: list = None, collectorType: str = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, offset: int = None, organizationId: int = None, os: list = None, osFamily: list = None, pageSize: int = None, showExpired: bool = None, sorting: str = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+	def list_collector_groups(self, organization: str, collectorGroups: list = None, collectorType: str = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, offset: int = None, organizationId: int = None, os: list = None, osFamily: list = None, pageSize: int = None, showExpired: bool = None, sorting: str = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: Return collector groups.
@@ -11743,7 +11743,7 @@ class CollectorInventoryRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def delete_collectors(self, collectorType: str = None, groupIds: list = None, organizationId: int = None) -> tuple[bool, None]:
+	def delete_collector_groups(self, collectorType: str = None, groupIds: list = None, organizationId: int = None) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: Delete collector groups.
@@ -11795,7 +11795,7 @@ class CollectorInventoryRestApiController:
 
 		return fortiedr_connection.send(url, request)
 
-	def Isolate_collectors(self, applyAllGroups: bool = None, collectorGroups: list = None, collectorIds: list = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+	def isolate_collectors(self, applyAllGroups: bool = None, collectorGroups: list = None, collectorIds: list = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: Isolate collectors.
@@ -11847,7 +11847,7 @@ class CollectorInventoryRestApiController:
 
 		return fortiedr_connection.insert(url, request)
 
-	def get_get_collectors(self, organization: str, collectorType: str = None, devices: list = None, freeTextSearch: str = None, groupId: int = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, offset: int = None, organizationId: int = None, os: list = None, osFamily: list = None, pageSize: int = None, showExpired: bool = None, sorting: str = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+	def list_collectors(self, organization: str, collectorType: str = None, devices: list = None, freeTextSearch: str = None, groupId: int = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, offset: int = None, organizationId: int = None, os: list = None, osFamily: list = None, pageSize: int = None, showExpired: bool = None, sorting: str = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: Return collectors.
@@ -11925,7 +11925,7 @@ class CollectorInventoryRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def get_collectors_inventory_collectors_move_collector_info(self, collectorIds: list = None, groupIds: list = None, organizationId: int = None) -> tuple[bool, None]:
+	def get_move_collector_info(self, collectorIds: list = None, groupIds: list = None, organizationId: int = None) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: Return collectors.
@@ -11954,7 +11954,7 @@ class CollectorInventoryRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def get_get_collectors_notification_info(self, organizationId: int) -> tuple[bool, None]:
+	def get_notification_info(self, organizationId: int) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: get collectors notification info.
@@ -11975,7 +11975,7 @@ class CollectorInventoryRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def Collectors_Search_options_auto_complete(self, accountId: int = None, allAccounts: bool = None, field: str = None, search: str = None) -> tuple[bool, list]:
+	def search_options_auto_complete(self, accountId: int = None, allAccounts: bool = None, field: str = None, search: str = None) -> tuple[bool, list]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: Collectors Search options auto complete.
@@ -12005,7 +12005,7 @@ class CollectorInventoryRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def State(self, applyAllGroups: bool = None, collectorGroups: list = None, collectorIds: list = None, collectorType: str = None, devices: list = None, enabled: bool = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+	def update_collectors_state(self, applyAllGroups: bool = None, collectorGroups: list = None, collectorIds: list = None, collectorType: str = None, devices: list = None, enabled: bool = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: Update Collectors state.
@@ -12061,7 +12061,7 @@ class CollectorInventoryRestApiController:
 
 		return fortiedr_connection.insert(url, request)
 
-	def Uninstall(self, applyAllGroups: bool = None, collectorGroups: list = None, collectorIds: list = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+	def uninstall_collectors(self, applyAllGroups: bool = None, collectorGroups: list = None, collectorIds: list = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: Uninstall collectors.
@@ -12113,7 +12113,7 @@ class CollectorInventoryRestApiController:
 
 		return fortiedr_connection.send(url, request)
 
-	def Unisolate_collectors(self, applyAllGroups: bool = None, collectorGroups: list = None, collectorIds: list = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+	def unisolate_collectors(self, applyAllGroups: bool = None, collectorGroups: list = None, collectorIds: list = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: Unisolate collectors.
@@ -12165,7 +12165,7 @@ class CollectorInventoryRestApiController:
 
 		return fortiedr_connection.insert(url, request)
 
-	def unmanaged_devices(self, deviceIds: list = None, freeTextSearch: str = None, organizationId: int = None) -> tuple[bool, None]:
+	def delete_unmanaged_devices(self, deviceIds: list = None, freeTextSearch: str = None, organizationId: int = None) -> tuple[bool, None]:
 		'''
 		Class CollectorInventoryRestApiController
 		Description: unmanaged devices.
@@ -12195,7 +12195,7 @@ class CollectorInventoryRestApiController:
 
 
 
-class MobileInventoryRestApiController:
+class MobileInventory:
 	'''Mobile Inventory Rest Api Controller'''
 	def create_group(self, name: str = None, organizationId: int = None) -> tuple[bool, None]:
 		'''
@@ -12221,7 +12221,7 @@ class MobileInventoryRestApiController:
 
 		return fortiedr_connection.send(url, request)
 
-	def Delete(self, allDevicesUnderGroupIds: list = None, deleteAll: bool = None, deviceIds: list = None, freeTextSearch: str = None, groupIds: list = None, organizationId: int = None, status: str = None) -> tuple[bool, None]:
+	def delete_devices(self, allDevicesUnderGroupIds: list = None, deleteAll: bool = None, deviceIds: list = None, freeTextSearch: str = None, groupIds: list = None, organizationId: int = None, status: str = None) -> tuple[bool, None]:
 		'''
 		Class MobileInventoryRestApiController
 		Description: Delete.
@@ -12288,7 +12288,7 @@ class MobileInventoryRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def get_groups(self, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, status: str = None) -> tuple[bool, None]:
+	def list_groups(self, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, status: str = None) -> tuple[bool, None]:
 		'''
 		Class MobileInventoryRestApiController
 		Description: Return mobile groups.
@@ -12324,7 +12324,7 @@ class MobileInventoryRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def get_devices(self, freeTextSearch: str = None, groupId: int = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, status: str = None) -> tuple[bool, None]:
+	def list_devices(self, freeTextSearch: str = None, groupId: int = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, status: str = None) -> tuple[bool, None]:
 		'''
 		Class MobileInventoryRestApiController
 		Description: Return mobile devices.
@@ -12393,9 +12393,9 @@ class MobileInventoryRestApiController:
 
 
 
-class WorkloadsListRestApiController:
+class WorkloadsList:
 	'''Workloads List Rest Api Controller'''
-	def workloads_filters(self, organizationId: int) -> tuple[bool, None]:
+	def get_workloads_filters(self, organizationId: int) -> tuple[bool, None]:
 		'''
 		Class WorkloadsListRestApiController
 		Description: workloads filters.
@@ -12413,7 +12413,7 @@ class WorkloadsListRestApiController:
 
 		return fortiedr_connection.get(url, organizationId)
 
-	def workloads_list(self, accounts: list = None, cloudProviders: list = None, clusters: list = None, forceUpdate: bool = None, maxResult: int = None, namespaces: list = None, organizationId: int = None, page: int = None, search: str = None) -> tuple[bool, None]:
+	def list_workloads(self, accounts: list = None, cloudProviders: list = None, clusters: list = None, forceUpdate: bool = None, maxResult: int = None, namespaces: list = None, organizationId: int = None, page: int = None, search: str = None) -> tuple[bool, None]:
 		'''
 		Class WorkloadsListRestApiController
 		Description: workloads list.
@@ -12466,7 +12466,7 @@ class WorkloadsListRestApiController:
 
 class Notifications:
 	'''Notification Controller'''
-	def handle(self, createdBy: str = None, createdTime: int = None, id: str = None, status: str = None, title: str = None, type: str = None) -> tuple[bool, None]:
+	def handle_notification(self, createdBy: str = None, createdTime: int = None, id: str = None, status: str = None, title: str = None, type: str = None) -> tuple[bool, None]:
 		'''
 		Class Notifications
 		Description: This API handles notifications created by the notification service.
@@ -12498,7 +12498,7 @@ class Notifications:
 
 		return fortiedr_connection.send(url, notification)
 
-	def notifications(self, isSeen: bool, userId: str) -> tuple[bool, str]:
+	def list_notifications(self, isSeen: bool, userId: str) -> tuple[bool, str]:
 		'''
 		Class Notifications
 		Description: This API get notifications from notification service.
@@ -12522,7 +12522,7 @@ class Notifications:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def create_notifications(self, message: object = None, topic: str = None) -> tuple[bool, None]:
+	def push_notification(self, message: object = None, topic: str = None) -> tuple[bool, None]:
 		'''
 		Class Notifications
 		Description: health method to emulate of action-->manager-->notification service-->db-->manager-->ui.
@@ -12548,9 +12548,9 @@ class Notifications:
 
 
 
-class PoliciesRestApiController:
+class PoliciesSearch:
 	'''Policies Rest Api Controller'''
-	def Search_options_auto_complete(self, accountId: int = None, allAccounts: bool = None, field: str = None, search: str = None) -> tuple[bool, list]:
+	def search_options_auto_complete(self, accountId: int = None, allAccounts: bool = None, field: str = None, search: str = None) -> tuple[bool, list]:
 		'''
 		Class PoliciesRestApiController
 		Description: Search options auto complete.
@@ -12584,7 +12584,7 @@ class PoliciesRestApiController:
 
 class Reputation:
 	'''Reputation Rest Api Controller'''
-	def regions(self, organizationId: int) -> tuple[bool, None]:
+	def get_regions(self, organizationId: int) -> tuple[bool, None]:
 		'''
 		Class Reputation
 		Description: retrieves reputation region entity.
@@ -12628,7 +12628,7 @@ class Reputation:
 
 		return fortiedr_connection.insert(url, regionIds)
 
-	def reputationdb(self, organizationId: int) -> tuple[bool, None]:
+	def get_reputation_db(self, organizationId: int) -> tuple[bool, None]:
 		'''
 		Class Reputation
 		Description: retrieves reputation db entity.
@@ -12651,7 +12651,7 @@ class Reputation:
 
 
 
-class SecureBrowserServiceRestApiController:
+class SecureBrowserService:
 	'''Secure Browser Service Rest Api Controller'''
 	def delete_policies(self, organization: str, deleteAll: bool = None, freeTextSearch: str = None, idToDelete: list = None, requirePolicyAssociation: bool = None) -> tuple[bool, None]:
 		'''
@@ -12687,7 +12687,7 @@ class SecureBrowserServiceRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
-	def policy(self, mode: bool, name: str, organization: str, forceGroupsAssign: bool = None, groupsIds: list = None, id: int = None, updatedBy: str = None) -> tuple[bool, None]:
+	def create_policy(self, mode: bool, name: str, organization: str, forceGroupsAssign: bool = None, groupsIds: list = None, id: int = None, updatedBy: str = None) -> tuple[bool, None]:
 		'''
 		Class SecureBrowserServiceRestApiController
 		Description: Create a secure browser policy.
@@ -12757,7 +12757,7 @@ class SecureBrowserServiceRestApiController:
 
 
 
-class SecureBrowserRestApiController:
+class SecureBrowser:
 	'''Secure Browser Rest Api Controller'''
 	def clone_policy(self, name: str, organizationId: int, sourcePolicyId: int) -> tuple[bool, None]:
 		'''
@@ -12818,7 +12818,7 @@ class SecureBrowserRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
-	def create_domain_groups(self, description: str = None, domains: list = None, id: int = None, name: str = None, organizationId: int = None, updatedBy: str = None) -> tuple[bool, None]:
+	def create_domain_group(self, description: str = None, domains: list = None, id: int = None, name: str = None, organizationId: int = None, updatedBy: str = None) -> tuple[bool, None]:
 		'''
 		Class SecureBrowserRestApiController
 		Description: create domain groups.
@@ -12926,7 +12926,7 @@ class SecureBrowserRestApiController:
 
 		return fortiedr_connection.insert(url, request)
 
-	def get_events(self, advancedFilters: str = None, endDate: int = None, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, None]:
+	def list_events(self, advancedFilters: str = None, endDate: int = None, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, None]:
 		'''
 		Class SecureBrowserRestApiController
 		Description: Return all secure browser events.
@@ -13023,7 +13023,7 @@ class SecureBrowserRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
-	def get_policies(self, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None) -> tuple[bool, None]:
+	def list_policies(self, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None) -> tuple[bool, None]:
 		'''
 		Class SecureBrowserRestApiController
 		Description: Return all secure browser policies.
@@ -13133,7 +13133,7 @@ class SecureBrowserRestApiController:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.delete(url)
 
-	def assigned_agent_groups(self, agentGroupsIds: list = None, excludePolicyId: int = None) -> tuple[bool, None]:
+	def get_assigned_agent_groups(self, agentGroupsIds: list = None, excludePolicyId: int = None) -> tuple[bool, None]:
 		'''
 		Class SecureBrowserRestApiController
 		Description: Return true if policies has assigned collector groups.
@@ -13196,7 +13196,7 @@ class SecureBrowserRestApiController:
 
 		return fortiedr_connection.insert(url, request)
 
-	def get_rules(self, id: int, organizationId: int = None) -> tuple[bool, None]:
+	def list_rules(self, id: int, organizationId: int = None) -> tuple[bool, None]:
 		'''
 		Class SecureBrowserRestApiController
 		Description: Return all secure browser rules for specific policy..
@@ -13352,7 +13352,7 @@ class SecureBrowserRestApiController:
 
 
 
-class ExportSettingsSMTP:
+class SMTPSettings:
 	'''Smtp Rest Controller'''
 	def get_smtp_settings(self, organizationId: int) -> tuple[bool, None]:
 		'''
