@@ -499,6 +499,53 @@ class Administrator:
 
 		return fortiedr_connection.insert(url, license)
 
+
+	def delete_collector_installer_version(self, osFamily: str, collectorVersion: str = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class Administrator
+		Description: Delete collector installer version.
+        
+		Args:
+			collectorVersion (str): Specifies the collector version
+			organizationId (int): Specifies the organization id
+			osFamily (str): OS
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_collector_installer_version", locals())
+
+		url = '/management-rest/admin/delete-collector-installer-version'
+		url_params = []
+		if collectorVersion != None:
+			url_params.append(f'collectorVersion={collectorVersion}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if osFamily != None:
+			url_params.append(f'osFamily={osFamily}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def create_upload_content(self, file: BinaryIO) -> tuple[bool, str]:
+		'''
+		Class Administrator
+		Description: Upload content to the system.
+        
+		Args:
+			file (BinaryIO): file
+
+		Returns:
+			bool: Status of the request (True or False). 
+			str
+		'''
+		validate_params("create_upload_content", locals())
+
+		url = '/management-rest/admin/upload-content'
+		if file:
+			file = {'file': file}
+
+		return fortiedr_connection.upload(url, file)
 class Audit:
 	'''The Audit module enables you to retrieve system audit based on given dates'''
 
@@ -3115,6 +3162,114 @@ class SystemInventory:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
+
+	def moveCollectorsToAnotherAggregator(self, address: str = None, cloudAccounts: list = None, cloudProviders: list = None, clusters: list = None, collectorGroups: list = None, collectorGroupsIds: list = None, collectorType: str = None, destinationAccountName: str = None, devices: list = None, devicesIds: list = None, firstSeen: str = None, hasCrashDumps: bool = None, ips: list = None, itemsPerPage: int = None, lastSeenEnd: str = None, lastSeenStart: str = None, loggedUser: str = None, operatingSystems: list = None, organization: str = None, osFamilies: list = None, pageNumber: int = None, showExpired: bool = None, sorting: str = None, states: list = None, strictMode: bool = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class SystemInventory
+		Description: This API call starts collectors transfer to another aggregator. Use the input parameters to filter the list.
+        
+		Args:
+			address (str): Specifies the address of the destination aggregator
+			cloudAccounts (list): Specifies the list cloud account names
+			cloudProviders (list): Specifies the list of cloud providers: AWS, Azure, GCP
+			clusters (list): Specifies the list of cluster
+			collectorGroups (list): Specifies the list of collector group names and retrieves collectors under the given groups
+			collectorGroupsIds (list): Specifies the list of collector group Ids and retrieves collectors under the given groups
+			collectorType (str): Specifies the group types of the collectors. Types: All, Collector, Workloads. All by default
+			destinationAccountName (str): Specifies the name of the destination account
+			devices (list): Specifies the list of device names
+			devicesIds (list): Specifies the list of device ids
+			firstSeen (str): Retrieves collectors that were first seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss
+			hasCrashDumps (bool): Retrieves collectors that have crash dumps
+			ips (list): Specifies the list of IP values
+			itemsPerPage (int): An integer used for paging that indicates the number of collectors to retrieve forthe current page. The default is 100. The maximum value is 1,000
+			lastSeenEnd (str): Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss
+			lastSeenStart (str): Retrieves collectors that were last seen after the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss
+			loggedUser (str): Specifies the user that was logged when the event occurred
+			operatingSystems (list): Specifies the list of specific operating systems. For example, Windows 7 Pro
+			organization (str): Specifies the organization. The value that you specify for this parameter indicates how the operation applies to an organization(s). Some parts of the Fortinet Endpoint Protection and Response Platform system have separate, non shared data that is organization-specific. Other parts of the system have data that is shared by all organizations. The value that you specify for the organization parameter, as described below, determines to which organization(s) an operation applies: •	Exact organization name – Specifies the name of a specific organization. The value that you specify here must match exactly. •	All organizations – Indicates that the operation applies to all organizations. In this case, the same data is shared by all organizations. 
+			osFamilies (list): Specifies the list of operating system families: Windows, Windows Server or OS X
+			pageNumber (int): An integer used for paging that indicates the required page number
+			showExpired (bool): Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired
+			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on
+			states (list): Specifies the list of collector states: Running, Disconnected, Disabled, Degraded,  Pending Reboot, Isolated, Expired, Migrated or Pending Migration
+			strictMode (bool): A true/false parameter indicating whether to perform strict matching on the search parameters. The default is False
+			versions (list): Specifies the list of collector versions
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("moveCollectorsToAnotherAggregator", locals())
+
+		url = '/management-rest/inventory/moveCollectorsToAnotherAggregator'
+		url_params = []
+		if address != None:
+			url_params.append(f'address={address}')
+		if cloudAccounts != None:
+			cloudAccounts = ",".join(cloudAccounts) if isinstance(cloudAccounts, list) else cloudAccounts
+			url_params.append(f'cloudAccounts={cloudAccounts}')
+		if cloudProviders != None:
+			cloudProviders = ",".join(cloudProviders) if isinstance(cloudProviders, list) else cloudProviders
+			url_params.append(f'cloudProviders={cloudProviders}')
+		if clusters != None:
+			clusters = ",".join(clusters) if isinstance(clusters, list) else clusters
+			url_params.append(f'clusters={clusters}')
+		if collectorGroups != None:
+			collectorGroups = ",".join(collectorGroups) if isinstance(collectorGroups, list) else collectorGroups
+			url_params.append(f'collectorGroups={collectorGroups}')
+		if collectorGroupsIds != None:
+			collectorGroupsIds = ",".join(map(str, collectorGroupsIds)) if isinstance(collectorGroupsIds, list) else collectorGroupsIds
+			url_params.append(f'collectorGroupsIds={collectorGroupsIds}')
+		if collectorType != None:
+			url_params.append(f'collectorType={collectorType}')
+		if destinationAccountName != None:
+			url_params.append(f'destinationAccountName={destinationAccountName}')
+		if devices != None:
+			devices = ",".join(devices) if isinstance(devices, list) else devices
+			url_params.append(f'devices={devices}')
+		if devicesIds != None:
+			devicesIds = ",".join(map(str, devicesIds)) if isinstance(devicesIds, list) else devicesIds
+			url_params.append(f'devicesIds={devicesIds}')
+		if firstSeen != None:
+			url_params.append(f'firstSeen={firstSeen}')
+		if hasCrashDumps != None:
+			url_params.append(f'hasCrashDumps={hasCrashDumps}')
+		if ips != None:
+			ips = ",".join(ips) if isinstance(ips, list) else ips
+			url_params.append(f'ips={ips}')
+		if itemsPerPage != None:
+			url_params.append(f'itemsPerPage={itemsPerPage}')
+		if lastSeenEnd != None:
+			url_params.append(f'lastSeenEnd={lastSeenEnd}')
+		if lastSeenStart != None:
+			url_params.append(f'lastSeenStart={lastSeenStart}')
+		if loggedUser != None:
+			url_params.append(f'loggedUser={loggedUser}')
+		if operatingSystems != None:
+			operatingSystems = ",".join(operatingSystems) if isinstance(operatingSystems, list) else operatingSystems
+			url_params.append(f'operatingSystems={operatingSystems}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if osFamilies != None:
+			osFamilies = ",".join(osFamilies) if isinstance(osFamilies, list) else osFamilies
+			url_params.append(f'osFamilies={osFamilies}')
+		if pageNumber != None:
+			url_params.append(f'pageNumber={pageNumber}')
+		if showExpired != None:
+			url_params.append(f'showExpired={showExpired}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if states != None:
+			states = ",".join(states) if isinstance(states, list) else states
+			url_params.append(f'states={states}')
+		if strictMode != None:
+			url_params.append(f'strictMode={strictMode}')
+		if versions != None:
+			versions = ",".join(versions) if isinstance(versions, list) else versions
+			url_params.append(f'versions={versions}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.send(url)
 class IoT:
 	'''The IoT module enables you to monitor the devices found in IoT scans and create/move IoT Groups.'''
 
@@ -3619,7 +3774,7 @@ class IPsets:
 class Organizations:
 	'''Organizations API'''
 
-	def create_organization(self, eXtendedDetection: bool = None, edr: bool = None, edrAddOnsAllocated: int = None, edrBackupEnabled: bool = None, edrEnabled: bool = None, edrNumberOfShards: int = None, edrStorageAllocatedInMb: int = None, expirationDate: str = None, forensics: bool = None, iotAllocated: int = None, name: str = None, password: str = None, passwordConfirmation: str = None, requestPolicyEngineLibUpdates: bool = None, serialNumber: str = None, serversAllocated: int = None, vulnerabilityAndIoT: bool = None, workstationsAllocated: int = None) -> tuple[bool, None]:
+	def create_organization(self, eXtendedDetection: bool = None, edr: bool = None, edrAddOnsAllocated: int = None, edrBackupEnabled: bool = None, edrEnabled: bool = None, edrNumberOfShards: int = None, edrStorageAllocatedInMb: int = None, expirationDate: str = None, forensics: bool = None, iotAllocated: int = None, name: str = None, password: str = None, passwordConfirmation: str = None, requestPolicyEngineLibUpdates: bool = None, serialNumber: str = None, serversAllocated: int = None, vulnerabilityAndIoT: bool = None, workstationsAllocated: int = None, endpointsAllocated: int = None, mobileEnabled: bool = None, secureBrowserEnabled: bool = None) -> tuple[bool, None]:
 		'''
 		Class Organizations
 		Description: This API creates organization in the system (only for Admin role).
@@ -3672,6 +3827,13 @@ class Organizations:
 			createAccountRequest["vulnerabilityAndIoT"] = f"{vulnerabilityAndIoT}"
 		if workstationsAllocated != None:
 			createAccountRequest["workstationsAllocated"] = f"{workstationsAllocated}"
+		if endpointsAllocated != None:
+			createAccountRequest["endpointsAllocated"] = f"{endpointsAllocated}"
+		if mobileEnabled:
+			createAccountRequest["mobileEnabled"] = f"{mobileEnabled}"
+		if secureBrowserEnabled:
+			createAccountRequest["secureBrowserEnabled"] = f"{secureBrowserEnabled}"
+
 
 		return fortiedr_connection.send(url, createAccountRequest)
 
@@ -3863,6 +4025,23 @@ class Organizations:
 
 		return fortiedr_connection.insert(url, accountRequest)
 
+
+	def get_available_license_count(self) -> tuple[bool, list]:
+		'''
+		Class Organizations
+		Description: This API returns number of remained licenses for all organizations.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_available_license_count", locals())
+
+		url = '/management-rest/organizations/get-available-license-count'
+		return fortiedr_connection.get(url)
 class Playbookspolicies:
 	'''Playbooks-policies API'''
 
@@ -4378,6 +4557,115 @@ class SystemEvents:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.get(url)
 
+
+	def get_system_events(self, freeTextSearch: str = None, maxResults: int = None, multipleSearchJSON: str = None, selectedEvents: list = None, start: int = None, viewFilterName: str = None) -> tuple[bool, None]:
+		'''
+		Class SystemEvents
+		Description: get-system-events.
+        
+		Args:
+			freeTextSearch (str): Free text search across audit records
+			maxResults (int): Maximum number of results per page
+			multipleSearchJSON (str): Advanced filtering in JSON string format
+			selectedEvents (list): Array of specific event IDs to filter
+			start (int): Start index for pagination
+			viewFilterName (str): Name of the saved view filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_system_events", locals())
+
+		url = '/api/admin/systemEvents'
+		url_params = []
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if maxResults != None:
+			url_params.append(f'maxResults={maxResults}')
+		if multipleSearchJSON != None:
+			url_params.append(f'multipleSearchJSON={multipleSearchJSON}')
+		if selectedEvents != None:
+			selectedEvents = ",".join(map(str, selectedEvents)) if isinstance(selectedEvents, list) else selectedEvents
+			url_params.append(f'selectedEvents={selectedEvents}')
+		if start != None:
+			url_params.append(f'start={start}')
+		if viewFilterName != None:
+			url_params.append(f'viewFilterName={viewFilterName}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def system_events_delete_system_events(self, itemIds: list, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class SystemEvents
+		Description: Deletes the given system events.
+        
+		Args:
+			itemIds (list): itemIds
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("system_events_delete_system_events", locals())
+
+		url = '/api/admin/systemEvents'
+		url_params = []
+		if itemIds != None:
+			itemIds = ",".join(map(str, itemIds)) if isinstance(itemIds, list) else itemIds
+			url_params.append(f'itemIds={itemIds}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def generate_report_system_events(self, multipleSearchJSON: str = None, organizationId: int = None, selectedEvents: list = None, sorting: object = None, viewFilterName: str = None) -> tuple[bool, None]:
+		'''
+		Class SystemEvents
+		Description: Exports the given system events.
+        
+		Args:
+			systemEventsExportRequest (Object): Check 'systemEventsExportRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("generate_report_system_events", locals())
+
+		url = '/api/admin/systemEvents/generate-report'
+
+		systemEventsExportRequest = {}
+		if multipleSearchJSON:
+			systemEventsExportRequest["multipleSearchJSON"] = f"{multipleSearchJSON}"
+		if organizationId != None:
+			systemEventsExportRequest["organizationId"] = f"{organizationId}"
+		if selectedEvents != None:
+			systemEventsExportRequest["selectedEvents"] = selectedEvents
+		if sorting != None:
+			systemEventsExportRequest["sorting"] = sorting
+		if viewFilterName:
+			systemEventsExportRequest["viewFilterName"] = f"{viewFilterName}"
+
+		return fortiedr_connection.send(url, systemEventsExportRequest)
+
+	def get_system_events_filter_options(self) -> tuple[bool, None]:
+		'''
+		Class SystemEvents
+		Description: Retrieve available system event filter options like component types.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_system_events_filter_options", locals())
+
+		url = '/api/admin/systemEvents/get-system-events-filter-options'
+		return fortiedr_connection.get(url)
 class ThreatHuntingExclusions:
 	'''API to create Threat Hunting exclusions.'''
 
@@ -5204,6 +5492,122 @@ class ThreatHunting:
 		url += '?' + '&'.join(url_params)
 		return fortiedr_connection.insert(url)
 
+
+	def delete_syslog_server(self, id: int) -> tuple[bool, str]:
+		'''
+		Class ThreatHunting
+		Description: This API delete a syslog server.
+        
+		Args:
+			id (int): id
+
+		Returns:
+			bool: Status of the request (True or False). 
+			str
+		'''
+		validate_params("delete_syslog_server", locals())
+
+		url = '/management-rest/threat-hunting/delete-syslog-server'
+		url_params = []
+		if id != None:
+			url_params.append(f'id={id}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def get_syslog_servers(self, accountId: int) -> tuple[bool, None]:
+		'''
+		Class ThreatHunting
+		Description: This API get the syslog servers.
+        
+		Args:
+			accountId (int): accountId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_syslog_servers", locals())
+
+		url = '/management-rest/threat-hunting/get-syslog-servers'
+		url_params = []
+		if accountId != None:
+			url_params.append(f'accountId={accountId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def test_syslog_server(self, accountId: int = None, host: str = None, id: int = None, name: str = None, port: int = None, protocol: str = None, syslogRFCFormat: str = None, useSSL: bool = None) -> tuple[bool, None]:
+		'''
+		Class ThreatHunting
+		Description: This API test a syslog server connection.
+        
+		Args:
+			syslogServer (Object): Check 'syslogServer' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("test_syslog_server", locals())
+
+		url = '/management-rest/threat-hunting/test-syslog-server'
+
+		syslogServer = {}
+		if accountId != None:
+			syslogServer["accountId"] = f"{accountId}"
+		if host:
+			syslogServer["host"] = f"{host}"
+		if id != None:
+			syslogServer["id"] = f"{id}"
+		if name:
+			syslogServer["name"] = f"{name}"
+		if port != None:
+			syslogServer["port"] = f"{port}"
+		if protocol:
+			syslogServer["protocol"] = f"{protocol}"
+		if syslogRFCFormat:
+			syslogServer["syslogRFCFormat"] = f"{syslogRFCFormat}"
+		if useSSL != None:
+			syslogServer["useSSL"] = f"{useSSL}"
+
+		return fortiedr_connection.send(url, syslogServer)
+
+	def update_syslog_server(self, accountId: int = None, agentGroupIds: list = None, host: str = None, id: int = None, name: str = None, port: int = None, protocol: str = None, syslogRFCFormat: str = None, useSSL: bool = None) -> tuple[bool, str]:
+		'''
+		Class ThreatHunting
+		Description: This API update a syslog server.
+        
+		Args:
+			updateSyslogServer (Object): Check 'updateSyslogServer' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			str
+		'''
+		validate_params("update_syslog_server", locals())
+
+		url = '/management-rest/threat-hunting/update-syslog-server'
+
+		updateSyslogServer = {}
+		if accountId != None:
+			updateSyslogServer["accountId"] = f"{accountId}"
+		if agentGroupIds != None:
+			updateSyslogServer["agentGroupIds"] = agentGroupIds
+		if host:
+			updateSyslogServer["host"] = f"{host}"
+		if id != None:
+			updateSyslogServer["id"] = f"{id}"
+		if name:
+			updateSyslogServer["name"] = f"{name}"
+		if port != None:
+			updateSyslogServer["port"] = f"{port}"
+		if protocol:
+			updateSyslogServer["protocol"] = f"{protocol}"
+		if syslogRFCFormat:
+			updateSyslogServer["syslogRFCFormat"] = f"{syslogRFCFormat}"
+		if useSSL != None:
+			updateSyslogServer["useSSL"] = f"{useSSL}"
+
+		return fortiedr_connection.send(url, updateSyslogServer)
 class Users:
 	'''API to define user'''
 
@@ -5446,6 +5850,7570 @@ class Users:
 
 		return fortiedr_connection.insert(url, userRequest)
 
+
+
+
+
+	def create_user_restapi(self, accountId: int, contact: object, name: str, password: str, passwordConfirm: str, rbacRole: str, customScript: bool = None, remoteShell: bool = None, restApi: bool = None, twoFactorAuthHours: int = None, twoFactorAuthentication: bool = None) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: This API creates a user in the system. (only for Admin role).
+        
+		Args:
+			createUserRequest (Object): Check 'createUserRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_user_restapi", locals())
+
+		url = '/api/users/create-user'
+
+		createUserRequest = {}
+		if accountId != None:
+			createUserRequest["accountId"] = f"{accountId}"
+		if contact != None:
+			createUserRequest["contact"] = contact
+		if customScript != None:
+			createUserRequest["customScript"] = f"{customScript}"
+		if name:
+			createUserRequest["name"] = f"{name}"
+		if password:
+			createUserRequest["password"] = f"{password}"
+		if passwordConfirm:
+			createUserRequest["passwordConfirm"] = f"{passwordConfirm}"
+		if rbacRole:
+			createUserRequest["rbacRole"] = f"{rbacRole}"
+		if remoteShell != None:
+			createUserRequest["remoteShell"] = f"{remoteShell}"
+		if restApi != None:
+			createUserRequest["restApi"] = f"{restApi}"
+		if twoFactorAuthHours != None:
+			createUserRequest["twoFactorAuthHours"] = f"{twoFactorAuthHours}"
+		if twoFactorAuthentication != None:
+			createUserRequest["twoFactorAuthentication"] = f"{twoFactorAuthentication}"
+
+		return fortiedr_connection.send(url, createUserRequest)
+
+	def delete_delete_user(self, userId: int) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: This API deletes a user (Admin role required).
+        
+		Args:
+			userId (int): userId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_delete_user", locals())
+
+		url = '/api/users/delete-user'
+		url_params = []
+		if userId != None:
+			url_params.append(f'userId={userId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def delete_users(self, userIds: list) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: This API deletes users (Admin role required).
+        
+		Args:
+			userIds (list): userIds
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_users", locals())
+
+		url = '/api/users/delete-users'
+		url_params = []
+		if userIds != None:
+			userIds = ",".join(map(str, userIds)) if isinstance(userIds, list) else userIds
+			url_params.append(f'userIds={userIds}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def environment_password_policy(self) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: This API fetches the environment password policy..
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("environment_password_policy", locals())
+
+		url = '/api/users/environment-password-policy'
+		return fortiedr_connection.get(url)
+
+	def get_gdpr_privacy_note(self) -> tuple[bool, str]:
+		'''
+		Class Users
+		Description: Get GDPR privacy note.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			str
+		'''
+		validate_params("get_gdpr_privacy_note", locals())
+
+		url = '/api/users/get-gdpr-privacy-note'
+		return fortiedr_connection.get(url)
+
+	def get_ldap_relevant_cores(self) -> tuple[bool, list]:
+		'''
+		Class Users
+		Description: Get LDAP relevant cores.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_ldap_relevant_cores", locals())
+
+		url = '/api/users/ldap-relevant-cores'
+		return fortiedr_connection.get(url)
+
+	def get_ldap_settings(self) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: Get LDAP settings.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_ldap_settings", locals())
+
+		url = '/api/users/ldap-settings'
+		return fortiedr_connection.get(url)
+
+	def get_ldap_users(self, organizationId: int) -> tuple[bool, list]:
+		'''
+		Class Users
+		Description: Get LDAP users.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_ldap_users", locals())
+
+		url = '/api/users/ldap-users'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def password_policy_config_by_accountId(self, accountId: int = None) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: This API fetches an existing password-policy-config..
+        
+		Args:
+			accountId (int): account id
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("password_policy_config_by_accountId", locals())
+
+		url = '/api/users/password-policy-config-by-accountId'
+		url_params = []
+		if accountId != None:
+			url_params.append(f'accountId={accountId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def set_user_preferences(self, entries: object = None, preferenceKey: str = None) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: Set user preferences.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("set_user_preferences", locals())
+
+		url = '/api/users/preferences'
+
+		request = {}
+		if entries != None:
+			request["entries"] = entries
+		if preferenceKey:
+			request["preferenceKey"] = f"{preferenceKey}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def get_user_preferences(self, preferenceKey: str) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: Get user preferences.
+        
+		Args:
+			preferenceKey (str): preferenceKey
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_user_preferences", locals())
+
+		url = f'/api/users/preferences/{preferenceKey}'
+		return fortiedr_connection.get(url)
+
+	def reset_ldap_two_fa(self, userId: int) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: Reset LDAP Two FA.
+        
+		Args:
+			userId (int): userId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("reset_ldap_two_fa", locals())
+
+		url = '/api/users/reset-ldap-two-fa'
+
+		return fortiedr_connection.send(url, userId)
+
+	def reset_Password(self, userDisplayItem: object = None) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: This API resets user password and optional require change Password on next sign in (Admin role required).
+        
+		Args:
+			resetPasswordRequest (Object): Check 'resetPasswordRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("reset_Password", locals())
+
+		url = '/api/users/reset-password'
+
+		resetPasswordRequest = {}
+		if userDisplayItem != None:
+			resetPasswordRequest["userDisplayItem"] = userDisplayItem
+
+		return fortiedr_connection.send(url, resetPasswordRequest)
+
+	def reset_two_factor_authentication(self, userId: int = None) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: This API resets two-factor authentication for a specified user. (Admin role required).
+        
+		Args:
+			resetTwoFactorAuthenticationRequest (Object): Check 'resetTwoFactorAuthenticationRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("reset_two_factor_authentication", locals())
+
+		url = '/api/users/reset-two-factor-authentication'
+
+		resetTwoFactorAuthenticationRequest = {}
+		if userId != None:
+			resetTwoFactorAuthenticationRequest["userId"] = f"{userId}"
+
+		return fortiedr_connection.send(url, resetTwoFactorAuthenticationRequest)
+
+	def rbac_roles(self, organizationId: int) -> tuple[bool, list]:
+		'''
+		Class Users
+		Description: Get RBAC roles.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("rbac_roles", locals())
+
+		url = '/api/users/roles'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_saml_settings(self) -> tuple[bool, list]:
+		'''
+		Class Users
+		Description: Get SAML settings.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_saml_settings", locals())
+
+		url = '/api/users/saml-settings'
+		return fortiedr_connection.get(url)
+
+	def save_saml_settings(self, accountId: int = None, metadataFileIsDirty: bool = None, metadataUuid: str = None, samlSettings: object = None) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: Save SAML Settings.
+        
+		Args:
+			samlRequest (Object): Check 'samlRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("save_saml_settings", locals())
+
+		url = '/api/users/saml-settings'
+
+		samlRequest = {}
+		if accountId != None:
+			samlRequest["accountId"] = f"{accountId}"
+		if metadataFileIsDirty != None:
+			samlRequest["metadataFileIsDirty"] = f"{metadataFileIsDirty}"
+		if metadataUuid:
+			samlRequest["metadataUuid"] = f"{metadataUuid}"
+		if samlSettings != None:
+			samlRequest["samlSettings"] = samlSettings
+
+		return fortiedr_connection.insert(url, samlRequest)
+
+	def clear_saml_settings(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: Clear SAML Settings.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("clear_saml_settings", locals())
+
+		url = '/api/users/saml-settings/clear'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.insert(url)
+
+	def valid_saml_sso_url(self, organizationId: int, urlPostfix: str) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: Valid SAML SSO url.
+        
+		Args:
+			organizationId (int): organizationId
+			urlPostfix (str): urlPostfix
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("valid_saml_sso_url", locals())
+
+		url = '/api/users/saml-settings/valid-sso-url'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if urlPostfix != None:
+			url_params.append(f'urlPostfix={urlPostfix}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def save_ldap_settings(self, adminsGroupName: str = None, apiGroupName: str = None, baseDn: str = None, bindDn: str = None, bindPassword: str = None, coreId: int = None, directoryType: str = None, enabled: bool = None, groupsMapping: list = None, host: str = None, hostGroupName: str = None, id: int = None, port: int = None, securityLevel: str = None, twoFactorAuthHours: int = None, twoFactorAuthenticationEnabled: bool = None, usersGroupName: str = None) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: Save LDAP Settings.
+        
+		Args:
+			ldapConfigRequest (Object): Check 'ldapConfigRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("save_ldap_settings", locals())
+
+		url = '/api/users/save-ldap-settings'
+
+		ldapConfigRequest = {}
+		if adminsGroupName:
+			ldapConfigRequest["adminsGroupName"] = f"{adminsGroupName}"
+		if apiGroupName:
+			ldapConfigRequest["apiGroupName"] = f"{apiGroupName}"
+		if baseDn:
+			ldapConfigRequest["baseDn"] = f"{baseDn}"
+		if bindDn:
+			ldapConfigRequest["bindDn"] = f"{bindDn}"
+		if bindPassword:
+			ldapConfigRequest["bindPassword"] = f"{bindPassword}"
+		if coreId != None:
+			ldapConfigRequest["coreId"] = f"{coreId}"
+		if directoryType:
+			ldapConfigRequest["directoryType"] = f"{directoryType}"
+		if enabled != None:
+			ldapConfigRequest["enabled"] = f"{enabled}"
+		if groupsMapping != None:
+			ldapConfigRequest["groupsMapping"] = groupsMapping
+		if host:
+			ldapConfigRequest["host"] = f"{host}"
+		if hostGroupName:
+			ldapConfigRequest["hostGroupName"] = f"{hostGroupName}"
+		if id != None:
+			ldapConfigRequest["id"] = f"{id}"
+		if port != None:
+			ldapConfigRequest["port"] = f"{port}"
+		if securityLevel:
+			ldapConfigRequest["securityLevel"] = f"{securityLevel}"
+		if twoFactorAuthHours != None:
+			ldapConfigRequest["twoFactorAuthHours"] = f"{twoFactorAuthHours}"
+		if twoFactorAuthenticationEnabled != None:
+			ldapConfigRequest["twoFactorAuthenticationEnabled"] = f"{twoFactorAuthenticationEnabled}"
+		if usersGroupName:
+			ldapConfigRequest["usersGroupName"] = f"{usersGroupName}"
+
+		return fortiedr_connection.send(url, ldapConfigRequest)
+
+	def save_password_policy_config(self, accountId: int = None, closeSessionImmediately: bool = None, passwordPolicyDisplayItem: object = None) -> tuple[bool, str]:
+		'''
+		Class Users
+		Description: This API save a password policy config..
+        
+		Args:
+			savePasswordPolicyConfigRequest (Object): Check 'savePasswordPolicyConfigRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			str
+		'''
+		validate_params("save_password_policy_config", locals())
+
+		url = '/api/users/save-password-policy-config'
+
+		savePasswordPolicyConfigRequest = {}
+		if accountId != None:
+			savePasswordPolicyConfigRequest["accountId"] = f"{accountId}"
+		if closeSessionImmediately != None:
+			savePasswordPolicyConfigRequest["closeSessionImmediately"] = f"{closeSessionImmediately}"
+		if passwordPolicyDisplayItem != None:
+			savePasswordPolicyConfigRequest["passwordPolicyDisplayItem"] = passwordPolicyDisplayItem
+
+		return fortiedr_connection.send(url, savePasswordPolicyConfigRequest)
+
+	def server_name_configured(self) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: Is Server DNS Name Configured.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("server_name_configured", locals())
+
+		url = '/api/users/server-name-configured'
+		return fortiedr_connection.get(url)
+
+	def test_ldap_connection(self, adminsGroupName: str = None, apiGroupName: str = None, baseDn: str = None, bindDn: str = None, bindPassword: str = None, coreId: int = None, directoryType: str = None, enabled: bool = None, groupsMapping: list = None, host: str = None, hostGroupName: str = None, id: int = None, port: int = None, securityLevel: str = None, twoFactorAuthHours: int = None, twoFactorAuthenticationEnabled: bool = None, usersGroupName: str = None) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: Test LDAP connection.
+        
+		Args:
+			ldapConfigRequest (Object): Check 'ldapConfigRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("test_ldap_connection", locals())
+
+		url = '/api/users/test-ldap-connection'
+
+		ldapConfigRequest = {}
+		if adminsGroupName:
+			ldapConfigRequest["adminsGroupName"] = f"{adminsGroupName}"
+		if apiGroupName:
+			ldapConfigRequest["apiGroupName"] = f"{apiGroupName}"
+		if baseDn:
+			ldapConfigRequest["baseDn"] = f"{baseDn}"
+		if bindDn:
+			ldapConfigRequest["bindDn"] = f"{bindDn}"
+		if bindPassword:
+			ldapConfigRequest["bindPassword"] = f"{bindPassword}"
+		if coreId != None:
+			ldapConfigRequest["coreId"] = f"{coreId}"
+		if directoryType:
+			ldapConfigRequest["directoryType"] = f"{directoryType}"
+		if enabled != None:
+			ldapConfigRequest["enabled"] = f"{enabled}"
+		if groupsMapping != None:
+			ldapConfigRequest["groupsMapping"] = groupsMapping
+		if host:
+			ldapConfigRequest["host"] = f"{host}"
+		if hostGroupName:
+			ldapConfigRequest["hostGroupName"] = f"{hostGroupName}"
+		if id != None:
+			ldapConfigRequest["id"] = f"{id}"
+		if port != None:
+			ldapConfigRequest["port"] = f"{port}"
+		if securityLevel:
+			ldapConfigRequest["securityLevel"] = f"{securityLevel}"
+		if twoFactorAuthHours != None:
+			ldapConfigRequest["twoFactorAuthHours"] = f"{twoFactorAuthHours}"
+		if twoFactorAuthenticationEnabled != None:
+			ldapConfigRequest["twoFactorAuthenticationEnabled"] = f"{twoFactorAuthenticationEnabled}"
+		if usersGroupName:
+			ldapConfigRequest["usersGroupName"] = f"{usersGroupName}"
+
+		return fortiedr_connection.send(url, ldapConfigRequest)
+
+	def update_gdpr_privacy_note(self, userId: int) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: Put GDPR privacy note.
+        
+		Args:
+			userId (int): userId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_gdpr_privacy_note", locals())
+
+		url = '/api/users/update-gdpr-privacy-note'
+		url_params = []
+		if userId != None:
+			url_params.append(f'userId={userId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.insert(url)
+
+	def update_user_restapi(self, accountId: int, changePasswordOnNextSignIn: bool, contact: object, isLocked: bool, name: str, password: str, passwordConfirm: str, rbacRole: str, accountName: str = None, customScript: bool = None, id: int = None, passwordPolicy: object = None, rbacRoleName: str = None, remoteShell: bool = None, restApi: bool = None, twoFactorAuthHours: int = None, twoFactorAuthentication: bool = None, userType: str = None) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: This API updates an existing user in the system. (only for Admin role).
+        
+		Args:
+			userToUpdate (Object): Check 'userToUpdate' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_user_restapi", locals())
+
+		url = '/api/users/update-user'
+
+		userToUpdate = {}
+		if accountId != None:
+			userToUpdate["accountId"] = f"{accountId}"
+		if accountName:
+			userToUpdate["accountName"] = f"{accountName}"
+		if changePasswordOnNextSignIn != None:
+			userToUpdate["changePasswordOnNextSignIn"] = f"{changePasswordOnNextSignIn}"
+		if contact != None:
+			userToUpdate["contact"] = contact
+		if customScript != None:
+			userToUpdate["customScript"] = f"{customScript}"
+		if id != None:
+			userToUpdate["id"] = f"{id}"
+		if isLocked != None:
+			userToUpdate["isLocked"] = f"{isLocked}"
+		if name:
+			userToUpdate["name"] = f"{name}"
+		if password:
+			userToUpdate["password"] = f"{password}"
+		if passwordConfirm:
+			userToUpdate["passwordConfirm"] = f"{passwordConfirm}"
+		if passwordPolicy != None:
+			userToUpdate["passwordPolicy"] = passwordPolicy
+		if rbacRole:
+			userToUpdate["rbacRole"] = f"{rbacRole}"
+		if rbacRoleName:
+			userToUpdate["rbacRoleName"] = f"{rbacRoleName}"
+		if remoteShell != None:
+			userToUpdate["remoteShell"] = f"{remoteShell}"
+		if restApi != None:
+			userToUpdate["restApi"] = f"{restApi}"
+		if twoFactorAuthHours != None:
+			userToUpdate["twoFactorAuthHours"] = f"{twoFactorAuthHours}"
+		if twoFactorAuthentication != None:
+			userToUpdate["twoFactorAuthentication"] = f"{twoFactorAuthentication}"
+		if userType:
+			userToUpdate["userType"] = f"{userType}"
+
+		return fortiedr_connection.insert(url, userToUpdate)
+
+	def get_users_display_item(self, freeTextSearch: str, offset: int, organizationId: int, pageSize: int, sorting: str) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: display-item.
+        
+		Args:
+			freeTextSearch (str): Specifies the free text search
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_users_display_item", locals())
+
+		url = '/api/users/users'
+		url_params = []
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_users_by_account(self, includeDummyAccountUsers: bool = None, includeLdapUsers: bool = None, includeSamlUsers: bool = None, organizationId: int = None) -> tuple[bool, list]:
+		'''
+		Class Users
+		Description: Get account users.
+        
+		Args:
+			includeDummyAccountUsers (bool): Whether to include dummy account users
+			includeLdapUsers (bool): Whether to include ldap users
+			includeSamlUsers (bool): Whether to include saml users
+			organizationId (int): Specifies the organization id
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_users_by_account", locals())
+
+		url = '/api/users/users-by-account'
+		url_params = []
+		if includeDummyAccountUsers != None:
+			url_params.append(f'includeDummyAccountUsers={includeDummyAccountUsers}')
+		if includeLdapUsers != None:
+			url_params.append(f'includeLdapUsers={includeLdapUsers}')
+		if includeSamlUsers != None:
+			url_params.append(f'includeSamlUsers={includeSamlUsers}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def create_update_saml_settings(self, idpMetadataFile: BinaryIO) -> tuple[bool, None]:
+		'''
+		Class Users
+		Description: Create / Update SAML authentication settings per organization.
+        
+		Args:
+			idpMetadataFile (BinaryIO): idpMetadataFile
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_update_saml_settings", locals())
+
+		url = '/management-rest/users/update-saml-settings'
+		if idpMetadataFile:
+			idpMetadataFile = {'idpMetadataFile': idpMetadataFile}
+
+		return fortiedr_connection.upload(url, idpMetadataFile)
+class Admin:
+	'''Admin Rest Api Controller'''
+	def admin_tab_indication(self) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: admin tab indication.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("admin_tab_indication", locals())
+
+		url = '/api/admin/admin-tab-indication'
+		return fortiedr_connection.get(url)
+
+	def upload_license(self, confirmInternalLicense: bool = None, licenseBlob: str = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: Upload license to the system.
+        
+		Args:
+			license (Object): Check 'license' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("upload_license", locals())
+
+		url = '/api/admin/license'
+
+		license = {}
+		if confirmInternalLicense != None:
+			license["confirmInternalLicense"] = f"{confirmInternalLicense}"
+		if licenseBlob:
+			license["licenseBlob"] = f"{licenseBlob}"
+
+		return fortiedr_connection.insert(url, license)
+
+	def av_scan(self, accountId: int = None, allowedGuid: list = None, day: int = None, dayOptionsList: list = None, enabled: bool = None, executableOnly: bool = None, frequency: str = None, frequencyOptionsList: list = None, hour: int = None, hourOptionsList: list = None, interval: int = None, lastScan: str = None, scanBy: str = None, scanSelection: list = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: av-scan.
+        
+		Args:
+			accountId (int): accountId
+			avScanDisplayItem (Object): Check 'avScanDisplayItem' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("av_scan", locals())
+
+		url = '/api/admin/settings/av-scan'
+
+		avScanDisplayItem = {}
+		if allowedGuid != None:
+			avScanDisplayItem["allowedGuid"] = allowedGuid
+		if day != None:
+			avScanDisplayItem["day"] = f"{day}"
+		if dayOptionsList != None:
+			avScanDisplayItem["dayOptionsList"] = dayOptionsList
+		if enabled != None:
+			avScanDisplayItem["enabled"] = f"{enabled}"
+		if executableOnly != None:
+			avScanDisplayItem["executableOnly"] = f"{executableOnly}"
+		if frequency:
+			avScanDisplayItem["frequency"] = f"{frequency}"
+		if frequencyOptionsList != None:
+			avScanDisplayItem["frequencyOptionsList"] = frequencyOptionsList
+		if hour != None:
+			avScanDisplayItem["hour"] = f"{hour}"
+		if hourOptionsList != None:
+			avScanDisplayItem["hourOptionsList"] = hourOptionsList
+		if interval != None:
+			avScanDisplayItem["interval"] = f"{interval}"
+		if lastScan:
+			avScanDisplayItem["lastScan"] = f"{lastScan}"
+		if scanBy:
+			avScanDisplayItem["scanBy"] = f"{scanBy}"
+		if scanSelection != None:
+			avScanDisplayItem["scanSelection"] = scanSelection
+
+		return fortiedr_connection.insert(url, avScanDisplayItem)
+
+	def av_scan_collectors_and_groups_options(self, accountId: int = None, field: str = None, filterCollectorStatus: bool = None, search: str = None) -> tuple[bool, list]:
+		'''
+		Class Admin
+		Description: av-scan-collectors-and-groups-options.
+        
+		Args:
+			accountId (int): accountId
+			field (str): field
+			filterCollectorStatus (bool): filterCollectorStatus
+			search (str): search
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("av_scan_collectors_and_groups_options", locals())
+
+		url = '/api/admin/settings/av-scan-collectors-and-groups-options'
+
+		return fortiedr_connection.get(url, accountId)
+
+	def av_scan_mobile(self, json: str = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: av-scan-mobile.
+        
+		Args:
+			json (str): json
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("av_scan_mobile", locals())
+
+		url = '/api/admin/settings/av-scan-mobile'
+
+		return fortiedr_connection.get(url, json)
+
+	def update_av_scan_mobile(self, day: int = None, enabled: bool = None, frequency: str = None, hour: int = None, organizationId: int = None, scanBy: str = None, scanSelection: list = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: av-scan-mobile.
+        
+		Args:
+			mobileSaveScan (Object): Check 'mobileSaveScan' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_av_scan_mobile", locals())
+
+		url = '/api/admin/settings/av-scan-mobile'
+
+		mobileSaveScan = {}
+		if day != None:
+			mobileSaveScan["day"] = f"{day}"
+		if enabled != None:
+			mobileSaveScan["enabled"] = f"{enabled}"
+		if frequency:
+			mobileSaveScan["frequency"] = f"{frequency}"
+		if hour != None:
+			mobileSaveScan["hour"] = f"{hour}"
+		if organizationId != None:
+			mobileSaveScan["organizationId"] = f"{organizationId}"
+		if scanBy:
+			mobileSaveScan["scanBy"] = f"{scanBy}"
+		if scanSelection != None:
+			mobileSaveScan["scanSelection"] = scanSelection
+
+		return fortiedr_connection.insert(url, mobileSaveScan)
+
+	def av_scan_mobile_collectors_and_groups_options(self, organizationId: int = None, searchType: str = None, searchValue: str = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: av-scan-mobile-collectors-and-groups-options.
+        
+		Args:
+			organizationId (int): Specifies the organization id
+			searchType (str): Specifies the search type (groups or collectors)
+			searchValue (str): Specifies the search value
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("av_scan_mobile_collectors_and_groups_options", locals())
+
+		url = '/api/admin/settings/av-scan-mobile-collectors-and-groups-options'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if searchType != None:
+			url_params.append(f'searchType={searchType}')
+		if searchValue != None:
+			url_params.append(f'searchValue={searchValue}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def trigger_scan(self, accountId: int = None, applyRecursiveScan: bool = None, executableOnly: bool = None, filePaths: list = None, origin: str = None, scanBy: str = None, scanSelection: list = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: trigger-scan.
+        
+		Args:
+			accountId (int): accountId
+			requestBody (Object): Check 'requestBody' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("trigger_scan", locals())
+
+		url = '/api/admin/settings/av-scan-trigger'
+
+		requestBody = {}
+		if applyRecursiveScan != None:
+			requestBody["applyRecursiveScan"] = f"{applyRecursiveScan}"
+		if executableOnly != None:
+			requestBody["executableOnly"] = f"{executableOnly}"
+		if filePaths != None:
+			requestBody["filePaths"] = filePaths
+		if origin:
+			requestBody["origin"] = f"{origin}"
+		if scanBy:
+			requestBody["scanBy"] = f"{scanBy}"
+		if scanSelection != None:
+			requestBody["scanSelection"] = scanSelection
+
+		return fortiedr_connection.send(url, requestBody)
+
+	def default_application_control_state(self, isDefault: bool, accountId: int = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: default-application-control-state.
+        
+		Args:
+			accountId (int): accountId
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("default_application_control_state", locals())
+
+		url = '/api/admin/settings/default-application-control-state'
+
+		request = {}
+		if isDefault != None:
+			request["isDefault"] = f"{isDefault}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def get_gdpr_data(self, accountId: int = None, searchInput: str = None, type: str = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: get-gdpr-data.
+        
+		Args:
+			accountId (int): accountId
+			searchInput (str): searchInput
+			type (str): type
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_gdpr_data", locals())
+
+		url = '/api/admin/settings/gdpr-data'
+
+		return fortiedr_connection.get(url, accountId)
+
+	def delete_gdpr_data(self, accountId: int = None, searchInput: str = None, type: str = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: delete-gdpr-data.
+        
+		Args:
+			accountId (int): accountId
+			searchInput (str): searchInput
+			type (str): type
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_gdpr_data", locals())
+
+		url = '/api/admin/settings/gdpr-data'
+
+		return fortiedr_connection.delete(url, accountId)
+
+	def gdpr_data_report(self, accountId: int = None, searchInput: str = None, type: str = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: gdpr-data-report.
+        
+		Args:
+			accountId (int): accountId
+			searchInput (str): searchInput
+			type (str): type
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("gdpr_data_report", locals())
+
+		url = '/api/admin/settings/gdpr-data-report'
+
+		return fortiedr_connection.get(url, accountId)
+
+	def gdpr_types(self) -> tuple[bool, list]:
+		'''
+		Class Admin
+		Description: gdpr-types.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("gdpr_types", locals())
+
+		url = '/api/admin/settings/gdpr-types'
+		return fortiedr_connection.get(url)
+
+	def gdpr_users_report(self, accountId: int = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: gdpr-users-report.
+        
+		Args:
+			accountId (int): accountId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("gdpr_users_report", locals())
+
+		url = '/api/admin/settings/gdpr-users-report'
+
+		return fortiedr_connection.get(url, accountId)
+
+	def iot_discovery_collectors(self, accountId: int = None, searchValue: str = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: iot-discovery-collectors.
+        
+		Args:
+			accountId (int): accountId
+			searchValue (str): searchValue
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("iot_discovery_collectors", locals())
+
+		url = '/api/admin/settings/iot-collectors'
+
+		return fortiedr_connection.get(url, accountId)
+
+	def stop_last_discovery(self, accountId: int = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: stop-last-discovery.
+        
+		Args:
+			accountId (int): accountId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("stop_last_discovery", locals())
+
+		url = '/api/admin/settings/iot-last-discovery'
+
+		return fortiedr_connection.get(url, accountId)
+
+	def iot_settings(self, accountId: int = None, autoGroupingOption: str = None, compareExternalIpWhenMatchDeviceToCollectors: bool = None, excludeGroupsIds: list = None, iotEnable: bool = None, isExcludeGroupsChanged: bool = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: iot-settings.
+        
+		Args:
+			accountId (int): accountId
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("iot_settings", locals())
+
+		url = '/api/admin/settings/iot-settings'
+
+		request = {}
+		if autoGroupingOption:
+			request["autoGroupingOption"] = f"{autoGroupingOption}"
+		if compareExternalIpWhenMatchDeviceToCollectors != None:
+			request["compareExternalIpWhenMatchDeviceToCollectors"] = f"{compareExternalIpWhenMatchDeviceToCollectors}"
+		if excludeGroupsIds != None:
+			request["excludeGroupsIds"] = excludeGroupsIds
+		if iotEnable != None:
+			request["iotEnable"] = f"{iotEnable}"
+		if isExcludeGroupsChanged != None:
+			request["isExcludeGroupsChanged"] = f"{isExcludeGroupsChanged}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def stop_test_scan(self, accountId: int = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: stop-test-scan.
+        
+		Args:
+			accountId (int): accountId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("stop_test_scan", locals())
+
+		url = '/api/admin/settings/iot-stop-test-scan'
+
+		return fortiedr_connection.get(url, accountId)
+
+	def iot_test_scan(self, accountId: int = None, collectorId: int = None, collectorName: str = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: iot-test-scan.
+        
+		Args:
+			accountId (int): accountId
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("iot_test_scan", locals())
+
+		url = '/api/admin/settings/iot-test-scan'
+
+		request = {}
+		if collectorId != None:
+			request["collectorId"] = f"{collectorId}"
+		if collectorName:
+			request["collectorName"] = f"{collectorName}"
+
+		return fortiedr_connection.send(url, request)
+
+	def iot_scan_test_info(self, accountId: int = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: iot-scan-test-info.
+        
+		Args:
+			accountId (int): accountId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("iot_scan_test_info", locals())
+
+		url = '/api/admin/settings/iot-test-scan-info'
+
+		return fortiedr_connection.get(url, accountId)
+
+	def session_time_out(self) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: session-time-out.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("session_time_out", locals())
+
+		url = '/api/admin/settings/session-time-out'
+		return fortiedr_connection.get(url)
+
+	def update_session_time_out(self, sessionTimeoutInSeconds: int = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: session-time-out.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_session_time_out", locals())
+
+		url = '/api/admin/settings/session-time-out'
+
+		request = {}
+		if sessionTimeoutInSeconds != None:
+			request["sessionTimeoutInSeconds"] = f"{sessionTimeoutInSeconds}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def splunk(self, organizationId: int = None, confirmPassword: str = None, password: str = None, username: str = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: save splunk user.
+        
+		Args:
+			organizationId (int): organizationId
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("splunk", locals())
+
+		url = '/api/admin/splunk-user'
+
+		request = {}
+		if confirmPassword:
+			request["confirmPassword"] = f"{confirmPassword}"
+		if password:
+			request["password"] = f"{password}"
+		if username:
+			request["username"] = f"{username}"
+
+		return fortiedr_connection.send(url, request)
+
+	def Get_available_timezone_options(self) -> tuple[bool, list]:
+		'''
+		Class Admin
+		Description: Returns list of available timezone options with display labels.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("Get_available_timezone_options", locals())
+
+		url = '/api/admin/timezones'
+		return fortiedr_connection.get(url)
+
+	def Get_organization_timezone_configuration(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: Returns the timezone configuration for the specified organization.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Get_organization_timezone_configuration", locals())
+
+		url = f'/api/admin/{organizationId}/timezone'
+		return fortiedr_connection.get(url)
+
+	def Update_organization_timezone_configuration(self, organizationId: int, enabled: bool, timezone: str, ignoreConverter: bool = None) -> tuple[bool, None]:
+		'''
+		Class Admin
+		Description: Updates the timezone configuration for the specified organization.
+        
+		Args:
+			organizationId (int): organizationId
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Update_organization_timezone_configuration", locals())
+
+		url = f'/api/admin/{organizationId}/timezone'
+
+		request = {}
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if ignoreConverter != None:
+			request["ignoreConverter"] = f"{ignoreConverter}"
+		if timezone:
+			request["timezone"] = f"{timezone}"
+
+		return fortiedr_connection.insert(url, request)
+
+
+
+class SystemComponents:
+	'''System Component Rest Api Controller'''
+	def aggregator_logs(self, aggregatorId: int = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class SystemComponents
+		Description: get aggregator logs.
+        
+		Args:
+			aggregatorId (int): Specifies the aggregator IDs
+			organizationId (int): Specifies the organization id
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("aggregator_logs", locals())
+
+		url = '/api/admin/deployment/system-components/aggregator-logs'
+		url_params = []
+		if aggregatorId != None:
+			url_params.append(f'aggregatorId={aggregatorId}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_aggregators(self, aggregatorIds: list = None, aggregators: list = None, freeTextSearch: str = None, ip: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, status: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class SystemComponents
+		Description: Return aggregators.
+        
+		Args:
+			aggregatorIds (list): Specifies the aggregator IDs
+			aggregators (list): Specifies the aggregator names
+			freeTextSearch (str): pattern of requested text
+			ip (str): Specifies the aggregator IP
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+			status (str): Specifies the aggregator status
+			versions (list): Specifies the aggregator versions
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_aggregators", locals())
+
+		url = '/api/admin/deployment/system-components/aggregators'
+		url_params = []
+		if aggregatorIds != None:
+			aggregatorIds = ",".join(map(str, aggregatorIds)) if isinstance(aggregatorIds, list) else aggregatorIds
+			url_params.append(f'aggregatorIds={aggregatorIds}')
+		if aggregators != None:
+			aggregators = ",".join(aggregators) if isinstance(aggregators, list) else aggregators
+			url_params.append(f'aggregators={aggregators}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if ip != None:
+			url_params.append(f'ip={ip}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if status != None:
+			url_params.append(f'status={status}')
+		if versions != None:
+			versions = ",".join(versions) if isinstance(versions, list) else versions
+			url_params.append(f'versions={versions}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def Delete_aggregators(self, aggregatorIds: list = None, aggregators: list = None, freeTextSearch: str = None, ip: str = None, organizationId: int = None, status: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class SystemComponents
+		Description: Delete aggregators.
+        
+		Args:
+			aggregatorIds (list): Specifies the aggregator IDs
+			aggregators (list): Specifies the aggregator names
+			freeTextSearch (str): pattern of requested text
+			ip (str): Specifies the aggregator IP
+			organizationId (int): Specifies the organization id
+			status (str): Specifies the aggregator status
+			versions (list): Specifies the aggregator versions
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Delete_aggregators", locals())
+
+		url = '/api/admin/deployment/system-components/aggregators'
+		url_params = []
+		if aggregatorIds != None:
+			aggregatorIds = ",".join(map(str, aggregatorIds)) if isinstance(aggregatorIds, list) else aggregatorIds
+			url_params.append(f'aggregatorIds={aggregatorIds}')
+		if aggregators != None:
+			aggregators = ",".join(aggregators) if isinstance(aggregators, list) else aggregators
+			url_params.append(f'aggregators={aggregators}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if ip != None:
+			url_params.append(f'ip={ip}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if status != None:
+			url_params.append(f'status={status}')
+		if versions != None:
+			versions = ",".join(versions) if isinstance(versions, list) else versions
+			url_params.append(f'versions={versions}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def core_logs(self, coreId: int = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class SystemComponents
+		Description: get core logs.
+        
+		Args:
+			coreId (int): Specifies the aggregator IDs
+			organizationId (int): Specifies the organization id
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("core_logs", locals())
+
+		url = '/api/admin/deployment/system-components/core-logs'
+		url_params = []
+		if coreId != None:
+			url_params.append(f'coreId={coreId}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_cores(self, coreIds: list = None, cores: list = None, deploymentModes: list = None, freeTextSearch: str = None, hasCrashDumps: bool = None, ip: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, status: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class SystemComponents
+		Description: Return cores.
+        
+		Args:
+			coreIds (list): Specifies the core IDs
+			cores (list): Specifies the core names
+			deploymentModes (list): List of cores deployments modes
+			freeTextSearch (str): pattern of requested text
+			hasCrashDumps (bool): Has crash dumps
+			ip (str): Specifies the core IP
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+			status (str): Specifies the device status
+			versions (list): Specifies the core versions
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_cores", locals())
+
+		url = '/api/admin/deployment/system-components/cores'
+		url_params = []
+		if coreIds != None:
+			coreIds = ",".join(map(str, coreIds)) if isinstance(coreIds, list) else coreIds
+			url_params.append(f'coreIds={coreIds}')
+		if cores != None:
+			cores = ",".join(cores) if isinstance(cores, list) else cores
+			url_params.append(f'cores={cores}')
+		if deploymentModes != None:
+			deploymentModes = ",".join(deploymentModes) if isinstance(deploymentModes, list) else deploymentModes
+			url_params.append(f'deploymentModes={deploymentModes}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if hasCrashDumps != None:
+			url_params.append(f'hasCrashDumps={hasCrashDumps}')
+		if ip != None:
+			url_params.append(f'ip={ip}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if status != None:
+			url_params.append(f'status={status}')
+		if versions != None:
+			versions = ",".join(versions) if isinstance(versions, list) else versions
+			url_params.append(f'versions={versions}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def Delete_cores(self, coreIds: list = None, cores: list = None, deploymentModes: list = None, freeTextSearch: str = None, ip: str = None, organizationId: int = None, status: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class SystemComponents
+		Description: Delete cores.
+        
+		Args:
+			coreIds (list): Specifies the core IDs
+			cores (list): Specifies the core names
+			deploymentModes (list): List of cores deployments modes
+			freeTextSearch (str): pattern of requested text
+			ip (str): Specifies the core IP
+			organizationId (int): Specifies the organization id
+			status (str): Specifies the device status
+			versions (list): Specifies the core versions
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Delete_cores", locals())
+
+		url = '/api/admin/deployment/system-components/cores'
+		url_params = []
+		if coreIds != None:
+			coreIds = ",".join(map(str, coreIds)) if isinstance(coreIds, list) else coreIds
+			url_params.append(f'coreIds={coreIds}')
+		if cores != None:
+			cores = ",".join(cores) if isinstance(cores, list) else cores
+			url_params.append(f'cores={cores}')
+		if deploymentModes != None:
+			deploymentModes = ",".join(deploymentModes) if isinstance(deploymentModes, list) else deploymentModes
+			url_params.append(f'deploymentModes={deploymentModes}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if ip != None:
+			url_params.append(f'ip={ip}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if status != None:
+			url_params.append(f'status={status}')
+		if versions != None:
+			versions = ",".join(versions) if isinstance(versions, list) else versions
+			url_params.append(f'versions={versions}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def management_logs(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class SystemComponents
+		Description: get management logs.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("management_logs", locals())
+
+		url = '/api/admin/deployment/system-components/management-logs'
+
+		return fortiedr_connection.get(url, organizationId)
+
+	def get_repositories(self) -> tuple[bool, list]:
+		'''
+		Class SystemComponents
+		Description: Return repositories.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_repositories", locals())
+
+		url = '/api/admin/deployment/system-components/repositories'
+		return fortiedr_connection.get(url)
+
+	def update_core_functionality(self, coreId: int = None, functionality: str = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class SystemComponents
+		Description: update-core-functionality.
+        
+		Args:
+			coreFunctionality (Object): Check 'coreFunctionality' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_core_functionality", locals())
+
+		url = '/api/admin/deployment/system-components/update-core-functionality'
+
+		coreFunctionality = {}
+		if coreId != None:
+			coreFunctionality["coreId"] = f"{coreId}"
+		if functionality:
+			coreFunctionality["functionality"] = f"{functionality}"
+		if organizationId != None:
+			coreFunctionality["organizationId"] = f"{organizationId}"
+
+		return fortiedr_connection.insert(url, coreFunctionality)
+
+
+
+class WorkloadsDeploymentRestApiController:
+	'''Workloads Deployment Rest Api Controller'''
+	def connect_account(self, accountData: object = None, accountName: str = None, cloudProvider: str = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class WorkloadsDeploymentRestApiController
+		Description: connect account.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("connect_account", locals())
+
+		url = '/api/admin/deployment/workloads/connect-account'
+
+		request = {}
+		if accountData != None:
+			request["accountData"] = accountData
+		if accountName:
+			request["accountName"] = f"{accountName}"
+		if cloudProvider:
+			request["cloudProvider"] = f"{cloudProvider}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+
+		return fortiedr_connection.send(url, request)
+
+	def delete_accounts(self, accountIds: list = None, deleteAll: bool = None, organizationId: int = None, search: str = None) -> tuple[bool, None]:
+		'''
+		Class WorkloadsDeploymentRestApiController
+		Description: delete accounts.
+        
+		Args:
+			accountIds (list): Specifies if delete all
+			deleteAll (bool): Specifies if delete all
+			organizationId (int): Specifies the organization ID
+			search (str): pattern of requested text
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_accounts", locals())
+
+		url = '/api/admin/deployment/workloads/delete-accounts'
+		url_params = []
+		if accountIds != None:
+			accountIds = ",".join(accountIds) if isinstance(accountIds, list) else accountIds
+			url_params.append(f'accountIds={accountIds}')
+		if deleteAll != None:
+			url_params.append(f'deleteAll={deleteAll}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if search != None:
+			url_params.append(f'search={search}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def discover_clusters(self, accountId: str = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class WorkloadsDeploymentRestApiController
+		Description: discover clusters.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("discover_clusters", locals())
+
+		url = '/api/admin/deployment/workloads/discover-clusters'
+
+		request = {}
+		if accountId:
+			request["accountId"] = f"{accountId}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+
+		return fortiedr_connection.send(url, request)
+
+	def get_account(self, accountId: str = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class WorkloadsDeploymentRestApiController
+		Description: get account.
+        
+		Args:
+			accountId (str): Specifies the account ID
+			organizationId (int): Specifies the organization ID
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_account", locals())
+
+		url = '/api/admin/deployment/workloads/get-account'
+		url_params = []
+		if accountId != None:
+			url_params.append(f'accountId={accountId}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def install_Agents(self, accountNames: list = None, aggregatorIp: str = None, cloudProviders: list = None, clusterIds: list = None, group: str = None, organizationId: int = None, search: str = None, tag: str = None) -> tuple[bool, None]:
+		'''
+		Class WorkloadsDeploymentRestApiController
+		Description: install Agents.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("install_Agents", locals())
+
+		url = '/api/admin/deployment/workloads/install-agents'
+
+		request = {}
+		if accountNames != None:
+			request["accountNames"] = accountNames
+		if aggregatorIp:
+			request["aggregatorIp"] = f"{aggregatorIp}"
+		if cloudProviders != None:
+			request["cloudProviders"] = cloudProviders
+		if clusterIds != None:
+			request["clusterIds"] = clusterIds
+		if group:
+			request["group"] = f"{group}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if search:
+			request["search"] = f"{search}"
+		if tag:
+			request["tag"] = f"{tag}"
+
+		return fortiedr_connection.send(url, request)
+
+	def installer_versions(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class WorkloadsDeploymentRestApiController
+		Description: installer versions.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("installer_versions", locals())
+
+		url = '/api/admin/deployment/workloads/installer-versions'
+
+		return fortiedr_connection.get(url, organizationId)
+
+	def list_accounts(self, maxResult: int = None, organizationId: int = None, page: int = None, search: str = None, sorting: str = None) -> tuple[bool, None]:
+		'''
+		Class WorkloadsDeploymentRestApiController
+		Description: list accounts.
+        
+		Args:
+			maxResult (int): Specifies the page size
+			organizationId (int): Specifies the organization ID
+			page (int): Specifies the page offset
+			search (str): pattern of requested text
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("list_accounts", locals())
+
+		url = '/api/admin/deployment/workloads/list-accounts'
+		url_params = []
+		if maxResult != None:
+			url_params.append(f'maxResult={maxResult}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if page != None:
+			url_params.append(f'page={page}')
+		if search != None:
+			url_params.append(f'search={search}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def list_clusters(self, accountNames: list = None, cloudProviders: list = None, maxResult: int = None, organizationId: int = None, page: int = None, search: str = None, sorting: str = None, statuses: list = None) -> tuple[bool, None]:
+		'''
+		Class WorkloadsDeploymentRestApiController
+		Description: list clusters.
+        
+		Args:
+			accountNames (list): Search by account names
+			cloudProviders (list): Search by cloud providers
+			maxResult (int): Specifies the page size
+			organizationId (int): Specifies the organization ID
+			page (int): Specifies the page offset
+			search (str): pattern of requested text
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+			statuses (list): Search by statuses
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("list_clusters", locals())
+
+		url = '/api/admin/deployment/workloads/list-clusters'
+		url_params = []
+		if accountNames != None:
+			accountNames = ",".join(accountNames) if isinstance(accountNames, list) else accountNames
+			url_params.append(f'accountNames={accountNames}')
+		if cloudProviders != None:
+			cloudProviders = ",".join(cloudProviders) if isinstance(cloudProviders, list) else cloudProviders
+			url_params.append(f'cloudProviders={cloudProviders}')
+		if maxResult != None:
+			url_params.append(f'maxResult={maxResult}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if page != None:
+			url_params.append(f'page={page}')
+		if search != None:
+			url_params.append(f'search={search}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if statuses != None:
+			statuses = ",".join(statuses) if isinstance(statuses, list) else statuses
+			url_params.append(f'statuses={statuses}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def refresh_clusters(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class WorkloadsDeploymentRestApiController
+		Description: refresh clusters.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("refresh_clusters", locals())
+
+		url = '/api/admin/deployment/workloads/refresh-clusters'
+
+		return fortiedr_connection.get(url, organizationId)
+
+	def uninstall_agents(self, accountNames: list = None, cloudProviders: list = None, clusterIds: list = None, organizationId: int = None, search: str = None) -> tuple[bool, None]:
+		'''
+		Class WorkloadsDeploymentRestApiController
+		Description: uninstall agents.
+        
+		Args:
+			accountNames (list): Search by account names
+			cloudProviders (list): Search by cloud providers
+			clusterIds (list): Specifies the cluster Ids
+			organizationId (int): Specifies the organization ID
+			search (str): pattern of requested text
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("uninstall_agents", locals())
+
+		url = '/api/admin/deployment/workloads/uninstall-agents'
+		url_params = []
+		if accountNames != None:
+			accountNames = ",".join(accountNames) if isinstance(accountNames, list) else accountNames
+			url_params.append(f'accountNames={accountNames}')
+		if cloudProviders != None:
+			cloudProviders = ",".join(cloudProviders) if isinstance(cloudProviders, list) else cloudProviders
+			url_params.append(f'cloudProviders={cloudProviders}')
+		if clusterIds != None:
+			clusterIds = ",".join(clusterIds) if isinstance(clusterIds, list) else clusterIds
+			url_params.append(f'clusterIds={clusterIds}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if search != None:
+			url_params.append(f'search={search}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def upgrade_Agents(self, accountNames: list = None, cloudProviders: list = None, clusterIds: list = None, organizationId: int = None, search: str = None, tag: str = None) -> tuple[bool, None]:
+		'''
+		Class WorkloadsDeploymentRestApiController
+		Description: upgrade Agents.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("upgrade_Agents", locals())
+
+		url = '/api/admin/deployment/workloads/upgrade-agents'
+
+		request = {}
+		if accountNames != None:
+			request["accountNames"] = accountNames
+		if cloudProviders != None:
+			request["cloudProviders"] = cloudProviders
+		if clusterIds != None:
+			request["clusterIds"] = clusterIds
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if search:
+			request["search"] = f"{search}"
+		if tag:
+			request["tag"] = f"{tag}"
+
+		return fortiedr_connection.insert(url, request)
+
+
+
+class AvScannerFileController:
+	'''Av Scanner File Rest Api Controller'''
+	def Stream_AV_Scanner_File(self, version: str) -> tuple[bool, None]:
+		'''
+		Class AvScannerFileController
+		Description: Streams a file from GCS directly to client.
+        
+		Args:
+			version (str): version
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Stream_AV_Scanner_File", locals())
+
+		url = '/api/av-scanner-file-controller/download'
+		url_params = []
+		if version != None:
+			url_params.append(f'version={version}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+
+
+class AvSignatureUpdate:
+	'''Av Signature Policy Rest Api Controller'''
+	def get_agent_groups_assignment(self, organization: str) -> tuple[bool, list]:
+		'''
+		Class AvSignatureUpdate
+		Description: Return agent groups.
+        
+		Args:
+			organization (str): organization
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_agent_groups_assignment", locals())
+
+		url = '/api/av-signatures-update/assign-agent-groups'
+		url_params = []
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def assign_policy(self, forceGroupsAssign: bool = None, freeTextSearch: str = None, groupsIds: list = None, id: int = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None) -> tuple[bool, None]:
+		'''
+		Class AvSignatureUpdate
+		Description: assign agent group to policy.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("assign_policy", locals())
+
+		url = '/api/av-signatures-update/assign-agent-groups'
+
+		request = {}
+		if forceGroupsAssign != None:
+			request["forceGroupsAssign"] = f"{forceGroupsAssign}"
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if groupsIds != None:
+			request["groupsIds"] = groupsIds
+		if id != None:
+			request["id"] = f"{id}"
+		if offset != None:
+			request["offset"] = f"{offset}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if pageSize != None:
+			request["pageSize"] = f"{pageSize}"
+		if sorting:
+			request["sorting"] = f"{sorting}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def clone_policy(self, newPolicyName: str, organization: str, sourcePolicyName: str) -> tuple[bool, list]:
+		'''
+		Class AvSignatureUpdate
+		Description: clone policy.
+        
+		Args:
+			clonePolicyRequest (Object): Check 'clonePolicyRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("clone_policy", locals())
+
+		url = '/api/av-signatures-update/clone-policy'
+
+		clonePolicyRequest = {}
+		if newPolicyName:
+			clonePolicyRequest["newPolicyName"] = f"{newPolicyName}"
+		if organization:
+			clonePolicyRequest["organization"] = f"{organization}"
+		if sourcePolicyName:
+			clonePolicyRequest["sourcePolicyName"] = f"{sourcePolicyName}"
+
+		return fortiedr_connection.send(url, clonePolicyRequest)
+
+	def Retrieve_the_latest_AV_signature_file_version_by_type(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class AvSignatureUpdate
+		Description: Retrieve the latest AV signature file version by type.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Retrieve_the_latest_AV_signature_file_version_by_type", locals())
+
+		url = '/api/av-signatures-update/latest-files-version'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_policies(self, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None) -> tuple[bool, None]:
+		'''
+		Class AvSignatureUpdate
+		Description: return av signature policies.
+        
+		Args:
+			freeTextSearch (str): pattern of requested text
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_policies", locals())
+
+		url = '/api/av-signatures-update/policies'
+		url_params = []
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def policy(self, organization: str, deleteAll: bool = None, freeTextSearch: str = None, idToDelete: list = None, requirePolicyAssociation: bool = None) -> tuple[bool, None]:
+		'''
+		Class AvSignatureUpdate
+		Description: Deletes an av signature policy.
+        
+		Args:
+			deleteAll (bool): Indicate if should delete all matching results (rather than only the selected) 
+			freeTextSearch (str): pattern of policies to delete
+			idToDelete (list): Id's of entities to delete
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			requirePolicyAssociation (bool): require policy association
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("policy", locals())
+
+		url = '/api/av-signatures-update/policies'
+		url_params = []
+		if deleteAll != None:
+			url_params.append(f'deleteAll={deleteAll}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if idToDelete != None:
+			idToDelete = ",".join(map(str, idToDelete)) if isinstance(idToDelete, list) else idToDelete
+			url_params.append(f'idToDelete={idToDelete}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if requirePolicyAssociation != None:
+			url_params.append(f'requirePolicyAssociation={requirePolicyAssociation}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def state(self, IsDefault: bool = None, description: str = None, enabled: bool = None, extraConfiguration: object = None, groupsIds: list = None, id: int = None, isActiveEnabled: bool = None, isExtendedEnabled: bool = None, isExtremeEnabled: bool = None, isUrlDBEnabled: bool = None, name: str = None, organizationId: int = None, organizationName: str = None, policiesIds: list = None, updateMethod: str = None) -> tuple[bool, list]:
+		'''
+		Class AvSignatureUpdate
+		Description: set policy state.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("state", locals())
+
+		url = '/api/av-signatures-update/policies/state'
+
+		request = {}
+		if IsDefault != None:
+			request["IsDefault"] = f"{IsDefault}"
+		if description:
+			request["description"] = f"{description}"
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if extraConfiguration != None:
+			request["extraConfiguration"] = extraConfiguration
+		if groupsIds != None:
+			request["groupsIds"] = groupsIds
+		if id != None:
+			request["id"] = f"{id}"
+		if isActiveEnabled != None:
+			request["isActiveEnabled"] = f"{isActiveEnabled}"
+		if isExtendedEnabled != None:
+			request["isExtendedEnabled"] = f"{isExtendedEnabled}"
+		if isExtremeEnabled != None:
+			request["isExtremeEnabled"] = f"{isExtremeEnabled}"
+		if isUrlDBEnabled != None:
+			request["isUrlDBEnabled"] = f"{isUrlDBEnabled}"
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if organizationName:
+			request["organizationName"] = f"{organizationName}"
+		if policiesIds != None:
+			request["policiesIds"] = policiesIds
+		if updateMethod:
+			request["updateMethod"] = f"{updateMethod}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def create_policy(self, name: str, IsDefault: bool = None, description: str = None, enabled: bool = None, extraConfiguration: object = None, groupsIds: list = None, id: int = None, isActiveEnabled: bool = None, isExtendedEnabled: bool = None, isExtremeEnabled: bool = None, isUrlDBEnabled: bool = None, organizationId: int = None, organizationName: str = None, updateMethod: str = None) -> tuple[bool, None]:
+		'''
+		Class AvSignatureUpdate
+		Description: create an av signature policy.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_policy", locals())
+
+		url = '/api/av-signatures-update/policy'
+
+		request = {}
+		if IsDefault != None:
+			request["IsDefault"] = f"{IsDefault}"
+		if description:
+			request["description"] = f"{description}"
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if extraConfiguration != None:
+			request["extraConfiguration"] = extraConfiguration
+		if groupsIds != None:
+			request["groupsIds"] = groupsIds
+		if id != None:
+			request["id"] = f"{id}"
+		if isActiveEnabled != None:
+			request["isActiveEnabled"] = f"{isActiveEnabled}"
+		if isExtendedEnabled != None:
+			request["isExtendedEnabled"] = f"{isExtendedEnabled}"
+		if isExtremeEnabled != None:
+			request["isExtremeEnabled"] = f"{isExtremeEnabled}"
+		if isUrlDBEnabled != None:
+			request["isUrlDBEnabled"] = f"{isUrlDBEnabled}"
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if organizationName:
+			request["organizationName"] = f"{organizationName}"
+		if updateMethod:
+			request["updateMethod"] = f"{updateMethod}"
+
+		return fortiedr_connection.send(url, request)
+
+	def get_policy(self, agentGroupsIds: list = None, excludePolicyId: int = None) -> tuple[bool, list]:
+		'''
+		Class AvSignatureUpdate
+		Description: returns existing agent group assignments.
+        
+		Args:
+			agentGroupsIds (list): agent groups id's
+			excludePolicyId (int): exclude policy id
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_policy", locals())
+
+		url = '/api/av-signatures-update/policy/existing-groups-assignment'
+		url_params = []
+		if agentGroupsIds != None:
+			agentGroupsIds = ",".join(map(str, agentGroupsIds)) if isinstance(agentGroupsIds, list) else agentGroupsIds
+			url_params.append(f'agentGroupsIds={agentGroupsIds}')
+		if excludePolicyId != None:
+			url_params.append(f'excludePolicyId={excludePolicyId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def update_policy(self, id: int, IsDefault: bool = None, description: str = None, enabled: bool = None, extraConfiguration: object = None, groupsIds: list = None, policy_body_id: int = None, isActiveEnabled: bool = None, isExtendedEnabled: bool = None, isExtremeEnabled: bool = None, isUrlDBEnabled: bool = None, name: str = None, organizationId: int = None, organizationName: str = None, updateMethod: str = None) -> tuple[bool, None]:
+		'''
+		Class AvSignatureUpdate
+		Description: update an av signature policy.
+        
+		Args:
+			id (int): id
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_policy", locals())
+
+		url = f'/api/av-signatures-update/policy/{id}'
+
+		request = {}
+		if IsDefault != None:
+			request["IsDefault"] = f"{IsDefault}"
+		if description:
+			request["description"] = f"{description}"
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if extraConfiguration != None:
+			request["extraConfiguration"] = extraConfiguration
+		if groupsIds != None:
+			request["groupsIds"] = groupsIds
+		if policy_body_id != None:
+			request["id"] = f"{policy_body_id}"
+		if isActiveEnabled != None:
+			request["isActiveEnabled"] = f"{isActiveEnabled}"
+		if isExtendedEnabled != None:
+			request["isExtendedEnabled"] = f"{isExtendedEnabled}"
+		if isExtremeEnabled != None:
+			request["isExtremeEnabled"] = f"{isExtremeEnabled}"
+		if isUrlDBEnabled != None:
+			request["isUrlDBEnabled"] = f"{isUrlDBEnabled}"
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if organizationName:
+			request["organizationName"] = f"{organizationName}"
+		if updateMethod:
+			request["updateMethod"] = f"{updateMethod}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def get_signatures(self, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None) -> tuple[bool, None]:
+		'''
+		Class AvSignatureUpdate
+		Description: return av signatures.
+        
+		Args:
+			freeTextSearch (str): pattern of requested text
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_signatures", locals())
+
+		url = '/api/av-signatures-update/signatures'
+		url_params = []
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_signatures_by_type(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class AvSignatureUpdate
+		Description: return av signatures by type.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_signatures_by_type", locals())
+
+		url = '/api/av-signatures-update/signatures-by-type'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def toggle(self, enabled: bool = None, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None) -> tuple[bool, None]:
+		'''
+		Class AvSignatureUpdate
+		Description: Enable / disable feature per organization.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("toggle", locals())
+
+		url = '/api/av-signatures-update/toggle'
+
+		request = {}
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if offset != None:
+			request["offset"] = f"{offset}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if pageSize != None:
+			request["pageSize"] = f"{pageSize}"
+		if sorting:
+			request["sorting"] = f"{sorting}"
+
+		return fortiedr_connection.insert(url, request)
+
+
+
+class CollectorSettings:
+	'''Collector Settings Policy Rest Api Controller'''
+	def assign_policy(self, forceGroupsAssign: bool = None, freeTextSearch: str = None, groupsIds: list = None, id: int = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None) -> tuple[bool, None]:
+		'''
+		Class CollectorSettings
+		Description: assign agent group to policy.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("assign_policy", locals())
+
+		url = '/api/collector-settings/assign-agent-groups'
+
+		request = {}
+		if forceGroupsAssign != None:
+			request["forceGroupsAssign"] = f"{forceGroupsAssign}"
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if groupsIds != None:
+			request["groupsIds"] = groupsIds
+		if id != None:
+			request["id"] = f"{id}"
+		if offset != None:
+			request["offset"] = f"{offset}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if pageSize != None:
+			request["pageSize"] = f"{pageSize}"
+		if sorting:
+			request["sorting"] = f"{sorting}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def clone_policy(self, newPolicyName: str, organization: str, sourcePolicyName: str) -> tuple[bool, list]:
+		'''
+		Class CollectorSettings
+		Description: clone policy.
+        
+		Args:
+			clonePolicyRequest (Object): Check 'clonePolicyRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("clone_policy", locals())
+
+		url = '/api/collector-settings/clone-policy'
+
+		clonePolicyRequest = {}
+		if newPolicyName:
+			clonePolicyRequest["newPolicyName"] = f"{newPolicyName}"
+		if organization:
+			clonePolicyRequest["organization"] = f"{organization}"
+		if sourcePolicyName:
+			clonePolicyRequest["sourcePolicyName"] = f"{sourcePolicyName}"
+
+		return fortiedr_connection.send(url, clonePolicyRequest)
+
+	def get_policies(self, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None) -> tuple[bool, None]:
+		'''
+		Class CollectorSettings
+		Description: return collector settings policies.
+        
+		Args:
+			freeTextSearch (str): pattern of requested text
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_policies", locals())
+
+		url = '/api/collector-settings/policies'
+		url_params = []
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def policy(self, organization: str, deleteAll: bool = None, freeTextSearch: str = None, idToDelete: list = None, requirePolicyAssociation: bool = None) -> tuple[bool, None]:
+		'''
+		Class CollectorSettings
+		Description: Deletes a collector settings policy.
+        
+		Args:
+			deleteAll (bool): Indicate if should delete all matching results (rather than only the selected) 
+			freeTextSearch (str): pattern of policies to delete
+			idToDelete (list): Id's of entities to delete
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			requirePolicyAssociation (bool): require policy association
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("policy", locals())
+
+		url = '/api/collector-settings/policies'
+		url_params = []
+		if deleteAll != None:
+			url_params.append(f'deleteAll={deleteAll}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if idToDelete != None:
+			idToDelete = ",".join(map(str, idToDelete)) if isinstance(idToDelete, list) else idToDelete
+			url_params.append(f'idToDelete={idToDelete}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if requirePolicyAssociation != None:
+			url_params.append(f'requirePolicyAssociation={requirePolicyAssociation}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def state(self, IsDefault: bool = None, closeExistingConnections: bool = None, description: str = None, enabled: bool = None, groupsIds: list = None, id: int = None, name: str = None, organizationId: int = None, organizationName: str = None, policiesIds: list = None, timeConfig: list = None, updateMethod: str = None) -> tuple[bool, list]:
+		'''
+		Class CollectorSettings
+		Description: set policy state.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("state", locals())
+
+		url = '/api/collector-settings/policies/state'
+
+		request = {}
+		if IsDefault != None:
+			request["IsDefault"] = f"{IsDefault}"
+		if closeExistingConnections != None:
+			request["closeExistingConnections"] = f"{closeExistingConnections}"
+		if description:
+			request["description"] = f"{description}"
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if groupsIds != None:
+			request["groupsIds"] = groupsIds
+		if id != None:
+			request["id"] = f"{id}"
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if organizationName:
+			request["organizationName"] = f"{organizationName}"
+		if policiesIds != None:
+			request["policiesIds"] = policiesIds
+		if timeConfig != None:
+			request["timeConfig"] = timeConfig
+		if updateMethod:
+			request["updateMethod"] = f"{updateMethod}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def create_policy(self, name: str, IsDefault: bool = None, closeExistingConnections: bool = None, description: str = None, enabled: bool = None, groupsIds: list = None, id: int = None, organizationId: int = None, organizationName: str = None, timeConfig: list = None, updateMethod: str = None) -> tuple[bool, None]:
+		'''
+		Class CollectorSettings
+		Description: create a collector settings policy.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_policy", locals())
+
+		url = '/api/collector-settings/policy'
+
+		request = {}
+		if IsDefault != None:
+			request["IsDefault"] = f"{IsDefault}"
+		if closeExistingConnections != None:
+			request["closeExistingConnections"] = f"{closeExistingConnections}"
+		if description:
+			request["description"] = f"{description}"
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if groupsIds != None:
+			request["groupsIds"] = groupsIds
+		if id != None:
+			request["id"] = f"{id}"
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if organizationName:
+			request["organizationName"] = f"{organizationName}"
+		if timeConfig != None:
+			request["timeConfig"] = timeConfig
+		if updateMethod:
+			request["updateMethod"] = f"{updateMethod}"
+
+		return fortiedr_connection.send(url, request)
+
+	def get_policy(self, agentGroupsIds: list = None, excludePolicyId: int = None) -> tuple[bool, list]:
+		'''
+		Class CollectorSettings
+		Description: returns existing agent group assignments.
+        
+		Args:
+			agentGroupsIds (list): agent groups id's
+			excludePolicyId (int): exclude policy id
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_policy", locals())
+
+		url = '/api/collector-settings/policy/existing-groups-assignment'
+		url_params = []
+		if agentGroupsIds != None:
+			agentGroupsIds = ",".join(map(str, agentGroupsIds)) if isinstance(agentGroupsIds, list) else agentGroupsIds
+			url_params.append(f'agentGroupsIds={agentGroupsIds}')
+		if excludePolicyId != None:
+			url_params.append(f'excludePolicyId={excludePolicyId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_get_policy(self, id: int, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class CollectorSettings
+		Description: get a collector settings policy.
+        
+		Args:
+			id (int): id
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_get_policy", locals())
+
+		url = f'/api/collector-settings/policy/{id}'
+
+		return fortiedr_connection.get(url, organizationId)
+
+	def update_policy(self, id: int, IsDefault: bool = None, closeExistingConnections: bool = None, description: str = None, enabled: bool = None, groupsIds: list = None, policy_body_id: int = None, name: str = None, organizationId: int = None, organizationName: str = None, timeConfig: list = None, updateMethod: str = None) -> tuple[bool, None]:
+		'''
+		Class CollectorSettings
+		Description: update a collector settings policy.
+        
+		Args:
+			id (int): id
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_policy", locals())
+
+		url = f'/api/collector-settings/policy/{id}'
+
+		request = {}
+		if IsDefault != None:
+			request["IsDefault"] = f"{IsDefault}"
+		if closeExistingConnections != None:
+			request["closeExistingConnections"] = f"{closeExistingConnections}"
+		if description:
+			request["description"] = f"{description}"
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if groupsIds != None:
+			request["groupsIds"] = groupsIds
+		if policy_body_id != None:
+			request["id"] = f"{policy_body_id}"
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if organizationName:
+			request["organizationName"] = f"{organizationName}"
+		if timeConfig != None:
+			request["timeConfig"] = timeConfig
+		if updateMethod:
+			request["updateMethod"] = f"{updateMethod}"
+
+		return fortiedr_connection.insert(url, request)
+
+
+
+class DashboardRestApiController:
+	'''Dashboard Rest Api Controller'''
+	def collectors(self, organization: str, endDate: int = None, key: str = None, os: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return collectors according to group by field.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			os (str): Specifies the OS of the return data
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("collectors", locals())
+
+		url = '/api/dashboard/collectors'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if os != None:
+			url_params.append(f'os={os}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def collectors_by_os(self, organization: str, endDate: int = None, key: str = None, os: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return collectors according to group by field.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			os (str): Specifies the OS of the return data
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("collectors_by_os", locals())
+
+		url = '/api/dashboard/collectors-by-os'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if os != None:
+			url_params.append(f'os={os}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def collectors_by_policies(self, organization: str, endDate: int = None, key: str = None, os: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return collectors by policies.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			os (str): Specifies the OS of the return data
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("collectors_by_policies", locals())
+
+		url = '/api/dashboard/collectors-by-policies'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if os != None:
+			url_params.append(f'os={os}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def collectors_by_version(self, organization: str, endDate: int = None, key: str = None, os: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return collectors according to group by field.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			os (str): Specifies the OS of the return data
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("collectors_by_version", locals())
+
+		url = '/api/dashboard/collectors-by-version'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if os != None:
+			url_params.append(f'os={os}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def com_control_policies(self, organization: str, endDate: int = None, key: str = None, operationMode: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return com control policies.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			operationMode (str): Specifies the operation mode.
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("com_control_policies", locals())
+
+		url = '/api/dashboard/com-control-policies'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if operationMode != None:
+			url_params.append(f'operationMode={operationMode}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def detection_activity(self, organization: str, classification: str = None, endDate: int = None, key: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return detection activity.
+        
+		Args:
+			classification (str): Specifies the event classification.
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("detection_activity", locals())
+
+		url = '/api/dashboard/detection-activity'
+		url_params = []
+		if classification != None:
+			url_params.append(f'classification={classification}')
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def event_classification_distribution(self, organization: str, endDate: int = None, key: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return event classification distribution.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("event_classification_distribution", locals())
+
+		url = '/api/dashboard/event-classification-distribution'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def generate_report(self, request: object) -> tuple[bool, None]:
+		'''
+		Class DashboardRestApiController
+		Description: Export to excel.
+        
+		Args:
+			request (object): request
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("generate_report", locals())
+
+		url = '/api/dashboard/generate-report'
+
+		return fortiedr_connection.send(url, request)
+
+	def get_progress(self, progressBarId: int = None) -> tuple[bool, None]:
+		'''
+		Class DashboardRestApiController
+		Description: Get progress.
+        
+		Args:
+			progressBarId (int): progressBarId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_progress", locals())
+
+		url = '/api/dashboard/get-progress'
+		url_params = []
+		if progressBarId != None:
+			url_params.append(f'progressBarId={progressBarId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def layout_config(self) -> tuple[bool, None]:
+		'''
+		Class DashboardRestApiController
+		Description: Return dashboard layout config.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("layout_config", locals())
+
+		url = '/api/dashboard/layout-config'
+		return fortiedr_connection.get(url)
+
+	def license_capacity_per_organization(self, organization: str, endDate: int = None, key: str = None, selectedOrganization: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return license capacity per organization.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			selectedOrganization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("license_capacity_per_organization", locals())
+
+		url = '/api/dashboard/license-capacity-per-organization'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if selectedOrganization != None:
+			url_params.append(f'selectedOrganization={selectedOrganization}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def license_status_per_organization(self, organization: str, endDate: int = None, key: str = None, selectedOrganization: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class DashboardRestApiController
+		Description: Return license status per organization.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			selectedOrganization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("license_status_per_organization", locals())
+
+		url = '/api/dashboard/license-status-per-organization'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if selectedOrganization != None:
+			url_params.append(f'selectedOrganization={selectedOrganization}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def my_events(self, organization: str, endDate: int = None, key: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return my events.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("my_events", locals())
+
+		url = '/api/dashboard/my-events'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def new_detections(self, organization: str, classification: str = None, endDate: int = None, key: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return new detections.
+        
+		Args:
+			classification (str): Specifies the event classification.
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("new_detections", locals())
+
+		url = '/api/dashboard/new-detections'
+		url_params = []
+		if classification != None:
+			url_params.append(f'classification={classification}')
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def system_components(self, organization: str, endDate: int = None, key: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return system components.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("system_components", locals())
+
+		url = '/api/dashboard/system-components'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def team_workload_overview(self, organization: str, endDate: int = None, incidentHandlingState: str = None, key: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return team workload overview.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			incidentHandlingState (str): Specifies the incident handling state.
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("team_workload_overview", locals())
+
+		url = '/api/dashboard/team-workload-overview'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if incidentHandlingState != None:
+			url_params.append(f'incidentHandlingState={incidentHandlingState}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def top_affected_devices(self, organization: str, endDate: int = None, key: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return top affected devices.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("top_affected_devices", locals())
+
+		url = '/api/dashboard/top-affected-devices'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def top_detection_rule_by_occurrence(self, organization: str, endDate: int = None, key: str = None, numOfResultsToDisplay: int = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return top detection rule by occurrence.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			numOfResultsToDisplay (int): Specifies the num of results to display.
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("top_detection_rule_by_occurrence", locals())
+
+		url = '/api/dashboard/top-detection-rule-by-occurrence'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if numOfResultsToDisplay != None:
+			url_params.append(f'numOfResultsToDisplay={numOfResultsToDisplay}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def top_response_action(self, organization: str, endDate: int = None, key: str = None, size: int = None, sortByField: str = None, sortDirection: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, list]:
+		'''
+		Class DashboardRestApiController
+		Description: Return top response action.
+        
+		Args:
+			endDate (int): Specifies the time filter end date
+			key (str): Specifies the chart key
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			size (int): Specifies the chart number axis items to display
+			sortByField (str): Specifies the sort by field
+			sortDirection (str): Specifies the sort direction
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("top_response_action", locals())
+
+		url = '/api/dashboard/top-response-action'
+		url_params = []
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if key != None:
+			url_params.append(f'key={key}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if size != None:
+			url_params.append(f'size={size}')
+		if sortByField != None:
+			url_params.append(f'sortByField={sortByField}')
+		if sortDirection != None:
+			url_params.append(f'sortDirection={sortDirection}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+
+
+class DistributionLists:
+	'''Distribution Lists Rest Api Controller'''
+	def distribution_lists(self, accountId: int = None, maxResults: int = None, start: int = None) -> tuple[bool, None]:
+		'''
+		Class DistributionLists
+		Description: Return distribution lists.
+        
+		Args:
+			accountId (int): Account Id
+			maxResults (int): Maximum number of results per page
+			start (int): Start index for pagination
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("distribution_lists", locals())
+
+		url = '/api/distribution-lists'
+		url_params = []
+		if accountId != None:
+			url_params.append(f'accountId={accountId}')
+		if maxResults != None:
+			url_params.append(f'maxResults={maxResults}')
+		if start != None:
+			url_params.append(f'start={start}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def distribution_lists_all(self, accountId: int) -> tuple[bool, list]:
+		'''
+		Class DistributionLists
+		Description: Return distribution lists.
+        
+		Args:
+			accountId (int): accountId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("distribution_lists_all", locals())
+
+		url = '/api/distribution-lists/all'
+		url_params = []
+		if accountId != None:
+			url_params.append(f'accountId={accountId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def delete_lists(self, listIds: str) -> tuple[bool, None]:
+		'''
+		Class DistributionLists
+		Description: Delete list.
+        
+		Args:
+			listIds (str): listIds
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_lists", locals())
+
+		url = f'/api/distribution-lists/delete-lists/{listIds}'
+		return fortiedr_connection.delete(url)
+
+	def delete_recipients(self, recipientsIds: str) -> tuple[bool, None]:
+		'''
+		Class DistributionLists
+		Description: Delete recipients.
+        
+		Args:
+			recipientsIds (str): recipientsIds
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_recipients", locals())
+
+		url = f'/api/distribution-lists/delete-recipients/{recipientsIds}'
+		return fortiedr_connection.delete(url)
+
+	def distribution_list_info(self, groupId: int) -> tuple[bool, None]:
+		'''
+		Class DistributionLists
+		Description: Return distribution list info by given list id.
+        
+		Args:
+			groupId (int): groupId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("distribution_list_info", locals())
+
+		url = f'/api/distribution-lists/info/{groupId}'
+		return fortiedr_connection.get(url)
+
+	def recipient_info(self, accountId: int, recipientId: int) -> tuple[bool, None]:
+		'''
+		Class DistributionLists
+		Description: Return recipient info by given recipient id.
+        
+		Args:
+			accountId (int): accountId
+			recipientId (int): recipientId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("recipient_info", locals())
+
+		url = f'/api/distribution-lists/recipient-info/{recipientId}'
+		url_params = []
+		if accountId != None:
+			url_params.append(f'accountId={accountId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def recipients_assignment_info(self, recipientIds: list) -> tuple[bool, None]:
+		'''
+		Class DistributionLists
+		Description: Return assignment info for recipients.
+        
+		Args:
+			recipientIds (list): recipientIds
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("recipients_assignment_info", locals())
+
+		url = '/api/distribution-lists/recipients/assignment-info'
+		url_params = []
+		if recipientIds != None:
+			recipientIds = ",".join(map(str, recipientIds)) if isinstance(recipientIds, list) else recipientIds
+			url_params.append(f'recipientIds={recipientIds}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def recipients_save_assignments(self, contactGroupDisplayItems: list = None, contactIDs: list = None) -> tuple[bool, None]:
+		'''
+		Class DistributionLists
+		Description: Save recipients assignments.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("recipients_save_assignments", locals())
+
+		url = '/api/distribution-lists/recipients/save-assignments'
+
+		request = {}
+		if contactGroupDisplayItems != None:
+			request["contactGroupDisplayItems"] = contactGroupDisplayItems
+		if contactIDs != None:
+			request["contactIDs"] = contactIDs
+
+		return fortiedr_connection.send(url, request)
+
+	def save_list(self, accountId: int = None, accountName: str = None, allRecipientsGroup: bool = None, assigned: bool = None, attachJson: bool = None, contacts: list = None, id: int = None, name: str = None, securityEventsNotification: bool = None, systemEventsNotification: bool = None) -> tuple[bool, None]:
+		'''
+		Class DistributionLists
+		Description: Save list.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("save_list", locals())
+
+		url = '/api/distribution-lists/save-list'
+
+		request = {}
+		if accountId != None:
+			request["accountId"] = f"{accountId}"
+		if accountName:
+			request["accountName"] = f"{accountName}"
+		if allRecipientsGroup != None:
+			request["allRecipientsGroup"] = f"{allRecipientsGroup}"
+		if assigned != None:
+			request["assigned"] = f"{assigned}"
+		if attachJson != None:
+			request["attachJson"] = f"{attachJson}"
+		if contacts != None:
+			request["contacts"] = contacts
+		if id != None:
+			request["id"] = f"{id}"
+		if name:
+			request["name"] = f"{name}"
+		if securityEventsNotification != None:
+			request["securityEventsNotification"] = f"{securityEventsNotification}"
+		if systemEventsNotification != None:
+			request["systemEventsNotification"] = f"{systemEventsNotification}"
+
+		return fortiedr_connection.send(url, request)
+
+	def save_recipient(self, email: str, firstName: str, lastName: str, accountId: int = None, accountName: str = None, contactGroups: list = None, id: int = None, title: str = None) -> tuple[bool, None]:
+		'''
+		Class DistributionLists
+		Description: Save recipient.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("save_recipient", locals())
+
+		url = '/api/distribution-lists/save-recipient'
+
+		request = {}
+		if accountId != None:
+			request["accountId"] = f"{accountId}"
+		if accountName:
+			request["accountName"] = f"{accountName}"
+		if contactGroups != None:
+			request["contactGroups"] = contactGroups
+		if email:
+			request["email"] = f"{email}"
+		if firstName:
+			request["firstName"] = f"{firstName}"
+		if id != None:
+			request["id"] = f"{id}"
+		if lastName:
+			request["lastName"] = f"{lastName}"
+		if title:
+			request["title"] = f"{title}"
+
+		return fortiedr_connection.send(url, request)
+
+	def update_notification(self, listId: int, accountId: int = None, securityEventsNotification: bool = None, systemEventsNotification: bool = None) -> tuple[bool, None]:
+		'''
+		Class DistributionLists
+		Description: Update notification.
+        
+		Args:
+			listId (int): listId
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_notification", locals())
+
+		url = f'/api/distribution-lists/update-notification/{listId}'
+
+		request = {}
+		if accountId != None:
+			request["accountId"] = f"{accountId}"
+		if securityEventsNotification != None:
+			request["securityEventsNotification"] = f"{securityEventsNotification}"
+		if systemEventsNotification != None:
+			request["systemEventsNotification"] = f"{systemEventsNotification}"
+
+		return fortiedr_connection.insert(url, request)
+
+
+
+class ExclusionsRestApiController:
+	'''Exclusions Rest Api Controller'''
+	def Save_exclusions(self, exclusions: list = None, exclusionsListId: int = None, organizationId: int = None) -> tuple[bool, list]:
+		'''
+		Class ExclusionsRestApiController
+		Description: Save security exclusions.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("Save_exclusions", locals())
+
+		url = '/api/exclusions'
+
+		request = {}
+		if exclusions != None:
+			request["exclusions"] = exclusions
+		if exclusionsListId != None:
+			request["exclusionsListId"] = f"{exclusionsListId}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+
+		return fortiedr_connection.send(url, request)
+
+	def Create_exclusions_list(self, name: str = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class ExclusionsRestApiController
+		Description: Creates a new security exclusions list.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Create_exclusions_list", locals())
+
+		url = '/api/exclusions/lists'
+
+		request = {}
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+
+		return fortiedr_connection.send(url, request)
+
+	def Get_exclusions_lists(self, organizationId: int) -> tuple[bool, list]:
+		'''
+		Class ExclusionsRestApiController
+		Description: Returns all security exclusion lists for the given organization.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("Get_exclusions_lists", locals())
+
+		url = f'/api/exclusions/lists/{organizationId}'
+		return fortiedr_connection.get(url)
+
+	def Delete_exclusions_list(self, organizationId: int, policyId: int) -> tuple[bool, None]:
+		'''
+		Class ExclusionsRestApiController
+		Description: Deletes the security exclusions list for the given policy ID.
+        
+		Args:
+			organizationId (int): organizationId
+			policyId (int): policyId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Delete_exclusions_list", locals())
+
+		url = f'/api/exclusions/lists/{organizationId}/{policyId}'
+		return fortiedr_connection.delete(url)
+
+	def Delete_exclusions(self, organizationId: int, ruleIds: str) -> tuple[bool, None]:
+		'''
+		Class ExclusionsRestApiController
+		Description: Deletes the specified security exclusions by their rule IDs.
+        
+		Args:
+			organizationId (int): organizationId
+			ruleIds (str): ruleIds
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Delete_exclusions", locals())
+
+		url = f'/api/exclusions/lists/{organizationId}/{ruleIds}'
+		return fortiedr_connection.delete(url)
+
+
+
+class Mobile:
+	'''Mobile Exclusions Rest Api Controller'''
+	def Save_exclusions_Mobile(self, exclusionGroupId: int = None, exclusions: list = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: Save security exclusions (mobile).
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Save_exclusions_Mobile", locals())
+
+		url = '/api/exclusions/mobile'
+
+		request = {}
+		if exclusionGroupId != None:
+			request["exclusionGroupId"] = f"{exclusionGroupId}"
+		if exclusions != None:
+			request["exclusions"] = exclusions
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+
+		return fortiedr_connection.send(url, request)
+
+	def Create_exclusions_list_Mobile(self, name: str = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: Creates a new security exclusions list (mobile).
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Create_exclusions_list_Mobile", locals())
+
+		url = '/api/exclusions/mobile/lists'
+
+		request = {}
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+
+		return fortiedr_connection.send(url, request)
+
+	def Get_exclusions_lists_Mobile(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: Returns all security exclusion lists for the given organization (mobile).
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Get_exclusions_lists_Mobile", locals())
+
+		url = f'/api/exclusions/mobile/lists/{organizationId}'
+		return fortiedr_connection.get(url)
+
+	def Delete_exclusions_list_Mobile(self, organizationId: int, policyId: int) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: Deletes the security exclusions list for the given policy ID (mobile).
+        
+		Args:
+			organizationId (int): organizationId
+			policyId (int): policyId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Delete_exclusions_list_Mobile", locals())
+
+		url = f'/api/exclusions/mobile/lists/{organizationId}/{policyId}'
+		return fortiedr_connection.delete(url)
+
+	def incidents(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, tags: list = None, tagsIds: list = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: Get incidents.
+        
+		Args:
+			advancedFilters (str): Specifies advanced filters
+			endDate (int): Specifies the time filter end date
+			freeTextFilters (list): Specifies the free text search filter
+			freeTextSearch (str): Specifies the free text search
+			incidentIds (list): Specifies the id's of the incidents
+			isAllIncidents (bool): Specifies the all incidents under the filters/search criteria are selected
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on
+			startDate (int): Specifies the time filter start date
+			statusFilter (str): Specifies the incidents status filter
+			tags (list): Specifies the tags
+			tagsIds (list): Specifies the tags ids
+			timeFilter (str): Specifies the incidents time filter
+			typeFilter (str): Specifies the incidents type filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("incidents", locals())
+
+		url = '/api/incidents/mobile'
+		url_params = []
+		if advancedFilters != None:
+			url_params.append(f'advancedFilters={advancedFilters}')
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if freeTextFilters != None:
+			freeTextFilters = ",".join(freeTextFilters) if isinstance(freeTextFilters, list) else freeTextFilters
+			url_params.append(f'freeTextFilters={freeTextFilters}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if incidentIds != None:
+			incidentIds = ",".join(map(str, incidentIds)) if isinstance(incidentIds, list) else incidentIds
+			url_params.append(f'incidentIds={incidentIds}')
+		if isAllIncidents != None:
+			url_params.append(f'isAllIncidents={isAllIncidents}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if statusFilter != None:
+			url_params.append(f'statusFilter={statusFilter}')
+		if tags != None:
+			tags = ",".join(tags) if isinstance(tags, list) else tags
+			url_params.append(f'tags={tags}')
+		if tagsIds != None:
+			tagsIds = ",".join(map(str, tagsIds)) if isinstance(tagsIds, list) else tagsIds
+			url_params.append(f'tagsIds={tagsIds}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		if typeFilter != None:
+			url_params.append(f'typeFilter={typeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def delete_incidents(self, advancedFilters: str = None, allSelectedEventsParentIds: list = None, endDate: int = None, eventIds: list = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, tags: list = None, tagsIds: list = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: Delete incidents.
+        
+		Args:
+			advancedFilters (str): Specifies advanced filters
+			allSelectedEventsParentIds (list): Meaning all those incidents' events under the filters/search criteria are selected. Specifies the events parent incidents ids
+			endDate (int): Specifies the time filter end date
+			eventIds (list): Specifies the IDs of the events
+			freeTextFilters (list): Specifies the free text search filter
+			freeTextSearch (str): Specifies the free text search
+			incidentIds (list): Specifies the id's of the incidents
+			isAllIncidents (bool): Specifies the all incidents under the filters/search criteria are selected
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on
+			startDate (int): Specifies the time filter start date
+			statusFilter (str): Specifies the incidents status filter
+			tags (list): Specifies the tags
+			tagsIds (list): Specifies the tags ids
+			timeFilter (str): Specifies the incidents time filter
+			typeFilter (str): Specifies the incidents type filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_incidents", locals())
+
+		url = '/api/incidents/mobile'
+		url_params = []
+		if advancedFilters != None:
+			url_params.append(f'advancedFilters={advancedFilters}')
+		if allSelectedEventsParentIds != None:
+			allSelectedEventsParentIds = ",".join(map(str, allSelectedEventsParentIds)) if isinstance(allSelectedEventsParentIds, list) else allSelectedEventsParentIds
+			url_params.append(f'allSelectedEventsParentIds={allSelectedEventsParentIds}')
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if eventIds != None:
+			eventIds = ",".join(map(str, eventIds)) if isinstance(eventIds, list) else eventIds
+			url_params.append(f'eventIds={eventIds}')
+		if freeTextFilters != None:
+			freeTextFilters = ",".join(freeTextFilters) if isinstance(freeTextFilters, list) else freeTextFilters
+			url_params.append(f'freeTextFilters={freeTextFilters}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if incidentIds != None:
+			incidentIds = ",".join(map(str, incidentIds)) if isinstance(incidentIds, list) else incidentIds
+			url_params.append(f'incidentIds={incidentIds}')
+		if isAllIncidents != None:
+			url_params.append(f'isAllIncidents={isAllIncidents}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if statusFilter != None:
+			url_params.append(f'statusFilter={statusFilter}')
+		if tags != None:
+			tags = ",".join(tags) if isinstance(tags, list) else tags
+			url_params.append(f'tags={tags}')
+		if tagsIds != None:
+			tagsIds = ",".join(map(str, tagsIds)) if isinstance(tagsIds, list) else tagsIds
+			url_params.append(f'tagsIds={tagsIds}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		if typeFilter != None:
+			url_params.append(f'typeFilter={typeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def update_modification_status(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None, userId: int = None, userName: str = None) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: update modification status.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_modification_status", locals())
+
+		url = '/api/incidents/mobile/assign-user'
+
+		request = {}
+		if advancedFilters:
+			request["advancedFilters"] = f"{advancedFilters}"
+		if endDate != None:
+			request["endDate"] = f"{endDate}"
+		if freeTextFilters != None:
+			request["freeTextFilters"] = freeTextFilters
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if incidentIds != None:
+			request["incidentIds"] = incidentIds
+		if isAllIncidents != None:
+			request["isAllIncidents"] = f"{isAllIncidents}"
+		if offset != None:
+			request["offset"] = f"{offset}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if pageSize != None:
+			request["pageSize"] = f"{pageSize}"
+		if sorting:
+			request["sorting"] = f"{sorting}"
+		if startDate != None:
+			request["startDate"] = f"{startDate}"
+		if statusFilter:
+			request["statusFilter"] = f"{statusFilter}"
+		if timeFilter:
+			request["timeFilter"] = f"{timeFilter}"
+		if typeFilter:
+			request["typeFilter"] = f"{typeFilter}"
+		if userId != None:
+			request["userId"] = f"{userId}"
+		if userName:
+			request["userName"] = f"{userName}"
+
+		return fortiedr_connection.send(url, request)
+
+	def events_handle(self, eventIds: list, classification: str = None, comment: str = None, handlingState: str = None, muteDurationTime: str = None, muteEnabled: bool = None) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: Handle events.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("events_handle", locals())
+
+		url = '/api/incidents/mobile/events/handle'
+
+		request = {}
+		if classification:
+			request["classification"] = f"{classification}"
+		if comment:
+			request["comment"] = f"{comment}"
+		if eventIds != None:
+			request["eventIds"] = eventIds
+		if handlingState:
+			request["handlingState"] = f"{handlingState}"
+		if muteDurationTime:
+			request["muteDurationTime"] = f"{muteDurationTime}"
+		if muteEnabled != None:
+			request["muteEnabled"] = f"{muteEnabled}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def generate_report(self, advancedFilters: str = None, allSelectedEventsParentIds: list = None, endDate: int = None, eventIds: list = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, tags: list = None, tagsIds: list = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: Generate mobile incidents report.
+        
+		Args:
+			reportRequest (Object): Check 'reportRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("generate_report", locals())
+
+		url = '/api/incidents/mobile/generate-report'
+
+		reportRequest = {}
+		if advancedFilters:
+			reportRequest["advancedFilters"] = f"{advancedFilters}"
+		if allSelectedEventsParentIds != None:
+			reportRequest["allSelectedEventsParentIds"] = allSelectedEventsParentIds
+		if endDate != None:
+			reportRequest["endDate"] = f"{endDate}"
+		if eventIds != None:
+			reportRequest["eventIds"] = eventIds
+		if freeTextFilters != None:
+			reportRequest["freeTextFilters"] = freeTextFilters
+		if freeTextSearch:
+			reportRequest["freeTextSearch"] = f"{freeTextSearch}"
+		if incidentIds != None:
+			reportRequest["incidentIds"] = incidentIds
+		if isAllIncidents != None:
+			reportRequest["isAllIncidents"] = f"{isAllIncidents}"
+		if offset != None:
+			reportRequest["offset"] = f"{offset}"
+		if organizationId != None:
+			reportRequest["organizationId"] = f"{organizationId}"
+		if pageSize != None:
+			reportRequest["pageSize"] = f"{pageSize}"
+		if sorting:
+			reportRequest["sorting"] = f"{sorting}"
+		if startDate != None:
+			reportRequest["startDate"] = f"{startDate}"
+		if statusFilter:
+			reportRequest["statusFilter"] = f"{statusFilter}"
+		if tags != None:
+			reportRequest["tags"] = tags
+		if tagsIds != None:
+			reportRequest["tagsIds"] = tagsIds
+		if timeFilter:
+			reportRequest["timeFilter"] = f"{timeFilter}"
+		if typeFilter:
+			reportRequest["typeFilter"] = f"{typeFilter}"
+
+		return fortiedr_connection.send(url, reportRequest)
+
+	def incident_handle(self, classification: str = None, comment: str = None, eventIds: list = None, handlingState: str = None, incidentId: int = None, userId: int = None, userName: str = None) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: Handle incidents.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("incident_handle", locals())
+
+		url = '/api/incidents/mobile/incident-handle'
+
+		request = {}
+		if classification:
+			request["classification"] = f"{classification}"
+		if comment:
+			request["comment"] = f"{comment}"
+		if eventIds != None:
+			request["eventIds"] = eventIds
+		if handlingState:
+			request["handlingState"] = f"{handlingState}"
+		if incidentId != None:
+			request["incidentId"] = f"{incidentId}"
+		if userId != None:
+			request["userId"] = f"{userId}"
+		if userName:
+			request["userName"] = f"{userName}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def get_incident_by_id(self, incidentId: int) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: Get incident by id.
+        
+		Args:
+			incidentId (int): incidentId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_incident_by_id", locals())
+
+		url = f'/api/incidents/mobile/incident/{incidentId}'
+		return fortiedr_connection.get(url)
+
+	def create_update_modification_status(self, incidentId: int, modificationStatus: str) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: update modification status.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_update_modification_status", locals())
+
+		url = '/api/incidents/mobile/modification-status'
+
+		request = {}
+		if incidentId != None:
+			request["incidentId"] = f"{incidentId}"
+		if modificationStatus:
+			request["modificationStatus"] = f"{modificationStatus}"
+
+		return fortiedr_connection.send(url, request)
+
+	def get_incident_audit_history(self, incidentId: int, events: list = None) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: get incident audit history.
+        
+		Args:
+			events (list): events
+			incidentId (int): incidentId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_incident_audit_history", locals())
+
+		url = f'/api/incidents/mobile/{incidentId}/audit-history'
+		url_params = []
+		if events != None:
+			events = ",".join(map(str, events)) if isinstance(events, list) else events
+			url_params.append(f'events={events}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def events(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class Mobile
+		Description: Get events.
+        
+		Args:
+			advancedFilters (str): Specifies advanced filters
+			endDate (int): Specifies the time filter end date
+			freeTextFilters (list): Specifies the free text search filter
+			freeTextSearch (str): Specifies the free text search
+			incidentIds (list): Specifies the id's of the incidents
+			isAllIncidents (bool): Specifies the all incidents under the filters/search criteria are selected
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on
+			startDate (int): Specifies the time filter start date
+			statusFilter (str): Specifies the incidents status filter
+			timeFilter (str): Specifies the incidents time filter
+			typeFilter (str): Specifies the incidents type filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("events", locals())
+
+		url = '/api/incidents/mobile/{incidentId}/events'
+		url_params = []
+		if advancedFilters != None:
+			url_params.append(f'advancedFilters={advancedFilters}')
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if freeTextFilters != None:
+			freeTextFilters = ",".join(freeTextFilters) if isinstance(freeTextFilters, list) else freeTextFilters
+			url_params.append(f'freeTextFilters={freeTextFilters}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if incidentIds != None:
+			incidentIds = ",".join(map(str, incidentIds)) if isinstance(incidentIds, list) else incidentIds
+			url_params.append(f'incidentIds={incidentIds}')
+		if isAllIncidents != None:
+			url_params.append(f'isAllIncidents={isAllIncidents}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if statusFilter != None:
+			url_params.append(f'statusFilter={statusFilter}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		if typeFilter != None:
+			url_params.append(f'typeFilter={typeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+
+
+class FeaturesRestApiController:
+	'''Features Rest Api Controller'''
+	def list_features(self) -> tuple[bool, list]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API call outputs a list of the features in the system..
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("list_features", locals())
+
+		url = '/api/features'
+		return fortiedr_connection.get(url)
+
+	def create_feature(self, enabled: bool, name: str, description: str = None, strategy: object = None) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API create feature in the system..
+        
+		Args:
+			item (Object): Check 'item' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_feature", locals())
+
+		url = '/api/features'
+
+		item = {}
+		if description:
+			item["description"] = f"{description}"
+		if enabled != None:
+			item["enabled"] = f"{enabled}"
+		if name:
+			item["name"] = f"{name}"
+		if strategy != None:
+			item["strategy"] = strategy
+
+		return fortiedr_connection.send(url, item)
+
+	def features_state(self, organizationId: int, featureName: str = None) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API retrieve feature state by account..
+        
+		Args:
+			featureName (str): featureName
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("features_state", locals())
+
+		url = '/api/features/features-state'
+		url_params = []
+		if featureName != None:
+			url_params.append(f'featureName={featureName}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def features_url(self) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API retrieve urls associated with feature..
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("features_url", locals())
+
+		url = '/api/features/features-url'
+		return fortiedr_connection.get(url)
+
+	def strategy_types(self) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: Retrieves all strategy types that exist in this instance, along with their descriptions..
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("strategy_types", locals())
+
+		url = '/api/features/strategy-types'
+		return fortiedr_connection.get(url)
+
+	def get_feature(self, featureName: str) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API call outputs a feature by feature name.
+        
+		Args:
+			featureName (str): featureName
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_feature", locals())
+
+		url = f'/api/features/{featureName}'
+		return fortiedr_connection.get(url)
+
+	def update_feature(self, featureName: str, enabled: bool, name: str, description: str = None, strategy: object = None) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API update feature in the system..
+        
+		Args:
+			featureName (str): featureName
+			item (Object): Check 'item' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_feature", locals())
+
+		url = f'/api/features/{featureName}'
+
+		item = {}
+		if description:
+			item["description"] = f"{description}"
+		if enabled != None:
+			item["enabled"] = f"{enabled}"
+		if name:
+			item["name"] = f"{name}"
+		if strategy != None:
+			item["strategy"] = strategy
+
+		return fortiedr_connection.insert(url, item)
+
+	def delete_feature(self, featureName: str) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API delete feature in the system..
+        
+		Args:
+			featureName (str): featureName
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_feature", locals())
+
+		url = f'/api/features/{featureName}'
+		return fortiedr_connection.delete(url)
+
+	def add_accounts(self, accountIds: list, featureName: str) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API add accounts to feature.
+        
+		Args:
+			accountIds (list): accountIds
+			featureName (str): featureName
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("add_accounts", locals())
+
+		url = f'/api/features/{featureName}/accounts'
+
+		return fortiedr_connection.insert(url, accountIds)
+
+	def remove_accounts(self, accountIds: list, featureName: str) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API remove accounts to feature.
+        
+		Args:
+			accountIds (list): accountIds
+			featureName (str): featureName
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("remove_accounts", locals())
+
+		url = f'/api/features/{featureName}/accounts'
+
+		return fortiedr_connection.delete(url, accountIds)
+
+	def disable_feature(self, featureName: str) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API disable a feature flag..
+        
+		Args:
+			featureName (str): featureName
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("disable_feature", locals())
+
+		url = f'/api/features/{featureName}/off'
+		return fortiedr_connection.insert(url)
+
+	def enable_feature(self, featureName: str) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API enable a feature flag..
+        
+		Args:
+			featureName (str): featureName
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("enable_feature", locals())
+
+		url = f'/api/features/{featureName}/on'
+		return fortiedr_connection.insert(url)
+
+	def add_feature_parameters(self, featureName: str, parameters: list = None) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API update feature with an additional parameters..
+        
+		Args:
+			featureName (str): featureName
+			item (Object): Check 'item' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("add_feature_parameters", locals())
+
+		url = f'/api/features/{featureName}/parameters'
+
+		item = {}
+		if parameters != None:
+			item["parameters"] = parameters
+
+		return fortiedr_connection.insert(url, item)
+
+	def remove_feature_parameters(self, featureName: str, parameters: list = None) -> tuple[bool, None]:
+		'''
+		Class FeaturesRestApiController
+		Description: This API removes parameters from feature..
+        
+		Args:
+			featureName (str): featureName
+			item (Object): Check 'item' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("remove_feature_parameters", locals())
+
+		url = f'/api/features/{featureName}/parameters'
+
+		item = {}
+		if parameters != None:
+			item["parameters"] = parameters
+
+		return fortiedr_connection.delete(url, item)
+
+
+
+class ForensicsRestApiController:
+	'''Forensics Rest Api Controller'''
+	def get_events(self, advancedFilters: str = None, endDate: int = None, eventIds: list = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, offset: int = None, organizationId: int = None, pageSize: int = None, selectedEventIds: list = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class ForensicsRestApiController
+		Description: Returns forensic events filtered according to the given request parameters.
+        
+		Args:
+			forensicsEventsRequest (Object): Check 'forensicsEventsRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_events", locals())
+
+		url = '/api/forensics/get-events'
+
+		forensicsEventsRequest = {}
+		if advancedFilters:
+			forensicsEventsRequest["advancedFilters"] = f"{advancedFilters}"
+		if endDate != None:
+			forensicsEventsRequest["endDate"] = f"{endDate}"
+		if eventIds != None:
+			forensicsEventsRequest["eventIds"] = eventIds
+		if freeTextFilters != None:
+			forensicsEventsRequest["freeTextFilters"] = freeTextFilters
+		if freeTextSearch:
+			forensicsEventsRequest["freeTextSearch"] = f"{freeTextSearch}"
+		if incidentIds != None:
+			forensicsEventsRequest["incidentIds"] = incidentIds
+		if offset != None:
+			forensicsEventsRequest["offset"] = f"{offset}"
+		if organizationId != None:
+			forensicsEventsRequest["organizationId"] = f"{organizationId}"
+		if pageSize != None:
+			forensicsEventsRequest["pageSize"] = f"{pageSize}"
+		if selectedEventIds != None:
+			forensicsEventsRequest["selectedEventIds"] = selectedEventIds
+		if sorting:
+			forensicsEventsRequest["sorting"] = f"{sorting}"
+		if startDate != None:
+			forensicsEventsRequest["startDate"] = f"{startDate}"
+		if statusFilter:
+			forensicsEventsRequest["statusFilter"] = f"{statusFilter}"
+		if timeFilter:
+			forensicsEventsRequest["timeFilter"] = f"{timeFilter}"
+		if typeFilter:
+			forensicsEventsRequest["typeFilter"] = f"{typeFilter}"
+
+		return fortiedr_connection.send(url, forensicsEventsRequest)
+
+
+
+class Incidents:
+	'''Incidents Rest Api Controller'''
+	def incidents(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, tags: list = None, tagsIds: list = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Get incidents.
+        
+		Args:
+			advancedFilters (str): Specifies advanced filters
+			endDate (int): Specifies the time filter end date
+			freeTextFilters (list): Specifies the free text search filter
+			freeTextSearch (str): Specifies the free text search
+			incidentIds (list): Specifies the id's of the incidents
+			isAllIncidents (bool): Specifies the all incidents under the filters/search criteria are selected
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on
+			startDate (int): Specifies the time filter start date
+			statusFilter (str): Specifies the incidents status filter
+			tags (list): Specifies the tags
+			tagsIds (list): Specifies the tags ids
+			timeFilter (str): Specifies the incidents time filter
+			typeFilter (str): Specifies the incidents type filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("incidents", locals())
+
+		url = '/api/incidents'
+		url_params = []
+		if advancedFilters != None:
+			url_params.append(f'advancedFilters={advancedFilters}')
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if freeTextFilters != None:
+			freeTextFilters = ",".join(freeTextFilters) if isinstance(freeTextFilters, list) else freeTextFilters
+			url_params.append(f'freeTextFilters={freeTextFilters}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if incidentIds != None:
+			incidentIds = ",".join(map(str, incidentIds)) if isinstance(incidentIds, list) else incidentIds
+			url_params.append(f'incidentIds={incidentIds}')
+		if isAllIncidents != None:
+			url_params.append(f'isAllIncidents={isAllIncidents}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if statusFilter != None:
+			url_params.append(f'statusFilter={statusFilter}')
+		if tags != None:
+			tags = ",".join(tags) if isinstance(tags, list) else tags
+			url_params.append(f'tags={tags}')
+		if tagsIds != None:
+			tagsIds = ",".join(map(str, tagsIds)) if isinstance(tagsIds, list) else tagsIds
+			url_params.append(f'tagsIds={tagsIds}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		if typeFilter != None:
+			url_params.append(f'typeFilter={typeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def delete_incidents(self, advancedFilters: str = None, allSelectedEventsParentIds: list = None, endDate: int = None, eventIds: list = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, tags: list = None, tagsIds: list = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Delete incidents.
+        
+		Args:
+			advancedFilters (str): Specifies advanced filters
+			allSelectedEventsParentIds (list): Meaning all those incidents' events under the filters/search criteria are selected. Specifies the events parent incidents ids
+			endDate (int): Specifies the time filter end date
+			eventIds (list): Specifies the IDs of the events
+			freeTextFilters (list): Specifies the free text search filter
+			freeTextSearch (str): Specifies the free text search
+			incidentIds (list): Specifies the id's of the incidents
+			isAllIncidents (bool): Specifies the all incidents under the filters/search criteria are selected
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on
+			startDate (int): Specifies the time filter start date
+			statusFilter (str): Specifies the incidents status filter
+			tags (list): Specifies the tags
+			tagsIds (list): Specifies the tags ids
+			timeFilter (str): Specifies the incidents time filter
+			typeFilter (str): Specifies the incidents type filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_incidents", locals())
+
+		url = '/api/incidents'
+		url_params = []
+		if advancedFilters != None:
+			url_params.append(f'advancedFilters={advancedFilters}')
+		if allSelectedEventsParentIds != None:
+			allSelectedEventsParentIds = ",".join(map(str, allSelectedEventsParentIds)) if isinstance(allSelectedEventsParentIds, list) else allSelectedEventsParentIds
+			url_params.append(f'allSelectedEventsParentIds={allSelectedEventsParentIds}')
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if eventIds != None:
+			eventIds = ",".join(map(str, eventIds)) if isinstance(eventIds, list) else eventIds
+			url_params.append(f'eventIds={eventIds}')
+		if freeTextFilters != None:
+			freeTextFilters = ",".join(freeTextFilters) if isinstance(freeTextFilters, list) else freeTextFilters
+			url_params.append(f'freeTextFilters={freeTextFilters}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if incidentIds != None:
+			incidentIds = ",".join(map(str, incidentIds)) if isinstance(incidentIds, list) else incidentIds
+			url_params.append(f'incidentIds={incidentIds}')
+		if isAllIncidents != None:
+			url_params.append(f'isAllIncidents={isAllIncidents}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if statusFilter != None:
+			url_params.append(f'statusFilter={statusFilter}')
+		if tags != None:
+			tags = ",".join(tags) if isinstance(tags, list) else tags
+			url_params.append(f'tags={tags}')
+		if tagsIds != None:
+			tagsIds = ",".join(map(str, tagsIds)) if isinstance(tagsIds, list) else tagsIds
+			url_params.append(f'tagsIds={tagsIds}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		if typeFilter != None:
+			url_params.append(f'typeFilter={typeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def update_user_assignment(self, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None, userId: int = None, userName: str = None) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: update user assignment.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_user_assignment", locals())
+
+		url = '/api/incidents/assign-user'
+
+		request = {}
+		if advancedFilters:
+			request["advancedFilters"] = f"{advancedFilters}"
+		if endDate != None:
+			request["endDate"] = f"{endDate}"
+		if freeTextFilters != None:
+			request["freeTextFilters"] = freeTextFilters
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if incidentIds != None:
+			request["incidentIds"] = incidentIds
+		if isAllIncidents != None:
+			request["isAllIncidents"] = f"{isAllIncidents}"
+		if offset != None:
+			request["offset"] = f"{offset}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if pageSize != None:
+			request["pageSize"] = f"{pageSize}"
+		if sorting:
+			request["sorting"] = f"{sorting}"
+		if startDate != None:
+			request["startDate"] = f"{startDate}"
+		if statusFilter:
+			request["statusFilter"] = f"{statusFilter}"
+		if timeFilter:
+			request["timeFilter"] = f"{timeFilter}"
+		if typeFilter:
+			request["typeFilter"] = f"{typeFilter}"
+		if userId != None:
+			request["userId"] = f"{userId}"
+		if userName:
+			request["userName"] = f"{userName}"
+
+		return fortiedr_connection.send(url, request)
+
+	def events_handle(self, eventIds: list, classification: str = None, comment: str = None, handlingState: str = None, muteDurationTime: str = None, muteEnabled: bool = None) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Handle events.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("events_handle", locals())
+
+		url = '/api/incidents/events/handle'
+
+		request = {}
+		if classification:
+			request["classification"] = f"{classification}"
+		if comment:
+			request["comment"] = f"{comment}"
+		if eventIds != None:
+			request["eventIds"] = eventIds
+		if handlingState:
+			request["handlingState"] = f"{handlingState}"
+		if muteDurationTime:
+			request["muteDurationTime"] = f"{muteDurationTime}"
+		if muteEnabled != None:
+			request["muteEnabled"] = f"{muteEnabled}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def get_event_by_id(self, eventId: int) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Get event by id.
+        
+		Args:
+			eventId (int): eventId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_event_by_id", locals())
+
+		url = f'/api/incidents/events/{eventId}'
+		return fortiedr_connection.get(url)
+
+	def raw_events(self, eventId: int, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Get raw events.
+        
+		Args:
+			advancedFilters (str): Specifies advanced filters
+			endDate (int): Specifies the time filter end date
+			eventId (int): eventId
+			freeTextFilters (list): Specifies the free text search filter
+			freeTextSearch (str): Specifies the free text search
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on
+			startDate (int): Specifies the time filter start date
+			statusFilter (str): Specifies the incidents status filter
+			timeFilter (str): Specifies the incidents time filter
+			typeFilter (str): Specifies the incidents type filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("raw_events", locals())
+
+		url = f'/api/incidents/events/{eventId}/raw-events'
+		url_params = []
+		if advancedFilters != None:
+			url_params.append(f'advancedFilters={advancedFilters}')
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if freeTextFilters != None:
+			freeTextFilters = ",".join(freeTextFilters) if isinstance(freeTextFilters, list) else freeTextFilters
+			url_params.append(f'freeTextFilters={freeTextFilters}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if statusFilter != None:
+			url_params.append(f'statusFilter={statusFilter}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		if typeFilter != None:
+			url_params.append(f'typeFilter={typeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def create_incidents(self, advancedFilters: str = None, allSelectedEventsParentIds: list = None, endDate: int = None, eventIds: list = None, freeTextFilters: list = None, freeTextSearch: str = None, incidentIds: list = None, isAllIncidents: bool = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, tags: list = None, tagsIds: list = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: exports incidents.
+        
+		Args:
+			reportRequest (Object): Check 'reportRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_incidents", locals())
+
+		url = '/api/incidents/generate-report'
+
+		reportRequest = {}
+		if advancedFilters:
+			reportRequest["advancedFilters"] = f"{advancedFilters}"
+		if allSelectedEventsParentIds != None:
+			reportRequest["allSelectedEventsParentIds"] = allSelectedEventsParentIds
+		if endDate != None:
+			reportRequest["endDate"] = f"{endDate}"
+		if eventIds != None:
+			reportRequest["eventIds"] = eventIds
+		if freeTextFilters != None:
+			reportRequest["freeTextFilters"] = freeTextFilters
+		if freeTextSearch:
+			reportRequest["freeTextSearch"] = f"{freeTextSearch}"
+		if incidentIds != None:
+			reportRequest["incidentIds"] = incidentIds
+		if isAllIncidents != None:
+			reportRequest["isAllIncidents"] = f"{isAllIncidents}"
+		if offset != None:
+			reportRequest["offset"] = f"{offset}"
+		if organizationId != None:
+			reportRequest["organizationId"] = f"{organizationId}"
+		if pageSize != None:
+			reportRequest["pageSize"] = f"{pageSize}"
+		if sorting:
+			reportRequest["sorting"] = f"{sorting}"
+		if startDate != None:
+			reportRequest["startDate"] = f"{startDate}"
+		if statusFilter:
+			reportRequest["statusFilter"] = f"{statusFilter}"
+		if tags != None:
+			reportRequest["tags"] = tags
+		if tagsIds != None:
+			reportRequest["tagsIds"] = tagsIds
+		if timeFilter:
+			reportRequest["timeFilter"] = f"{timeFilter}"
+		if typeFilter:
+			reportRequest["typeFilter"] = f"{typeFilter}"
+
+		return fortiedr_connection.send(url, reportRequest)
+
+	def incident_handle(self, classification: str = None, comment: str = None, eventIds: list = None, handlingState: str = None, incidentId: int = None, userId: int = None, userName: str = None) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Handle incidents.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("incident_handle", locals())
+
+		url = '/api/incidents/incident-handle'
+
+		request = {}
+		if classification:
+			request["classification"] = f"{classification}"
+		if comment:
+			request["comment"] = f"{comment}"
+		if eventIds != None:
+			request["eventIds"] = eventIds
+		if handlingState:
+			request["handlingState"] = f"{handlingState}"
+		if incidentId != None:
+			request["incidentId"] = f"{incidentId}"
+		if userId != None:
+			request["userId"] = f"{userId}"
+		if userName:
+			request["userName"] = f"{userName}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def update_modification_status(self, incidentId: int, modificationStatus: str) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: update modification status.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_modification_status", locals())
+
+		url = '/api/incidents/modification-status'
+
+		request = {}
+		if incidentId != None:
+			request["incidentId"] = f"{incidentId}"
+		if modificationStatus:
+			request["modificationStatus"] = f"{modificationStatus}"
+
+		return fortiedr_connection.send(url, request)
+
+	def search_info(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Get incidents search info.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("search_info", locals())
+
+		url = '/api/incidents/search-info'
+
+		return fortiedr_connection.get(url, organizationId)
+
+	def get_tags(self, organizationId: int) -> tuple[bool, list]:
+		'''
+		Class Incidents
+		Description: Return incident tags by organization.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_tags", locals())
+
+		url = '/api/incidents/tags'
+
+		return fortiedr_connection.get(url, organizationId)
+
+	def tag(self, tagName: str, organizationId: int = None, tagId: int = None) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Create incidents tag.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("tag", locals())
+
+		url = '/api/incidents/tags'
+
+		request = {}
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if tagId != None:
+			request["tagId"] = f"{tagId}"
+		if tagName:
+			request["tagName"] = f"{tagName}"
+
+		return fortiedr_connection.send(url, request)
+
+	def update_tag(self, tagName: str, organizationId: int = None, tagId: int = None) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Update incidents tag name.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_tag", locals())
+
+		url = '/api/incidents/tags'
+
+		request = {}
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if tagId != None:
+			request["tagId"] = f"{tagId}"
+		if tagName:
+			request["tagName"] = f"{tagName}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def tags(self, tagId: int) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Deletes incident tags.
+        
+		Args:
+			tagId (int): tagId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("tags", locals())
+
+		url = '/api/incidents/tags'
+
+		return fortiedr_connection.delete(url, tagId)
+
+	def get_incident_by_id(self, incidentId: int) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Get incident by id.
+        
+		Args:
+			incidentId (int): incidentId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_incident_by_id", locals())
+
+		url = f'/api/incidents/{incidentId}'
+		return fortiedr_connection.get(url)
+
+	def get_incident_audit_history(self, incidentId: int, eventIds: list = None) -> tuple[bool, list]:
+		'''
+		Class Incidents
+		Description: get incident audit history.
+        
+		Args:
+			eventIds (list): Specifies the IDs of the events
+			incidentId (int): incidentId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_incident_audit_history", locals())
+
+		url = f'/api/incidents/{incidentId}/audit-history'
+		url_params = []
+		if eventIds != None:
+			eventIds = ",".join(map(str, eventIds)) if isinstance(eventIds, list) else eventIds
+			url_params.append(f'eventIds={eventIds}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def events(self, incidentId: int, advancedFilters: str = None, endDate: int = None, freeTextFilters: list = None, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, statusFilter: str = None, timeFilter: str = None, typeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Get events.
+        
+		Args:
+			advancedFilters (str): Specifies advanced filters
+			endDate (int): Specifies the time filter end date
+			freeTextFilters (list): Specifies the free text search filter
+			freeTextSearch (str): Specifies the free text search
+			incidentId (int): incidentId
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): Specifies a list of strings in JSON format representing the fields by which to sort the results in the following format: %7B"column1":true, "column2":false%7D. True indicates to sort in descending order.Results are sorted by the first field, then by the second field and so on
+			startDate (int): Specifies the time filter start date
+			statusFilter (str): Specifies the incidents status filter
+			timeFilter (str): Specifies the incidents time filter
+			typeFilter (str): Specifies the incidents type filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("events", locals())
+
+		url = f'/api/incidents/{incidentId}/events'
+		url_params = []
+		if advancedFilters != None:
+			url_params.append(f'advancedFilters={advancedFilters}')
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if freeTextFilters != None:
+			freeTextFilters = ",".join(freeTextFilters) if isinstance(freeTextFilters, list) else freeTextFilters
+			url_params.append(f'freeTextFilters={freeTextFilters}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if statusFilter != None:
+			url_params.append(f'statusFilter={statusFilter}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		if typeFilter != None:
+			url_params.append(f'typeFilter={typeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_incident_related_policies(self, incidentId: int) -> tuple[bool, list]:
+		'''
+		Class Incidents
+		Description: get incident related policies.
+        
+		Args:
+			incidentId (int): incidentId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_incident_related_policies", locals())
+
+		url = f'/api/incidents/{incidentId}/policies'
+		return fortiedr_connection.get(url)
+
+	def get_incident_related_processes(self, incidentId: int) -> tuple[bool, list]:
+		'''
+		Class Incidents
+		Description: get incident related processes.
+        
+		Args:
+			incidentId (int): incidentId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_incident_related_processes", locals())
+
+		url = f'/api/incidents/{incidentId}/processes'
+		return fortiedr_connection.get(url)
+
+	def get_get_tags(self, incidentId: int) -> tuple[bool, list]:
+		'''
+		Class Incidents
+		Description: Return incident's tags.
+        
+		Args:
+			incidentId (int): incidentId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("get_get_tags", locals())
+
+		url = f'/api/incidents/{incidentId}/tags'
+		return fortiedr_connection.get(url)
+
+	def create_get_tags(self, incidentId: int, tagsIds: list) -> tuple[bool, None]:
+		'''
+		Class Incidents
+		Description: Return incident's tags.
+        
+		Args:
+			incidentId (int): incidentId
+			tagsIds (list): Specifies the id's of the incidents
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_get_tags", locals())
+
+		url = f'/api/incidents/{incidentId}/tags'
+		url_params = []
+		if tagsIds != None:
+			tagsIds = ",".join(map(str, tagsIds)) if isinstance(tagsIds, list) else tagsIds
+			url_params.append(f'tagsIds={tagsIds}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.send(url)
+
+
+
+class CollectorInventoryRestApiController:
+	'''Collector Inventory Rest Api Controller'''
+	def collectors(self, collectorGroups: list = None, collectorIds: list = None, collectorType: str = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: Delete collectors.
+        
+		Args:
+			collectorGroups (list): Specifies the collector names
+			collectorIds (list): Specifies the Collector IDs
+			collectorType (str): The collector Type
+			devices (list): Specifies the collector names
+			freeTextSearch (str): pattern of requested collectors
+			groupIds (list): Specifies the Collector group IDs
+			ips (list): Specifies the collector IPs
+			lastSeenEnd (str): Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss
+			macAddresses (list): Specifies the collector mac Addresses
+			organizationId (int): Specifies the organization ID
+			os (list): Specifies the list of specific operating systems. For example, Windows 7 Pro
+			osFamily (list): Specifies the list of operating system families: Windows, Windows Server or OS X
+			showExpired (bool): Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired
+			status (str): Specifies the Collector status
+			user (str): Specifies the user that was logged
+			versions (list): Specifies the collector versions
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("collectors", locals())
+
+		url = '/api/inventory/collectors'
+		url_params = []
+		if collectorGroups != None:
+			collectorGroups = ",".join(collectorGroups) if isinstance(collectorGroups, list) else collectorGroups
+			url_params.append(f'collectorGroups={collectorGroups}')
+		if collectorIds != None:
+			collectorIds = ",".join(map(str, collectorIds)) if isinstance(collectorIds, list) else collectorIds
+			url_params.append(f'collectorIds={collectorIds}')
+		if collectorType != None:
+			url_params.append(f'collectorType={collectorType}')
+		if devices != None:
+			devices = ",".join(devices) if isinstance(devices, list) else devices
+			url_params.append(f'devices={devices}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if groupIds != None:
+			groupIds = ",".join(map(str, groupIds)) if isinstance(groupIds, list) else groupIds
+			url_params.append(f'groupIds={groupIds}')
+		if ips != None:
+			ips = ",".join(ips) if isinstance(ips, list) else ips
+			url_params.append(f'ips={ips}')
+		if lastSeenEnd != None:
+			url_params.append(f'lastSeenEnd={lastSeenEnd}')
+		if macAddresses != None:
+			macAddresses = ",".join(macAddresses) if isinstance(macAddresses, list) else macAddresses
+			url_params.append(f'macAddresses={macAddresses}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if os != None:
+			os = ",".join(os) if isinstance(os, list) else os
+			url_params.append(f'os={os}')
+		if osFamily != None:
+			osFamily = ",".join(osFamily) if isinstance(osFamily, list) else osFamily
+			url_params.append(f'osFamily={osFamily}')
+		if showExpired != None:
+			url_params.append(f'showExpired={showExpired}')
+		if status != None:
+			url_params.append(f'status={status}')
+		if user != None:
+			url_params.append(f'user={user}')
+		if versions != None:
+			versions = ",".join(versions) if isinstance(versions, list) else versions
+			url_params.append(f'versions={versions}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def get_collectors_notification_info(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: get collectors notification info.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_collectors_notification_info", locals())
+
+		url = '/api/inventory/collectors/advanced-search-info'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_collectors(self, collectorGroups: list = None, collectorIds: list = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, int]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: Return collectors.
+        
+		Args:
+			collectorGroups (list): Specifies the collector names
+			collectorIds (list): Specifies the Collector IDs
+			devices (list): Specifies the collector names
+			freeTextSearch (str): pattern of requested collectors
+			groupIds (list): Specifies the Collector group IDs
+			ips (list): Specifies the collector IPs
+			lastSeenEnd (str): Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss
+			macAddresses (list): Specifies the collector mac Addresses
+			organizationId (int): Specifies the organization ID
+			os (list): Specifies the list of specific operating systems. For example, Windows 7 Pro
+			osFamily (list): Specifies the list of operating system families: Windows, Windows Server or OS X
+			showExpired (bool): Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired
+			status (str): Specifies the Collector status
+			user (str): Specifies the user that was logged
+			versions (list): Specifies the collector versions
+
+		Returns:
+			bool: Status of the request (True or False). 
+			int
+		'''
+		validate_params("get_collectors", locals())
+
+		url = '/api/inventory/collectors/agent-count'
+		url_params = []
+		if collectorGroups != None:
+			collectorGroups = ",".join(collectorGroups) if isinstance(collectorGroups, list) else collectorGroups
+			url_params.append(f'collectorGroups={collectorGroups}')
+		if collectorIds != None:
+			collectorIds = ",".join(map(str, collectorIds)) if isinstance(collectorIds, list) else collectorIds
+			url_params.append(f'collectorIds={collectorIds}')
+		if devices != None:
+			devices = ",".join(devices) if isinstance(devices, list) else devices
+			url_params.append(f'devices={devices}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if groupIds != None:
+			groupIds = ",".join(map(str, groupIds)) if isinstance(groupIds, list) else groupIds
+			url_params.append(f'groupIds={groupIds}')
+		if ips != None:
+			ips = ",".join(ips) if isinstance(ips, list) else ips
+			url_params.append(f'ips={ips}')
+		if lastSeenEnd != None:
+			url_params.append(f'lastSeenEnd={lastSeenEnd}')
+		if macAddresses != None:
+			macAddresses = ",".join(macAddresses) if isinstance(macAddresses, list) else macAddresses
+			url_params.append(f'macAddresses={macAddresses}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if os != None:
+			os = ",".join(os) if isinstance(os, list) else os
+			url_params.append(f'os={os}')
+		if osFamily != None:
+			osFamily = ",".join(osFamily) if isinstance(osFamily, list) else osFamily
+			url_params.append(f'osFamily={osFamily}')
+		if showExpired != None:
+			url_params.append(f'showExpired={showExpired}')
+		if status != None:
+			url_params.append(f'status={status}')
+		if user != None:
+			url_params.append(f'user={user}')
+		if versions != None:
+			versions = ",".join(versions) if isinstance(versions, list) else versions
+			url_params.append(f'versions={versions}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def assign_agent_group(self, collectorGroups: list = None, collectorIds: list = None, collectorType: str = None, devices: list = None, freeTextSearch: str = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, sourceGroupIds: list = None, status: str = None, targetGroupId: int = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: assign agent group.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("assign_agent_group", locals())
+
+		url = '/api/inventory/collectors/assign-agent-group'
+
+		request = {}
+		if collectorGroups != None:
+			request["collectorGroups"] = collectorGroups
+		if collectorIds != None:
+			request["collectorIds"] = collectorIds
+		if collectorType:
+			request["collectorType"] = f"{collectorType}"
+		if devices != None:
+			request["devices"] = devices
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if ips != None:
+			request["ips"] = ips
+		if lastSeenEnd:
+			request["lastSeenEnd"] = f"{lastSeenEnd}"
+		if macAddresses != None:
+			request["macAddresses"] = macAddresses
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if os != None:
+			request["os"] = os
+		if osFamily != None:
+			request["osFamily"] = osFamily
+		if showExpired != None:
+			request["showExpired"] = f"{showExpired}"
+		if sourceGroupIds != None:
+			request["sourceGroupIds"] = sourceGroupIds
+		if status:
+			request["status"] = f"{status}"
+		if targetGroupId != None:
+			request["targetGroupId"] = f"{targetGroupId}"
+		if user:
+			request["user"] = f"{user}"
+		if versions != None:
+			request["versions"] = versions
+
+		return fortiedr_connection.insert(url, request)
+
+	def create_group(self, name: str = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: Create a Collector group.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_group", locals())
+
+		url = '/api/inventory/collectors/create-group'
+
+		request = {}
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+
+		return fortiedr_connection.send(url, request)
+
+	def generate_logs(self, collectorGroups: list = None, collectorIds: list = None, collectorType: str = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, sorting: str = None, status: str = None, type: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: generate logs.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("generate_logs", locals())
+
+		url = '/api/inventory/collectors/generate-logs'
+
+		request = {}
+		if collectorGroups != None:
+			request["collectorGroups"] = collectorGroups
+		if collectorIds != None:
+			request["collectorIds"] = collectorIds
+		if collectorType:
+			request["collectorType"] = f"{collectorType}"
+		if devices != None:
+			request["devices"] = devices
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if groupIds != None:
+			request["groupIds"] = groupIds
+		if ips != None:
+			request["ips"] = ips
+		if lastSeenEnd:
+			request["lastSeenEnd"] = f"{lastSeenEnd}"
+		if macAddresses != None:
+			request["macAddresses"] = macAddresses
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if os != None:
+			request["os"] = os
+		if osFamily != None:
+			request["osFamily"] = osFamily
+		if showExpired != None:
+			request["showExpired"] = f"{showExpired}"
+		if sorting:
+			request["sorting"] = f"{sorting}"
+		if status:
+			request["status"] = f"{status}"
+		if type:
+			request["type"] = f"{type}"
+		if user:
+			request["user"] = f"{user}"
+		if versions != None:
+			request["versions"] = versions
+
+		return fortiedr_connection.send(url, request)
+
+	def generate_report(self, collectorGroups: list = None, collectorIds: list = None, collectorType: str = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, sorting: str = None, status: str = None, type: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: generate report.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("generate_report", locals())
+
+		url = '/api/inventory/collectors/generate-report'
+
+		request = {}
+		if collectorGroups != None:
+			request["collectorGroups"] = collectorGroups
+		if collectorIds != None:
+			request["collectorIds"] = collectorIds
+		if collectorType:
+			request["collectorType"] = f"{collectorType}"
+		if devices != None:
+			request["devices"] = devices
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if groupIds != None:
+			request["groupIds"] = groupIds
+		if ips != None:
+			request["ips"] = ips
+		if lastSeenEnd:
+			request["lastSeenEnd"] = f"{lastSeenEnd}"
+		if macAddresses != None:
+			request["macAddresses"] = macAddresses
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if os != None:
+			request["os"] = os
+		if osFamily != None:
+			request["osFamily"] = osFamily
+		if showExpired != None:
+			request["showExpired"] = f"{showExpired}"
+		if sorting:
+			request["sorting"] = f"{sorting}"
+		if status:
+			request["status"] = f"{status}"
+		if type:
+			request["type"] = f"{type}"
+		if user:
+			request["user"] = f"{user}"
+		if versions != None:
+			request["versions"] = versions
+
+		return fortiedr_connection.send(url, request)
+
+	def get_groups(self, organization: str, collectorGroups: list = None, collectorType: str = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, offset: int = None, organizationId: int = None, os: list = None, osFamily: list = None, pageSize: int = None, showExpired: bool = None, sorting: str = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: Return collector groups.
+        
+		Args:
+			collectorGroups (list): Specifies the collector group names
+			collectorType (str): The collector Type
+			devices (list): Specifies the collector names
+			freeTextSearch (str): pattern of requested policies
+			groupIds (list): Specifies the collector group IDs
+			ips (list): Specifies the collector IPs
+			lastSeenEnd (str): Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss
+			macAddresses (list): Specifies the collector mac Addresses
+			offset (int): Specifies the page offset
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			organizationId (int): Specifies the organization ID
+			os (list): Specifies the list of specific operating systems. For example, Windows 7 Pro
+			osFamily (list): Specifies the list of operating system families: Windows, Windows Server or OS X
+			pageSize (int): Specifies the page size
+			showExpired (bool): Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+			status (str): Specifies the device status
+			user (str): Specifies the user that was logged
+			versions (list): Specifies the collector versions
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_groups", locals())
+
+		url = '/api/inventory/collectors/groups'
+		url_params = []
+		if collectorGroups != None:
+			collectorGroups = ",".join(collectorGroups) if isinstance(collectorGroups, list) else collectorGroups
+			url_params.append(f'collectorGroups={collectorGroups}')
+		if collectorType != None:
+			url_params.append(f'collectorType={collectorType}')
+		if devices != None:
+			devices = ",".join(devices) if isinstance(devices, list) else devices
+			url_params.append(f'devices={devices}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if groupIds != None:
+			groupIds = ",".join(map(str, groupIds)) if isinstance(groupIds, list) else groupIds
+			url_params.append(f'groupIds={groupIds}')
+		if ips != None:
+			ips = ",".join(ips) if isinstance(ips, list) else ips
+			url_params.append(f'ips={ips}')
+		if lastSeenEnd != None:
+			url_params.append(f'lastSeenEnd={lastSeenEnd}')
+		if macAddresses != None:
+			macAddresses = ",".join(macAddresses) if isinstance(macAddresses, list) else macAddresses
+			url_params.append(f'macAddresses={macAddresses}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if os != None:
+			os = ",".join(os) if isinstance(os, list) else os
+			url_params.append(f'os={os}')
+		if osFamily != None:
+			osFamily = ",".join(osFamily) if isinstance(osFamily, list) else osFamily
+			url_params.append(f'osFamily={osFamily}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if showExpired != None:
+			url_params.append(f'showExpired={showExpired}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if status != None:
+			url_params.append(f'status={status}')
+		if user != None:
+			url_params.append(f'user={user}')
+		if versions != None:
+			versions = ",".join(versions) if isinstance(versions, list) else versions
+			url_params.append(f'versions={versions}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def delete_collectors(self, collectorType: str = None, groupIds: list = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: Delete collector groups.
+        
+		Args:
+			collectorType (str): The collector Type
+			groupIds (list): Specifies the Collector group IDs
+			organizationId (int): Specifies the organization ID
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_collectors", locals())
+
+		url = '/api/inventory/collectors/groups'
+		url_params = []
+		if collectorType != None:
+			url_params.append(f'collectorType={collectorType}')
+		if groupIds != None:
+			groupIds = ",".join(map(str, groupIds)) if isinstance(groupIds, list) else groupIds
+			url_params.append(f'groupIds={groupIds}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def set_as_default_group(self, collectorGroupId: int = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: set as default group.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("set_as_default_group", locals())
+
+		url = '/api/inventory/collectors/groups/set-default'
+
+		request = {}
+		if collectorGroupId != None:
+			request["collectorGroupId"] = f"{collectorGroupId}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+
+		return fortiedr_connection.send(url, request)
+
+	def Isolate_collectors(self, applyAllGroups: bool = None, collectorGroups: list = None, collectorIds: list = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: Isolate collectors.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Isolate_collectors", locals())
+
+		url = '/api/inventory/collectors/isolate'
+
+		request = {}
+		if applyAllGroups != None:
+			request["applyAllGroups"] = f"{applyAllGroups}"
+		if collectorGroups != None:
+			request["collectorGroups"] = collectorGroups
+		if collectorIds != None:
+			request["collectorIds"] = collectorIds
+		if devices != None:
+			request["devices"] = devices
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if groupIds != None:
+			request["groupIds"] = groupIds
+		if ips != None:
+			request["ips"] = ips
+		if lastSeenEnd:
+			request["lastSeenEnd"] = f"{lastSeenEnd}"
+		if macAddresses != None:
+			request["macAddresses"] = macAddresses
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if os != None:
+			request["os"] = os
+		if osFamily != None:
+			request["osFamily"] = osFamily
+		if showExpired != None:
+			request["showExpired"] = f"{showExpired}"
+		if status:
+			request["status"] = f"{status}"
+		if user:
+			request["user"] = f"{user}"
+		if versions != None:
+			request["versions"] = versions
+
+		return fortiedr_connection.insert(url, request)
+
+	def get_get_collectors(self, organization: str, collectorType: str = None, devices: list = None, freeTextSearch: str = None, groupId: int = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, offset: int = None, organizationId: int = None, os: list = None, osFamily: list = None, pageSize: int = None, showExpired: bool = None, sorting: str = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: Return collectors.
+        
+		Args:
+			collectorType (str): The collector Type
+			devices (list): Specifies the collector names
+			freeTextSearch (str): pattern of requested policies
+			groupId (int): The group ID of the collector device
+			ips (list): Specifies the collector IPs
+			lastSeenEnd (str): Retrieves collectors that were last seen before the value assigned to this date. Date Format: yyyy-MM-dd HH:mm:ss
+			macAddresses (list): Specifies the collector mac Addresses
+			offset (int): Specifies the page offset
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			organizationId (int): Specifies the organization ID
+			os (list): Specifies the list of specific operating systems. For example, Windows 7 Pro
+			osFamily (list): Specifies the list of operating system families: Windows, Windows Server or OS X
+			pageSize (int): Specifies the page size
+			showExpired (bool): Specifies whether to include collectors which have been disconnected for more than 30 days (sequentially) and are marked as Expired
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+			status (str): The status of the collector device
+			user (str): Specifies the user that was logged
+			versions (list): Specifies the collector versions
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_get_collectors", locals())
+
+		url = '/api/inventory/collectors/list'
+		url_params = []
+		if collectorType != None:
+			url_params.append(f'collectorType={collectorType}')
+		if devices != None:
+			devices = ",".join(devices) if isinstance(devices, list) else devices
+			url_params.append(f'devices={devices}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if groupId != None:
+			url_params.append(f'groupId={groupId}')
+		if ips != None:
+			ips = ",".join(ips) if isinstance(ips, list) else ips
+			url_params.append(f'ips={ips}')
+		if lastSeenEnd != None:
+			url_params.append(f'lastSeenEnd={lastSeenEnd}')
+		if macAddresses != None:
+			macAddresses = ",".join(macAddresses) if isinstance(macAddresses, list) else macAddresses
+			url_params.append(f'macAddresses={macAddresses}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if os != None:
+			os = ",".join(os) if isinstance(os, list) else os
+			url_params.append(f'os={os}')
+		if osFamily != None:
+			osFamily = ",".join(osFamily) if isinstance(osFamily, list) else osFamily
+			url_params.append(f'osFamily={osFamily}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if showExpired != None:
+			url_params.append(f'showExpired={showExpired}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if status != None:
+			url_params.append(f'status={status}')
+		if user != None:
+			url_params.append(f'user={user}')
+		if versions != None:
+			versions = ",".join(versions) if isinstance(versions, list) else versions
+			url_params.append(f'versions={versions}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_collectors_inventory_collectors_move_collector_info(self, collectorIds: list = None, groupIds: list = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: Return collectors.
+        
+		Args:
+			collectorIds (list): Specifies the Collector IDs
+			groupIds (list): Specifies the Collector group IDs
+			organizationId (int): Specifies the organization ID
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_collectors_inventory_collectors_move_collector_info", locals())
+
+		url = '/api/inventory/collectors/move-collector-info'
+		url_params = []
+		if collectorIds != None:
+			collectorIds = ",".join(map(str, collectorIds)) if isinstance(collectorIds, list) else collectorIds
+			url_params.append(f'collectorIds={collectorIds}')
+		if groupIds != None:
+			groupIds = ",".join(map(str, groupIds)) if isinstance(groupIds, list) else groupIds
+			url_params.append(f'groupIds={groupIds}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_get_collectors_notification_info(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: get collectors notification info.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_get_collectors_notification_info", locals())
+
+		url = '/api/inventory/collectors/notification-info'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def Collectors_Search_options_auto_complete(self, accountId: int = None, allAccounts: bool = None, field: str = None, search: str = None) -> tuple[bool, list]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: Collectors Search options auto complete.
+        
+		Args:
+			accountId (int): Specifies the account id
+			allAccounts (bool): Specifies if need to check on all accounts
+			field (str): Specifies the field to which need to search
+			search (str): Specifies the text to search
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("Collectors_Search_options_auto_complete", locals())
+
+		url = '/api/inventory/collectors/search-options-auto-complete'
+		url_params = []
+		if accountId != None:
+			url_params.append(f'accountId={accountId}')
+		if allAccounts != None:
+			url_params.append(f'allAccounts={allAccounts}')
+		if field != None:
+			url_params.append(f'field={field}')
+		if search != None:
+			url_params.append(f'search={search}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def State(self, applyAllGroups: bool = None, collectorGroups: list = None, collectorIds: list = None, collectorType: str = None, devices: list = None, enabled: bool = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: Update Collectors state.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("State", locals())
+
+		url = '/api/inventory/collectors/state'
+
+		request = {}
+		if applyAllGroups != None:
+			request["applyAllGroups"] = f"{applyAllGroups}"
+		if collectorGroups != None:
+			request["collectorGroups"] = collectorGroups
+		if collectorIds != None:
+			request["collectorIds"] = collectorIds
+		if collectorType:
+			request["collectorType"] = f"{collectorType}"
+		if devices != None:
+			request["devices"] = devices
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if groupIds != None:
+			request["groupIds"] = groupIds
+		if ips != None:
+			request["ips"] = ips
+		if lastSeenEnd:
+			request["lastSeenEnd"] = f"{lastSeenEnd}"
+		if macAddresses != None:
+			request["macAddresses"] = macAddresses
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if os != None:
+			request["os"] = os
+		if osFamily != None:
+			request["osFamily"] = osFamily
+		if showExpired != None:
+			request["showExpired"] = f"{showExpired}"
+		if status:
+			request["status"] = f"{status}"
+		if user:
+			request["user"] = f"{user}"
+		if versions != None:
+			request["versions"] = versions
+
+		return fortiedr_connection.insert(url, request)
+
+	def Uninstall(self, applyAllGroups: bool = None, collectorGroups: list = None, collectorIds: list = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: Uninstall collectors.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Uninstall", locals())
+
+		url = '/api/inventory/collectors/uninstall'
+
+		request = {}
+		if applyAllGroups != None:
+			request["applyAllGroups"] = f"{applyAllGroups}"
+		if collectorGroups != None:
+			request["collectorGroups"] = collectorGroups
+		if collectorIds != None:
+			request["collectorIds"] = collectorIds
+		if devices != None:
+			request["devices"] = devices
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if groupIds != None:
+			request["groupIds"] = groupIds
+		if ips != None:
+			request["ips"] = ips
+		if lastSeenEnd:
+			request["lastSeenEnd"] = f"{lastSeenEnd}"
+		if macAddresses != None:
+			request["macAddresses"] = macAddresses
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if os != None:
+			request["os"] = os
+		if osFamily != None:
+			request["osFamily"] = osFamily
+		if showExpired != None:
+			request["showExpired"] = f"{showExpired}"
+		if status:
+			request["status"] = f"{status}"
+		if user:
+			request["user"] = f"{user}"
+		if versions != None:
+			request["versions"] = versions
+
+		return fortiedr_connection.send(url, request)
+
+	def Unisolate_collectors(self, applyAllGroups: bool = None, collectorGroups: list = None, collectorIds: list = None, devices: list = None, freeTextSearch: str = None, groupIds: list = None, ips: list = None, lastSeenEnd: str = None, macAddresses: list = None, organizationId: int = None, os: list = None, osFamily: list = None, showExpired: bool = None, status: str = None, user: str = None, versions: list = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: Unisolate collectors.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Unisolate_collectors", locals())
+
+		url = '/api/inventory/collectors/unisolate'
+
+		request = {}
+		if applyAllGroups != None:
+			request["applyAllGroups"] = f"{applyAllGroups}"
+		if collectorGroups != None:
+			request["collectorGroups"] = collectorGroups
+		if collectorIds != None:
+			request["collectorIds"] = collectorIds
+		if devices != None:
+			request["devices"] = devices
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if groupIds != None:
+			request["groupIds"] = groupIds
+		if ips != None:
+			request["ips"] = ips
+		if lastSeenEnd:
+			request["lastSeenEnd"] = f"{lastSeenEnd}"
+		if macAddresses != None:
+			request["macAddresses"] = macAddresses
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if os != None:
+			request["os"] = os
+		if osFamily != None:
+			request["osFamily"] = osFamily
+		if showExpired != None:
+			request["showExpired"] = f"{showExpired}"
+		if status:
+			request["status"] = f"{status}"
+		if user:
+			request["user"] = f"{user}"
+		if versions != None:
+			request["versions"] = versions
+
+		return fortiedr_connection.insert(url, request)
+
+	def unmanaged_devices(self, deviceIds: list = None, freeTextSearch: str = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class CollectorInventoryRestApiController
+		Description: unmanaged devices.
+        
+		Args:
+			deviceIds (list): Specifies the Collector IDs
+			freeTextSearch (str): pattern of requested collectors
+			organizationId (int): Specifies the organization ID
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("unmanaged_devices", locals())
+
+		url = '/api/inventory/collectors/unmanaged-devices'
+		url_params = []
+		if deviceIds != None:
+			deviceIds = ",".join(map(str, deviceIds)) if isinstance(deviceIds, list) else deviceIds
+			url_params.append(f'deviceIds={deviceIds}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+
+
+class MobileInventoryRestApiController:
+	'''Mobile Inventory Rest Api Controller'''
+	def create_group(self, name: str = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class MobileInventoryRestApiController
+		Description: Create a Mobile group.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_group", locals())
+
+		url = '/api/inventory/mobile/create-group'
+
+		request = {}
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+
+		return fortiedr_connection.send(url, request)
+
+	def Delete(self, allDevicesUnderGroupIds: list = None, deleteAll: bool = None, deviceIds: list = None, freeTextSearch: str = None, groupIds: list = None, organizationId: int = None, status: str = None) -> tuple[bool, None]:
+		'''
+		Class MobileInventoryRestApiController
+		Description: Delete.
+        
+		Args:
+			allDevicesUnderGroupIds (list): Delete all the devices under the group ids
+			deleteAll (bool): Specifies delete all groups and devices
+			deviceIds (list): Specifies the device ids
+			freeTextSearch (str): pattern of requested text
+			groupIds (list): Specifies the group ids
+			organizationId (int): Specifies the organization id
+			status (str): Specifies the device status
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("Delete", locals())
+
+		url = '/api/inventory/mobile/delete'
+		url_params = []
+		if allDevicesUnderGroupIds != None:
+			allDevicesUnderGroupIds = ",".join(map(str, allDevicesUnderGroupIds)) if isinstance(allDevicesUnderGroupIds, list) else allDevicesUnderGroupIds
+			url_params.append(f'allDevicesUnderGroupIds={allDevicesUnderGroupIds}')
+		if deleteAll != None:
+			url_params.append(f'deleteAll={deleteAll}')
+		if deviceIds != None:
+			deviceIds = ",".join(map(str, deviceIds)) if isinstance(deviceIds, list) else deviceIds
+			url_params.append(f'deviceIds={deviceIds}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if groupIds != None:
+			groupIds = ",".join(map(str, groupIds)) if isinstance(groupIds, list) else groupIds
+			url_params.append(f'groupIds={groupIds}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if status != None:
+			url_params.append(f'status={status}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def devices_count_per_group(self, groupIds: list = None, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class MobileInventoryRestApiController
+		Description: devices count per group.
+        
+		Args:
+			groupIds (list): Specifies the group ids
+			organizationId (int): Specifies the organization id
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("devices_count_per_group", locals())
+
+		url = '/api/inventory/mobile/devices-count-per-group'
+		url_params = []
+		if groupIds != None:
+			groupIds = ",".join(map(str, groupIds)) if isinstance(groupIds, list) else groupIds
+			url_params.append(f'groupIds={groupIds}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_groups(self, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, status: str = None) -> tuple[bool, None]:
+		'''
+		Class MobileInventoryRestApiController
+		Description: Return mobile groups.
+        
+		Args:
+			freeTextSearch (str): pattern of requested text
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+			status (str): Specifies the device status
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_groups", locals())
+
+		url = '/api/inventory/mobile/groups'
+		url_params = []
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if status != None:
+			url_params.append(f'status={status}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_devices(self, freeTextSearch: str = None, groupId: int = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, status: str = None) -> tuple[bool, None]:
+		'''
+		Class MobileInventoryRestApiController
+		Description: Return mobile devices.
+        
+		Args:
+			freeTextSearch (str): pattern of requested text
+			groupId (int): Specifies the device group id
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+			status (str): Specifies device status
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_devices", locals())
+
+		url = '/api/inventory/mobile/list'
+		url_params = []
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if groupId != None:
+			url_params.append(f'groupId={groupId}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if status != None:
+			url_params.append(f'status={status}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def move_group(self, deviceIds: list = None, organizationId: int = None, srcGroupIds: list = None, targetGroupId: int = None) -> tuple[bool, None]:
+		'''
+		Class MobileInventoryRestApiController
+		Description: Move a Mobile group.
+        
+		Args:
+			mobileMoveGroupRequest (Object): Check 'mobileMoveGroupRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("move_group", locals())
+
+		url = '/api/inventory/mobile/move-group'
+
+		mobileMoveGroupRequest = {}
+		if deviceIds != None:
+			mobileMoveGroupRequest["deviceIds"] = deviceIds
+		if organizationId != None:
+			mobileMoveGroupRequest["organizationId"] = f"{organizationId}"
+		if srcGroupIds != None:
+			mobileMoveGroupRequest["srcGroupIds"] = srcGroupIds
+		if targetGroupId != None:
+			mobileMoveGroupRequest["targetGroupId"] = f"{targetGroupId}"
+
+		return fortiedr_connection.insert(url, mobileMoveGroupRequest)
+
+
+
+class WorkloadsListRestApiController:
+	'''Workloads List Rest Api Controller'''
+	def workloads_filters(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class WorkloadsListRestApiController
+		Description: workloads filters.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("workloads_filters", locals())
+
+		url = '/api/inventory/workloads/filters'
+
+		return fortiedr_connection.get(url, organizationId)
+
+	def workloads_list(self, accounts: list = None, cloudProviders: list = None, clusters: list = None, forceUpdate: bool = None, maxResult: int = None, namespaces: list = None, organizationId: int = None, page: int = None, search: str = None) -> tuple[bool, None]:
+		'''
+		Class WorkloadsListRestApiController
+		Description: workloads list.
+        
+		Args:
+			accounts (list): Specifies the account list
+			cloudProviders (list): Specifies the cloud providers list
+			clusters (list): Specifies the clusters list
+			forceUpdate (bool): Specifies if force update
+			maxResult (int): Specifies the page size
+			namespaces (list): Specifies the namespaces list
+			organizationId (int): Specifies the organization ID
+			page (int): Specifies the page offset
+			search (str): pattern of requested text
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("workloads_list", locals())
+
+		url = '/api/inventory/workloads/list'
+		url_params = []
+		if accounts != None:
+			accounts = ",".join(map(str, accounts)) if isinstance(accounts, list) else accounts
+			url_params.append(f'accounts={accounts}')
+		if cloudProviders != None:
+			cloudProviders = ",".join(map(str, cloudProviders)) if isinstance(cloudProviders, list) else cloudProviders
+			url_params.append(f'cloudProviders={cloudProviders}')
+		if clusters != None:
+			clusters = ",".join(map(str, clusters)) if isinstance(clusters, list) else clusters
+			url_params.append(f'clusters={clusters}')
+		if forceUpdate != None:
+			url_params.append(f'forceUpdate={forceUpdate}')
+		if maxResult != None:
+			url_params.append(f'maxResult={maxResult}')
+		if namespaces != None:
+			namespaces = ",".join(map(str, namespaces)) if isinstance(namespaces, list) else namespaces
+			url_params.append(f'namespaces={namespaces}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if page != None:
+			url_params.append(f'page={page}')
+		if search != None:
+			url_params.append(f'search={search}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+
+
+class Notifications:
+	'''Notification Controller'''
+	def handle(self, createdBy: str = None, createdTime: int = None, id: str = None, status: str = None, title: str = None, type: str = None) -> tuple[bool, None]:
+		'''
+		Class Notifications
+		Description: This API handles notifications created by the notification service.
+        
+		Args:
+			notification (Object): Check 'notification' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("handle", locals())
+
+		url = '/api/notifications/handle'
+
+		notification = {}
+		if createdBy:
+			notification["createdBy"] = f"{createdBy}"
+		if createdTime != None:
+			notification["createdTime"] = f"{createdTime}"
+		if id:
+			notification["id"] = f"{id}"
+		if status:
+			notification["status"] = f"{status}"
+		if title:
+			notification["title"] = f"{title}"
+		if type:
+			notification["type"] = f"{type}"
+
+		return fortiedr_connection.send(url, notification)
+
+	def notifications(self, isSeen: bool, userId: str) -> tuple[bool, str]:
+		'''
+		Class Notifications
+		Description: This API get notifications from notification service.
+        
+		Args:
+			isSeen (bool): isSeen
+			userId (str): userId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			str
+		'''
+		validate_params("notifications", locals())
+
+		url = '/api/notifications/notifications'
+		url_params = []
+		if isSeen != None:
+			url_params.append(f'isSeen={isSeen}')
+		if userId != None:
+			url_params.append(f'userId={userId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def create_notifications(self, message: object = None, topic: str = None) -> tuple[bool, None]:
+		'''
+		Class Notifications
+		Description: health method to emulate of action-->manager-->notification service-->db-->manager-->ui.
+        
+		Args:
+			notificationServiceHealthRequest (Object): Check 'notificationServiceHealthRequest' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_notifications", locals())
+
+		url = '/api/notifications/push'
+
+		notificationServiceHealthRequest = {}
+		if message != None:
+			notificationServiceHealthRequest["message"] = message
+		if topic:
+			notificationServiceHealthRequest["topic"] = f"{topic}"
+
+		return fortiedr_connection.send(url, notificationServiceHealthRequest)
+
+
+
+class PoliciesRestApiController:
+	'''Policies Rest Api Controller'''
+	def Search_options_auto_complete(self, accountId: int = None, allAccounts: bool = None, field: str = None, search: str = None) -> tuple[bool, list]:
+		'''
+		Class PoliciesRestApiController
+		Description: Search options auto complete.
+        
+		Args:
+			accountId (int): Specifies the account id
+			allAccounts (bool): Specifies if need to check on all accounts
+			field (str): Specifies the field to which need to search
+			search (str): Specifies the text to search
+
+		Returns:
+			bool: Status of the request (True or False). 
+			list
+		'''
+		validate_params("Search_options_auto_complete", locals())
+
+		url = '/api/policies/search-options-auto-complete'
+		url_params = []
+		if accountId != None:
+			url_params.append(f'accountId={accountId}')
+		if allAccounts != None:
+			url_params.append(f'allAccounts={allAccounts}')
+		if field != None:
+			url_params.append(f'field={field}')
+		if search != None:
+			url_params.append(f'search={search}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+
+
+class Reputation:
+	'''Reputation Rest Api Controller'''
+	def regions(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class Reputation
+		Description: retrieves reputation region entity.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("regions", locals())
+
+		url = '/api/reputation/regions'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def update_regions(self, organizationId: int, regionIds: list) -> tuple[bool, None]:
+		'''
+		Class Reputation
+		Description: select regions for specific organization.
+        
+		Args:
+			organizationId (int): organizationId
+			regionIds (list): regionIds
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_regions", locals())
+
+		url = '/api/reputation/regions'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+
+		return fortiedr_connection.insert(url, regionIds)
+
+	def reputationdb(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class Reputation
+		Description: retrieves reputation db entity.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("reputationdb", locals())
+
+		url = '/api/reputation/reputationdb'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+
+
+class SecureBrowserServiceRestApiController:
+	'''Secure Browser Service Rest Api Controller'''
+	def delete_policies(self, organization: str, deleteAll: bool = None, freeTextSearch: str = None, idToDelete: list = None, requirePolicyAssociation: bool = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserServiceRestApiController
+		Description: Delete secure browser policies.
+        
+		Args:
+			deleteAll (bool): Indicate if should delete all matching results (rather than only the selected) 
+			freeTextSearch (str): pattern of policies to delete
+			idToDelete (list): Id's of entities to delete
+			organization (str): Specifies the name of a specific organization. The value that you specify here must match exactly
+			requirePolicyAssociation (bool): require policy association
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_policies", locals())
+
+		url = '/api/secure-browser-service/policies'
+		url_params = []
+		if deleteAll != None:
+			url_params.append(f'deleteAll={deleteAll}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if idToDelete != None:
+			idToDelete = ",".join(map(str, idToDelete)) if isinstance(idToDelete, list) else idToDelete
+			url_params.append(f'idToDelete={idToDelete}')
+		if organization != None:
+			url_params.append(f'organization={organization}')
+		if requirePolicyAssociation != None:
+			url_params.append(f'requirePolicyAssociation={requirePolicyAssociation}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def policy(self, mode: bool, name: str, organization: str, forceGroupsAssign: bool = None, groupsIds: list = None, id: int = None, updatedBy: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserServiceRestApiController
+		Description: Create a secure browser policy.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("policy", locals())
+
+		url = '/api/secure-browser-service/policy'
+
+		request = {}
+		if forceGroupsAssign != None:
+			request["forceGroupsAssign"] = f"{forceGroupsAssign}"
+		if groupsIds != None:
+			request["groupsIds"] = groupsIds
+		if id != None:
+			request["id"] = f"{id}"
+		if mode != None:
+			request["mode"] = f"{mode}"
+		if name:
+			request["name"] = f"{name}"
+		if organization:
+			request["organization"] = f"{organization}"
+		if updatedBy:
+			request["updatedBy"] = f"{updatedBy}"
+
+		return fortiedr_connection.send(url, request)
+
+	def update_policy(self, id: int, organization: str, forceGroupsAssign: bool = None, groupsIds: list = None, mode: bool = None, name: str = None, updatedBy: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserServiceRestApiController
+		Description: edit a secure browser policy.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_policy", locals())
+
+		url = '/api/secure-browser-service/policy'
+
+		request = {}
+		if forceGroupsAssign != None:
+			request["forceGroupsAssign"] = f"{forceGroupsAssign}"
+		if groupsIds != None:
+			request["groupsIds"] = groupsIds
+		if id != None:
+			request["id"] = f"{id}"
+		if mode != None:
+			request["mode"] = f"{mode}"
+		if name:
+			request["name"] = f"{name}"
+		if organization:
+			request["organization"] = f"{organization}"
+		if updatedBy:
+			request["updatedBy"] = f"{updatedBy}"
+
+		return fortiedr_connection.insert(url, request)
+
+
+
+class SecureBrowserRestApiController:
+	'''Secure Browser Rest Api Controller'''
+	def clone_policy(self, name: str, organizationId: int, sourcePolicyId: int) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: clone secure browser policy.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("clone_policy", locals())
+
+		url = '/api/secure-browser/clone-policy'
+
+		request = {}
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if sourcePolicyId != None:
+			request["sourcePolicyId"] = f"{sourcePolicyId}"
+
+		return fortiedr_connection.send(url, request)
+
+	def get_domain_groups(self, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Return all secure browser domain groups.
+        
+		Args:
+			freeTextSearch (str): pattern of requested text
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_domain_groups", locals())
+
+		url = '/api/secure-browser/domain-groups'
+		url_params = []
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def create_domain_groups(self, description: str = None, domains: list = None, id: int = None, name: str = None, organizationId: int = None, updatedBy: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: create domain groups.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_domain_groups", locals())
+
+		url = '/api/secure-browser/domain-groups'
+
+		request = {}
+		if description:
+			request["description"] = f"{description}"
+		if domains != None:
+			request["domains"] = domains
+		if id != None:
+			request["id"] = f"{id}"
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if updatedBy:
+			request["updatedBy"] = f"{updatedBy}"
+
+		return fortiedr_connection.send(url, request)
+
+	def delete_domain_groups(self, deleteAll: bool = None, freeTextSearch: str = None, idsToDelete: list = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, updatedBy: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Delete domain groups.
+        
+		Args:
+			deleteAll (bool): Indicate if should delete all matching results (rather than only the selected) 
+			freeTextSearch (str): pattern of policies to delete
+			idsToDelete (list): Id's of entities to delete
+			offset (int): Specifies the page offset
+			organizationId (int): organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+			updatedBy (str): specifies the user who updated the policy
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_domain_groups", locals())
+
+		url = '/api/secure-browser/domain-groups'
+		url_params = []
+		if deleteAll != None:
+			url_params.append(f'deleteAll={deleteAll}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if idsToDelete != None:
+			idsToDelete = ",".join(map(str, idsToDelete)) if isinstance(idsToDelete, list) else idsToDelete
+			url_params.append(f'idsToDelete={idsToDelete}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if updatedBy != None:
+			url_params.append(f'updatedBy={updatedBy}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def update_domain_group(self, id: int, description: str = None, domains: list = None, domain_group_body_id: int = None, name: str = None, organizationId: int = None, updatedBy: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: update domain group.
+        
+		Args:
+			id (int): id
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_domain_group", locals())
+
+		url = f'/api/secure-browser/domain-groups/{id}'
+
+		request = {}
+		if description:
+			request["description"] = f"{description}"
+		if domains != None:
+			request["domains"] = domains
+		if domain_group_body_id != None:
+			request["id"] = f"{domain_group_body_id}"
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if updatedBy:
+			request["updatedBy"] = f"{updatedBy}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def get_events(self, advancedFilters: str = None, endDate: int = None, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Return all secure browser events.
+        
+		Args:
+			advancedFilters (str): Specifies advanced filters
+			endDate (int): Specifies the time filter end date
+			freeTextSearch (str): pattern of requested text
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the incidents time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_events", locals())
+
+		url = '/api/secure-browser/events'
+		url_params = []
+		if advancedFilters != None:
+			url_params.append(f'advancedFilters={advancedFilters}')
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def delete_event(self, advancedFilters: str = None, deleteAll: bool = None, endDate: int = None, freeTextSearch: str = None, idsToDelete: list = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, startDate: int = None, timeFilter: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Delete secure browser events.
+        
+		Args:
+			advancedFilters (str): Specifies advanced filters
+			deleteAll (bool): Indicate if should delete all matching results (rather than only the selected) 
+			endDate (int): Specifies the time filter end date
+			freeTextSearch (str): pattern of requested text
+			idsToDelete (list): Id's of entities to delete
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+			startDate (int): Specifies the time filter start date
+			timeFilter (str): Specifies the incidents time filter
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_event", locals())
+
+		url = '/api/secure-browser/events'
+		url_params = []
+		if advancedFilters != None:
+			url_params.append(f'advancedFilters={advancedFilters}')
+		if deleteAll != None:
+			url_params.append(f'deleteAll={deleteAll}')
+		if endDate != None:
+			url_params.append(f'endDate={endDate}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if idsToDelete != None:
+			idsToDelete = ",".join(map(str, idsToDelete)) if isinstance(idsToDelete, list) else idsToDelete
+			url_params.append(f'idsToDelete={idsToDelete}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if startDate != None:
+			url_params.append(f'startDate={startDate}')
+		if timeFilter != None:
+			url_params.append(f'timeFilter={timeFilter}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def get_policies(self, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Return all secure browser policies.
+        
+		Args:
+			freeTextSearch (str): pattern of requested text
+			offset (int): Specifies the page offset
+			organizationId (int): Specifies the organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_policies", locals())
+
+		url = '/api/secure-browser/policies'
+		url_params = []
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def create_policy(self, collectorGroups: list = None, description: str = None, enabled: bool = None, id: int = None, name: str = None, organizationId: int = None, updatedBy: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Create secure browser policy.
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("create_policy", locals())
+
+		url = '/api/secure-browser/policies'
+
+		request = {}
+		if collectorGroups != None:
+			request["collectorGroups"] = collectorGroups
+		if description:
+			request["description"] = f"{description}"
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if id != None:
+			request["id"] = f"{id}"
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if updatedBy:
+			request["updatedBy"] = f"{updatedBy}"
+
+		return fortiedr_connection.send(url, request)
+
+	def delete_policy(self, deleteAll: bool = None, freeTextSearch: str = None, idsToDelete: list = None, offset: int = None, organizationId: int = None, pageSize: int = None, sorting: str = None, updatedBy: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Delete secure browser policies.
+        
+		Args:
+			deleteAll (bool): Indicate if should delete all matching results (rather than only the selected) 
+			freeTextSearch (str): pattern of policies to delete
+			idsToDelete (list): Id's of entities to delete
+			offset (int): Specifies the page offset
+			organizationId (int): organization id
+			pageSize (int): Specifies the page size
+			sorting (str): list of sorting fields (each is a map of <fieldName>:<descending order flag>. false=ascending, true=descending)
+			updatedBy (str): specifies the user who updated the policy
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("delete_policy", locals())
+
+		url = '/api/secure-browser/policies'
+		url_params = []
+		if deleteAll != None:
+			url_params.append(f'deleteAll={deleteAll}')
+		if freeTextSearch != None:
+			url_params.append(f'freeTextSearch={freeTextSearch}')
+		if idsToDelete != None:
+			idsToDelete = ",".join(map(str, idsToDelete)) if isinstance(idsToDelete, list) else idsToDelete
+			url_params.append(f'idsToDelete={idsToDelete}')
+		if offset != None:
+			url_params.append(f'offset={offset}')
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		if pageSize != None:
+			url_params.append(f'pageSize={pageSize}')
+		if sorting != None:
+			url_params.append(f'sorting={sorting}')
+		if updatedBy != None:
+			url_params.append(f'updatedBy={updatedBy}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.delete(url)
+
+	def assigned_agent_groups(self, agentGroupsIds: list = None, excludePolicyId: int = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Return true if policies has assigned collector groups.
+        
+		Args:
+			agentGroupsIds (list): agent groups id's
+			excludePolicyId (int): exclude policy id
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("assigned_agent_groups", locals())
+
+		url = '/api/secure-browser/policies/assigned-agent-groups'
+		url_params = []
+		if agentGroupsIds != None:
+			agentGroupsIds = ",".join(map(str, agentGroupsIds)) if isinstance(agentGroupsIds, list) else agentGroupsIds
+			url_params.append(f'agentGroupsIds={agentGroupsIds}')
+		if excludePolicyId != None:
+			url_params.append(f'excludePolicyId={excludePolicyId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def update_policy_state(self, allSelected: bool = None, enabled: bool = None, freeTextSearch: str = None, offset: int = None, organizationId: int = None, pageSize: int = None, policiesIds: list = None, sorting: str = None, updatedBy: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Change secure browser policies state (enable/disable).
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_policy_state", locals())
+
+		url = '/api/secure-browser/policies/state'
+
+		request = {}
+		if allSelected != None:
+			request["allSelected"] = f"{allSelected}"
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if freeTextSearch:
+			request["freeTextSearch"] = f"{freeTextSearch}"
+		if offset != None:
+			request["offset"] = f"{offset}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if pageSize != None:
+			request["pageSize"] = f"{pageSize}"
+		if policiesIds != None:
+			request["policiesIds"] = policiesIds
+		if sorting:
+			request["sorting"] = f"{sorting}"
+		if updatedBy:
+			request["updatedBy"] = f"{updatedBy}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def get_rules(self, id: int, organizationId: int = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Return all secure browser rules for specific policy..
+        
+		Args:
+			id (int): id
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_rules", locals())
+
+		url = f'/api/secure-browser/policies/{id}/rules'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def get_policy(self, id: int, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: get secure browser policy.
+        
+		Args:
+			id (int): id
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_policy", locals())
+
+		url = f'/api/secure-browser/policy/{id}'
+
+		return fortiedr_connection.get(url, organizationId)
+
+	def update_policy(self, id: int, collectorGroups: list = None, description: str = None, enabled: bool = None, policy_body_id: int = None, name: str = None, organizationId: int = None, updatedBy: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Update secure browser policy.
+        
+		Args:
+			id (int): id
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_policy", locals())
+
+		url = f'/api/secure-browser/policy/{id}'
+
+		request = {}
+		if collectorGroups != None:
+			request["collectorGroups"] = collectorGroups
+		if description:
+			request["description"] = f"{description}"
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if policy_body_id != None:
+			request["id"] = f"{policy_body_id}"
+		if name:
+			request["name"] = f"{name}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if updatedBy:
+			request["updatedBy"] = f"{updatedBy}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def update_rule(self, id: int, action: str = None, attributes: object = None, enabled: bool = None, rule_body_id: int = None, organizationId: int = None, policyId: int = None, ruleType: str = None, updatedBy: str = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Update rule.
+        
+		Args:
+			id (int): id
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_rule", locals())
+
+		url = f'/api/secure-browser/rules/{id}'
+
+		request = {}
+		if action:
+			request["action"] = f"{action}"
+		if attributes != None:
+			request["attributes"] = attributes
+		if enabled != None:
+			request["enabled"] = f"{enabled}"
+		if rule_body_id != None:
+			request["id"] = f"{rule_body_id}"
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if policyId != None:
+			request["policyId"] = f"{policyId}"
+		if ruleType:
+			request["ruleType"] = f"{ruleType}"
+		if updatedBy:
+			request["updatedBy"] = f"{updatedBy}"
+
+		return fortiedr_connection.insert(url, request)
+
+	def get_static_data(self) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: get static data.
+        
+		Args:
+
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_static_data", locals())
+
+		url = '/api/secure-browser/static-data'
+		return fortiedr_connection.get(url)
+
+	def update_system_prevention_mode(self, organizationId: int = None, prevention: bool = None) -> tuple[bool, None]:
+		'''
+		Class SecureBrowserRestApiController
+		Description: Change system prevention mode (prevention/simulation).
+        
+		Args:
+			request (Object): Check 'request' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("update_system_prevention_mode", locals())
+
+		url = '/api/secure-browser/system-prevention-mode'
+
+		request = {}
+		if organizationId != None:
+			request["organizationId"] = f"{organizationId}"
+		if prevention != None:
+			request["prevention"] = f"{prevention}"
+
+		return fortiedr_connection.insert(url, request)
+
+
+
+class ExportSettingsSMTP:
+	'''Smtp Rest Controller'''
+	def get_smtp_settings(self, organizationId: int) -> tuple[bool, None]:
+		'''
+		Class ExportSettingsSMTP
+		Description: Load the current SMTP configuration settings.
+        
+		Args:
+			organizationId (int): organizationId
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("get_smtp_settings", locals())
+
+		url = '/management-rest/settings/smtp'
+		url_params = []
+		if organizationId != None:
+			url_params.append(f'organizationId={organizationId}')
+		url += '?' + '&'.join(url_params)
+		return fortiedr_connection.get(url)
+
+	def save_smtp_settings(self, authenticate: bool = None, encryptionType: str = None, existingPasswordLength: int = None, fromEmail: str = None, organizationId: int = None, password: str = None, port: int = None, senderName: str = None, serverName: str = None, username: str = None) -> tuple[bool, None]:
+		'''
+		Class ExportSettingsSMTP
+		Description: Save new SMTP configuration settings.
+        
+		Args:
+			smtpConfig (Object): Check 'smtpConfig' in the API documentation for further information.
+
+		Returns:
+			bool: Status of the request (True or False). 
+			None: This function does not return any data.
+		'''
+		validate_params("save_smtp_settings", locals())
+
+		url = '/management-rest/settings/smtp'
+
+		smtpConfig = {}
+		if authenticate != None:
+			smtpConfig["authenticate"] = f"{authenticate}"
+		if encryptionType:
+			smtpConfig["encryptionType"] = f"{encryptionType}"
+		if existingPasswordLength != None:
+			smtpConfig["existingPasswordLength"] = f"{existingPasswordLength}"
+		if fromEmail:
+			smtpConfig["fromEmail"] = f"{fromEmail}"
+		if organizationId != None:
+			smtpConfig["organizationId"] = f"{organizationId}"
+		if password:
+			smtpConfig["password"] = f"{password}"
+		if port != None:
+			smtpConfig["port"] = f"{port}"
+		if senderName:
+			smtpConfig["senderName"] = f"{senderName}"
+		if serverName:
+			smtpConfig["serverName"] = f"{serverName}"
+		if username:
+			smtpConfig["username"] = f"{username}"
+
+		return fortiedr_connection.send(url, smtpConfig)
 
 debug = None
 ssl_enabled = True
