@@ -1,5 +1,5 @@
 import base64
-import requests
+import niquests
 
 class Auth:
       
@@ -20,7 +20,7 @@ class Auth:
 
             url = f'https://{host}/management-rest/{url}'
             try:
-                res = requests.get(url, headers=headers, verify=False)
+                res = niquests.get(url, headers=headers, verify=False)
                 res_code = res.status_code
                 status = False
                 if res_code == 401:
@@ -37,7 +37,7 @@ class Auth:
                     response_headers = res.headers
                     return status, data, response_headers
 
-            except requests.exceptions.RequestException as err:
+            except Exception as err:
                 raise SystemExit(err) from err
         
         return status, data, response_headers

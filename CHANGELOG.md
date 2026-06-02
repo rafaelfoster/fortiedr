@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.9.4 - 2026-06-02
+
+### Changed
+- Migrated the internal HTTP client from `requests` to `niquests` (drop-in compatible) for better performance while preserving existing public APIs and return structures.
+
 ## 3.8 - 2024-07-05
 
 ### Added

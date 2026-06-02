@@ -1,10 +1,14 @@
 import json
 import logging
-import requests
 from datetime import datetime
 
-# Globally disable SSL warnings
-requests.packages.urllib3.disable_warnings()
+import niquests
+
+# Globally disable SSL warnings (keeps legacy behaviour)
+try:
+    niquests.packages.urllib3.disable_warnings()
+except Exception:
+    pass
 
 class FortiEDR_API_GW:
 
@@ -14,15 +18,20 @@ class FortiEDR_API_GW:
         self.SSL_Verify = True
         self.debug_enabled = False
 
+        # Shared session for connection pooling / HTTP/2 (niquests)
+        self._session = niquests.Session()
+
     def enable_debug(self):
         import http.client as http_client
         http_client.HTTPConnection.debuglevel = 1
 
         logging.basicConfig()
-        logger = logging.getLogger().setLevel(logging.DEBUG)
-        requests_log = logging.getLogger("requests.packages.urllib3")
-        requests_log.setLevel(logging.DEBUG)
-        requests_log.propagate = True
+        logging.getLogger().setLevel(logging.DEBUG)
+
+        niquests_log = logging.getLogger("niquests.packages.urllib3")
+        niquests_log.setLevel(logging.DEBUG)
+        niquests_log.propagate = True
+
         self.debug_enabled = True
 
     def conn(self, headers=None, host=None, enable_debug=False, enable_ssl=True, organization = None):
@@ -32,6 +41,10 @@ class FortiEDR_API_GW:
             self.enable_debug()
 
         self.SSL_Verify = enable_ssl
+        try:
+            self._session.verify = self.SSL_Verify
+        except Exception:
+            pass
 
     def get(self, url, params=None, request_type=None):
         return self._exec("GET", url, params, request_type=request_type)
@@ -74,7 +87,7 @@ class FortiEDR_API_GW:
             print(json.dumps(params, indent=4))
 
         try:
-            response = requests.request(
+            response = self._session.request(
                 method,
                 url,
                 headers=self.headers,
@@ -84,12 +97,21 @@ class FortiEDR_API_GW:
                 stream=download_file,
                 files=upload_file
             )
-        except requests.exceptions.ConnectionError as e:
-             return {
-                'status': False,
-                'data': {'status_code': 500, 'error_message': f'Failed to connect to {url}. Error: {e}'}
-            }
-        except requests.exceptions.RequestException as e:
+        except Exception as e:
+            # Keep the same error contract as the previous requests-based implementation
+            is_connection_error = False
+            try:
+                from niquests import exceptions as niquests_exceptions
+                is_connection_error = isinstance(e, niquests_exceptions.ConnectionError)
+            except Exception:
+                pass
+
+            if is_connection_error:
+                return {
+                    'status': False,
+                    'data': {'status_code': 500, 'error_message': f'Failed to connect to {url}. Error: {e}'}
+                }
+
             return {
                 'status': False,
                 'data': {'status_code': 500, 'error_message': e}
