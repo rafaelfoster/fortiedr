@@ -52,27 +52,34 @@ class FortiEDR_API_GW:
         except Exception:
             pass
 
-    def get(self, url, params=None, request_type=None):
-        return self._exec("GET", url, params, request_type=request_type)
+    def get(self, url, params=None, request_type=None, async_req=False, **kwargs):
+        async_req = bool(async_req or kwargs.pop('async', False) or kwargs.pop('async_', False))
+        return self._exec("GET", url, params, request_type=request_type, async_req=async_req)
 
-    def send(self, url, params=None, request_type=None):
-        return self._exec("POST", url, params, request_type=request_type)
+    def send(self, url, params=None, request_type=None, async_req=False, **kwargs):
+        async_req = bool(async_req or kwargs.pop('async', False) or kwargs.pop('async_', False))
+        return self._exec("POST", url, params, request_type=request_type, async_req=async_req)
 
-    def insert(self, url, params=None, request_type=None):
-        return self._exec("PUT", url, params, request_type=request_type)
+    def insert(self, url, params=None, request_type=None, async_req=False, **kwargs):
+        async_req = bool(async_req or kwargs.pop('async', False) or kwargs.pop('async_', False))
+        return self._exec("PUT", url, params, request_type=request_type, async_req=async_req)
 
-    def update(self, url, params=None, request_type=None):
-        return self._exec("PATCH", url, params, request_type=request_type)
+    def update(self, url, params=None, request_type=None, async_req=False, **kwargs):
+        async_req = bool(async_req or kwargs.pop('async', False) or kwargs.pop('async_', False))
+        return self._exec("PATCH", url, params, request_type=request_type, async_req=async_req)
 
-    def delete(self, url, params=None, request_type=None):
-        return self._exec("DELETE", url, params, request_type=request_type)
+    def delete(self, url, params=None, request_type=None, async_req=False, **kwargs):
+        async_req = bool(async_req or kwargs.pop('async', False) or kwargs.pop('async_', False))
+        return self._exec("DELETE", url, params, request_type=request_type, async_req=async_req)
     
-    def download(self, url, params=None, request_type=None, file_format = 'zip', download_folder = ''):
+    def download(self, url, params=None, request_type=None, file_format = 'zip', download_folder = '', async_req=False, **kwargs):
+        async_req = bool(async_req or kwargs.pop('async', False) or kwargs.pop('async_', False))
         self.download_folder = download_folder
-        return self._exec("GET", url, params, request_type=request_type, download_file=True, file_format=file_format)
+        return self._exec("GET", url, params, request_type=request_type, download_file=True, file_format=file_format, async_req=async_req)
     
-    def upload(self, url, file, params=None, request_type=None ):
-        return self._exec("POST", url, params, request_type=request_type, upload_file=file)
+    def upload(self, url, file, params=None, request_type=None, async_req=False, **kwargs):
+        async_req = bool(async_req or kwargs.pop('async', False) or kwargs.pop('async_', False))
+        return self._exec("POST", url, params, request_type=request_type, upload_file=file, async_req=async_req)
 
     def _get_thread_session(self):
         session = getattr(self._thread_local, 'session', None)
@@ -96,45 +103,22 @@ class FortiEDR_API_GW:
         loop = asyncio.get_running_loop()
         return await loop.run_in_executor(None, functools.partial(func, *args, **kwargs))
 
-    async def aget(self, url, params=None, request_type=None):
-        session = self._get_thread_session()
-        return await self._run_in_thread(self._exec, "GET", url, params, request_type=request_type, session=session)
+    def _exec(self, method, url, params=None, download_file=False, request_type=None, file_format=None, upload_file=None, session=None, async_req=False):
+        if async_req:
+            session = self._get_thread_session()
+            return self._run_in_thread(
+                self._exec,
+                method,
+                url,
+                params,
+                download_file=download_file,
+                request_type=request_type,
+                file_format=file_format,
+                upload_file=upload_file,
+                session=session,
+                async_req=False,
+            )
 
-    async def asend(self, url, params=None, request_type=None):
-        session = self._get_thread_session()
-        return await self._run_in_thread(self._exec, "POST", url, params, request_type=request_type, session=session)
-
-    async def ainsert(self, url, params=None, request_type=None):
-        session = self._get_thread_session()
-        return await self._run_in_thread(self._exec, "PUT", url, params, request_type=request_type, session=session)
-
-    async def aupdate(self, url, params=None, request_type=None):
-        session = self._get_thread_session()
-        return await self._run_in_thread(self._exec, "PATCH", url, params, request_type=request_type, session=session)
-
-    async def adelete(self, url, params=None, request_type=None):
-        session = self._get_thread_session()
-        return await self._run_in_thread(self._exec, "DELETE", url, params, request_type=request_type, session=session)
-
-    async def adownload(self, url, params=None, request_type=None, file_format='zip', download_folder=''):
-        self.download_folder = download_folder
-        session = self._get_thread_session()
-        return await self._run_in_thread(
-            self._exec,
-            "GET",
-            url,
-            params,
-            request_type=request_type,
-            download_file=True,
-            file_format=file_format,
-            session=session,
-        )
-
-    async def aupload(self, url, file, params=None, request_type=None):
-        session = self._get_thread_session()
-        return await self._run_in_thread(self._exec, "POST", url, params, request_type=request_type, upload_file=file, session=session)
-
-    def _exec(self, method, url, params=None, download_file=False, request_type=None, file_format=None, upload_file=None, session=None):
         if method not in ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']:
             raise ValueError("Method not supported")
 

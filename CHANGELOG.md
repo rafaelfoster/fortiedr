@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.9.5 - 2026-06-02
+
+### Changed
+- Simplified async support in `FortiEDR_API_GW`: removed the extra `a*` methods and added `async_req` to existing methods (`get/send/insert/update/delete/download/upload`). When `async_req=True`, the call runs in a threadpool and returns an awaitable.
+
 ## 4.9.4 - 2026-06-02
 
 ### Added
