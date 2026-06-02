@@ -2,7 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-## 3.9.4 - 2026-06-02
+## 4.9.4 - 2026-06-02
+
+### Added
+- Async-capable connector methods (`aget`, `asend`, `ainsert`, `aupdate`, `adelete`, `adownload`, `aupload`) for future FastAPI/async usage.
 
 ### Changed
 - Migrated the internal HTTP client from `requests` to `niquests` (drop-in compatible) for better performance while preserving existing public APIs and return structures.

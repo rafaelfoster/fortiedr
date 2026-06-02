@@ -1,5 +1,8 @@
+import asyncio
+import functools
 import json
 import logging
+import threading
 from datetime import datetime
 
 import niquests
@@ -20,6 +23,9 @@ class FortiEDR_API_GW:
 
         # Shared session for connection pooling / HTTP/2 (niquests)
         self._session = niquests.Session()
+
+        # For async usage (via threadpool), ensure each worker thread gets its own session
+        self._thread_local = threading.local()
 
     def enable_debug(self):
         import http.client as http_client
@@ -68,7 +74,67 @@ class FortiEDR_API_GW:
     def upload(self, url, file, params=None, request_type=None ):
         return self._exec("POST", url, params, request_type=request_type, upload_file=file)
 
-    def _exec(self, method, url, params=None, download_file=False, request_type=None, file_format=None, upload_file=None):
+    def _get_thread_session(self):
+        session = getattr(self._thread_local, 'session', None)
+        if session is None:
+            session = niquests.Session()
+            self._thread_local.session = session
+
+        try:
+            session.verify = self.SSL_Verify
+        except Exception:
+            pass
+
+        return session
+
+    async def _run_in_thread(self, func, *args, **kwargs):
+        # Python 3.8 compatibility: asyncio.to_thread exists only from 3.9+
+        to_thread = getattr(asyncio, 'to_thread', None)
+        if to_thread is not None:
+            return await to_thread(func, *args, **kwargs)
+
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(None, functools.partial(func, *args, **kwargs))
+
+    async def aget(self, url, params=None, request_type=None):
+        session = self._get_thread_session()
+        return await self._run_in_thread(self._exec, "GET", url, params, request_type=request_type, session=session)
+
+    async def asend(self, url, params=None, request_type=None):
+        session = self._get_thread_session()
+        return await self._run_in_thread(self._exec, "POST", url, params, request_type=request_type, session=session)
+
+    async def ainsert(self, url, params=None, request_type=None):
+        session = self._get_thread_session()
+        return await self._run_in_thread(self._exec, "PUT", url, params, request_type=request_type, session=session)
+
+    async def aupdate(self, url, params=None, request_type=None):
+        session = self._get_thread_session()
+        return await self._run_in_thread(self._exec, "PATCH", url, params, request_type=request_type, session=session)
+
+    async def adelete(self, url, params=None, request_type=None):
+        session = self._get_thread_session()
+        return await self._run_in_thread(self._exec, "DELETE", url, params, request_type=request_type, session=session)
+
+    async def adownload(self, url, params=None, request_type=None, file_format='zip', download_folder=''):
+        self.download_folder = download_folder
+        session = self._get_thread_session()
+        return await self._run_in_thread(
+            self._exec,
+            "GET",
+            url,
+            params,
+            request_type=request_type,
+            download_file=True,
+            file_format=file_format,
+            session=session,
+        )
+
+    async def aupload(self, url, file, params=None, request_type=None):
+        session = self._get_thread_session()
+        return await self._run_in_thread(self._exec, "POST", url, params, request_type=request_type, upload_file=file, session=session)
+
+    def _exec(self, method, url, params=None, download_file=False, request_type=None, file_format=None, upload_file=None, session=None):
         if method not in ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']:
             raise ValueError("Method not supported")
 
@@ -86,8 +152,10 @@ class FortiEDR_API_GW:
             print(json.dumps(self.headers, indent=4))
             print(json.dumps(params, indent=4))
 
+        session = session or self._session
+
         try:
-            response = self._session.request(
+            response = session.request(
                 method,
                 url,
                 headers=self.headers,
