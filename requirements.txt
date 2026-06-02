@@ -1,2 +1,2 @@
-Requests==2.31.0
+niquests==3.19.0
 setuptools==45.2.0

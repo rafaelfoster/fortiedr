@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.9.5 - 2026-06-02
+
+### Changed
+- Simplified async support in `FortiEDR_API_GW`: removed the extra `a*` methods and added `async_req` to existing methods (`get/send/insert/update/delete/download/upload`). When `async_req=True`, the call runs in a threadpool and returns an awaitable.
+
+## 4.9.4 - 2026-06-02
+
+### Added
+- Async-capable connector methods (`aget`, `asend`, `ainsert`, `aupdate`, `adelete`, `adownload`, `aupload`) for future FastAPI/async usage.
+
+### Changed
+- Migrated the internal HTTP client from `requests` to `niquests` (drop-in compatible) for better performance while preserving existing public APIs and return structures.
+- Updated `fortiedr/fortiedr.py` to include the latest endpoints from `api_docs/api-docs-7.2.3.0103.json`.
+
 ## 3.8 - 2024-07-05
 
 ### Added
