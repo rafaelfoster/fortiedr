@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Migrated the internal HTTP client from `requests` to `niquests` (drop-in compatible) for better performance while preserving existing public APIs and return structures.
+- Updated `fortiedr/fortiedr.py` to include the latest endpoints from `api_docs/api-docs-7.2.3.0103.json`.
 
 ## 3.8 - 2024-07-05
 
