@@ -6,7 +6,7 @@ from typing import BinaryIO
 from fortiedr.auth import Auth as fedrAuth
 from fortiedr.connector import FortiEDR_API_GW
 
-version = '4.9.4'
+version = '3.9'
 
 fortiedr_connection = None
 
@@ -11808,7 +11808,7 @@ class IPsets:
 class Organizations:
 	'''Organizations API'''
 
-	def create_organization(self, expirationDate: str, name: str, password: str, passwordConfirmation: str, eXtendedDetection: bool = None, edr: bool = None, edrAddOnsAllocated: int = None, edrBackupEnabled: bool = None, edrEnabled: bool = None, edrNumberOfShards: int = None, edrStorageAllocatedInMb: int = None, endpointsAllocated: int = None, forensics: bool = None, iotAllocated: int = None, mobileEnabled: bool = None, requestPolicyEngineLibUpdates: bool = None, secureBrowserEnabled: bool = None, serialNumber: str = None, serversAllocated: int = None, vulnerabilityAndIoT: bool = None, workstationsAllocated: int = None) -> tuple[bool, None]:
+	def create_organization(self, eXtendedDetection: bool = None, edr: bool = None, edrAddOnsAllocated: int = None, edrBackupEnabled: bool = None, edrEnabled: bool = None, edrNumberOfShards: int = None, edrStorageAllocatedInMb: int = None, expirationDate: str = None, forensics: bool = None, iotAllocated: int = None, name: str = None, password: str = None, passwordConfirmation: str = None, requestPolicyEngineLibUpdates: bool = None, serialNumber: str = None, serversAllocated: int = None, vulnerabilityAndIoT: bool = None, workstationsAllocated: int = None) -> tuple[bool, None]:
 		'''
 		Class Organizations
 		Description: This API creates organization in the system (only for Admin role).
@@ -11867,10 +11867,17 @@ class Organizations:
 			createAccountRequest["vulnerabilityAndIoT"] = f"{vulnerabilityAndIoT}"
 		if workstationsAllocated != None:
 			createAccountRequest["workstationsAllocated"] = f"{workstationsAllocated}"
+		if endpointsAllocated != None:
+			createAccountRequest["endpointsAllocated"] = f"{endpointsAllocated}"
+		if mobileEnabled:
+			createAccountRequest["mobileEnabled"] = f"{mobileEnabled}"
+		if secureBrowserEnabled:
+			createAccountRequest["secureBrowserEnabled"] = f"{secureBrowserEnabled}"
+
 
 		return fortiedr_connection.send(url, createAccountRequest)
 
-	def delete_organization(self, organization: str) -> tuple[bool, None]:
+	def delete_organization(self, organization: str = None) -> tuple[bool, None]:
 		'''
 		Class Organizations
 		Description: This API delete organization in the system (only for Admin role).
