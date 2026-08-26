@@ -25,3 +25,9 @@ test.py
 *.pyc
 TO-DO.md
 *.log
+
+# JavaScript development dependencies (the compiled dist/ directory is
+# intentionally tracked because GitHub installs do not run the build script).
+node_modules/
+!test/
+!test/surface.test.mjs

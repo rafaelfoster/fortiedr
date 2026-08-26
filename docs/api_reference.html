@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FortiEDR API Reference</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #0f172a;
+      --text: #e5e7eb;
+      --muted: #a0a7b4;
+      --accent: #22d3ee;
+      --accent-2: #a855f7;
+      --border: #1f2937;
+      --mono: "SFMono-Regular","Menlo","Consolas","Liberation Mono",monospace;
+      --sans: "Inter","Segoe UI","Helvetica Neue",Arial,sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--text);
+      background: radial-gradient(circle at 15% 20%, rgba(34,211,238,0.08), transparent 25%),
+                  radial-gradient(circle at 80% 0%, rgba(168,85,247,0.08), transparent 22%),
+                  var(--bg);
+    }
+    header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(11,18,32,0.9);
+      position: sticky; top: 0; backdrop-filter: blur(8px);
+    }
+    h1 { margin: 0 0 0.35rem; letter-spacing: -0.5px; }
+    nav a { color: var(--muted); text-decoration: none; margin-right: 1rem; font-weight: 600; }
+    nav a:hover { color: var(--accent); }
+    main { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+    section { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
+    h2 { margin-top: 0; letter-spacing: -0.3px; }
+    h3 { margin-bottom: 0.35rem; }
+    p, li { color: var(--muted); line-height: 1.6; }
+    code { font-family: var(--mono); background: #0b1220; border: 1px solid var(--border); padding: 0.1rem 0.3rem; border-radius: 6px; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 0.6rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>FortiEDR API Reference</h1>
+    <nav>
+      <a href="./index.html">Overview</a>
+      <a href="./api_reference.html">API Reference</a>
+      <a href="./checklist.html">Checklist</a>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <p>This reference lists every public class and function in the repository. Names mirror the FortiEDR REST endpoints they wrap.</p>
+    </section>
+
+    <section id="core">
+      <h2>Core client</h2>
+      <h3>FortiEDR</h3>
+      <ul>
+        <li><code>FortiEDR(host, user, password, organization=None, enable_debug=False, enable_ssl=True)</code> builds Basic Auth headers, probes the management host, and wires wrappers.</li>
+        <li><code>enable_debug()</code> turns on verbose <code>requests</code> logging and prints URL/headers/payload.</li>
+        <li><code>get</code>, <code>send</code> (POST), <code>insert</code> (PUT), <code>update</code> (PATCH), <code>delete</code>, <code>download</code> (saves to disk, returns path), <code>upload</code> (multipart).</li>
+        <li>Every helper returns <code>{"status": bool, "data": response|error}</code>; on failure <code>data</code> holds <code>status_code</code> and <code>error_message</code>.</li>
+      </ul>
+      <h3>Auth</h3>
+      <ul>
+        <li><code>convert_to_base64(string)</code>: encodes credentials.</li>
+        <li><code>test_authentication(headers, host)</code>: probes two URLs to validate credentials; returns status, data, response headers.</li>
+        <li><code>get_headers(fedr_host, fedr_user, fedr_pass, fedr_org=None)</code>: builds the Basic Auth header and returns it with host, or <code>(None, error)</code> on failure.</li>
+      </ul>
+    </section>
+
+    <section id="attached">
+      <h2>Primary wrappers (attached to <code>FortiEDR</code>)</h2>
+      <p>All methods return the standard <code>{"status": bool, "data": ...}</code> envelope. Below are full signatures with argument types and descriptive behavior (all support an optional <code>organization</code> parameter unless noted).</p>
+
+      <div class="grid">
+        <div>
+          <h3>Administrator</h3>
+          <ul>
+            <li><code>list_system_summary(organization: str|None=None)</code> — Retrieves management hostname, version, external/internal IPs, and license expiration for the specified organization or default tenant.</li>
+            <li><code>upload_license(licenseBlob: bytes)</code> — Uploads a FortiEDR license file; pass the raw bytes or a file-like object in a <code>{"licenseBlob": ...}</code> mapping.</li>
+            <li><code>list_users(organization: str|None=None)</code> — Returns the roster of FortiEDR management users.</li>
+            <li><code>get_user(username: str, organization: str|None=None)</code> — Fetches a single user record by username.</li>
+            <li><code>delete_user(username: str, organization: str|None=None)</code> — Removes a user account from the management console.</li>
+            <li><code>create_user(firstName: str, lastName: str, password: str, confirmPassword: str, email: str, username: str, title: str, role: str, restApi: bool, customScript: bool, remoteShell: bool, organization: str|None=None)</code> — Creates a user with the given role and capability flags (REST API, custom scripts, remote shell).</li>
+            <li><code>update_user(username: str, firstName: str|None=None, lastName: str|None=None, password: str|None=None, confirmPassword: str|None=None, email: str|None=None, title: str|None=None, role: str|None=None, restApi: bool|None=None, customScript: bool|None=None, remoteShell: bool|None=None, organization: str|None=None)</code> — Updates identity fields, password, role, and capability flags for an existing user.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>ApplicationControl</h3>
+          <ul>
+            <li><code>add_app_to_app_group(application: str, applicationGroup: str, organization: str|None=None)</code> — Places an application into a named application group.</li>
+            <li><code>add_app_group(applicationGroup: str, organization: str|None=None)</code> — Creates a new application group for policy targeting.</li>
+            <li><code>delete_app_from_app_group(application: str, applicationGroup: str, organization: str|None=None)</code> — Removes an application from the specified group.</li>
+            <li><code>delete_app_group(applicationGroup: str, organization: str|None=None)</code> — Deletes an application group and its membership.</li>
+            <li><code>list_app_groups(organization: str|None=None)</code> — Lists all application groups available to the tenant.</li>
+            <li><code>list_apps_in_app_group(applicationGroup: str, organization: str|None=None)</code> — Lists applications that belong to a given group.</li>
+            <li><code>list_collectors_for_app(application: str, organization: str|None=None)</code> — Shows collectors where a particular app is installed.</li>
+            <li><code>list_installed_apps(collectorId: str, organization: str|None=None)</code> — Returns installed applications on a specific collector.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Audit</h3>
+          <ul><li><code>get_system_audit(startDate: str, endDate: str, organization: str|None=None)</code> — Pulls audit log entries between two timestamps (string format accepted by the FortiEDR API).</li></ul>
+
+          <h3>AvScannerFileController</h3>
+          <ul><li><code>upload_file(file: bytes, organization: str|None=None)</code> — Sends a file to the AV scanner; pass a <code>{"file": open(...,"rb")}</code>-style mapping.</li></ul>
+
+          <h3>CommunicationControl</h3>
+          <ul>
+            <li><code>add_exception(ruleName: str, organization: str|None=None)</code> — Creates a communication-control exception rule by name.</li>
+            <li><code>delete_exception(ruleName: str, organization: str|None=None)</code> — Deletes a specific communication-control exception rule.</li>
+            <li><code>list_exceptions(organization: str|None=None)</code> — Lists all communication-control exception rules.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Events</h3>
+          <ul>
+            <li><code>acknowledge_event(eventId: int, organization: str|None=None)</code> — Marks the event as acknowledged in FortiEDR.</li>
+            <li><code>add_comment_to_event(eventId: int, comment: str, organization: str|None=None)</code> — Adds a textual comment to an event record.</li>
+            <li><code>get_event(eventId: int, organization: str|None=None)</code> — Retrieves full details for a single event.</li>
+            <li><code>get_event_process_info(eventId: int, organization: str|None=None)</code> — Returns process lineage/details associated with the event.</li>
+            <li><code>list_event_comments(eventId: int, organization: str|None=None)</code> — Lists comments posted to the event.</li>
+            <li><code>list_events(organization: str|None=None)</code> — Lists events for the tenant with default FortiEDR paging.</li>
+            <li><code>unacknowledge_event(eventId: int, organization: str|None=None)</code> — Reverts an event to an unacknowledged state.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Exclusions</h3>
+          <ul>
+            <li><code>add_exclusion(ruleName: str, organization: str|None=None)</code> — Creates an exclusion rule by name.</li>
+            <li><code>delete_exclusion(ruleName: str, organization: str|None=None)</code> — Removes an exclusion rule.</li>
+            <li><code>list_exclusions(organization: str|None=None)</code> — Returns the current set of exclusion rules.</li>
+          </ul>
+
+          <h3>Features</h3>
+          <ul><li><code>get_feature_parameters(featureName: str, organization: str|None=None)</code> — Fetches configurable parameters for a named feature (e.g., <code>threat_hunting</code>).</li></ul>
+        </div>
+
+        <div>
+          <h3>ForensicAnalysis</h3>
+          <ul>
+            <li><code>get_file_from_collector(collectorId: str, filePath: str, organization: str|None=None)</code> — Requests and downloads a specific file from a collector.</li>
+            <li><code>get_process_info_from_collector(collectorId: str, processId: int, organization: str|None=None)</code> — Retrieves process details directly from the collector host.</li>
+            <li><code>list_running_processes_from_collector(collectorId: str, organization: str|None=None)</code> — Lists currently running processes on a collector.</li>
+            <li><code>abort_request(collectorId: str, requestId: str, organization: str|None=None)</code> — Cancels a previously issued forensic request.</li>
+            <li><code>get_file_from_collector_ext(collectorId: str, filePath: str, organization: str|None=None)</code> — Extended API variant for file retrieval.</li>
+            <li><code>get_process_info_from_collector_ext(collectorId: str, processId: int, organization: str|None=None)</code> — Extended API variant for process details.</li>
+            <li><code>list_running_processes_from_collector_ext(collectorId: str, organization: str|None=None)</code> — Extended API variant for listing processes.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Forensics</h3>
+          <ul>
+            <li><code>get_file(collectorId: str, filePath: str, organization: str|None=None)</code> — Downloads a file using the forensics endpoint (management-mediated).</li>
+            <li><code>get_process_details(collectorId: str, processId: int, organization: str|None=None)</code> — Retrieves process details via forensics.</li>
+            <li><code>list_processes(collectorId: str, organization: str|None=None)</code> — Lists processes for a collector through the forensics API.</li>
+          </ul>
+
+          <h3>HashSearch</h3>
+          <ul><li><code>search(hash: str, organization: str|None=None)</code> — Searches FortiEDR for evidence of the provided file hash.</li></ul>
+        </div>
+
+        <div>
+          <h3>Incidents</h3>
+          <ul>
+            <li><code>add_comment_to_incident(incidentId: int, comment: str, organization: str|None=None)</code> — Adds an analyst comment to an incident.</li>
+            <li><code>get_incident(incidentId: int, organization: str|None=None)</code> — Retrieves full incident details.</li>
+            <li><code>list_incidents(organization: str|None=None)</code> — Lists incidents visible to the tenant.</li>
+            <li><code>update_incident(incidentId: int, organization: str|None=None)</code> — Updates incident state/metadata (fields defined by FortiEDR server).</li>
+            <li><code>list_incident_comments(incidentId: int, organization: str|None=None)</code> — Lists comments recorded on the incident.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>IntegrationsSupport</h3>
+          <ul>
+            <li><code>get_ems_settings(organization: str|None=None)</code> — Retrieves current EMS connector settings.</li>
+            <li><code>get_hoster_details(hosterType: str, organization: str|None=None)</code> — Returns connection details for the specified hoster type.</li>
+            <li><code>get_hoster_types(organization: str|None=None)</code> — Lists hoster types supported by the instance.</li>
+          </ul>
+
+          <h3>Integrations</h3>
+          <ul>
+            <li><code>add_integration(organization: str|None=None)</code> — Creates a new integration entry (payload handled server-side).</li>
+            <li><code>delete_integration(integrationId: int, organization: str|None=None)</code> — Removes an integration by ID.</li>
+            <li><code>get_integration(integrationId: int, organization: str|None=None)</code> — Retrieves details for a specific integration.</li>
+            <li><code>list_integrations(organization: str|None=None)</code> — Lists all configured integrations.</li>
+            <li><code>update_integration(integrationId: int, organization: str|None=None)</code> — Updates integration fields (payload defined by server schema).</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Inventory</h3>
+          <ul>
+            <li><code>get_collector_details(collectorId: str, organization: str|None=None)</code> — Returns hardware, OS, and status details for a collector.</li>
+            <li><code>list_collectors(organization: str|None=None)</code> — Lists all collectors enrolled under the tenant.</li>
+            <li><code>list_groups(organization: str|None=None)</code> — Lists collector groups.</li>
+            <li><code>move_collectors_to_group(collectorIds: int|list[int], groupId: int, organization: str|None=None)</code> — Moves one or many collectors into the target group; single IDs are auto-wrapped into a list.</li>
+            <li><code>uninstall_collector(collectorId: str, organization: str|None=None)</code> — Initiates a collector uninstall workflow.</li>
+            <li><code>create_group(groupName: str, organization: str|None=None)</code> — Creates a new collector group.</li>
+            <li><code>delete_group(groupName: str, organization: str|None=None)</code> — Deletes a collector group.</li>
+            <li><code>disable_collector(collectorId: str, organization: str|None=None)</code> — Disables a collector.</li>
+            <li><code>enable_collector(collectorId: str, organization: str|None=None)</code> — Enables a collector.</li>
+            <li><code>restart_collector(collectorId: str, organization: str|None=None)</code> — Restarts a collector service.</li>
+            <li><code>scan_collector(collectorId: str, organization: str|None=None)</code> — Triggers an on-demand scan on the collector.</li>
+            <li><code>set_collector_policy(collectorId: str, policyName: str, organization: str|None=None)</code> — Assigns a specific policy to a collector.</li>
+            <li><code>assign_policy_to_group(groupId: int, policyName: str, organization: str|None=None)</code> — Assigns a policy to an entire collector group.</li>
+            <li><code>get_collectors_by_group(groupName: str, organization: str|None=None)</code> — Lists collectors belonging to a named group.</li>
+            <li><code>get_group_policy(groupName: str, organization: str|None=None)</code> — Retrieves the policy currently applied to a group.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>IoT</h3>
+          <ul>
+            <li><code>create_iot_group(groupName: str, organization: str|None=None)</code> — Creates an IoT device group for segmentation.</li>
+            <li><code>delete_iot_group(groupName: str, organization: str|None=None)</code> — Deletes an IoT group by name.</li>
+            <li><code>list_iot_devices(organization: str|None=None)</code> — Lists IoT devices discovered or managed.</li>
+            <li><code>list_iot_groups(organization: str|None=None)</code> — Lists defined IoT groups.</li>
+            <li><code>move_iot_devices_to_group(deviceIds: int|list[int], groupId: int, organization: str|None=None)</code> — Moves one or more devices into a group (single IDs auto-wrapped to list).</li>
+          </ul>
+
+          <h3>IPSets</h3>
+          <ul>
+            <li><code>add_ip_set(name: str, description: str, ips: str|list[str], organization: str|None=None)</code> — Creates an IP set with description and members (accepts single IP string or list).</li>
+            <li><code>delete_ip_set(name: str, organization: str|None=None)</code> — Deletes a named IP set.</li>
+            <li><code>list_ip_sets(organization: str|None=None)</code> — Lists configured IP sets.</li>
+            <li><code>update_ip_set(name: str, new_name: str|None=None, description: str|None=None, ips: str|list[str]|None=None, organization: str|None=None)</code> — Renames, re-describes, or replaces members in an IP set.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Mobile</h3>
+          <ul>
+            <li><code>get_incident(incidentId: int, organization: str|None=None)</code> — Retrieves details for a mobile incident.</li>
+            <li><code>list_incidents(organization: str|None=None)</code> — Lists mobile incidents.</li>
+          </ul>
+
+          <h3>Organizations</h3>
+          <ul>
+            <li><code>add_organization(organizationName: str, organizationId: int|None=None)</code> — Creates a new organization (ID optional if server auto-assigns).</li>
+            <li><code>delete_organization(organizationId: int)</code> — Deletes an organization by ID.</li>
+            <li><code>get_organization(organizationId: int)</code> — Retrieves an organization record.</li>
+            <li><code>list_organizations()</code> — Lists all organizations known to the management server.</li>
+            <li><code>update_organization(organizationId: int, organizationName: str|None=None)</code> — Renames an organization.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>PlaybooksPolicies</h3>
+          <ul>
+            <li><code>add_playbook_policy(policyName: str, organization: str|None=None)</code> — Creates a playbook policy container.</li>
+            <li><code>delete_playbook_policy(policyName: str, organization: str|None=None)</code> — Deletes a playbook policy by name.</li>
+            <li><code>get_playbook_policy(policyName: str, organization: str|None=None)</code> — Retrieves a playbook policy definition.</li>
+            <li><code>list_playbook_policies(organization: str|None=None)</code> — Lists all playbook policies.</li>
+            <li><code>update_playbook_policy(policyName: str, organization: str|None=None)</code> — Updates an existing playbook policy.</li>
+          </ul>
+
+          <h3>Policies</h3>
+          <ul>
+            <li><code>assign_policy_to_group(policyName: str, groupName: str, organization: str|None=None)</code> — Assigns a policy to a collector group.</li>
+            <li><code>clone(policyName: str, newPolicyName: str, organization: str|None=None)</code> — Clones an existing policy into a new named policy.</li>
+            <li><code>create_policy(policyName: str, organization: str|None=None)</code> — Creates a new empty policy.</li>
+            <li><code>delete_policy(policyName: str, organization: str|None=None)</code> — Removes a policy by name.</li>
+            <li><code>get_policy(policyName: str, organization: str|None=None)</code> — Retrieves details of a policy.</li>
+            <li><code>list_policies(organization: str|None=None)</code> — Lists all policies in the tenant.</li>
+            <li><code>update_policy(policyName: str, organization: str|None=None)</code> — Updates policy contents (payload handled server-side).</li>
+            <li><code>unassign_policy_from_group(policyName: str, groupName: str, organization: str|None=None)</code> — Removes a policy assignment from a group.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>ThreatHunting</h3>
+          <ul>
+            <li><code>add_comment_to_event(eventId: int, comment: str, organization: str|None=None)</code> — Adds an analyst comment to a threat-hunting event.</li>
+            <li><code>get_event(eventId: int, organization: str|None=None)</code> — Retrieves full threat-hunting event details.</li>
+            <li><code>list_events(organization: str|None=None)</code> — Lists threat-hunting events.</li>
+            <li><code>get_event_process_info(eventId: int, organization: str|None=None)</code> — Returns process info tied to an event.</li>
+            <li><code>list_event_comments(eventId: int, organization: str|None=None)</code> — Lists comments recorded on the event.</li>
+          </ul>
+
+          <h3>Users</h3>
+          <ul>
+            <li><code>create_user(firstName: str, lastName: str, password: str, confirmPassword: str, email: str, username: str, title: str, role: str, restApi: bool, customScript: bool, remoteShell: bool, organization: str|None=None)</code> — Creates a user (same fields as Administrator).</li>
+            <li><code>delete_user(username: str, organization: str|None=None)</code> — Deletes a FortiEDR user.</li>
+            <li><code>list_users(organization: str|None=None)</code> — Lists users.</li>
+            <li><code>update_user(username: str, organization: str|None=None)</code> — Updates a user; FortiEDR server defines payload fields.</li>
+            <li><code>get_user(username: str, organization: str|None=None)</code> — Retrieves a user record.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="experimental">
+      <h2>Additional/experimental wrappers (manual use)</h2>
+      <p>These modules are in <code>fortiedr/api</code> but not attached to <code>FortiEDR</code>. Some rely on HTTP helpers like <code>post</code> or <code>put</code> that you can alias:</p>
+<pre><code class="language-python">from fortiedr import FortiEDR
+from fortiedr.api.system_components import SystemComponents
+
+fedr = FortiEDR(...)
+fedr.post = fedr.send    # POST
+fedr.put = fedr.insert   # PUT
+system_components = SystemComponents(fedr)</code></pre>
+      <div class="grid">
+        <div>
+          <h3>Admin</h3>
+          <ul>
+            <li><code>admin_tab_indication()</code></li>
+            <li><code>set_enable_default_application_control_state(request)</code></li>
+            <li><code>set_tray_notification_settings(request)</code></li>
+            <li><code>av_scan(avScanDisplayItem, accountId=None)</code></li>
+            <li><code>av_scan_collectors_and_groups_options(accountId=None, field=None, filterCollectorStatus=None, search=None)</code></li>
+            <li><code>get_av_scan_mobile(json=None, organizationId=None)</code></li>
+            <li><code>update_av_scan_mobile(mobileSaveScan)</code></li>
+            <li><code>av_scan_mobile_collectors_and_groups_options(organizationId=None, searchType=None, searchValue=None)</code></li>
+            <li><code>trigger_scan(requestBody, accountId=None)</code></li>
+            <li><code>default_application_control_state(request)</code></li>
+          </ul>
+        </div>
+        <div>
+          <h3>CollectorInventory</h3>
+          <ul><li><code>collectors(collectors, organization=None)</code></li></ul>
+          <h3>Dashboard</h3>
+          <ul>
+            <li><code>events_and_incidents_by_os(organization=None)</code></li>
+            <li><code>events_and_incidents_progress(organization=None)</code></li>
+            <li><code>events_severities(organization=None)</code></li>
+            <li><code>incidents_severities(organization=None)</code></li>
+            <li><code>top_ten_collectors_by_events(organization=None)</code></li>
+            <li><code>top_ten_events(organization=None)</code></li>
+          </ul>
+        </div>
+        <div>
+          <h3>MobileInventory</h3>
+          <ul><li><code>devices(devices, organization=None)</code></li></ul>
+          <h3>Notifications</h3>
+          <ul>
+            <li><code>count(organization=None)</code></li>
+            <li><code>mark_as_read(notificationIds, organization=None)</code></li>
+          </ul>
+          <h3>Reputation</h3>
+          <ul>
+            <li><code>get_file_reputation(fileHash, organization=None)</code></li>
+            <li><code>get_ip_reputation(ip, organization=None)</code></li>
+            <li><code>get_url_reputation(url, organization=None)</code></li>
+          </ul>
+        </div>
+        <div>
+          <h3>SecureBrowser</h3>
+          <ul>
+            <li><code>disable(organization=None)</code></li>
+            <li><code>enable(organization=None)</code></li>
+          </ul>
+          <h3>SecureBrowserService</h3>
+          <ul>
+            <li><code>get_settings(organization=None)</code></li>
+            <li><code>update_settings(settings, organization=None)</code></li>
+          </ul>
+          <h3>SendableEntities</h3>
+          <ul>
+            <li><code>create(entity, organization=None)</code></li>
+            <li><code>test(entity, organization=None)</code></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Support</h3>
+          <ul><li><code>get_logs(organization=None)</code></li></ul>
+          <h3>SystemComponents</h3>
+          <ul>
+            <li><code>aggregator_logs(aggregatorId=None, organizationId=None)</code></li>
+            <li><code>get_aggregators(...)</code></li>
+            <li><code>delete_aggregators(...)</code></li>
+            <li><code>core_logs(coreId=None, organizationId=None)</code></li>
+            <li><code>get_cores(...)</code></li>
+            <li><code>delete_cores(...)</code></li>
+            <li><code>management_logs(organizationId)</code></li>
+            <li><code>get_repositories()</code></li>
+            <li><code>update_core_functionality(coreFunctionality)</code></li>
+          </ul>
+        </div>
+        <div>
+          <h3>SystemEvents</h3>
+          <ul><li><code>list(organization=None)</code></li></ul>
+          <h3>ThreatHuntingExclusions</h3>
+          <ul>
+            <li><code>add_exclusion(ruleName, organization=None)</code></li>
+            <li><code>delete_exclusion(ruleName, organization=None)</code></li>
+            <li><code>list_exclusions(organization=None)</code></li>
+          </ul>
+          <h3>ThreatHuntingSettings</h3>
+          <ul>
+            <li><code>get_settings(organization=None)</code></li>
+            <li><code>update_settings(settings, organization=None)</code></li>
+          </ul>
+        </div>
+        <div>
+          <h3>WorkloadGroups</h3>
+          <ul>
+            <li><code>add_workload_group(groupName, organization=None)</code></li>
+            <li><code>delete_workload_group(groupName, organization=None)</code></li>
+            <li><code>get_workload_group(groupName, organization=None)</code></li>
+            <li><code>list_workload_groups(organization=None)</code></li>
+            <li><code>update_workload_group(groupName, newGroupName, organization=None)</code></li>
+          </ul>
+          <h3>WorkloadsDeployment</h3>
+          <ul>
+            <li><code>connect_account(request)</code></li>
+            <li><code>delete_accounts(accountIds=None, deleteAll=None, organizationId=None, search=None)</code></li>
+            <li><code>discover_clusters(request)</code></li>
+            <li><code>get_account(accountId=None, organizationId=None)</code></li>
+            <li><code>install_agents(request)</code></li>
+            <li><code>installer_versions(organizationId)</code></li>
+            <li><code>list_accounts(maxResult=None, organizationId=None, page=None, search=None, sorting=None)</code></li>
+            <li><code>list_clusters(accountNames=None, cloudProviders=None, maxResult=None, organizationId=None, page=None, search=None, sorting=None, statuses=None)</code></li>
+            <li><code>refresh_clusters(organizationId)</code></li>
+            <li><code>uninstall_agents(accountNames=None, cloudProviders=None, clusterIds=None, organizationId=None, search=None)</code></li>
+            <li><code>upgrade_agents(request)</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

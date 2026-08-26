@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FortiEDR Python Client</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #22d3ee;
+      --accent-2: #a855f7;
+      --border: #1f2937;
+      --mono: "SFMono-Regular","Menlo","Consolas","Liberation Mono",monospace;
+      --sans: "Inter","Segoe UI","Helvetica Neue",Arial,sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--text);
+      background: radial-gradient(circle at 10% 20%, rgba(34,211,238,0.08), transparent 25%),
+                  radial-gradient(circle at 80% 0%, rgba(168,85,247,0.08), transparent 20%),
+                  var(--bg);
+    }
+    header {
+      padding: 2rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15,23,42,0.9);
+      position: sticky; top: 0; backdrop-filter: blur(8px);
+    }
+    h1 { margin: 0 0 0.35rem; font-size: 1.9rem; letter-spacing: -0.5px; }
+    nav a { color: var(--muted); text-decoration: none; margin-right: 1rem; font-weight: 600; }
+    nav a:hover { color: var(--accent); }
+    main { max-width: 1000px; margin: 0 auto; padding: 1.5rem; }
+    section { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
+    h2 { margin-top: 0; letter-spacing: -0.3px; }
+    p { line-height: 1.6; color: var(--muted); }
+    ul { color: var(--muted); }
+    code, pre { font-family: var(--mono); }
+    pre { background: #0b1220; border: 1px solid var(--border); border-radius: 10px; padding: 1rem; overflow-x: auto; }
+    .pill { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; margin-right: 0.5rem; }
+    a.btn { display: inline-block; padding: 0.55rem 0.85rem; border-radius: 10px; background: linear-gradient(120deg,var(--accent),var(--accent-2)); color: #0b1220; text-decoration: none; font-weight: 700; box-shadow: 0 10px 30px rgba(34,211,238,0.25); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 0.75rem; }
+    .muted { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>FortiEDR Python Client</h1>
+    <nav>
+      <a href="./index.html">Overview</a>
+      <a href="./api_reference.html">API Reference</a>
+      <a href="./checklist.html">Checklist</a>
+      <a class="btn" href="https://pypi.org/project/fortiedr/">PyPI</a>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <p>An open-source Python library that wraps the FortiEDR REST API. The client handles authentication, basic HTTP plumbing, and groups endpoints into small Python classes so you can script FortiEDR administration, inventory, threat hunting, and integrations.</p>
+      <div class="grid">
+        <div>
+          <span class="pill">Python 3.8+</span>
+          <span class="pill">requests</span>
+          <span class="pill">SSL verify on by default</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="install">
+      <h2>Installation</h2>
+      <pre><code>pip install fortiedr</code></pre>
+      <p>Or install from source:</p>
+      <pre><code>git clone https://github.com/rafaelfoster/fortiedr.git
+cd fortiedr
+pip3 install .</code></pre>
+    </section>
+
+    <section id="auth">
+      <h2>Authenticating</h2>
+      <p>Create a FortiEDR REST API user in the Management console and ensure the user logs in once to change the initial password.</p>
+      <pre><code class="language-python">from fortiedr import FortiEDR
+
+fedr = FortiEDR(
+    host="your-management-host.example.com",  # hostname only, no https://
+    user="api-user",
+    password="SuperSecret!",
+    organization="ORG_NAME",                  # optional, case sensitive
+    enable_debug=False,                       # set True to log request details
+    enable_ssl=True                           # set False to skip TLS verification
+)
+
+if not fedr.auth["status"]:
+    raise SystemExit(f"Authentication failed: {fedr.auth['data']}")</code></pre>
+      <p>The client builds a Basic Auth header, validates it against the FortiEDR gateway, and stores it in <code>fedr.headers</code> for subsequent calls.</p>
+    </section>
+
+    <section id="responses">
+      <h2>Responses &amp; errors</h2>
+      <p>Every helper returns <code>{"status": True|False, "data": &lt;response json|text|error dict&gt;}</code>.</p>
+      <ul>
+        <li><strong>status=True</strong> → HTTP 2xx and JSON (or text) parsed successfully.</li>
+        <li><strong>status=False</strong> → <code>data.status_code</code> and <code>data.error_message</code> include server reply or Python exception text.</li>
+      </ul>
+    </section>
+
+    <section id="helpers">
+      <h2>HTTP helpers on the client</h2>
+      <ul>
+        <li><code>get(url, params=None, request_type=None)</code></li>
+        <li><code>send(url, params=None, request_type=None)</code> — POST</li>
+        <li><code>insert(url, params=None, request_type=None)</code> — PUT</li>
+        <li><code>update(url, params=None, request_type=None)</code> — PATCH</li>
+        <li><code>delete(url, params=None, request_type=None)</code></li>
+        <li><code>download(url, params=None, request_type=None, file_format="zip", download_folder="")</code> writes to disk and returns the path.</li>
+        <li><code>upload(url, file, params=None, request_type=None)</code> sends multipart form data.</li>
+        <li><code>enable_debug()</code> prints URLs, headers, and payloads and enables <code>requests</code> debug logging.</li>
+      </ul>
+      <p>Use these for endpoints that do not yet have a convenience wrapper.</p>
+    </section>
+
+    <section id="wrappers">
+      <h2>Wrappers &amp; surface</h2>
+      <p><code>FortiEDR</code> wires the primary wrappers as attributes: <em>administrator, application_control, audit, av_scanner_file_controller, communication_control, events, exclusions, features, forensic_analysis, forensics, hash_search, incidents, integrations_support, integrations, inventory, iot, ip_sets, mobile, organizations, playbooks_policies, policies, threat_hunting, users.</em></p>
+      <p>Full per-method coverage lives in the <a href="./api_reference.html">API Reference</a>. Additional experimental wrappers are also documented there.</p>
+    </section>
+
+    <section id="examples">
+      <h2>Example usage</h2>
+      <pre><code class="language-python">from fortiedr import FortiEDR
+
+fedr = FortiEDR(host="...", user="...", password="...")
+events = fedr.events.list_events()
+
+if events["status"]:
+    print(events["data"])
+else:
+    print(events["data"]["error_message"])</code></pre>
+      <p>See <code>example.py</code> in the repository for a longer walkthrough (cloning policies, listing collectors, fetching incidents, etc.).</p>
+    </section>
+
+    <section id="troubleshooting">
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li>Set <code>enable_debug=True</code> when constructing the client or call <code>enable_debug()</code> later to log requests.</li>
+        <li>Keep <code>enable_ssl=True</code> unless you explicitly want to skip TLS verification (lab use only).</li>
+        <li>Authentication issues show as <code>{"status": False, "data": "Unauthorized" | "Forbidden" | ...}</code> from the auth probe.</li>
+      </ul>
+    </section>
+
+    <section id="contrib">
+      <h2>Contributing</h2>
+      <p>Keep wrapper naming aligned with existing modules and update the <a href="./api_reference.html">API Reference</a> plus <a href="./checklist.html">checklist</a> when you add endpoints. Code should remain ASCII unless interacting with existing Unicode data.</p>
+    </section>
+  </main>
+</body>
+</html>

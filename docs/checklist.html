@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FortiEDR Docs Checklist</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #0b1220;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #22d3ee;
+      --border: #1f2937;
+      --sans: "Inter","Segoe UI","Helvetica Neue",Arial,sans-serif;
+    }
+    body { margin: 0; font-family: var(--sans); color: var(--text); background: var(--bg); }
+    header { padding: 1.4rem; border-bottom: 1px solid var(--border); background: rgba(15,23,42,0.9); position: sticky; top: 0; backdrop-filter: blur(8px); }
+    h1 { margin: 0 0 0.35rem; letter-spacing: -0.4px; }
+    nav a { color: var(--muted); text-decoration: none; margin-right: 1rem; font-weight: 600; }
+    nav a:hover { color: var(--accent); }
+    main { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+    section { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 10px 35px rgba(0,0,0,0.3); }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li { padding: 0.6rem 0.4rem; border-bottom: 1px solid var(--border); color: var(--muted); }
+    li:last-child { border-bottom: 0; }
+    .box { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; margin-right: 0.6rem; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Documentation Checklist</h1>
+    <nav>
+      <a href="./index.html">Overview</a>
+      <a href="./api_reference.html">API Reference</a>
+      <a href="./checklist.html">Checklist</a>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <ul>
+        <li><span class="box"></span>Installation instructions in <code>docs/index.md</code> and <code>README.md</code> match current Python/dependency versions.</li>
+        <li><span class="box"></span>Authentication flow documented (constructor args, auth probe behavior, TLS toggle, <code>enable_debug</code>).</li>
+        <li><span class="box"></span>Response structure and error handling noted (<code>{"status": bool, "data": ...}</code> with <code>status_code</code>/<code>error_message</code> on failures).</li>
+        <li><span class="box"></span>File transfer behavior covered (<code>download</code> writes timestamped files; <code>upload</code> expects <code>requests</code>-style mapping).</li>
+        <li><span class="box"></span>Primary wrappers documented in <code>docs/api_reference.md</code> (Administrator, ApplicationControl, Audit, AvScannerFileController, CommunicationControl, Events, Exclusions, Features, ForensicAnalysis, Forensics, HashSearch, Incidents, IntegrationsSupport, Integrations, Inventory, IoT, IPSets, Mobile, Organizations, PlaybooksPolicies, Policies, ThreatHunting, Users).</li>
+        <li><span class="box"></span>Additional/experimental wrappers documented with usage guidance (Admin, CollectorInventory, Dashboard, MobileInventory, Notifications, Reputation, SecureBrowser, SecureBrowserService, SendableEntities, Support, SystemComponents, SystemEvents, ThreatHuntingExclusions, ThreatHuntingSettings, WorkloadGroups, WorkloadsDeployment).</li>
+        <li><span class="box"></span>Quickstart example in <code>docs/index.md</code> and <code>example.py</code> use consistent constructor args and attribute names.</li>
+        <li><span class="box"></span><code>README.md</code> links to the docs folder for GitHub Pages/PyPI long description.</li>
+        <li><span class="box"></span>Any new endpoints added after this version are appended to <code>docs/api_reference.md</code> and revalidated against this list.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "name": "fortiedr",
+  "version": "4.9.5-js.0",
+  "description": "JavaScript/TypeScript client for the FortiEDR Cloud API.",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafaelfoster/fortiedr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rafaelfoster/fortiedr/issues"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts",
+    "dist/index.d.ts.map",
+    "dist/generated-manifest.json"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "generate": "node scripts/generate-js-manifest.mjs",
+    "build": "npm run generate && tsc",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "check:surface": "node scripts/check-js-surface.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}

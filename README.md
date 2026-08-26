@@ -69,3 +69,33 @@ The "example.py" file contains some examples of how to use the package.
 You can e-mail me at rafaelgfoster at gmail (.) com.
 
 Enjoy it!
+
+## JavaScript/TypeScript module
+
+This repository also contains a Node.js client with the same controller and
+method surface as the Python implementation. The compiled JavaScript is kept
+in `dist/` so applications can install it directly from GitHub without a
+public npm release.
+
+Install the branch from GitHub:
+
+```bash
+npm install github:rafaelfoster/fortiedr#feat/typescript-client
+```
+
+Use it from JavaScript or TypeScript:
+
+```js
+import { auth, Inventory } from 'fortiedr';
+
+const login = await auth('FORTIEDR_HOST.COM', 'USER', 'PASSWORD');
+if (login.status) {
+  const inventory = new Inventory();
+  const collectors = await inventory.list_collectors();
+  console.log(collectors);
+}
+```
+
+For local development, run `npm install`, then `npm test`. `npm run build`
+regenerates the controller manifest from the Python sources and compiles the
+TypeScript client.
